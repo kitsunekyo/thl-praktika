@@ -22,3 +22,17 @@ export async function createTraining(
   });
   revalidatePath("/");
 }
+
+export async function deleteTraining(formData: FormData) {
+  const id = formData.get("id");
+  if (!id) {
+    throw new Error("No id provided");
+  }
+  const client = new PrismaClient();
+  await client.training.delete({
+    where: {
+      id: parseInt(id.toString()),
+    },
+  });
+  revalidatePath("/");
+}

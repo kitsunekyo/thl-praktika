@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { PrismaClient } from "@prisma/client";
 import { format } from "date-fns";
 import { PlusSquare, TrashIcon } from "lucide-react";
+import { deleteTraining } from "./actions";
 
 export async function TrainingList() {
   const prisma = new PrismaClient();
@@ -36,9 +37,12 @@ export async function TrainingList() {
                 <Button variant="ghost" size="sm">
                   <PlusSquare className="h-4 w-4 mr-2" /> Anmelden
                 </Button>
-                <Button variant="ghost" size="icon">
-                  <TrashIcon className="h-4 w-4" />
-                </Button>
+                <form action={deleteTraining}>
+                  <input type="hidden" name="id" value={training.id} />
+                  <Button variant="ghost" size="icon">
+                    <TrashIcon className="h-4 w-4" />
+                  </Button>
+                </form>
               </div>
             </footer>
           </li>
