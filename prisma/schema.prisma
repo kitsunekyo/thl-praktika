@@ -14,11 +14,10 @@ datasource db {
 model Training {
   id          Int       @id @default(autoincrement())
   createdAt   DateTime  @default(now())
-  startDate   DateTime
-  endDate     DateTime
-  name        String
+  date        DateTime
+  startTime   String
+  endTime     String
   description String?
-  location    String
   maxInterns  Int
   registrations Registration[]
 }
