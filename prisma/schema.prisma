@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Training {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  startDate   DateTime
+  endDate     DateTime
+  name        String
+  description String?
+  location    String
+  maxInterns  Int
+  registrations Registration[]
+}
+
+model Registration {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  training    Training  @relation(fields: [trainingId], references: [id])
+  trainingId  Int
+  @@index([trainingId])
+}
