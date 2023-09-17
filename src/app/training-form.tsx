@@ -52,7 +52,7 @@ export function TrainingForm() {
         onSubmit={form.handleSubmit((data: z.infer<typeof trainingSchema>) => {
           createTraining(data);
         })}
-        className="space-y-8 max-w-[500px] mx-auto"
+        className="space-y-8 mx-auto"
       >
         <FormField
           control={form.control}
