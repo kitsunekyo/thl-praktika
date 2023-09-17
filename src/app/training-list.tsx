@@ -59,7 +59,6 @@ export async function TrainingList() {
                     <form action={unregister}>
                       <input type="hidden" name="id" value={training.id} />
                       <Button variant="ghost" size="sm">
-                        <MinusSquare className="mr-2 h-4 w-4" />
                         Abmelden
                       </Button>
                     </form>
@@ -67,7 +66,6 @@ export async function TrainingList() {
                     <form action={register}>
                       <input type="hidden" name="id" value={training.id} />
                       <Button variant="ghost" size="sm">
-                        <PlusSquare className="mr-2 h-4 w-4" />
                         Anmelden
                       </Button>
                     </form>

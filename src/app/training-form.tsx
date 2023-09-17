@@ -25,8 +25,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-
-
 import { createTraining } from "./training-actions";
 
 export const trainingSchema = z.object({
@@ -139,8 +137,8 @@ export function TrainingForm() {
                   <Input
                     placeholder="08:00"
                     maxLength={5}
-                    {...field}
                     data-1p-ignore
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />
@@ -160,8 +158,8 @@ export function TrainingForm() {
                   <Input
                     placeholder="17:00"
                     maxLength={5}
-                    {...field}
                     data-1p-ignore
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />
