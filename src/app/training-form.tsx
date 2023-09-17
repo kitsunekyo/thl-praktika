@@ -78,7 +78,7 @@ export function TrainingForm() {
             <FormItem>
               <FormLabel>Maximale Anzahl an Praktikanten</FormLabel>
               <FormControl>
-                <Input type="number" min="1" max="6" {...field} />
+                <Input type="number" min={1} max={6} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
