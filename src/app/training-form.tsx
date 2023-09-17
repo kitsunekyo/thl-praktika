@@ -24,7 +24,7 @@ import {
 import { cn } from "@/lib/utils";
 import { CalendarIcon, Regex } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
-import { createTraining } from "./actions";
+import { createTraining } from "./training-actions";
 
 export const trainingSchema = z.object({
   description: z.string().optional(),
