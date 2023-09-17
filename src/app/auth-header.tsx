@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 
 export function AuthHeader({ session }: { session: Session | null }) {
   return (
-    <header className="flex gap-4 items-center mb-8">
+    <header className="mb-8 flex items-center gap-4">
       {!!session ? <LoggedIn session={session} /> : <LoggedOut />}
     </header>
   );
@@ -46,7 +46,7 @@ function User({ user }: { user: NonNullable<Session["user"]> }) {
         <AvatarFallback>{user.name}</AvatarFallback>
       </Avatar>
       <div className="text-sm">
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           {user.name}
           {!!user.role && <Badge>{user.role}</Badge>}
         </div>

@@ -15,7 +15,7 @@ const createTrainingSchema = z.object({
 });
 
 export async function createTraining(
-  payload: z.infer<typeof createTrainingSchema>
+  payload: z.infer<typeof createTrainingSchema>,
 ) {
   const session = await getServerSession(authOptions);
   const currentUser = session?.user;

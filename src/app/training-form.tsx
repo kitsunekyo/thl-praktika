@@ -53,7 +53,7 @@ export function TrainingForm() {
           const payload = { ...data, maxInterns: parseInt(data.maxInterns) };
           createTraining(payload);
         })}
-        className="space-y-8 mx-auto"
+        className="mx-auto space-y-8"
       >
         <FormField
           control={form.control}
@@ -84,7 +84,7 @@ export function TrainingForm() {
             </FormItem>
           )}
         />
-        <div className="flex space-x-4 items-end">
+        <div className="flex items-end space-x-4">
           <FormField
             control={form.control}
             name="date"
@@ -97,8 +97,8 @@ export function TrainingForm() {
                       <Button
                         variant="outline"
                         className={cn(
-                          "w-[240px] pl-3 text-left font-normal flex",
-                          !field.value && "text-muted-foreground"
+                          "flex w-[240px] pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground",
                         )}
                       >
                         {field.value ? (
@@ -144,7 +144,7 @@ export function TrainingForm() {
               </FormItem>
             )}
           />
-          <div className="h-[40px] flex items-center">
+          <div className="flex h-[40px] items-center">
             <span>bis</span>
           </div>
           <FormField

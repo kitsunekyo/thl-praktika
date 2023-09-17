@@ -21,16 +21,16 @@ export async function TrainingList() {
 
   return (
     <section>
-      <h1 className="text font-semibold mb-2">Trainings</h1>
+      <h1 className="text mb-2 font-semibold">Trainings</h1>
       <ul className="space-y-2">
         {trainings.map((training) => {
           const isRegistered = training.registrations.some(
-            (r) => r.userId === session?.user.id
+            (r) => r.userId === session?.user.id,
           );
           return (
             <li
               key={training.id}
-              className="border border-solid rounded text-sm p-4"
+              className="rounded border border-solid p-4 text-sm"
             >
               <dl className="space-y-2">
                 <dd>{training.description}</dd>
@@ -42,8 +42,8 @@ export async function TrainingList() {
                   Praktikanten angemeldet
                 </dd>
               </dl>
-              <footer className="flex gap-4 pt-4 border-t mt-4 items-center">
-                <div className="flex gap-2 items-center">
+              <footer className="mt-4 flex items-center gap-4 border-t pt-4">
+                <div className="flex items-center gap-2">
                   <Avatar>
                     {!!training.author.image && (
                       <AvatarImage src={training.author.image} />
@@ -52,12 +52,12 @@ export async function TrainingList() {
                   </Avatar>
                   <dd>{training.author.name}</dd>
                 </div>
-                <div className="ml-auto flex gap-2 items-center">
+                <div className="ml-auto flex items-center gap-2">
                   {role !== "trainer" && isRegistered ? (
                     <form action={unregister}>
                       <input type="hidden" name="id" value={training.id} />
                       <Button variant="ghost" size="sm">
-                        <MinusSquare className="h-4 w-4 mr-2" />
+                        <MinusSquare className="mr-2 h-4 w-4" />
                         Abmelden
                       </Button>
                     </form>
@@ -65,7 +65,7 @@ export async function TrainingList() {
                     <form action={register}>
                       <input type="hidden" name="id" value={training.id} />
                       <Button variant="ghost" size="sm">
-                        <PlusSquare className="h-4 w-4 mr-2" />
+                        <PlusSquare className="mr-2 h-4 w-4" />
                         Anmelden
                       </Button>
                     </form>
