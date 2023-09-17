@@ -1,14 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { PrismaClient } from "@prisma/client";
 import { format } from "date-fns";
 import { MinusSquare, PlusSquare, TrashIcon } from "lucide-react";
 import { deleteTraining, register, unregister } from "./actions";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
+import { prisma } from "@/lib/prisma";
 
 export async function TrainingList() {
-  const prisma = new PrismaClient();
   const session = await getServerSession(authOptions);
 
   const role = session?.user.role;

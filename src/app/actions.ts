@@ -1,10 +1,10 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import * as z from "zod";
 import { authOptions } from "./api/auth/[...nextauth]/route";
+import { prisma } from "@/lib/prisma";
 
 const createTrainingSchema = z.object({
   description: z.string().optional(),
@@ -23,8 +23,7 @@ export async function createTraining(
     throw new Error("must be authenticated");
   }
   const training = createTrainingSchema.parse(payload);
-  const client = new PrismaClient();
-  await client.training.create({
+  await prisma.training.create({
     data: { ...training, authorId: currentUser.id },
   });
   revalidatePath("/");
@@ -35,8 +34,7 @@ export async function deleteTraining(formData: FormData) {
   if (typeof id !== "string") {
     throw new Error("No id provided");
   }
-  const client = new PrismaClient();
-  await client.training.delete({
+  await prisma.training.delete({
     where: {
       id,
     },
@@ -56,10 +54,8 @@ export async function register(formData: FormData) {
     throw new Error("No id provided");
   }
 
-  const client = new PrismaClient();
-
   const isRegisteredAlready =
-    (await client.registration.findFirst({
+    (await prisma.registration.findFirst({
       where: {
         userId: currentUser.id,
       },
@@ -69,7 +65,7 @@ export async function register(formData: FormData) {
     throw new Error("Already registered");
   }
 
-  await client.registration.create({
+  await prisma.registration.create({
     data: {
       trainingId: id,
       userId: currentUser.id,
@@ -90,8 +86,7 @@ export async function unregister(formData: FormData) {
     throw new Error("No id provided");
   }
 
-  const client = new PrismaClient();
-  const registration = await client.registration.findFirst({
+  const registration = await prisma.registration.findFirst({
     where: {
       trainingId: id,
       userId: currentUser.id,
@@ -102,7 +97,7 @@ export async function unregister(formData: FormData) {
     throw new Error("Did not find registration");
   }
 
-  await client.registration.delete({
+  await prisma.registration.delete({
     where: {
       id: registration.id,
     },

@@ -2,7 +2,6 @@
 
 import { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
-import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
