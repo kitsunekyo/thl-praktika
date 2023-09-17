@@ -7,7 +7,11 @@ import { deleteTraining } from "./actions";
 
 export async function TrainingList() {
   const prisma = new PrismaClient();
-  const trainings = await prisma.training.findMany();
+  const trainings = await prisma.training.findMany({
+    include: {
+      author: true,
+    },
+  });
 
   return (
     <div>
@@ -28,10 +32,12 @@ export async function TrainingList() {
             <footer className="flex gap-4 pt-4 border-t mt-4 items-center">
               <div className="flex gap-2 items-center">
                 <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
+                  {!!training.author.image && (
+                    <AvatarImage src={training.author.image} />
+                  )}
+                  <AvatarFallback>{training.author.name}</AvatarFallback>
                 </Avatar>
-                <dd>Ralf Gahleitner</dd>
+                <dd>{training.author.name}</dd>
               </div>
               <div className="ml-auto flex gap-2 items-center">
                 <Button variant="ghost" size="sm">

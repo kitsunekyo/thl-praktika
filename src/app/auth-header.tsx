@@ -26,19 +26,21 @@ function LoggedOut() {
 function LoggedIn({ session }: { session: Session }) {
   return (
     <>
-      <Button onClick={() => signOut()}>Sign Out</Button>
       {!!session?.user && (
-        <div className="ml-auto">
+        <div>
           <User user={session.user} />
         </div>
       )}
+      <Button onClick={() => signOut()} size="sm" variant="ghost">
+        Sign Out
+      </Button>
     </>
   );
 }
 
 function User({ user }: { user: NonNullable<Session["user"]> }) {
   return (
-    <div className="flex items-center gap-2 border rounded p-2">
+    <div className="flex items-center gap-2">
       <Avatar>
         {!!user.image && <AvatarImage src={user.image} />}
         <AvatarFallback>{user.name}</AvatarFallback>
