@@ -1,9 +1,12 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import { compare } from "bcrypt";
 import NextAuth, { AuthOptions, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 
 import { prisma } from "@/lib/prisma";
+
+import { Role } from "../../../../../next-auth";
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -23,17 +26,33 @@ export const authOptions: AuthOptions = {
         password: { label: "Passwort", type: "password" },
       },
       async authorize(credentials, req) {
-        const user: User = {
-          id: "68e6c00f51354d98b41d6f15a2286b24",
-          name: "John Smith",
-          email: "js@org.com",
-          image: "https://i.pravatar.cc/100",
-          role: "admin",
-        };
-        if (user) {
-          return user;
+        if (!credentials?.email || !credentials?.password) {
+          return null;
         }
-        return null;
+
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email },
+        });
+
+        if (!user || !user.password) {
+          return null;
+        }
+
+        const isPasswordValid = await compare(
+          credentials.password,
+          user.password,
+        );
+
+        if (!isPasswordValid) {
+          return null;
+        }
+
+        return {
+          id: user.id,
+          role: user.role as Role,
+          email: user.email,
+          image: user.image,
+        } satisfies User;
       },
     }),
     Google({
