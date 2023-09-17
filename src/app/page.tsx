@@ -9,14 +9,12 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="container">
-        <AuthHeader session={session} />
-        <div className="grid grid-cols-2 gap-8">
-          <TrainingForm />
-          <TrainingList />
-        </div>
+    <>
+      <AuthHeader session={session} />
+      <div className="grid grid-cols-2 gap-8">
+        <TrainingForm />
+        <TrainingList />
       </div>
-    </main>
+    </>
   );
 }
