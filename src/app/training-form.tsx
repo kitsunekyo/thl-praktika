@@ -1,10 +1,13 @@
 "use client";
 
-import { format, startOfDay } from "date-fns";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { format, startOfDay } from "date-fns";
+import { CalendarIcon, Regex } from "lucide-react";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -14,16 +17,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { CalendarIcon, Regex } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
+
+
+
 import { createTraining } from "./training-actions";
 
 export const trainingSchema = z.object({

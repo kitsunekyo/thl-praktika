@@ -1,10 +1,12 @@
 "use server";
 
-import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
+import { getServerSession } from "next-auth";
 import * as z from "zod";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+
 import { prisma } from "@/lib/prisma";
+
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 const createTrainingSchema = z.object({
   description: z.string().optional(),
