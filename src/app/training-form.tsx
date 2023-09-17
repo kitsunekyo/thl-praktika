@@ -31,7 +31,7 @@ export const trainingSchema = z.object({
   date: z.date(),
   startTime: z.string().regex(new RegExp(/\d{1,2}:\d{1,2}/)),
   endTime: z.string().regex(new RegExp(/\d{1,2}:\d{1,2}/)),
-  maxInterns: z.string().transform((v) => parseInt(v)),
+  maxInterns: z.string(),
 });
 
 export function TrainingForm() {
@@ -39,7 +39,7 @@ export function TrainingForm() {
     resolver: zodResolver(trainingSchema),
     defaultValues: {
       description: "Welpengruppe",
-      maxInterns: 3,
+      maxInterns: "3",
       date: startOfDay(new Date()),
       startTime: "09:00",
       endTime: "17:00",
@@ -50,7 +50,8 @@ export function TrainingForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit((data: z.infer<typeof trainingSchema>) => {
-          createTraining(data);
+          const payload = { ...data, maxInterns: parseInt(data.maxInterns) };
+          createTraining(payload);
         })}
         className="space-y-8 mx-auto"
       >
