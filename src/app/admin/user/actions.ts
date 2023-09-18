@@ -5,9 +5,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
-
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export async function getUsers() {
   return await prisma.user.findMany({

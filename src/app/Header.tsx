@@ -19,8 +19,12 @@ const LINKS = [
     label: "Trainer Hub",
   },
   {
-    href: "/user",
-    label: "User Management",
+    href: "/admin/user",
+    label: "Users",
+  },
+  {
+    href: "/admin/registration",
+    label: "Registrations",
   },
 ];
 

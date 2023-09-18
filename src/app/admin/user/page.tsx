@@ -2,12 +2,12 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -16,7 +16,6 @@ import {
 
 import { getUsers } from "./actions";
 import { UserActions } from "./UserActions";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export default async function UserPage() {
   const session = await getServerSession(authOptions);

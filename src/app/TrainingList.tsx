@@ -25,6 +25,7 @@ async function register(formData: FormData) {
     (await prisma.registration.findFirst({
       where: {
         userId: currentUser.id,
+        id: id,
       },
     })) !== null;
 
