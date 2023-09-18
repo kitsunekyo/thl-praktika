@@ -26,7 +26,7 @@ export default async function UserPage() {
     <div>
       <h1 className="mb-4 text-xl font-semibold">Users</h1>
       <div className="mb-8">
-        <Link href="/user/create">
+        <Link href="/admin/user/create">
           <Button variant="outline">User erstellen</Button>
         </Link>
       </div>
