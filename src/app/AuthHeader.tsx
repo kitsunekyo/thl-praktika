@@ -16,11 +16,7 @@ export function AuthHeader({ session }: { session: Session | null }) {
 }
 
 function LoggedOut() {
-  return (
-    <>
-      <Button onClick={() => signIn()}>Sign in</Button>
-    </>
-  );
+  return <Button onClick={() => signIn()}>Sign in</Button>;
 }
 
 function LoggedIn({ session }: { session: Session }) {
@@ -48,7 +44,7 @@ function User({ user }: { user: NonNullable<Session["user"]> }) {
       <div className="text-sm">
         <div className="flex items-center gap-2">
           {user.name}
-          {!!user.role && <Badge>{user.role}</Badge>}
+          {!!user.role && <Badge variant="outline">{user.role}</Badge>}
         </div>
         <div className="text-xs text-gray-500">{user.email}</div>
       </div>
