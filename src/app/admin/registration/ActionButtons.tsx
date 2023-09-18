@@ -6,12 +6,13 @@ import { deleteRegistration } from "./actions";
 export function ActionButtons({ id }: { id: string }) {
   return (
     <div className="flex items-center justify-end gap-2">
-      <form action={() => deleteRegistration(id)}>
-        <input type="hidden" name="id" value={id} />
-        <Button size="sm" variant="destructive">
-          delete
-        </Button>
-      </form>
+      <Button
+        size="sm"
+        variant="destructive"
+        onClick={() => deleteRegistration(id)}
+      >
+        delete
+      </Button>
     </div>
   );
 }
