@@ -77,7 +77,7 @@ export function TrainingForm() {
           name="maxInterns"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Maximale Anzahl an Praktikanten</FormLabel>
+              <FormLabel>Maximale Anzahl an Praktikant:innen</FormLabel>
               <FormControl>
                 <Input type="number" min={1} max={6} {...field} />
               </FormControl>
