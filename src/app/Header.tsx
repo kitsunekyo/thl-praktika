@@ -39,7 +39,7 @@ export function Header({ children }: { children: React.ReactNode }) {
   if (status === "loading") return null;
 
   return (
-    <header className="flex items-center py-6">
+    <header className="flex flex-wrap items-center py-6">
       <div className="spacing mr-12 text-xs font-bold uppercase tracking-widest text-gray-400">
         <Link href="/">THL Praktika</Link>
       </div>

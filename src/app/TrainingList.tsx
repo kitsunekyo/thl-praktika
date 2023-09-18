@@ -88,7 +88,10 @@ export async function TrainingList() {
 
   return (
     <section>
-      <h1 className="text mb-2 font-semibold">Trainings</h1>
+      <h1 className="mb-3 text-xl font-semibold">Praktika</h1>
+      <p className="mb-8 max-w-[70ch] text-sm leading-[1.8] text-gray-500">
+        Melde dich für Praktika bei THL Trainer:innen an.
+      </p>
       <ul className="space-y-2">
         {trainings.map((training) => {
           const isRegistered = training.registrations.some(
