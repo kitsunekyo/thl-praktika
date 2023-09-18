@@ -13,7 +13,7 @@ import {
 import { prisma } from "@/lib/prisma";
 import { formatTrainingDate } from "@/lib/utils";
 
-import { Actions } from "./Actions";
+import { ActionButtons } from "./ActionButtons";
 
 async function getRegistrations() {
   return await prisma.registration.findMany({
@@ -35,7 +35,7 @@ export default async function RegistrationsPage() {
   }
   return (
     <div>
-      <h1 className="mb-8 text-xl font-semibold">Registrations</h1>
+      <h1 className="mb-8 text-xl font-semibold">Anmeldungen für Praktika</h1>
       <Registrations />
     </div>
   );
@@ -67,7 +67,7 @@ async function Registrations() {
             </TableCell>
             <TableCell>{registration.training.author.email}</TableCell>
             <TableCell className="text-right">
-              <Actions id={registration.id} />
+              <ActionButtons id={registration.id} />
             </TableCell>
           </TableRow>
         ))}

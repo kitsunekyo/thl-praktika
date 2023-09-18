@@ -6,7 +6,7 @@ import { z } from "zod";
 
 import { prisma } from "@/lib/prisma";
 
-import { authOptions, getSession } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export async function getMyTrainings() {
   const session = await getServerSession(authOptions);
