@@ -1,5 +1,6 @@
 "use client";
 
+import { LogOutIcon } from "lucide-react";
 import { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 
@@ -27,8 +28,8 @@ function LoggedIn({ session }: { session: Session }) {
           <User user={session.user} />
         </div>
       )}
-      <Button onClick={() => signOut()} size="sm" variant="ghost">
-        Sign Out
+      <Button onClick={() => signOut()} size="icon" variant="secondary">
+        <LogOutIcon className="h-4 w-4" />
       </Button>
     </>
   );
