@@ -20,7 +20,7 @@ export default async function Page() {
   const myTrainings = await getMyTrainings();
 
   return (
-    <div className="grid grid-cols-2 gap-8">
+    <div className="grid gap-8 md:grid-cols-2">
       <div>
         <h1 className="mb-3 text-xl font-semibold">Training eintragen</h1>
         <p className="mb-8 max-w-[70ch] text-sm leading-[1.8] text-gray-500">
