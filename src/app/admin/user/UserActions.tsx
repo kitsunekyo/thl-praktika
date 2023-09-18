@@ -19,11 +19,9 @@ export function UserActions({
       <Button
         size="sm"
         variant="destructive"
-        onClick={async () => {
-          await deleteUser(user.id);
-        }}
+        onClick={() => deleteUser(user.id)}
       >
-        delete
+        Löschen
       </Button>
     </div>
   );

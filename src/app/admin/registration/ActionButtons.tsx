@@ -11,7 +11,7 @@ export function ActionButtons({ id }: { id: string }) {
         variant="destructive"
         onClick={() => deleteRegistration(id)}
       >
-        delete
+        Löschen
       </Button>
     </div>
   );
