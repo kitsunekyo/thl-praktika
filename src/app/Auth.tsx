@@ -32,6 +32,9 @@ function LoggedIn({ user }: { user: Session["user"] }) {
 }
 
 function User({ user }: { user: Session["user"] }) {
+  const initials =
+    user.email?.replace("@", "").substring(0, 2).toUpperCase() || "UU";
+
   return (
     <div className="flex items-end">
       {!!user.role && user.role !== "user" && (
@@ -41,7 +44,7 @@ function User({ user }: { user: Session["user"] }) {
       )}
       <Avatar>
         <AvatarImage src={user.image || "/img/avatar.jpg"} />
-        <AvatarFallback>{user.name}</AvatarFallback>
+        <AvatarFallback>{initials}</AvatarFallback>
       </Avatar>
     </div>
   );
