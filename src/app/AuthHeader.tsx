@@ -17,7 +17,7 @@ export function AuthHeader({ session }: { session: Session | null }) {
 }
 
 function LoggedOut() {
-  return <Button onClick={() => signIn()}>Sign in</Button>;
+  return <Button onClick={() => signIn()}>Login</Button>;
 }
 
 function LoggedIn({ session }: { session: Session }) {
