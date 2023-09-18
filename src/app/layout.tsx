@@ -1,7 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { getServerSession } from "next-auth";
 
+import { authOptions, getSession } from "./api/auth/[...nextauth]/route";
+import { AuthHeader } from "./auth-header";
+import { Header } from "./Header";
 import { Providers } from "./Providers";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -11,16 +15,23 @@ export const metadata: Metadata = {
   description: "THL Praktikums Planung",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <main className="flex min-h-screen flex-col items-center justify-between p-24">
+          <div className="container">
+            <Header>
+              <AuthHeader session={session} />
+            </Header>
+          </div>
+          <main>
             <div className="container">{children}</div>
           </main>
         </Providers>

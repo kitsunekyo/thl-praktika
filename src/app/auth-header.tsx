@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 export function AuthHeader({ session }: { session: Session | null }) {
   return (
-    <header className="mb-8 flex items-center gap-4">
+    <header className="flex items-center gap-4">
       {!!session ? <LoggedIn session={session} /> : <LoggedOut />}
     </header>
   );

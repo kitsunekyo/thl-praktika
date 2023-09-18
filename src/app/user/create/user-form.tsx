@@ -14,12 +14,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-import { createUser } from "./actions";
+import { createUser } from "../actions";
 
 export const userSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
+  role: z.string(),
 });
 
 export function UserForm() {
@@ -28,16 +36,17 @@ export function UserForm() {
     defaultValues: {
       email: "",
       password: "",
+      role: "user",
     },
   });
 
   return (
     <Form {...form}>
       <form
+        className="max-w-[300px] space-y-6"
         onSubmit={form.handleSubmit((data: z.infer<typeof userSchema>) => {
-          createUser(data.email, data.password);
+          createUser(data.email, data.password, data.role);
         })}
-        className="mx-auto space-y-8"
       >
         <FormField
           control={form.control}
@@ -57,14 +66,32 @@ export function UserForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Beschreibung</FormLabel>
+              <FormLabel>Passwort</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  placeholder="a really strong password"
-                  {...field}
-                />
+                <Input type="password" {...field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="role"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Rolle</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Wähle eine Rolle" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="user">user</SelectItem>
+                  <SelectItem value="trainer">trainer</SelectItem>
+                  <SelectItem value="admin">admin</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
