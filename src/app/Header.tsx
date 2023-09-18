@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import React from "react";
 
 import {
@@ -17,19 +18,25 @@ const LINKS = [
   {
     href: "/trainer/dashboard",
     label: "Trainer Hub",
+    roles: ["trainer", "admin"],
   },
   {
     href: "/admin/user",
     label: "Users",
+    roles: ["admin"],
   },
   {
     href: "/admin/registration",
     label: "Registrations",
+    roles: ["admin"],
   },
 ];
 
 export function Header({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { data: session, status } = useSession();
+
+  if (status === "loading") return null;
 
   return (
     <header className="flex items-center py-6">
@@ -41,6 +48,10 @@ export function Header({ children }: { children: React.ReactNode }) {
           <NavigationMenuList>
             {LINKS.map((link) => {
               const isActive = pathname === link.href;
+              const role = session?.user.role || "user";
+              if (link.roles && !link.roles.includes(role)) {
+                return null;
+              }
 
               return (
                 <NavigationMenuItem key={link.href}>
