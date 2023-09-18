@@ -25,7 +25,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-import { createTraining } from "./training-actions";
+import { createTraining } from "../actions";
 
 export const trainingSchema = z.object({
   description: z.string().optional(),

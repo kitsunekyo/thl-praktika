@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import { getServerSession } from "next-auth";
 
 import { authOptions, getSession } from "./api/auth/[...nextauth]/route";
-import { AuthHeader } from "./auth-header";
+import { AuthHeader } from "./AuthHeader";
 import { Header } from "./Header";
 import { Providers } from "./Providers";
 

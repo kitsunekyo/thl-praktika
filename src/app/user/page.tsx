@@ -1,11 +1,18 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 
 import { Button } from "@/components/ui/button";
 
 import { getUsers } from "./actions";
 import { UserItem } from "./UserItem";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export default async function UserPage() {
+  const session = await getServerSession(authOptions);
+  if (!session || session.user.role !== "admin") {
+    redirect("/");
+  }
   return (
     <div>
       <h1 className="mb-4 text-xl font-semibold">Users</h1>

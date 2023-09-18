@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { MinusSquare, PlusSquare, TrashIcon } from "lucide-react";
+import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -7,12 +7,76 @@ import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";
 
 import { authOptions } from "./api/auth/[...nextauth]/route";
-import { deleteTraining, register, unregister } from "./training-actions";
+
+async function register(formData: FormData) {
+  "use server";
+  const session = await getServerSession(authOptions);
+  const currentUser = session?.user;
+  if (!currentUser) {
+    throw new Error("must be authenticated");
+  }
+
+  const id = formData.get("id");
+  if (typeof id !== "string") {
+    throw new Error("No id provided");
+  }
+
+  const isRegisteredAlready =
+    (await prisma.registration.findFirst({
+      where: {
+        userId: currentUser.id,
+      },
+    })) !== null;
+
+  if (isRegisteredAlready) {
+    throw new Error("Already registered");
+  }
+
+  await prisma.registration.create({
+    data: {
+      trainingId: id,
+      userId: currentUser.id,
+    },
+  });
+  revalidatePath("/");
+}
+
+async function unregister(formData: FormData) {
+  "use server";
+  const session = await getServerSession(authOptions);
+  const currentUser = session?.user;
+  if (!currentUser) {
+    throw new Error("must be authenticated");
+  }
+
+  const id = formData.get("id");
+  if (typeof id !== "string") {
+    throw new Error("No id provided");
+  }
+
+  const registration = await prisma.registration.findFirst({
+    where: {
+      trainingId: id,
+      userId: currentUser.id,
+    },
+  });
+
+  if (!registration) {
+    throw new Error("Did not find registration");
+  }
+
+  await prisma.registration.delete({
+    where: {
+      id: registration.id,
+    },
+  });
+
+  revalidatePath("/");
+}
 
 export async function TrainingList() {
   const session = await getServerSession(authOptions);
-
-  const role = session?.user.role;
+  const userId = session?.user.id;
 
   const trainings = await prisma.training.findMany({
     include: {
@@ -27,7 +91,7 @@ export async function TrainingList() {
       <ul className="space-y-2">
         {trainings.map((training) => {
           const isRegistered = training.registrations.some(
-            (r) => r.userId === session?.user.id,
+            (r) => r.userId === userId,
           );
           return (
             <li
@@ -52,10 +116,10 @@ export async function TrainingList() {
                     )}
                     <AvatarFallback>{training.author.name}</AvatarFallback>
                   </Avatar>
-                  <dd>{training.author.name}</dd>
+                  <dd>{training.author.email}</dd>
                 </div>
                 <div className="ml-auto flex items-center gap-2">
-                  {role !== "trainer" && isRegistered ? (
+                  {isRegistered ? (
                     <form action={unregister}>
                       <input type="hidden" name="id" value={training.id} />
                       <Button variant="ghost" size="sm">
@@ -67,14 +131,6 @@ export async function TrainingList() {
                       <input type="hidden" name="id" value={training.id} />
                       <Button variant="ghost" size="sm">
                         Anmelden
-                      </Button>
-                    </form>
-                  )}
-                  {role !== "user" && (
-                    <form action={deleteTraining}>
-                      <input type="hidden" name="id" value={training.id} />
-                      <Button variant="ghost" size="icon">
-                        <TrashIcon className="h-4 w-4" />
                       </Button>
                     </form>
                   )}
