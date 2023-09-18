@@ -130,7 +130,7 @@ export async function TrainingList() {
                   ) : (
                     <form action={register}>
                       <input type="hidden" name="id" value={training.id} />
-                      <Button variant="ghost" size="sm">
+                      <Button variant="secondary" size="sm">
                         Anmelden
                       </Button>
                     </form>
