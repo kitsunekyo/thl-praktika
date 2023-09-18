@@ -10,8 +10,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { formatTrainingDate } from "@/lib/date";
 import { prisma } from "@/lib/prisma";
-import { formatTrainingDate } from "@/lib/utils";
 
 import { ActionButtons } from "./ActionButtons";
 

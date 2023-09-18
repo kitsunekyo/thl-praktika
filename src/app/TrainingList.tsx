@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { formatTrainingDate } from "@/lib/date";
 import { prisma } from "@/lib/prisma";
 import { getInitials } from "@/lib/utils";
 
@@ -105,9 +106,13 @@ export async function TrainingList() {
             >
               <dl className="space-y-2">
                 <dd>{training.description}</dd>
-                <dd>{`${format(new Date(training.date), "do MMM yy")} von ${
-                  training.startTime
-                } bis ${training.endTime}`}</dd>
+                <dd>
+                  {formatTrainingDate(
+                    training.date,
+                    training.startTime,
+                    training.endTime,
+                  )}
+                </dd>
                 <dd>
                   {training.registrations.length}/{training.maxInterns}{" "}
                   Praktikanten angemeldet
