@@ -39,7 +39,7 @@ export function Header({ user }: { user?: Session["user"] }) {
 
   return (
     <header className="flex flex-wrap items-center py-6">
-      <div className="spacing mr-12 text-xs font-bold uppercase tracking-widest text-gray-400">
+      <div className="spacing mr-12 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-gray-500">
         <Link href="/">THL Praktika</Link>
       </div>
       <nav>
