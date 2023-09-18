@@ -2,10 +2,20 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 import { getUsers } from "./actions";
-import { UserItem } from "./UserItem";
+import { UserActions } from "./UserActions";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export default async function UserPage() {
@@ -30,12 +40,27 @@ async function UserList() {
   const users = await getUsers();
 
   return (
-    <ul className="space-y-4">
-      {users.map((user) => (
-        <li key={user.id}>
-          <UserItem user={user} />
-        </li>
-      ))}
-    </ul>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[100px]">Email</TableHead>
+          <TableHead>Rolle</TableHead>
+          <TableHead></TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {users.map((user) => (
+          <TableRow key={user.id}>
+            <TableCell className="font-medium">{user.email}</TableCell>
+            <TableCell>
+              <Badge variant="outline">{user.role}</Badge>
+            </TableCell>
+            <TableCell className="text-right">
+              <UserActions user={user} />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 }

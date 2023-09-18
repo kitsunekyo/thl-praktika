@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 import { deleteUser } from "./actions";
 
-export function UserItem({
+export function UserActions({
   user,
 }: {
   user: {
@@ -15,12 +15,7 @@ export function UserItem({
   };
 }) {
   return (
-    <div>
-      <dl>
-        <dd>
-          {user.email} ({user.role})
-        </dd>
-      </dl>
+    <div className="flex items-center justify-end gap-2">
       <Button
         size="sm"
         variant="destructive"
