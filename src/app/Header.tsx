@@ -24,12 +24,12 @@ const LINKS = [
   },
   {
     href: "/admin/user",
-    label: "Users",
+    label: "User",
     roles: ["admin"],
   },
   {
     href: "/admin/registration",
-    label: "Registrations",
+    label: "Anmeldungen",
     roles: ["admin"],
   },
 ];

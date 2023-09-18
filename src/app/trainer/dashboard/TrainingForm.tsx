@@ -85,7 +85,7 @@ export function TrainingForm() {
             </FormItem>
           )}
         />
-        <div className="flex flex-wrap items-end">
+        <div className="flex flex-wrap items-end md:flex-nowrap md:gap-4">
           <FormField
             control={form.control}
             name="date"
@@ -145,7 +145,7 @@ export function TrainingForm() {
               </FormItem>
             )}
           />
-          <div className="mx-4 flex h-[40px] items-center">
+          <div className="mx-4 flex h-[40px] items-center md:mx-0">
             <span>bis</span>
           </div>
           <FormField
