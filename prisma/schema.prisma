@@ -87,6 +87,7 @@ model Registration {
   userId     String
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([trainingId, userId])
   @@index([trainingId])
   @@index([userId])
 }
