@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { getServerSession } from "next-auth";
 
-import { authOptions, getSession } from "./api/auth/[...nextauth]/route";
-import { AuthHeader } from "./AuthHeader";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import { Auth } from "./Auth";
 import { Header } from "./Header";
 import { Providers } from "./Providers";
 
@@ -27,9 +27,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <Providers>
           <div className="container">
-            <Header>
-              <AuthHeader session={session} />
-            </Header>
+            <Header user={session?.user} />
           </div>
           <main>
             <div className="container my-8 md:my-20">{children}</div>

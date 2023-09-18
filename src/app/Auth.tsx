@@ -8,10 +8,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-export function AuthHeader({ session }: { session: Session | null }) {
+export function Auth({ user }: { user?: Session["user"] }) {
   return (
     <header className="flex items-center gap-4">
-      {!!session ? <LoggedIn session={session} /> : <LoggedOut />}
+      {!!user ? <LoggedIn user={user} /> : <LoggedOut />}
     </header>
   );
 }
@@ -20,14 +20,10 @@ function LoggedOut() {
   return <Button onClick={() => signIn()}>Login</Button>;
 }
 
-function LoggedIn({ session }: { session: Session }) {
+function LoggedIn({ user }: { user: Session["user"] }) {
   return (
     <>
-      {!!session?.user && (
-        <div>
-          <User user={session.user} />
-        </div>
-      )}
+      {!!user && <User user={user} />}
       <Button onClick={() => signOut()} size="icon" variant="secondary">
         <LogOutIcon className="h-4 w-4" />
       </Button>
@@ -35,7 +31,7 @@ function LoggedIn({ session }: { session: Session }) {
   );
 }
 
-function User({ user }: { user: NonNullable<Session["user"]> }) {
+function User({ user }: { user: Session["user"] }) {
   return (
     <div className="flex items-end">
       {!!user.role && user.role !== "user" && (

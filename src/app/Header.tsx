@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 import React from "react";
 
 import {
@@ -13,6 +13,8 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+
+import { Auth } from "./Auth";
 
 const LINKS = [
   {
@@ -32,11 +34,8 @@ const LINKS = [
   },
 ];
 
-export function Header({ children }: { children: React.ReactNode }) {
+export function Header({ user }: { user?: Session["user"] }) {
   const pathname = usePathname();
-  const { data: session, status } = useSession();
-
-  if (status === "loading") return null;
 
   return (
     <header className="flex flex-wrap items-center py-6">
@@ -48,14 +47,14 @@ export function Header({ children }: { children: React.ReactNode }) {
           <NavigationMenuList>
             {LINKS.map((link) => {
               const isActive = pathname === link.href;
-              const role = session?.user.role || "user";
+              const role = user?.role || "user";
               if (link.roles && !link.roles.includes(role)) {
                 return null;
               }
 
               return (
                 <NavigationMenuItem key={link.href}>
-                  <Link href={link.href}>
+                  <Link href={link.href} legacyBehavior passHref>
                     <NavigationMenuLink
                       className={cn(
                         navigationMenuTriggerStyle(),
@@ -72,7 +71,9 @@ export function Header({ children }: { children: React.ReactNode }) {
         </NavigationMenu>
       </nav>
 
-      <div className="ml-auto">{children}</div>
+      <div className="ml-auto">
+        <Auth user={user} />
+      </div>
     </header>
   );
 }
