@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";
+import { getInitials } from "@/lib/utils";
 
 import { authOptions } from "./api/auth/[...nextauth]/route";
 
@@ -118,9 +119,11 @@ export async function TrainingList() {
                     <AvatarImage
                       src={training.author.image || "/img/avatar.jpg"}
                     />
-                    <AvatarFallback>{training.author.name}</AvatarFallback>
+                    <AvatarFallback>
+                      {getInitials(training.author)}
+                    </AvatarFallback>
                   </Avatar>
-                  <dd>{training.author.email}</dd>
+                  <dd className="hidden md:block">{training.author.email}</dd>
                 </div>
                 <div className="ml-auto flex items-center gap-2">
                   {isRegistered ? (

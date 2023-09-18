@@ -7,6 +7,7 @@ import { signIn, signOut } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { getInitials } from "@/lib/utils";
 
 export function Auth({ user }: { user?: Session["user"] }) {
   return (
@@ -32,8 +33,7 @@ function LoggedIn({ user }: { user: Session["user"] }) {
 }
 
 function User({ user }: { user: Session["user"] }) {
-  const initials =
-    user.email?.replace("@", "").substring(0, 2).toUpperCase() || "UU";
+  const initials = getInitials(user);
 
   return (
     <div className="flex items-end">

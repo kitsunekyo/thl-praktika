@@ -18,7 +18,10 @@ export function formatTrainingDate(
   )} von ${startTime} bis ${endTime}`;
 }
 
-export function getInitials(user: User) {
+export function getInitials(user: {
+  name?: string | null;
+  email?: string | null;
+}) {
   const name = user.name?.split(" ");
   if (name) {
     const initials = name[0].charAt(0) + name[1].charAt(0);
