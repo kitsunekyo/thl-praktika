@@ -37,18 +37,16 @@ function LoggedIn({ session }: { session: Session }) {
 
 function User({ user }: { user: NonNullable<Session["user"]> }) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-end">
+      {!!user.role && user.role !== "user" && (
+        <Badge variant="outline" className="z-10 translate-x-2 bg-white">
+          {user.role}
+        </Badge>
+      )}
       <Avatar>
         <AvatarImage src={user.image || "/img/avatar.jpg"} />
         <AvatarFallback>{user.name}</AvatarFallback>
       </Avatar>
-      <div className="text-sm">
-        <div className="flex items-center gap-2">
-          {user.name}
-          {!!user.role && <Badge variant="outline">{user.role}</Badge>}
-        </div>
-        <div className="text-xs text-gray-500">{user.email}</div>
-      </div>
     </div>
   );
 }
