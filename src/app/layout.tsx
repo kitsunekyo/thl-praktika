@@ -11,7 +11,7 @@ import { Providers } from "./Providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "THL Prakta",
+  title: "THL Praktika",
   description: "THL Praktikums Planung",
 };
 
