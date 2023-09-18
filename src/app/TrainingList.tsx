@@ -112,9 +112,9 @@ export async function TrainingList() {
               <footer className="mt-4 flex items-center gap-4 border-t pt-4">
                 <div className="flex items-center gap-2">
                   <Avatar>
-                    {!!training.author.image && (
-                      <AvatarImage src={training.author.image} />
-                    )}
+                    <AvatarImage
+                      src={training.author.image || "/img/avatar.jpg"}
+                    />
                     <AvatarFallback>{training.author.name}</AvatarFallback>
                   </Avatar>
                   <dd>{training.author.email}</dd>

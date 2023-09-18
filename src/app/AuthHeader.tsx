@@ -38,7 +38,7 @@ function User({ user }: { user: NonNullable<Session["user"]> }) {
   return (
     <div className="flex items-center gap-2">
       <Avatar>
-        {!!user.image && <AvatarImage src={user.image} />}
+        <AvatarImage src={user.image || "/img/avatar.jpg"} />
         <AvatarFallback>{user.name}</AvatarFallback>
       </Avatar>
       <div className="text-sm">
