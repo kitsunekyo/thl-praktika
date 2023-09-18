@@ -31,6 +31,11 @@ export default async function Page() {
       </div>
       <section>
         <h1 className="mb-6 text-xl font-semibold">Meine Trainings</h1>
+        {myTrainings.length === 0 && (
+          <p className="text-sm text-gray-500">
+            Du hast noch keine Trainings eingetragen.
+          </p>
+        )}
         <ul className="space-y-2">
           {myTrainings.map((training) => {
             return (
