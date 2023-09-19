@@ -57,9 +57,7 @@ export function TrainingForm() {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((data: z.infer<typeof trainingSchema>) => {
-          createTraining(data);
-        })}
+        onSubmit={form.handleSubmit(createTraining)}
         className="mx-auto space-y-8"
       >
         <FormField
