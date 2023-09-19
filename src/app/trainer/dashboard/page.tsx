@@ -7,6 +7,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { getServerSession } from "@/lib/next-auth";
 
 import { TrainingForm } from "./TrainingForm";
+import { TrainingListActions } from "./TrainingListActions";
 import { deleteTraining, getMyTrainings } from "../actions";
 
 export default async function Page() {
@@ -52,14 +53,7 @@ export default async function Page() {
                     {training.registrations.length}/{training.maxInterns}{" "}
                     Praktikant:innen angemeldet
                   </div>
-                  <div className="ml-auto flex items-center gap-2">
-                    <form action={deleteTraining}>
-                      <input type="hidden" name="id" value={training.id} />
-                      <Button variant="ghost" size="sm">
-                        <BanIcon className="mr-2 h-4 w-4" /> Absagen
-                      </Button>
-                    </form>
-                  </div>
+                  <TrainingListActions id={training.id} key={training.id} />
                 </CardFooter>
               </Card>
             );

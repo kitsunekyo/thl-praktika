@@ -24,11 +24,7 @@ export async function getMyTrainings() {
   });
 }
 
-export async function deleteTraining(formData: FormData) {
-  const id = formData.get("id");
-  if (typeof id !== "string") {
-    throw new Error("No id provided");
-  }
+export async function deleteTraining(id: string) {
   await prisma.training.delete({
     where: {
       id,
