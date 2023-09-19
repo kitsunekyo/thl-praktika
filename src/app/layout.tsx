@@ -1,9 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/lib/next-auth";
+import { getServerSession } from "@/lib/next-auth";
 
 import { Header } from "./Header";
 import { Providers } from "./Providers";
@@ -20,7 +19,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
 
   return (
     <html lang="en">

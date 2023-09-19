@@ -1,11 +1,9 @@
-import { getServerSession } from "next-auth";
-
-import { authOptions } from "@/lib/next-auth";
+import { getServerSession } from "@/lib/next-auth";
 
 import { TrainingList } from "./TrainingList";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
 
   let content = <p>du musst dich anmelden</p>;
   if (session) {

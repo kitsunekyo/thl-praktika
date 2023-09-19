@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
 
 import {
   Table,
@@ -10,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatTrainingDate } from "@/lib/date";
-import { authOptions } from "@/lib/next-auth";
+import { getServerSession } from "@/lib/next-auth";
 import { prisma } from "@/lib/prisma";
 
 import { ActionButtons } from "./ActionButtons";
@@ -29,7 +28,7 @@ async function getRegistrations() {
 }
 
 export default async function RegistrationsPage() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   if (!session || session.user.role !== "admin") {
     redirect("/");
   }

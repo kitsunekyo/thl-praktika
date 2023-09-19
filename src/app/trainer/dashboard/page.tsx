@@ -1,17 +1,16 @@
 import { format } from "date-fns";
 import { BanIcon } from "lucide-react";
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { authOptions } from "@/lib/next-auth";
+import { getServerSession } from "@/lib/next-auth";
 
 import { TrainingForm } from "./TrainingForm";
 import { deleteTraining, getMyTrainings } from "../actions";
 
 export default async function Page() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
 
   if (!session || session.user.role === "user") {
     redirect("/");

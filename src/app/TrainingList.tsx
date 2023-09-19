@@ -1,17 +1,15 @@
-import { format } from "date-fns";
 import { revalidatePath } from "next/cache";
-import { getServerSession } from "next-auth";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { formatTrainingDate } from "@/lib/date";
-import { authOptions } from "@/lib/next-auth";
+import { getServerSession } from "@/lib/next-auth";
 import { prisma } from "@/lib/prisma";
 import { getInitials } from "@/lib/utils";
 
 async function register(formData: FormData) {
   "use server";
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   const currentUser = session?.user;
   if (!currentUser) {
     throw new Error("must be authenticated");
@@ -45,7 +43,7 @@ async function register(formData: FormData) {
 
 async function unregister(formData: FormData) {
   "use server";
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   const currentUser = session?.user;
   if (!currentUser) {
     throw new Error("must be authenticated");
@@ -77,7 +75,7 @@ async function unregister(formData: FormData) {
 }
 
 export async function TrainingList() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   const userId = session?.user.id;
 
   const trainings = await prisma.training.findMany({

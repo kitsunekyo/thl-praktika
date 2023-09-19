@@ -1,14 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getServerSession } from "next-auth";
 import { z } from "zod";
 
-import { authOptions } from "@/lib/next-auth";
+import { getServerSession } from "@/lib/next-auth";
 import { prisma } from "@/lib/prisma";
 
 export async function getMyTrainings() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
 
   if (!session) {
     return [];
@@ -49,7 +48,7 @@ const createTrainingSchema = z.object({
 export async function createTraining(
   payload: z.infer<typeof createTrainingSchema>,
 ) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   const currentUser = session?.user;
   if (!currentUser) {
     throw new Error("must be authenticated");
