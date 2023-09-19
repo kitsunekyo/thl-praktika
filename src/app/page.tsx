@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/next-auth";
+
 import { TrainingList } from "./TrainingList";
 
 export default async function Home() {

@@ -2,7 +2,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { authOptions } from "@/lib/next-auth";
 
 import { getUsers } from "./actions";
 import { UserActions } from "./UserActions";

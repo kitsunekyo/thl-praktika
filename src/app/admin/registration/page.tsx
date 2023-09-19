@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import {
   Table,
   TableBody,
@@ -11,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatTrainingDate } from "@/lib/date";
+import { authOptions } from "@/lib/next-auth";
 import { prisma } from "@/lib/prisma";
 
 import { ActionButtons } from "./ActionButtons";

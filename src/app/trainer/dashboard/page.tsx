@@ -3,9 +3,9 @@ import { BanIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { authOptions } from "@/lib/next-auth";
 
 import { TrainingForm } from "./TrainingForm";
 import { deleteTraining, getMyTrainings } from "../actions";

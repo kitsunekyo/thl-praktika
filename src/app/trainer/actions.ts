@@ -4,9 +4,8 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { z } from "zod";
 
+import { authOptions } from "@/lib/next-auth";
 import { prisma } from "@/lib/prisma";
-
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export async function getMyTrainings() {
   const session = await getServerSession(authOptions);

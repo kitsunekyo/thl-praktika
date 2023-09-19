@@ -5,10 +5,9 @@ import { getServerSession } from "next-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { formatTrainingDate } from "@/lib/date";
+import { authOptions } from "@/lib/next-auth";
 import { prisma } from "@/lib/prisma";
 import { getInitials } from "@/lib/utils";
-
-import { authOptions } from "./api/auth/[...nextauth]/route";
 
 async function register(formData: FormData) {
   "use server";
