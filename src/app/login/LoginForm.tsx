@@ -1,10 +1,14 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,11 +21,16 @@ import {
 import { Input } from "@/components/ui/input";
 
 export const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
+  email: z.string().email({ message: "Ungültige Email" }),
+  password: z.string().min(1, { message: "Passwort darf nicht leer sein" }),
 });
 
 export function LoginForm() {
+  const [loading, setLoading] = useState(false);
+
+  const search = useSearchParams();
+  const error = search.get("error");
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -32,11 +41,23 @@ export function LoginForm() {
 
   return (
     <Form {...form}>
+      {!!error && (
+        <Alert variant="destructive" className="mb-6">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Fehler</AlertTitle>
+          <AlertDescription>Email oder Passwort sind falsch.</AlertDescription>
+        </Alert>
+      )}
       <form
         className="space-y-6"
         onSubmit={form.handleSubmit(
-          ({ email, password }: z.infer<typeof loginSchema>) => {
-            signIn("credentials", { email, password });
+          async ({ email, password }: z.infer<typeof loginSchema>) => {
+            setLoading(true);
+            try {
+              signIn("credentials", { email, password });
+            } catch {
+              setLoading(false);
+            }
           },
         )}
       >
@@ -67,7 +88,7 @@ export function LoginForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full" disabled={loading}>
           Login
         </Button>
       </form>
@@ -76,11 +97,21 @@ export function LoginForm() {
 }
 
 function GoogleSignInButton() {
+  const [loading, setLoading] = useState(false);
+
   return (
     <Button
       type="button"
       className="w-full bg-[#4285F4] hover:bg-[#4074c7]"
-      onClick={() => signIn("google")}
+      disabled={loading}
+      onClick={async () => {
+        setLoading(true);
+        try {
+          await signIn("google");
+        } catch {
+          setLoading(false);
+        }
+      }}
     >
       <svg
         className="mr-2 h-4 w-4"
