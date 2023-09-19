@@ -90,7 +90,7 @@ export function Header({ user }: { user?: Session["user"] }) {
 
       <div className="ml-2 flex lg:hidden">
         <Sheet open={mobileMenuOpen} onOpenChange={(v) => setMobileMenuOpen(v)}>
-          <SheetTrigger>
+          <SheetTrigger asChild>
             <Button type="button" variant="ghost" size="icon">
               <span className="sr-only">Navigation öffnen</span>
               <MenuIcon className="h-6 w-6" aria-hidden="true" />

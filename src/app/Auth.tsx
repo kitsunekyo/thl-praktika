@@ -27,7 +27,11 @@ export function Auth({ user }: { user?: Session["user"] }) {
 }
 
 function LoggedOut() {
-  return <Button onClick={() => signIn()}>Anmelden</Button>;
+  return (
+    <Button onClick={() => signIn()} size="sm">
+      Anmelden
+    </Button>
+  );
 }
 
 function LoggedIn({ user }: { user: Session["user"] }) {
