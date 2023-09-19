@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, set, startOfDay } from "date-fns";
 import { CalendarIcon, Regex } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import {
   ControllerRenderProps,
   FieldValues,
@@ -63,6 +63,8 @@ export const trainingSchema = z
   );
 
 export function TrainingForm() {
+  const [loading, setLoading] = useState(false);
+
   const form = useForm<z.infer<typeof trainingSchema>>({
     resolver: zodResolver(trainingSchema),
     defaultValues: {
@@ -77,9 +79,17 @@ export function TrainingForm() {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((data: z.infer<typeof trainingSchema>) => {
-          createTraining(data);
-        })}
+        onSubmit={form.handleSubmit(
+          async (data: z.infer<typeof trainingSchema>) => {
+            setLoading(true);
+            try {
+              await createTraining(data);
+              setLoading(false);
+            } catch {
+              setLoading(false);
+            }
+          },
+        )}
         className="mx-auto space-y-8"
       >
         <FormField
@@ -205,7 +215,9 @@ export function TrainingForm() {
             )}
           />
         </div>
-        <Button type="submit">Erstellen</Button>
+        <Button type="submit" disabled={loading}>
+          Erstellen
+        </Button>
       </form>
     </Form>
   );
