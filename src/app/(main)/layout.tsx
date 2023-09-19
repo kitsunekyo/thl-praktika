@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth";
+import { getServerSession } from "@/lib/next-auth";
 
 import { Header } from "../Header";
 
