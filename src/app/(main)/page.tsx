@@ -1,6 +1,6 @@
 import { getServerSession } from "@/lib/next-auth";
 
-import { TrainingList } from "./TrainingList";
+import { TrainingList } from "../TrainingList";
 
 export default async function Home() {
   const session = await getServerSession();
