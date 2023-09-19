@@ -44,6 +44,7 @@ async function UserList() {
         <TableRow>
           <TableHead className="w-[100px]">Email</TableHead>
           <TableHead>Rolle</TableHead>
+          <TableHead>Name</TableHead>
           <TableHead></TableHead>
         </TableRow>
       </TableHeader>
@@ -54,6 +55,7 @@ async function UserList() {
             <TableCell>
               <Badge variant="outline">{user.role}</Badge>
             </TableCell>
+            <TableCell>{user.name || "-"}</TableCell>
             <TableCell className="text-right">
               <UserActions user={user} />
             </TableCell>
