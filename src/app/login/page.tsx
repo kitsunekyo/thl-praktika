@@ -16,7 +16,7 @@ export default async function Login() {
   return (
     <div className="flex flex-wrap">
       <div className="my-auto flex flex-col justify-center px-8 pt-8 md:w-1/2 md:justify-start md:px-24 md:pt-0 lg:px-32">
-        <h1 className="mb-6 text-center text-4xl font-bold">Login</h1>
+        <h1 className="mb-6 text-center text-4xl font-bold">Anmelden</h1>
         <LoginForm />
         <div className="pb-12 pt-12 text-center">
           <p>Du hast noch keinen Account?</p>

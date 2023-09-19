@@ -53,7 +53,7 @@ export function UserForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Beschreibung</FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input type="email" placeholder="good@pup.com" {...field} />
               </FormControl>
