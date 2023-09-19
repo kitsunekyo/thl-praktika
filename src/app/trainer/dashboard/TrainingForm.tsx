@@ -3,7 +3,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, startOfDay } from "date-fns";
 import { CalendarIcon, Regex } from "lucide-react";
-import { useForm } from "react-hook-form";
+import React from "react";
+import {
+  ControllerRenderProps,
+  FieldValues,
+  UseFormReturn,
+  useForm,
+} from "react-hook-form";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -23,6 +29,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
+import { formatTimeValue } from "@/lib/date";
 import { cn } from "@/lib/utils";
 
 import { createTraining } from "../actions";
@@ -42,7 +49,7 @@ export function TrainingForm() {
       description: "Welpengruppe",
       maxInterns: "3",
       date: startOfDay(new Date()),
-      startTime: "09:00",
+      startTime: "08:00",
       endTime: "17:00",
     },
   });
@@ -139,6 +146,12 @@ export function TrainingForm() {
                     maxLength={5}
                     data-1p-ignore
                     {...field}
+                    onFocus={(e) => e.currentTarget.select()}
+                    onBlur={(e) => {
+                      const newValue = formatTimeValue(e.currentTarget.value);
+                      form.setValue(field.name, newValue);
+                      field.onBlur();
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -160,6 +173,12 @@ export function TrainingForm() {
                     maxLength={5}
                     data-1p-ignore
                     {...field}
+                    onFocus={(e) => e.currentTarget.select()}
+                    onBlur={(e) => {
+                      const newValue = formatTimeValue(e.currentTarget.value);
+                      form.setValue(field.name, newValue);
+                      field.onBlur();
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
