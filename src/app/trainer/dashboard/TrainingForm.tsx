@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format, startOfDay } from "date-fns";
+import { format, set, startOfDay } from "date-fns";
 import { CalendarIcon, Regex } from "lucide-react";
 import React from "react";
 import {
@@ -34,13 +34,33 @@ import { cn } from "@/lib/utils";
 
 import { createTraining } from "../actions";
 
-export const trainingSchema = z.object({
-  description: z.string().optional(),
-  date: z.date(),
-  startTime: z.string().regex(new RegExp(/\d{1,2}:\d{1,2}/)),
-  endTime: z.string().regex(new RegExp(/\d{1,2}:\d{1,2}/)),
-  maxInterns: z.coerce.number(),
-});
+export const trainingSchema = z
+  .object({
+    description: z.string().optional(),
+    date: z.date(),
+    startTime: z.string(),
+    endTime: z.string(),
+    maxInterns: z.coerce.number(),
+  })
+  .refine(
+    (data) => {
+      const [startHours, startMinutes] = data.startTime.split(":");
+      const start = set(new Date(), {
+        hours: parseInt(startHours),
+        minutes: parseInt(startMinutes),
+      });
+      const [endHours, endMinutes] = data.endTime.split(":");
+      const end = set(new Date(), {
+        hours: parseInt(endHours),
+        minutes: parseInt(endMinutes),
+      });
+      return start < end;
+    },
+    {
+      message: "muss später sein",
+      path: ["endTime"],
+    },
+  );
 
 export function TrainingForm() {
   const form = useForm<z.infer<typeof trainingSchema>>({
@@ -91,7 +111,7 @@ export function TrainingForm() {
             </FormItem>
           )}
         />
-        <div className="flex flex-wrap items-end md:flex-nowrap md:gap-4">
+        <div className="flex flex-wrap md:flex-nowrap md:gap-4">
           <FormField
             control={form.control}
             name="date"
@@ -157,7 +177,7 @@ export function TrainingForm() {
               </FormItem>
             )}
           />
-          <div className="mx-4 flex h-[40px] items-center md:mx-0">
+          <div className="mx-4 mt-10 md:mx-0">
             <span>bis</span>
           </div>
           <FormField
