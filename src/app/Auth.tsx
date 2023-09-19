@@ -50,7 +50,7 @@ function User({ user }: { user: Session["user"] }) {
             <AvatarImage src={user.image || "/img/avatar.jpg"} />
             <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
-          <ChevronDownIcon className="ml-2 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
+          <ChevronDownIcon className="ml-2 hidden h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100 lg:block" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-[180px]">
