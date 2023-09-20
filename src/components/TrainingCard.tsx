@@ -1,16 +1,58 @@
 import { Registration, Training, User } from "@prisma/client";
+import {
+  formatDistance,
+  formatDistanceStrict,
+  formatDuration,
+  intervalToDuration,
+} from "date-fns";
 import { UserCheckIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-import { RegisterButton, UnregisterButton } from "@/app/register-buttons";
+import { getMe } from "@/app/(main)/profile/actions";
 import { formatTrainingDate } from "@/lib/date";
+import { getDirections } from "@/lib/mapquest";
 import { getInitials, range } from "@/lib/utils";
 
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 
-export function TrainingCard({
+async function getDistanceToUser(
+  user: Pick<User, "address" | "city" | "zipCode">,
+) {
+  const me = await getMe();
+  if (!me) {
+    return;
+  }
+  const myAddress = getAddress(me);
+  const userAddress = getAddress(user);
+
+  if (!myAddress || !userAddress) {
+    return;
+  }
+
+  if (process.env.NODE_ENV === "development") {
+    return { time: 90 * 60, formattedTime: "01:11:20" };
+  }
+
+  const directions = await getDirections(getAddress(me), getAddress(user));
+
+  return {
+    time: directions.route.time,
+    formattedTime: directions.route.formattedTime,
+  };
+}
+
+function secondsToDuration(seconds: number): Duration {
+  const epoch = new Date(0);
+  const secondsAfterEpoch = new Date(seconds * 1000);
+  return intervalToDuration({
+    start: epoch,
+    end: secondsAfterEpoch,
+  });
+}
+
+export async function TrainingCard({
   training,
   actions,
 }: {
@@ -20,6 +62,9 @@ export function TrainingCard({
   };
   actions?: React.ReactNode;
 }) {
+  const travelTime = await getDistanceToUser(training.author);
+  console.log({ travelTime });
+
   return (
     <div className="rounded border border-solid p-4 text-sm">
       <dl className="space-y-2">
@@ -37,15 +82,22 @@ export function TrainingCard({
               Adresse wird persönlich bekannt gegeben
             </span>
           ) : (
-            <Link
-              href={`https://www.google.com/maps/place/${getAddress(
-                training.author,
-              ).replaceAll(" ", "+")}`}
-              target="_blank"
-              className="underline hover:no-underline"
-            >
-              {getAddress(training.author)}
-            </Link>
+            <div>
+              <Link
+                href={`https://www.google.com/maps/place/${getAddress(
+                  training.author,
+                ).replaceAll(" ", "+")}`}
+                target="_blank"
+                className="underline hover:no-underline"
+              >
+                {getAddress(training.author)}{" "}
+              </Link>
+              {!!travelTime && (
+                <p className="text-xs">
+                  {formatDuration(secondsToDuration(travelTime.time))} entfernt
+                </p>
+              )}
+            </div>
           )}
         </dd>
         <dd>
@@ -101,7 +153,7 @@ function RegistrationStatus({
   );
 }
 
-function getAddress(user: User) {
+function getAddress(user: Pick<User, "address" | "city" | "zipCode">) {
   return [user.address, [user.zipCode, user.city].filter(Boolean).join(" ")]
     .filter(Boolean)
     .join(", ");
