@@ -11,9 +11,7 @@ export default async function RootLayout({
 
   return (
     <>
-      <div className="container">
-        <Header user={session?.user} />
-      </div>
+      <Header user={session?.user} />
       <main>
         <div className="container my-8 md:my-20">{children}</div>
       </main>

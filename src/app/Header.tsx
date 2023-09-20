@@ -58,68 +58,73 @@ export function Header({ user }: { user?: Session["user"] }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="flex flex-wrap items-center py-6">
-      <div className="mr-12">
-        <Logo />
-      </div>
+    <header>
+      <div className="container flex flex-wrap items-center py-6">
+        <div className="mr-12">
+          <Logo />
+        </div>
 
-      <nav className="hidden lg:block">
-        <NavigationMenu>
-          <NavigationMenuList>
-            {links.map((link) => (
-              <NavigationMenuItem key={link.href}>
-                <Link href={link.href} legacyBehavior passHref>
-                  <NavigationMenuLink
-                    className={cn(
-                      navigationMenuTriggerStyle(),
-                      pathname === link.href && "bg-accent/60",
-                    )}
-                  >
-                    {link.label}
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
-      </nav>
-
-      <div className="ml-auto">
-        <Auth user={user} />
-      </div>
-
-      <div className="ml-2 flex lg:hidden">
-        <Sheet open={mobileMenuOpen} onOpenChange={(v) => setMobileMenuOpen(v)}>
-          <SheetTrigger asChild>
-            <Button type="button" variant="ghost" size="icon">
-              <span className="sr-only">Navigation öffnen</span>
-              <MenuIcon className="h-6 w-6" aria-hidden="true" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader className="my-8 text-left">
-              <Logo onNavigate={() => setMobileMenuOpen(false)} />
-            </SheetHeader>
-            <nav aria-label="Navigation">
-              <ul className="space-y-2 text-sm font-semibold">
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={() => setMobileMenuOpen(false)}
+        <nav className="hidden lg:block">
+          <NavigationMenu>
+            <NavigationMenuList>
+              {links.map((link) => (
+                <NavigationMenuItem key={link.href}>
+                  <Link href={link.href} legacyBehavior passHref>
+                    <NavigationMenuLink
                       className={cn(
-                        "-mx-4 block rounded px-4 py-3 hover:bg-accent/60",
+                        navigationMenuTriggerStyle(),
                         pathname === link.href && "bg-accent/60",
                       )}
                     >
                       {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </SheetContent>
-        </Sheet>
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
+        </nav>
+
+        <div className="ml-auto">
+          <Auth user={user} />
+        </div>
+
+        <div className="ml-2 flex lg:hidden">
+          <Sheet
+            open={mobileMenuOpen}
+            onOpenChange={(v) => setMobileMenuOpen(v)}
+          >
+            <SheetTrigger asChild>
+              <Button type="button" variant="ghost" size="icon">
+                <span className="sr-only">Navigation öffnen</span>
+                <MenuIcon className="h-6 w-6" aria-hidden="true" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader className="my-8 text-left">
+                <Logo onNavigate={() => setMobileMenuOpen(false)} />
+              </SheetHeader>
+              <nav aria-label="Navigation">
+                <ul className="space-y-2 text-sm font-semibold">
+                  {links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={cn(
+                          "-mx-4 block rounded px-4 py-3 hover:bg-accent/60",
+                          pathname === link.href && "bg-accent/60",
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );
