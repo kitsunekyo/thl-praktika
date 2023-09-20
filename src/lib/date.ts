@@ -20,7 +20,6 @@ export function formatTrainingDate(
   const hours = Math.floor((endSeconds - startSeconds) / 3600);
   const minutes = Math.floor(((endSeconds - startSeconds) % 3600) / 60);
 
-  // duration in the form of 1h30m
   let duration = "";
   if (hours > 0) duration += `${hours}h`;
   if (minutes > 0) duration += `${minutes}m`;
@@ -31,9 +30,6 @@ export function formatTrainingDate(
   )} von ${startTime} bis ${endTime} (${duration})`;
 }
 
-/**
- * @returns a time string in the format HH:mm
- */
 export function formatTimeValue(time: string) {
   if (time === "" || !time.match(/^[\d\:]*$/)) return "08:00";
 
