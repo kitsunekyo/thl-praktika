@@ -1,9 +1,18 @@
+import { User } from "@prisma/client";
+import Link from "next/link";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatTrainingDate } from "@/lib/date";
 import { getInitials } from "@/lib/utils";
 
 import { getTrainnings } from "./register";
 import { RegisterButton, UnregisterButton } from "./register-buttons";
+
+function getAddress(user: User) {
+  return [user.address, [user.zipCode, user.city].filter(Boolean).join(" ")]
+    .filter(Boolean)
+    .join(", ");
+}
 
 export async function TrainingList() {
   const trainings = await getTrainnings();
@@ -32,6 +41,17 @@ export async function TrainingList() {
               <dd>
                 {training.registrations.length}/{training.maxInterns}{" "}
                 Praktikanten angemeldet
+              </dd>
+              <dd>
+                <Link
+                  href={`https://www.google.com/maps/place/${getAddress(
+                    training.author,
+                  ).replaceAll(" ", "+")}`}
+                  target="_blank"
+                  className="underline hover:no-underline"
+                >
+                  {getAddress(training.author)}
+                </Link>
               </dd>
             </dl>
             <footer className="mt-4 flex items-center gap-4 border-t pt-4">
