@@ -90,7 +90,7 @@ export function TrainingForm() {
             }
           },
         )}
-        className="mx-auto space-y-8"
+        className="mx-auto space-y-4 md:space-y-8"
       >
         <FormField
           control={form.control}
@@ -121,7 +121,7 @@ export function TrainingForm() {
             </FormItem>
           )}
         />
-        <div className="flex flex-wrap md:flex-nowrap md:gap-4">
+        <div className="md:flex md:gap-4">
           <FormField
             control={form.control}
             name="date"
@@ -134,7 +134,7 @@ export function TrainingForm() {
                       <Button
                         variant="outline"
                         className={cn(
-                          "flex w-[240px] pl-3 text-left font-normal",
+                          "flex w-full pl-3 text-left font-normal md:w-[240px]",
                           !field.value && "text-muted-foreground",
                         )}
                       >
@@ -163,57 +163,57 @@ export function TrainingForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="startTime"
-            render={({ field }) => (
-              <FormItem>
-                <span className="h-[17px]">&nbsp;</span>
-                <FormControl>
-                  <Input
-                    placeholder="08:00"
-                    maxLength={5}
-                    data-1p-ignore
-                    {...field}
-                    onFocus={(e) => e.currentTarget.select()}
-                    onBlur={(e) => {
-                      const newValue = formatTimeValue(e.currentTarget.value);
-                      form.setValue(field.name, newValue);
-                      field.onBlur();
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="mx-4 mt-10 md:mx-0">
-            <span>bis</span>
+          <div className="mt-4 flex md:mt-8">
+            <FormField
+              control={form.control}
+              name="startTime"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="08:00"
+                      maxLength={5}
+                      data-1p-ignore
+                      {...field}
+                      onFocus={(e) => e.currentTarget.select()}
+                      onBlur={(e) => {
+                        const newValue = formatTimeValue(e.currentTarget.value);
+                        form.setValue(field.name, newValue);
+                        field.onBlur();
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="mx-2 mt-2 text-center">
+              <span>bis</span>
+            </div>
+            <FormField
+              control={form.control}
+              name="endTime"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="17:00"
+                      maxLength={5}
+                      data-1p-ignore
+                      {...field}
+                      onFocus={(e) => e.currentTarget.select()}
+                      onBlur={(e) => {
+                        const newValue = formatTimeValue(e.currentTarget.value);
+                        form.setValue(field.name, newValue);
+                        field.onBlur();
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
-          <FormField
-            control={form.control}
-            name="endTime"
-            render={({ field }) => (
-              <FormItem>
-                <span className="h-[17px]">&nbsp;</span>
-                <FormControl>
-                  <Input
-                    placeholder="17:00"
-                    maxLength={5}
-                    data-1p-ignore
-                    {...field}
-                    onFocus={(e) => e.currentTarget.select()}
-                    onBlur={(e) => {
-                      const newValue = formatTimeValue(e.currentTarget.value);
-                      form.setValue(field.name, newValue);
-                      field.onBlur();
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
         </div>
         <Button type="submit" disabled={loading}>
           Erstellen
