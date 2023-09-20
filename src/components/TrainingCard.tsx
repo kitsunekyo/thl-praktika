@@ -35,6 +35,10 @@ async function getDistanceToUser(
 
   const directions = await getDirections(getAddress(me), getAddress(user));
 
+  if (directions.info.statuscode !== 200) {
+    return;
+  }
+
   return {
     time: directions.route.time,
     formattedTime: directions.route.formattedTime,

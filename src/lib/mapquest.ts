@@ -2,14 +2,11 @@ export function getDirections(
   from: string,
   to: string,
 ): Promise<DirectionResponse> {
-  const fromEncoded = encodeURIComponent(from);
-  const toEncoded = encodeURIComponent(to);
-
   const url = new URL("https://www.mapquestapi.com/directions/v2/route");
   const options = {
     key: process.env.MAPQUEST_KEY,
-    from: fromEncoded,
-    to: toEncoded,
+    from,
+    to,
     outFormat: "json",
     ambiguities: "ignore",
     routeType: "fastest",
@@ -21,7 +18,6 @@ export function getDirections(
     if (!value) return;
     url.searchParams.append(key, value);
   });
-
   return fetch(url, {
     cache: "force-cache",
   }).then((res) => res.json());
