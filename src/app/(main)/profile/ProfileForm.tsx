@@ -25,7 +25,10 @@ const phoneRegex = new RegExp(
 
 export const profileSchema = z.object({
   name: z.string(),
-  phone: z.string().regex(phoneRegex, "Ungültige Telefonnummer"),
+  phone: z.union([
+    z.literal(""),
+    z.string().regex(phoneRegex, "Ungültige Telefonnummer"),
+  ]),
   address: z.string().optional(),
   city: z.string().optional(),
   zipCode: z.string().optional(),
