@@ -11,10 +11,24 @@ export function formatTrainingDate(
   startTime: string,
   endTime: string,
 ) {
+  const [startHours, startMinutes] = startTime.split(":");
+  const [endHours, endMinutes] = endTime.split(":");
+  const startSeconds =
+    parseInt(startHours) * 60 * 60 + parseInt(startMinutes) * 60;
+  const endSeconds = parseInt(endHours) * 60 * 60 + parseInt(endMinutes) * 60;
+
+  const hours = Math.floor((endSeconds - startSeconds) / 3600);
+  const minutes = Math.floor(((endSeconds - startSeconds) % 3600) / 60);
+
+  // duration in the form of 1h30m
+  let duration = "";
+  if (hours > 0) duration += `${hours}h`;
+  if (minutes > 0) duration += `${minutes}m`;
+
   return `${format(
     new Date(date),
     "do MMM yy",
-  )} von ${startTime} bis ${endTime}`;
+  )} von ${startTime} bis ${endTime} (${duration})`;
 }
 
 /**
