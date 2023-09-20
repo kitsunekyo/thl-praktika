@@ -1,14 +1,11 @@
-import { format } from "date-fns";
-import { BanIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { TrainingCard } from "@/components/TrainingCard";
 import { getServerSession } from "@/lib/next-auth";
 
 import { TrainingForm } from "./TrainingForm";
 import { TrainingListActions } from "./TrainingListActions";
-import { deleteTraining, getMyTrainings } from "../actions";
+import { getMyTrainings } from "../actions";
 
 export default async function Page() {
   const session = await getServerSession();
@@ -37,27 +34,16 @@ export default async function Page() {
           </p>
         )}
         <ul className="space-y-2">
-          {myTrainings.map((training) => {
-            return (
-              <Card key={training.id} className="pt-6 text-sm">
-                <CardContent>
-                  <dl className="space-y-2">
-                    <dd>{training.description}</dd>
-                    <dd>{`${format(new Date(training.date), "do MMM yy")} von ${
-                      training.startTime
-                    } bis ${training.endTime}`}</dd>
-                  </dl>
-                </CardContent>
-                <CardFooter>
-                  <div>
-                    {training.registrations.length}/{training.maxInterns}{" "}
-                    Praktikant:innen angemeldet
-                  </div>
+          {myTrainings.map((training) => (
+            <li key={training.id}>
+              <TrainingCard
+                training={training}
+                actions={
                   <TrainingListActions id={training.id} key={training.id} />
-                </CardFooter>
-              </Card>
-            );
-          })}
+                }
+              />
+            </li>
+          ))}
         </ul>
       </section>
     </div>

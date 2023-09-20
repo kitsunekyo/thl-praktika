@@ -1,13 +1,41 @@
-import { getServerSession } from "@/lib/next-auth";
+import { TrainingCard } from "@/components/TrainingCard";
 
-import { TrainingList } from "../TrainingList";
+import { getTrainnings } from "../register";
+import { RegisterButton, UnregisterButton } from "../register-buttons";
 
 export default async function Home() {
-  const session = await getServerSession();
+  return (
+    <div className="grid gap-8 md:grid-cols-2">
+      <TrainingList />
+    </div>
+  );
+}
 
-  let content = <p>du musst dich anmelden</p>;
-  if (session) {
-    content = <TrainingList />;
-  }
-  return <div className="grid gap-8 md:grid-cols-2">{content}</div>;
+async function TrainingList() {
+  const trainings = await getTrainnings();
+
+  return (
+    <section>
+      <h1 className="mb-3 text-xl font-semibold">Praktika</h1>
+      <p className="mb-8 max-w-[70ch] text-sm leading-[1.8] text-gray-500">
+        Melde dich für Praktika bei THL Trainer:innen an.
+      </p>
+      <ul className="space-y-2">
+        {trainings.map((training) => (
+          <li key={training.id}>
+            <TrainingCard
+              training={training}
+              actions={
+                training.isRegistered ? (
+                  <UnregisterButton trainingId={training.id} />
+                ) : training.maxInterns - training.registrations.length > 0 ? (
+                  <RegisterButton trainingId={training.id} />
+                ) : null
+              }
+            />
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 }
