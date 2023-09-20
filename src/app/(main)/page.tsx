@@ -5,7 +5,7 @@ import { RegisterButton, UnregisterButton } from "../register-buttons";
 
 export default async function Home() {
   return (
-    <div className="grid gap-8 md:grid-cols-2">
+    <div className="mx-auto max-w-[600px]">
       <TrainingList />
     </div>
   );

@@ -12,7 +12,7 @@ export default async function Profile() {
   }
 
   return (
-    <div>
+    <div className="mx-auto max-w-[600px]">
       <h1 className="mb-8 text-xl font-semibold">Dein Profil</h1>
       <Image
         width={120}
