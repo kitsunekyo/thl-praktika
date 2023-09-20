@@ -2,11 +2,10 @@
 
 import { ChevronDownIcon, LogOutIcon } from "lucide-react";
 import Link from "next/link";
-import { Session, User } from "next-auth";
-import { signIn, signOut } from "next-auth/react";
+import type { User } from "next-auth";
+import { signOut } from "next-auth/react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,21 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { getInitials } from "@/lib/utils";
 
-export function Auth({ user }: { user?: Session["user"] }) {
-  return (
-    <div className="flex items-center gap-4">
-      {!!user ? (
-        <User user={user} />
-      ) : (
-        <Button onClick={() => signIn()} size="sm">
-          Anmelden
-        </Button>
-      )}
-    </div>
-  );
-}
-
-function User({ user }: { user: User }) {
+export function UserMenu({ user }: { user: User }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>

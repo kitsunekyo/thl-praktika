@@ -3,8 +3,8 @@
 import { LogOutIcon, MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Session, User } from "next-auth";
-import { signOut } from "next-auth/react";
+import type { Session, User } from "next-auth";
+import { signIn, signOut } from "next-auth/react";
 import React, { useState } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn, getInitials } from "@/lib/utils";
 
-import { Auth } from "./Auth";
+import { UserMenu } from "./UserMenu";
 
 /**
  * leave roles undefined if the link should be visible for all users
@@ -63,11 +63,19 @@ export function Header({ user }: { user?: Session["user"] }) {
         </div>
         <DesktopMenu links={links} />
         <div className="ml-auto hidden md:block">
-          <Auth user={user} />
+          {!!user ? <UserMenu user={user} /> : <LoginButton />}
         </div>
         <MobileMenu user={user} links={links} />
       </div>
     </header>
+  );
+}
+
+function LoginButton() {
+  return (
+    <Button onClick={() => signIn()} size="sm">
+      Anmelden
+    </Button>
   );
 }
 
