@@ -66,7 +66,6 @@ export async function TrainingCard({
   actions?: React.ReactNode;
 }) {
   const travelTime = await getDistanceToUser(training.author);
-  console.log({ travelTime });
 
   return (
     <div className="rounded border border-solid p-4 text-sm">
