@@ -110,6 +110,10 @@ function MobileMenu({ user, links }: { user?: User; links: typeof ALL_LINKS }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  function close() {
+    setMobileMenuOpen(false);
+  }
+
   return (
     <div className="ml-auto flex pl-2 md:hidden">
       <Sheet open={mobileMenuOpen} onOpenChange={(v) => setMobileMenuOpen(v)}>
@@ -121,7 +125,7 @@ function MobileMenu({ user, links }: { user?: User; links: typeof ALL_LINKS }) {
         </SheetTrigger>
         <SheetContent className="flex flex-col">
           <SheetHeader className="my-8 text-left">
-            <Logo onNavigate={() => setMobileMenuOpen(false)} />
+            <Logo onNavigate={close} />
           </SheetHeader>
           <nav aria-label="Navigation">
             <ul className="space-y-2 text-sm font-semibold">
@@ -129,7 +133,7 @@ function MobileMenu({ user, links }: { user?: User; links: typeof ALL_LINKS }) {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={close}
                     className={cn(
                       "-mx-4 block rounded px-4 py-3 hover:bg-accent/60",
                       pathname === link.href && "bg-accent/60",
@@ -145,7 +149,11 @@ function MobileMenu({ user, links }: { user?: User; links: typeof ALL_LINKS }) {
             <hr className="py-2" />
             {!!user && (
               <>
-                <div className="flex items-center gap-2">
+                <Link
+                  href="/profile"
+                  className="flex items-center gap-2"
+                  onClick={close}
+                >
                   <Avatar>
                     <AvatarImage src={user.image || "/img/avatar.jpg"} />
                     <AvatarFallback>{getInitials(user)}</AvatarFallback>
@@ -156,7 +164,7 @@ function MobileMenu({ user, links }: { user?: User; links: typeof ALL_LINKS }) {
                     )}
                     <dd className="text-gray-400">{user.email}</dd>
                   </dl>
-                </div>
+                </Link>
                 <Button
                   onClick={() => signOut()}
                   className="mt-4 w-full"
