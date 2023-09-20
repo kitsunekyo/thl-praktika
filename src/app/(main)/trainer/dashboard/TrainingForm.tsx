@@ -68,10 +68,10 @@ export function TrainingForm() {
   const form = useForm<z.infer<typeof trainingSchema>>({
     resolver: zodResolver(trainingSchema),
     defaultValues: {
-      description: "Welpengruppe",
+      description: "",
       maxInterns: 3,
       date: startOfDay(new Date()),
-      startTime: "08:00",
+      startTime: "12:00",
       endTime: "17:00",
     },
   });
