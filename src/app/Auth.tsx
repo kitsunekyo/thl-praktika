@@ -2,11 +2,10 @@
 
 import { ChevronDownIcon, LogOutIcon } from "lucide-react";
 import Link from "next/link";
-import { Session } from "next-auth";
+import { Session, User } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -20,38 +19,25 @@ import { getInitials } from "@/lib/utils";
 export function Auth({ user }: { user?: Session["user"] }) {
   return (
     <div className="flex items-center gap-4">
-      {!!user ? <LoggedIn user={user} /> : <LoggedOut />}
+      {!!user ? (
+        <User user={user} />
+      ) : (
+        <Button onClick={() => signIn()} size="sm">
+          Anmelden
+        </Button>
+      )}
     </div>
   );
 }
 
-function LoggedOut() {
-  return (
-    <Button onClick={() => signIn()} size="sm">
-      Anmelden
-    </Button>
-  );
-}
-
-function LoggedIn({ user }: { user: Session["user"] }) {
-  return <User user={user} />;
-}
-
-function User({ user }: { user: Session["user"] }) {
-  const initials = getInitials(user);
-
+function User({ user }: { user: User }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <div className="group flex items-center">
-          {!!user.role && user.role !== "user" && (
-            <Badge variant="outline" className="z-10 translate-x-2 bg-white">
-              {user.role}
-            </Badge>
-          )}
           <Avatar>
             <AvatarImage src={user.image || "/img/avatar.jpg"} />
-            <AvatarFallback>{initials}</AvatarFallback>
+            <AvatarFallback>{getInitials(user)}</AvatarFallback>
           </Avatar>
           <ChevronDownIcon className="ml-2 hidden h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100 lg:block" />
         </div>
