@@ -39,6 +39,7 @@ const createTrainingSchema = z.object({
   startTime: z.string(),
   endTime: z.string(),
   maxInterns: z.number(),
+  customAddress: z.boolean(),
 });
 
 export async function createTraining(
@@ -49,6 +50,7 @@ export async function createTraining(
   if (!currentUser) {
     throw new Error("must be authenticated");
   }
+  console.log({ payload });
   const training = createTrainingSchema.parse(payload);
   await prisma.training.create({
     data: { ...training, authorId: currentUser.id },

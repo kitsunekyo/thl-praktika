@@ -32,15 +32,21 @@ export function TrainingCard({
           )}
         </dd>
         <dd>
-          <Link
-            href={`https://www.google.com/maps/place/${getAddress(
-              training.author,
-            ).replaceAll(" ", "+")}`}
-            target="_blank"
-            className="underline hover:no-underline"
-          >
-            {getAddress(training.author)}
-          </Link>
+          {training.customAddress ? (
+            <span className="text-gray-400">
+              Adresse wird persönlich bekannt gegeben
+            </span>
+          ) : (
+            <Link
+              href={`https://www.google.com/maps/place/${getAddress(
+                training.author,
+              ).replaceAll(" ", "+")}`}
+              target="_blank"
+              className="underline hover:no-underline"
+            >
+              {getAddress(training.author)}
+            </Link>
+          )}
         </dd>
         <dd>
           <RegistrationStatus training={training} />

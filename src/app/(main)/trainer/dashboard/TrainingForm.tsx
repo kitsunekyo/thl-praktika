@@ -14,9 +14,11 @@ import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -41,6 +43,7 @@ export const trainingSchema = z
     startTime: z.string(),
     endTime: z.string(),
     maxInterns: z.coerce.number(),
+    customAddress: z.boolean(),
   })
   .refine(
     (data) => {
@@ -73,6 +76,7 @@ export function TrainingForm() {
       date: startOfDay(new Date()),
       startTime: "12:00",
       endTime: "17:00",
+      customAddress: false,
     },
   });
 
@@ -215,6 +219,28 @@ export function TrainingForm() {
             />
           </div>
         </div>
+        <FormField
+          control={form.control}
+          name="customAddress"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>Abweichende Adresse</FormLabel>
+                <FormDescription>
+                  Falls das Training an einer anderen Adresse stattfindet, als
+                  die in deinem Profil hinterlegte. (zB bei einem Kunden / einer
+                  Kundin)
+                </FormDescription>
+              </div>
+            </FormItem>
+          )}
+        />
         <Button type="submit" disabled={loading}>
           Erstellen
         </Button>
