@@ -1,9 +1,10 @@
 "use server";
 
+import { User } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 import { getServerSession } from "@/lib/next-auth";
-import { prisma } from "@/lib/prisma";
+import { prisma, prismaExclude } from "@/lib/prisma";
 
 export async function getMe() {
   const session = await getServerSession();
@@ -18,15 +19,22 @@ export async function getMe() {
     },
     select: {
       id: true,
-      name: true,
       email: true,
+      name: true,
+      emailVerified: true,
       image: true,
       role: true,
+      address: true,
+      city: true,
+      zipCode: true,
+      phone: true,
     },
   });
 }
 
-export async function updateProfile(user: Partial<{ name: string }>) {
+export async function updateProfile(
+  user: Partial<Omit<User, "password" | "emailVerified" | "email" | "id">>,
+) {
   const session = await getServerSession();
 
   if (!session?.user) {
@@ -37,9 +45,7 @@ export async function updateProfile(user: Partial<{ name: string }>) {
     where: {
       id: session.user.id,
     },
-    data: {
-      name: user.name,
-    },
+    data: user,
   });
 
   revalidatePath("/profile");

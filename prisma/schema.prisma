@@ -50,6 +50,9 @@ model User {
   role          String    @default("user")
   password      String?
   address       String?
+  city          String?
+  zipCode       String?
+  phone         String?
 
   accounts      Account[]
   sessions      Session[]
