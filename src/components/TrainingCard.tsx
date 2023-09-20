@@ -102,16 +102,16 @@ export async function TrainingCard({
         </dd>
       </dl>
       <footer className="mt-4 flex items-center gap-4 border-t pt-4">
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 shrink items-center gap-2">
           <Avatar>
             <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
             <AvatarFallback>{getInitials(training.author)}</AvatarFallback>
           </Avatar>
-          <dd className="hidden text-xs md:block">
+          <dd className="min-w-0 shrink text-xs">
             {!!training.author.name && (
-              <p className="font-medium">{training.author.name}</p>
+              <p className="truncate font-medium">{training.author.name}</p>
             )}
-            <p>{training.author.email}</p>
+            <p className="truncate">{training.author.email}</p>
           </dd>
         </div>
         <div className="ml-auto flex items-center gap-2">{actions}</div>
