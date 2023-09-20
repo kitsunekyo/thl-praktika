@@ -1,10 +1,5 @@
 import { Registration, Training, User } from "@prisma/client";
-import {
-  formatDistance,
-  formatDistanceStrict,
-  formatDuration,
-  intervalToDuration,
-} from "date-fns";
+import { formatDuration, intervalToDuration } from "date-fns";
 import { UserCheckIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
