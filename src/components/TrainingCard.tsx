@@ -18,10 +18,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 
 async function getDistanceToUser(
-  user: Pick<User, "address" | "city" | "zipCode">,
+  user: Pick<User, "id" | "address" | "city" | "zipCode">,
 ) {
   const me = await getMe();
   if (!me) {
+    return;
+  }
+  if (me.id === user.id) {
     return;
   }
   const myAddress = getAddress(me);
