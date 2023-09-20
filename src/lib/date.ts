@@ -27,7 +27,7 @@ export function formatTrainingDate(
   return `${format(
     new Date(date),
     "do MMM yy",
-  )} von ${startTime} bis ${endTime} (${duration})`;
+  )}, ${startTime} - ${endTime} (${duration})`;
 }
 
 export function formatTimeValue(time: string) {
