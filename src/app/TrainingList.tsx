@@ -1,9 +1,11 @@
-import { User } from "@prisma/client";
+import { Registration, Training, User } from "@prisma/client";
+import { UserCheckIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { formatTrainingDate } from "@/lib/date";
-import { getInitials } from "@/lib/utils";
+import { getInitials, range } from "@/lib/utils";
 
 import { getTrainnings } from "./register";
 import { RegisterButton, UnregisterButton } from "./register-buttons";
@@ -30,17 +32,13 @@ export async function TrainingList() {
             className="rounded border border-solid p-4 text-sm"
           >
             <dl className="space-y-2">
-              <dd>{training.description}</dd>
+              <dd className="font-medium">{training.description}</dd>
               <dd>
                 {formatTrainingDate(
                   training.date,
                   training.startTime,
                   training.endTime,
                 )}
-              </dd>
-              <dd>
-                {training.registrations.length}/{training.maxInterns}{" "}
-                Praktikanten angemeldet
               </dd>
               <dd>
                 <Link
@@ -53,6 +51,9 @@ export async function TrainingList() {
                   {getAddress(training.author)}
                 </Link>
               </dd>
+              <dd>
+                <RegistrationStatus training={training} />
+              </dd>
             </dl>
             <footer className="mt-4 flex items-center gap-4 border-t pt-4">
               <div className="flex items-center gap-2">
@@ -64,19 +65,54 @@ export async function TrainingList() {
                     {getInitials(training.author)}
                   </AvatarFallback>
                 </Avatar>
-                <dd className="hidden md:block">{training.author.email}</dd>
+                <dd className="hidden text-xs md:block">
+                  {!!training.author.name && (
+                    <p className="font-medium">{training.author.name}</p>
+                  )}
+                  <p>{training.author.email}</p>
+                </dd>
               </div>
               <div className="ml-auto flex items-center gap-2">
                 {training.isRegistered ? (
                   <UnregisterButton trainingId={training.id} />
-                ) : (
+                ) : training.maxInterns - training.registrations.length > 0 ? (
                   <RegisterButton trainingId={training.id} />
-                )}
+                ) : null}
               </div>
             </footer>
           </li>
         ))}
       </ul>
     </section>
+  );
+}
+
+function RegistrationStatus({
+  training,
+}: {
+  training: Training & {
+    registrations: Registration[];
+  };
+}) {
+  const freeSpots = training.maxInterns - training.registrations.length;
+
+  return (
+    <div className="flex items-center">
+      {range(training.registrations.length).map((i) => (
+        <UserCheckIcon key={i} className="h-5 w-5" />
+      ))}
+      {range(freeSpots).map((i) => (
+        <UserIcon key={i} className="h-5 w-5 text-gray-400" />
+      ))}
+      {freeSpots > 0 ? (
+        <Badge className="ml-2" variant="secondary">
+          {freeSpots}/{training.maxInterns} frei
+        </Badge>
+      ) : (
+        <Badge className="ml-2" variant="destructive">
+          voll
+        </Badge>
+      )}
+    </div>
   );
 }

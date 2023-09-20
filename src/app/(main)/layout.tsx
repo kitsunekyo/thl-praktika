@@ -13,7 +13,7 @@ export default async function RootLayout({
     <>
       <Header user={session?.user} />
       <main>
-        <div className="container py-8 md:py-20">{children}</div>
+        <div className="container py-8">{children}</div>
       </main>
     </>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { UserMinusIcon, UserPlusIcon } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,7 @@ export function RegisterButton({ trainingId }: { trainingId: string }) {
         }
       }}
     >
+      <UserPlusIcon className="mr-2 h-4 w-4" />
       Anmelden
     </Button>
   );
@@ -44,6 +46,7 @@ export function UnregisterButton({ trainingId }: { trainingId: string }) {
         }
       }}
     >
+      <UserMinusIcon className="mr-2 h-4 w-4" />
       Abmelden
     </Button>
   );
