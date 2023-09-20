@@ -89,7 +89,7 @@ export async function TrainingCard({
               >
                 {getAddress(training.author)}{" "}
               </Link>
-              {!!travelTime && (
+              {!!travelTime && travelTime.time > 0 && (
                 <p className="text-xs">
                   {formatDuration(secondsToDuration(travelTime.time))} entfernt
                 </p>
