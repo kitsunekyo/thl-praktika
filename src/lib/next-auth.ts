@@ -1,4 +1,4 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { compare } from "bcrypt";
 import {
   AuthOptions,
@@ -74,7 +74,7 @@ export const authOptions: AuthOptions = {
     session: ({ session, token }) => {
       if (token) {
         session.user.id = token.id;
-        session.user.role = token.role;
+        session.user.role = token.role || "user";
       }
       return session;
     },

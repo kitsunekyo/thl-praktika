@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Session } from "next-auth";
+import { User } from "next-auth";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -23,7 +23,7 @@ export const profileSchema = z.object({
   name: z.string(),
 });
 
-export function ProfileForm({ user }: { user: Session["user"] }) {
+export function ProfileForm({ user }: { user: User }) {
   const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),

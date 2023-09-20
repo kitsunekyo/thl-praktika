@@ -21,6 +21,7 @@ export async function getMe() {
       name: true,
       email: true,
       image: true,
+      role: true,
     },
   });
 }
