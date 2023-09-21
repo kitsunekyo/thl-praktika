@@ -3,9 +3,9 @@ import { redirect } from "next/navigation";
 import { TrainingCard } from "@/components/TrainingCard";
 import { getServerSession } from "@/lib/next-auth";
 
+import { getMyTrainings } from "./actions";
 import { TrainingForm } from "./TrainingForm";
 import { TrainingListActions } from "./TrainingListActions";
-import { getMyTrainings } from "../actions";
 
 export default async function Page() {
   const session = await getServerSession();

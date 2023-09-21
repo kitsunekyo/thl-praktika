@@ -1,15 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format, set, startOfDay } from "date-fns";
-import { CalendarIcon, Regex } from "lucide-react";
+import { format, set } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 import React, { useState } from "react";
-import {
-  ControllerRenderProps,
-  FieldValues,
-  UseFormReturn,
-  useForm,
-} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -31,10 +26,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
-import { formatTimeValue } from "@/lib/date";
+import { formatTimeValue, getFixedDate } from "@/lib/date";
 import { cn } from "@/lib/utils";
 
-import { createTraining } from "../actions";
+import { createTraining } from "./actions";
 
 export const trainingSchema = z
   .object({
@@ -73,7 +68,7 @@ export function TrainingForm() {
     defaultValues: {
       description: "",
       maxInterns: 3,
-      date: startOfDay(new Date()),
+      date: getFixedDate(new Date()),
       startTime: "12:00",
       endTime: "17:00",
       customAddress: false,

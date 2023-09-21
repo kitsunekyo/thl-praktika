@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
+import { getFixedDate } from "@/lib/date";
 import { getServerSession } from "@/lib/next-auth";
 import { prisma } from "@/lib/prisma";
 
@@ -50,10 +51,13 @@ export async function createTraining(
   if (!currentUser) {
     throw new Error("must be authenticated");
   }
-  console.log({ payload });
   const training = createTrainingSchema.parse(payload);
   await prisma.training.create({
-    data: { ...training, authorId: currentUser.id },
+    data: {
+      ...training,
+      authorId: currentUser.id,
+      date: getFixedDate(training.date),
+    },
   });
   revalidatePath("/");
 }

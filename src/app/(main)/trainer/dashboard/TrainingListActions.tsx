@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
-import { deleteTraining } from "../actions";
+import { deleteTraining } from "./actions";
 
 export function TrainingListActions({ id }: { id: string }) {
   const [loading, setLoading] = useState(false);

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-duplicates */
-import { format, setDefaultOptions } from "date-fns";
+import { format, setDefaultOptions, startOfDay, sub } from "date-fns";
 import { deAT } from "date-fns/locale";
 
 setDefaultOptions({
@@ -51,3 +51,8 @@ export function formatTimeValue(time: string) {
 
   return `${paddedHours}:${paddedMinutes}`;
 }
+
+const timeZoneOffset = new Date().getTimezoneOffset();
+export const getFixedDate = (date: Date) => {
+  return sub(startOfDay(date), { minutes: timeZoneOffset });
+};
