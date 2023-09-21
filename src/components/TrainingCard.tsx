@@ -32,12 +32,10 @@ async function getDistanceToUser(
   }
 
   if (process.env.NODE_ENV === "development") {
-    return { time: 90 * 60, formattedTime: "01:11:20" };
+    return { time: 4855, formattedTime: "01:11:20" };
   }
 
   const directions = await getDirections(getAddress(me), getAddress(user));
-
-  console.log({ directionsStatus: directions.info.statuscode });
 
   if (directions.info.statuscode !== 0) {
     return;
@@ -68,7 +66,13 @@ export async function TrainingCard({
   };
   actions?: React.ReactNode;
 }) {
-  const travelTime = await getDistanceToUser(training.author);
+  const distance = await getDistanceToUser(training.author);
+  let travelDuration: undefined | string;
+  if (distance && distance.time >= 1) {
+    travelDuration = formatDuration(secondsToDuration(distance.time), {
+      format: ["hours", "minutes"],
+    });
+  }
 
   return (
     <div className="rounded border border-solid p-4 text-sm">
@@ -97,10 +101,8 @@ export async function TrainingCard({
               >
                 {getAddress(training.author)}{" "}
               </Link>
-              {!!travelTime && travelTime.time > 0 && (
-                <p className="text-xs">
-                  {formatDuration(secondsToDuration(travelTime.time))} entfernt
-                </p>
+              {!!travelDuration && (
+                <p className="text-xs">{travelDuration} entfernt</p>
               )}
             </div>
           )}
