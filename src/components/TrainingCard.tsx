@@ -39,7 +39,7 @@ async function getDistanceToUser(
 
   console.log({ directionsStatus: directions.info.statuscode });
 
-  if (directions.info.statuscode !== 200) {
+  if (directions.info.statuscode !== 0) {
     return;
   }
 
