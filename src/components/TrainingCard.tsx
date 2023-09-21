@@ -25,8 +25,6 @@ async function getDistanceToUser(
   const myAddress = getAddress(me);
   const userAddress = getAddress(user);
 
-  console.log({ myAddress, userAddress });
-
   if (!myAddress || !userAddress) {
     return;
   }
