@@ -25,6 +25,8 @@ async function getDistanceToUser(
   const myAddress = getAddress(me);
   const userAddress = getAddress(user);
 
+  console.log({ myAddress, userAddress });
+
   if (!myAddress || !userAddress) {
     return;
   }
@@ -34,6 +36,8 @@ async function getDistanceToUser(
   }
 
   const directions = await getDirections(getAddress(me), getAddress(user));
+
+  console.log({ directionsStatus: directions.info.statuscode });
 
   if (directions.info.statuscode !== 200) {
     return;
