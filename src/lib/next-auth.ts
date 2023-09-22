@@ -64,6 +64,17 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      const foundUser = await prisma.user.findFirst({
+        where: {
+          email: user.email,
+        },
+      });
+      if (!foundUser) {
+        return false;
+      }
+      return true;
+    },
     jwt: ({ token, user }) => {
       if (user) {
         token.id = user.id;

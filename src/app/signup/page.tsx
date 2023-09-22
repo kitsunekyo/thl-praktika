@@ -5,26 +5,27 @@ import React from "react";
 
 import { getServerSession } from "@/lib/next-auth";
 
-import { LoginForm } from "./LoginForm";
+import { SignupForm } from "./SignupForm";
 
 export default async function Login() {
   const session = await getServerSession();
   if (session) {
-    redirect("/");
+    return redirect("/");
   }
+
   return (
     <div
       className="md:flex"
       style={{ "--login-height": "calc(100vh - 88px - 160px)" }}
     >
       <div className="my-auto flex flex-col justify-center px-8 pt-8 md:w-1/2 md:justify-start md:px-24 md:pt-0 lg:px-32">
-        <h1 className="mb-6 text-center text-4xl font-bold">Anmelden</h1>
-        <LoginForm />
+        <h1 className="mb-6 text-center text-4xl font-bold">Registrieren</h1>
+        <SignupForm />
         <div className="mt-12 text-center">
-          <p>Du hast noch keinen Account?</p>
+          <p>Du hast bereits einen Account?</p>
           <p>
-            <Link href="/signup" className="font-semibold underline">
-              Registrieren
+            <Link href="/login" className="font-semibold underline">
+              Anmelden
             </Link>
           </p>
         </div>
