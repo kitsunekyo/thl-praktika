@@ -1,13 +1,13 @@
 "use client";
 
-import { User } from "next-auth";
+import { Invitation } from "@prisma/client";
 import { useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 
-import { deleteUser } from "./actions";
+import { deleteInvitation } from "./actions";
 
-export function UserActions({ user }: { user: User }) {
+export function InvitationActions({ invitation }: { invitation: Invitation }) {
   const [pending, startTransition] = useTransition();
 
   return (
@@ -18,7 +18,7 @@ export function UserActions({ user }: { user: User }) {
         disabled={pending}
         onClick={() => {
           startTransition(() => {
-            deleteUser(user.id);
+            deleteInvitation(invitation.id);
           });
         }}
       >

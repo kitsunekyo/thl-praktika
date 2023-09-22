@@ -17,6 +17,7 @@ import {
 import { authOptions } from "@/lib/next-auth";
 
 import { getInvitations, getUsers } from "./actions";
+import { InvitationActions } from "./InvitationActions";
 import { UserActions } from "./UserActions";
 
 export default async function UserPage() {
@@ -102,7 +103,8 @@ async function InvitationList() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Email</TableHead>
+          <TableHead className="max-w-[100px]">Email</TableHead>
+          <TableHead>Name</TableHead>
           <TableHead>Rolle</TableHead>
           <TableHead></TableHead>
         </TableRow>
@@ -111,10 +113,13 @@ async function InvitationList() {
         {invitations.map((invitation) => (
           <TableRow key={invitation.id}>
             <TableCell className="font-medium">{invitation.email}</TableCell>
+            <TableCell>{invitation.name}</TableCell>
             <TableCell>
               <Badge variant="outline">{invitation.role}</Badge>
             </TableCell>
-            <TableCell className="text-right">{/* TODO: actions */}</TableCell>
+            <TableCell className="text-right">
+              <InvitationActions invitation={invitation} />
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>

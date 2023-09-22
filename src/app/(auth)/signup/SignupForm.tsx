@@ -28,9 +28,10 @@ export const loginSchema = z.object({
   password: z
     .string()
     .min(6, { message: "Passwort entspricht nicht den Kritieren" }),
+  name: z.string(),
 });
 
-export function SignupForm() {
+export function SignupForm({ name, email }: { name?: string; email?: string }) {
   const [loading, startTransition] = useTransition();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -40,7 +41,8 @@ export function SignupForm() {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
+      email,
+      name,
       password: "",
     },
   });
@@ -57,9 +59,9 @@ export function SignupForm() {
       <form
         className="space-y-6"
         onSubmit={form.handleSubmit(
-          async ({ email, password }: z.infer<typeof loginSchema>) => {
+          async ({ email, password, name }: z.infer<typeof loginSchema>) => {
             startTransition(() => {
-              register({ email, password });
+              register({ email, password, name });
             });
           },
         )}
@@ -70,9 +72,33 @@ export function SignupForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Email*</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="good@pup.com" {...field} />
+                <Input
+                  type="email"
+                  placeholder="good@pup.com"
+                  required
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  data-1p-ignore
+                  placeholder="Sam S."
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -84,10 +110,14 @@ export function SignupForm() {
           name="password"
           render={({ field }) => (
             <FormItem className="flex-grow">
-              <FormLabel>Passwort</FormLabel>
+              <FormLabel>Passwort*</FormLabel>
               <FormControl>
                 <div className="flex items-center gap-2">
-                  <Input type={showPassword ? "text" : "password"} {...field} />
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    required
+                    {...field}
+                  />
                   {showPassword ? (
                     <Button
                       type="button"

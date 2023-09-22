@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { getServerSession } from "@/lib/next-auth";
+import { sendEmail, sendInvitationMail } from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
 
 export async function getUsers() {
@@ -21,6 +22,7 @@ export async function deleteUser(id: string) {
 export async function createUser(
   email: string,
   password: string,
+  name?: string,
   role = "user",
 ) {
   const session = await getServerSession();
@@ -38,6 +40,7 @@ export async function createUser(
     data: {
       email,
       password: hashedPassword,
+      name,
       role,
     },
   });
@@ -45,22 +48,43 @@ export async function createUser(
   redirect("/admin/user");
 }
 
-export async function inviteUser(email: string, role = "user") {
+export async function inviteUser(email: string, name = "", role = "user") {
   const session = await getServerSession();
   const currentUser = session?.user;
-  if (!currentUser) {
-    throw new Error("must be authenticated");
+
+  if (currentUser?.role !== "admin") {
+    throw new Error("not authorized");
   }
-  if (currentUser.role !== "admin") {
-    throw new Error("not allowed");
+
+  const invitation = await prisma.invitation.findFirst({
+    where: {
+      email,
+    },
+  });
+
+  if (invitation) {
+    throw new Error("invitation already exists");
+  }
+
+  const user = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
+
+  if (user) {
+    throw new Error("user already exists");
   }
 
   await prisma.invitation.create({
     data: {
       email,
+      name,
       role,
     },
   });
+
+  sendInvitationMail({ to: email, name });
 
   redirect("/admin/user");
 }
@@ -76,6 +100,11 @@ export async function getInvitations() {
   }
 
   return await prisma.invitation.findMany({
-    select: { id: true, email: true, role: true },
+    select: { id: true, email: true, role: true, name: true },
   });
+}
+
+export async function deleteInvitation(id: string) {
+  await prisma.invitation.delete({ where: { id } });
+  revalidatePath("/user");
 }

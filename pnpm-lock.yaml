@@ -35,6 +35,7 @@ specifiers:
   next: 13.5.2
   next-auth: ^4.23.1
   postcss: 8.4.29
+  postmark: ^3.0.19
   prettier: ^3.0.3
   prettier-plugin-tailwindcss: ^0.5.4
   prisma: ^5.3.1
@@ -83,6 +84,7 @@ dependencies:
   next: 13.5.2_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.23.1_a5awh3fq7n5gjpbh6s2j4fmxfi
   postcss: 8.4.29
+  postmark: 3.0.19
   prettier: 3.0.3
   prettier-plugin-tailwindcss: 0.5.4_prettier@3.0.3
   react: 18.2.0
@@ -1715,6 +1717,14 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
+  /axios/0.25.0:
+    resolution: {integrity: sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==}
+    dependencies:
+      follow-redirects: 1.15.3
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /axobject-query/3.2.1:
     resolution: {integrity: sha512-jsyHu61e6N4Vbz/v18DHwWYKK0bSWLqn47eeDSKPB7m8tqMHF9YJ+mhIk2lVteyZrY8tnSj/jHOv4YiTCuCJgg==}
     dependencies:
@@ -2654,6 +2664,16 @@ packages:
 
   /flatted/3.2.9:
     resolution: {integrity: sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==}
+    dev: false
+
+  /follow-redirects/1.15.3:
+    resolution: {integrity: sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
     dev: false
 
   /for-each/0.3.3:
@@ -3886,6 +3906,14 @@ packages:
       nanoid: 3.3.6
       picocolors: 1.0.0
       source-map-js: 1.0.2
+    dev: false
+
+  /postmark/3.0.19:
+    resolution: {integrity: sha512-ujO8OnL1P60qXCwqLrsQqB4aGHaxrvYP3+wCLilUthKmAv9q88nMFHw5VganNljPmzurrVwvyczQc3AUijP2aw==}
+    dependencies:
+      axios: 0.25.0
+    transitivePeerDependencies:
+      - debug
     dev: false
 
   /preact-render-to-string/5.2.6_preact@10.17.1:

@@ -27,6 +27,7 @@ import { createUser, inviteUser } from "../actions";
 
 export const userSchema = z.object({
   email: z.string().email(),
+  name: z.string().optional(),
   password: z.union([z.string().min(6), z.literal("")]),
   role: z.string(),
 });
@@ -36,21 +37,24 @@ export function UserForm() {
     resolver: zodResolver(userSchema),
     defaultValues: {
       email: "",
+      name: "",
       password: "",
       role: "user",
     },
   });
+
+  const isPasswordEmpty = form.getValues("password").length <= 0;
 
   return (
     <Form {...form}>
       <form
         className="max-w-[300px] space-y-6"
         onSubmit={form.handleSubmit((data: z.infer<typeof userSchema>) => {
-          if ("password" in data && data.password !== "") {
-            createUser(data.email, data.password, data.role);
+          if (isPasswordEmpty) {
+            inviteUser(data.email, data.name, data.role);
             return;
           }
-          inviteUser(data.email, data.role);
+          createUser(data.email, data.password, data.role);
         })}
       >
         <FormField
@@ -90,6 +94,26 @@ export function UserForm() {
         />
         <FormField
           control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  data-1p-ignore
+                  placeholder="Sam S"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">User einladen</Button>
+
+        <FormField
+          control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem>
@@ -98,17 +122,11 @@ export function UserForm() {
                 <Input type="password" {...field} />
               </FormControl>
               <FormMessage />
-              <FormDescription>
-                Du kannst Passwort leer lassen um den User einzuladen. Der User
-                kann sich später selbst registrieren.
-              </FormDescription>
             </FormItem>
           )}
         />
-        <Button type="submit">
-          {form.getValues("password") === ""
-            ? "User einladen"
-            : "User erstellen"}
+        <Button type="submit" disabled={isPasswordEmpty}>
+          User erstellen
         </Button>
       </form>
     </Form>
