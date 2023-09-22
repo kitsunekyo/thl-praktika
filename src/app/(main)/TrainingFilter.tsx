@@ -1,5 +1,6 @@
 "use client";
 
+import { ClockIcon, MapIcon, UserIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 
@@ -8,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 const filterOptions = [
   {
     key: "traveltime",
+    icon: MapIcon,
     label: "Fahrtzeit",
     options: [
       { key: "30", label: "bis 30h" },
@@ -17,6 +19,7 @@ const filterOptions = [
   },
   {
     key: "free",
+    icon: UserIcon,
     label: "Freie Plätze",
     options: [
       { key: "1", label: "1+" },
@@ -26,6 +29,7 @@ const filterOptions = [
   },
   {
     key: "duration",
+    icon: ClockIcon,
     label: "Trainingsdauer",
     options: [
       { key: "2", label: "ab 2h" },
@@ -56,10 +60,13 @@ export function TrainingFilter() {
   }
 
   return (
-    <section className="text-sm" aria-label="filter">
-      {filterOptions.map((filter) => (
-        <div key={filter.label} className="mb-4">
-          <p className="mb-2 font-medium">{filter.label}</p>
+    <section className="space-y-6 text-sm" aria-label="filter">
+      {filterOptions.map(({ icon: Icon, ...filter }) => (
+        <div key={filter.label}>
+          <div className="mb-2 flex items-center">
+            <Icon className="mr-2 h-4 w-5" />
+            <p className="font-medium">{filter.label}</p>
+          </div>
           <ul className="flex flex-wrap items-center gap-1">
             <li>
               <Badge
