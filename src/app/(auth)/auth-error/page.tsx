@@ -10,32 +10,19 @@ export default async function AuthError({
   searchParams: Record<string, string | string[] | undefined>;
 }) {
   return (
-    <div
-      className="md:flex"
-      style={{ "--login-height": "calc(100vh - 88px - 160px)" }}
-    >
-      <div className="my-auto flex flex-col justify-center px-8 pt-8 md:w-1/2 md:justify-start md:px-24 md:pt-0 lg:px-32">
-        {typeof searchParams.error === "string" && (
-          <Message error={searchParams.error} />
-        )}
-        <div className="mt-12 flex flex-wrap items-center gap-4">
-          <Link href="/signup" className="font-semibold underline">
-            <Button>Registrieren</Button>
-          </Link>
-          <Link href="/login" className="font-semibold underline">
-            <Button variant="secondary">Anmelden</Button>
-          </Link>
-        </div>
+    <>
+      {typeof searchParams.error === "string" && (
+        <Message error={searchParams.error} />
+      )}
+      <div className="mt-12 flex flex-wrap items-center gap-4">
+        <Link href="/signup" className="font-semibold underline">
+          <Button>Registrieren</Button>
+        </Link>
+        <Link href="/login" className="font-semibold underline">
+          <Button variant="secondary">Anmelden</Button>
+        </Link>
       </div>
-      <div className="relative hidden h-[var(--login-height)] w-1/2 overflow-hidden rounded-xl shadow-2xl md:block">
-        <Image
-          fill
-          className="hidden object-cover md:block"
-          src="/img/sam.jpg"
-          alt=""
-        />
-      </div>
-    </div>
+    </>
   );
 }
 
