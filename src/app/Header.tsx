@@ -93,7 +93,8 @@ function DesktopMenu({ links }: { links: typeof ALL_LINKS }) {
                 <NavigationMenuLink
                   className={cn(
                     navigationMenuTriggerStyle(),
-                    pathname === link.href && "bg-accent/60",
+                    "text-foreground/60 hover:text-foreground/80",
+                    pathname === link.href && "text-foreground",
                   )}
                 >
                   {link.label}
