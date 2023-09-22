@@ -20,10 +20,13 @@ export function sendEmail({
 }
 
 export function sendInvitationMail({ to, name }: { to: string; name: string }) {
+  const templateId =
+    process.env.NODE_ENV === "development" ? 33246448 : 33246306;
+
   client.sendEmailWithTemplate({
     From: "hi@mostviertel.tech",
     To: to,
-    TemplateId: 33246448,
+    TemplateId: templateId,
     MessageStream: "outbound",
     TemplateModel: {
       product_url: "https://thl-praktika.vercel.app",
