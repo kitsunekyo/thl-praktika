@@ -1,3 +1,4 @@
+import { PawPrintIcon } from "lucide-react";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
@@ -16,8 +17,11 @@ export function Logo({
         { "text-white": light },
       )}
     >
-      <Link href="/" className="py-2" onClick={onNavigate}>
-        THL Praktika
+      <Link href="/" onClick={onNavigate}>
+        <div className="flex items-center">
+          <PawPrintIcon className="mr-2 h-6 w-6" />
+          THL Praktika
+        </div>
       </Link>
     </div>
   );
