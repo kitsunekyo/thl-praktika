@@ -25,6 +25,9 @@ export async function getMyTrainings() {
       author: true,
       registrations: true,
     },
+    orderBy: {
+      date: "asc",
+    },
   });
 }
 

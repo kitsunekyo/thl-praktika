@@ -79,6 +79,9 @@ export async function getTrainings() {
         gte: new Date(),
       },
     },
+    orderBy: {
+      date: "asc",
+    },
   });
 
   return trainings;
