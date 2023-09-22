@@ -7,7 +7,7 @@ import React from "react";
 import { getMe } from "@/app/(main)/profile/actions";
 import { formatTrainingDate } from "@/lib/date";
 import { getDirections } from "@/lib/mapquest";
-import { getInitials, range } from "@/lib/utils";
+import { cn, getInitials, range } from "@/lib/utils";
 
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
@@ -64,6 +64,7 @@ export async function TrainingCard({
   };
   actions?: React.ReactNode;
 }) {
+  const isPast = training.date < new Date();
   const distance = await getDistanceToUser(training.author);
   let travelDuration: undefined | string;
   if (distance && distance.time >= 1) {
@@ -73,7 +74,11 @@ export async function TrainingCard({
   }
 
   return (
-    <div className="rounded border border-solid p-4 text-sm">
+    <div
+      className={cn("rounded border border-solid p-4 text-sm", {
+        "opacity-50": isPast,
+      })}
+    >
       <dl className="space-y-2">
         <dd className="font-medium">{training.description}</dd>
         <dd>
