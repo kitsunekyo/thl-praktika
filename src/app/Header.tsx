@@ -31,7 +31,7 @@ import { UserMenu } from "./UserMenu";
  * leave roles undefined if the link should be visible for all users
  * otherwise specify the roles that should see the link
  */
-const ALL_LINKS = [
+const DESKTOP_LINKS = [
   {
     href: "/trainer/dashboard",
     label: "Trainer Hub",
@@ -49,24 +49,33 @@ const ALL_LINKS = [
   },
 ];
 
-function canSeeLink(link: (typeof ALL_LINKS)[number], user?: Session["user"]) {
+const MOBILE_LINKS = [
+  ...DESKTOP_LINKS,
+  {
+    href: "/profile",
+    label: "Mein Profil",
+  },
+];
+
+function canSeeLink(
+  link: { href: string; label: string; roles?: string[] },
+  user?: Session["user"],
+) {
   return !link.roles || (user && user.role && link.roles.includes(user.role));
 }
 
 export function Header({ user }: { user?: Session["user"] }) {
-  const links = ALL_LINKS.filter((link) => canSeeLink(link, user));
-
   return (
     <header className="border-b">
       <div className="container flex flex-wrap items-center py-2">
         <div className="mr-12">
           <Logo />
         </div>
-        <DesktopMenu links={links} />
+        <DesktopMenu />
         <div className="ml-auto hidden md:block">
           {!!user ? <UserMenu user={user} /> : <LoginButton />}
         </div>
-        <MobileMenu user={user} links={links} />
+        <MobileMenu user={user} />
       </div>
     </header>
   );
@@ -80,8 +89,9 @@ function LoginButton() {
   );
 }
 
-function DesktopMenu({ links }: { links: typeof ALL_LINKS }) {
+function DesktopMenu({ user }: { user?: User }) {
   const pathname = usePathname();
+  const links = DESKTOP_LINKS.filter((link) => canSeeLink(link, user));
 
   return (
     <nav className="hidden md:block">
@@ -108,9 +118,10 @@ function DesktopMenu({ links }: { links: typeof ALL_LINKS }) {
   );
 }
 
-function MobileMenu({ user, links }: { user?: User; links: typeof ALL_LINKS }) {
+function MobileMenu({ user }: { user?: User }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const links = MOBILE_LINKS.filter((link) => canSeeLink(link, user));
 
   function close() {
     setMobileMenuOpen(false);
@@ -160,11 +171,11 @@ function MobileMenu({ user, links }: { user?: User; links: typeof ALL_LINKS }) {
                     <AvatarImage src={user.image || "/img/avatar.jpg"} />
                     <AvatarFallback>{getInitials(user)}</AvatarFallback>
                   </Avatar>
-                  <dl className="min-w-0 shrink truncate text-xs">
+                  <dl className="min-w-0 shrink text-xs">
                     {!!user.name && (
-                      <dd className="font-medium">{user.name}</dd>
+                      <dd className="truncate font-medium">{user.name}</dd>
                     )}
-                    <dd className="text-gray-400">{user.email}</dd>
+                    <dd className="truncate text-gray-400">{user.email}</dd>
                   </dl>
                 </Link>
                 <Button

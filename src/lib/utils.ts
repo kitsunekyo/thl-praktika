@@ -11,7 +11,10 @@ export function getInitials(user: {
 }) {
   const name = user.name?.split(" ");
   if (name) {
-    const initials = name[0].charAt(0) + name[1].charAt(0);
+    const initials =
+      name.length > 2
+        ? name[0].charAt(0) + name[1].charAt(0)
+        : name[0].substring(0, 2);
     return initials.toUpperCase();
   }
   const emailName = user.email?.split("@")[0];

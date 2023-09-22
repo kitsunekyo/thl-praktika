@@ -18,13 +18,18 @@ import { getInitials } from "@/lib/utils";
 export function UserMenu({ user }: { user: User }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <div className="group flex items-center">
+      <DropdownMenuTrigger className="rounded focus:outline-none">
+        <div className="flex items-center">
+          {user.name && (
+            <span className="mr-2 min-w-0 max-w-[160px] shrink truncate text-xs">
+              Hi, {user.name}
+            </span>
+          )}
           <Avatar>
             <AvatarImage src={user.image || "/img/avatar.jpg"} />
             <AvatarFallback>{getInitials(user)}</AvatarFallback>
           </Avatar>
-          <ChevronDownIcon className="ml-2 hidden h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100 lg:block" />
+          <ChevronDownIcon className="ml-2 hidden h-4 w-4 lg:block" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-[180px]">
