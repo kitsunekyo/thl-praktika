@@ -50,7 +50,7 @@ export function ProfileForm({ user }: { user: Omit<User, "password"> }) {
   return (
     <Form {...form}>
       <form
-        className="max-w-[300px] space-y-6"
+        className="space-y-6"
         onSubmit={form.handleSubmit((data: z.infer<typeof profileSchema>) => {
           startTransition(async () => {
             await updateProfile(data);
@@ -58,6 +58,14 @@ export function ProfileForm({ user }: { user: Omit<User, "password"> }) {
           });
         })}
       >
+        <FormItem>
+          <FormLabel>Email*</FormLabel>
+          <FormControl>
+            <Input value={user.email} disabled />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+
         <FormField
           control={form.control}
           name="name"
@@ -71,13 +79,7 @@ export function ProfileForm({ user }: { user: Omit<User, "password"> }) {
             </FormItem>
           )}
         />
-        <FormItem>
-          <FormLabel>Email*</FormLabel>
-          <FormControl>
-            <Input value={user.email} disabled />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
+
         <FormField
           control={form.control}
           name="phone"
@@ -91,6 +93,7 @@ export function ProfileForm({ user }: { user: Omit<User, "password"> }) {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="address"
@@ -104,32 +107,35 @@ export function ProfileForm({ user }: { user: Omit<User, "password"> }) {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="zipCode"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Postleitzahl</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="city"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Stadt</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
+        <div className="space-y-6 md:flex md:gap-4 md:space-y-0">
+          <FormField
+            control={form.control}
+            name="zipCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Postleitzahl</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem className="flex-grow">
+                <FormLabel>Stadt</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <Button type="submit" disabled={loading || !form.formState.isDirty}>
           Speichern
         </Button>
