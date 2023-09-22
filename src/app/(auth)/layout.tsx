@@ -17,13 +17,8 @@ export default async function RootLayout({
           </div>
           {children}
         </div>
-        <div className="relative hidden h-[600px]  w-full overflow-hidden rounded-xl shadow-2xl lg:block">
-          <Image
-            fill
-            className="hidden object-cover md:block"
-            src="/img/sam.jpg"
-            alt=""
-          />
+        <div className="relative hidden h-[600px] w-full overflow-hidden rounded-xl shadow-2xl lg:block">
+          <Image fill className="object-cover" src="/img/sam.jpg" alt="" />
         </div>
       </div>
       <Footer />
