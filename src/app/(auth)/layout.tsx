@@ -20,8 +20,10 @@ export default async function RootLayout({
         <div className="relative hidden h-[600px] w-full overflow-hidden rounded-xl shadow-2xl lg:block">
           <Image
             fill
+            priority
             className="object-cover"
             src="https://i.imgur.com/7GZhST0.jpg"
+            sizes="600px"
             alt=""
           />
         </div>
