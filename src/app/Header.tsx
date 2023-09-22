@@ -57,8 +57,8 @@ export function Header({ user }: { user?: Session["user"] }) {
   const links = ALL_LINKS.filter((link) => canSeeLink(link, user));
 
   return (
-    <header>
-      <div className="container flex flex-wrap items-center py-6">
+    <header className="border-b">
+      <div className="container flex flex-wrap items-center py-2">
         <div className="mr-12">
           <Logo />
         </div>
