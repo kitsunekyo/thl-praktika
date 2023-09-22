@@ -13,13 +13,13 @@ export default async function RootLayout({
   const session = await getServerSession();
 
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <Header user={session?.user} />
-      <main>
+      <main className="flex-grow">
         <div className="container py-8 md:pb-24">{children}</div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
