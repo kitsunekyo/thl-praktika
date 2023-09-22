@@ -10,10 +10,10 @@ export function Footer() {
           <div className="mb-6 md:mb-0">
             <Logo light={true} />
           </div>
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-6">
+          <div className="grid grid-cols-2 gap-8 text-sm sm:grid-cols-3 sm:gap-6">
             <div>
-              <h2 className="mb-6 text-sm font-semibold uppercase text-white">
-                Legal
+              <h2 className="mb-6 font-semibold uppercase text-white">
+                Rechtliche Infos
               </h2>
               <ul className="space-y-4 font-medium text-gray-400">
                 <li>
@@ -32,7 +32,7 @@ export function Footer() {
         </div>
         <hr className="my-6 border-gray-700 sm:mx-auto lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
-          <span className="text-sm text-gray-400 sm:text-center">
+          <span className="text-xs text-gray-400 sm:text-center">
             © 2023{" "}
             <a href="https://flowbite.com/" className="hover:underline">
               Alexander Spieslechner
