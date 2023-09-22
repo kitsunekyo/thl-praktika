@@ -26,7 +26,7 @@ export default async function UserPage() {
   }
   return (
     <>
-      <div className="flex-end flex">
+      <div className="flex items-baseline">
         <PageTitle>User und Einladungen</PageTitle>
         <div className="ml-auto">
           <Link href="/admin/user/create">
