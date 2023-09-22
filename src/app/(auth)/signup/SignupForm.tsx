@@ -79,7 +79,7 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
                 description: "Du kannst dich nun anmelden.",
               });
 
-              redirect("/login");
+              redirect("/login?email=" + email);
             });
           },
         )}

@@ -25,7 +25,7 @@ export const loginSchema = z.object({
   password: z.string().min(1, { message: "Passwort darf nicht leer sein" }),
 });
 
-export function LoginForm() {
+export function LoginForm({ email }: { email?: string }) {
   const [loading, startTransition] = useTransition();
 
   const search = useSearchParams();
@@ -34,7 +34,7 @@ export function LoginForm() {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
+      email: email || "",
       password: "",
     },
   });
