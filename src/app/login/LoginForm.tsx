@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -26,7 +26,7 @@ export const loginSchema = z.object({
 });
 
 export function LoginForm() {
-  const [loading, setLoading] = useState(false);
+  const [loading, startTransition] = useTransition();
 
   const search = useSearchParams();
   const error = search.get("error");
@@ -52,12 +52,9 @@ export function LoginForm() {
         className="space-y-6"
         onSubmit={form.handleSubmit(
           async ({ email, password }: z.infer<typeof loginSchema>) => {
-            setLoading(true);
-            try {
+            startTransition(() => {
               signIn("credentials", { email, password });
-            } catch {
-              setLoading(false);
-            }
+            });
           },
         )}
       >
@@ -97,21 +94,18 @@ export function LoginForm() {
 }
 
 function GoogleSignInButton() {
-  const [loading, setLoading] = useState(false);
+  const [loading, startTransition] = useTransition();
 
   return (
     <Button
       type="button"
       className="w-full bg-[#4285F4] hover:bg-[#4074c7]"
       disabled={loading}
-      onClick={async () => {
-        setLoading(true);
-        try {
-          await signIn("google");
-        } catch {
-          setLoading(false);
-        }
-      }}
+      onClick={() =>
+        startTransition(() => {
+          signIn("google");
+        })
+      }
     >
       <svg
         className="mr-2 h-4 w-4"

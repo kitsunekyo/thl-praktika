@@ -1,28 +1,24 @@
 "use client";
 
 import { UserMinusIcon, UserPlusIcon } from "lucide-react";
-import { useState } from "react";
+import { useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 
 import { register, unregister } from "./register";
 
 export function RegisterButton({ trainingId }: { trainingId: string }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, startTransition] = useTransition();
   return (
     <Button
       variant="ghost"
       size="sm"
       disabled={loading}
-      onClick={async () => {
-        setLoading(true);
-        try {
-          await register(trainingId);
-          setLoading(false);
-        } catch (error) {
-          setLoading(false);
-        }
-      }}
+      onClick={() =>
+        startTransition(() => {
+          register(trainingId);
+        })
+      }
     >
       <UserPlusIcon className="mr-2 h-4 w-4" />
       Anmelden
@@ -30,21 +26,17 @@ export function RegisterButton({ trainingId }: { trainingId: string }) {
   );
 }
 export function UnregisterButton({ trainingId }: { trainingId: string }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, startTransition] = useTransition();
   return (
     <Button
       variant="ghost"
       size="sm"
       disabled={loading}
-      onClick={async () => {
-        setLoading(true);
-        try {
-          await unregister(trainingId);
-          setLoading(false);
-        } catch (error) {
-          setLoading(false);
-        }
-      }}
+      onClick={() =>
+        startTransition(() => {
+          unregister(trainingId);
+        })
+      }
     >
       <UserMinusIcon className="mr-2 h-4 w-4" />
       Abmelden

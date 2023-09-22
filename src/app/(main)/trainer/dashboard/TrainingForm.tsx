@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, set } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import React, { useState } from "react";
+import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -61,7 +61,7 @@ export const trainingSchema = z
   );
 
 export function TrainingForm() {
-  const [loading, setLoading] = useState(false);
+  const [loading, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof trainingSchema>>({
     resolver: zodResolver(trainingSchema),
@@ -80,13 +80,9 @@ export function TrainingForm() {
       <form
         onSubmit={form.handleSubmit(
           async (data: z.infer<typeof trainingSchema>) => {
-            setLoading(true);
-            try {
-              await createTraining(data);
-              setLoading(false);
-            } catch {
-              setLoading(false);
-            }
+            startTransition(() => {
+              createTraining(data);
+            });
           },
         )}
         className="mx-auto space-y-4 md:space-y-8"

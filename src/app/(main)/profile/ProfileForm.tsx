@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@prisma/client";
-import { useState } from "react";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -35,7 +35,7 @@ export const profileSchema = z.object({
 });
 
 export function ProfileForm({ user }: { user: Omit<User, "password"> }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, startTransition] = useTransition();
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -51,18 +51,12 @@ export function ProfileForm({ user }: { user: Omit<User, "password"> }) {
     <Form {...form}>
       <form
         className="max-w-[300px] space-y-6"
-        onSubmit={form.handleSubmit(
-          async (data: z.infer<typeof profileSchema>) => {
-            setLoading(true);
-            try {
-              await updateProfile(data);
-              setLoading(false);
-              form.reset(data);
-            } catch {
-              setLoading(false);
-            }
-          },
-        )}
+        onSubmit={form.handleSubmit((data: z.infer<typeof profileSchema>) => {
+          startTransition(async () => {
+            await updateProfile(data);
+            form.reset(data);
+          });
+        })}
       >
         <FormField
           control={form.control}
