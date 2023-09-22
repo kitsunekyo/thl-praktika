@@ -104,7 +104,6 @@ async function InvitationList() {
         <TableRow>
           <TableHead className="w-[100px]">Email</TableHead>
           <TableHead>Rolle</TableHead>
-          <TableHead>Name</TableHead>
           <TableHead></TableHead>
         </TableRow>
       </TableHeader>
@@ -115,7 +114,7 @@ async function InvitationList() {
             <TableCell>
               <Badge variant="outline">{invitation.role}</Badge>
             </TableCell>
-            <TableCell className="text-right">actions</TableCell>
+            <TableCell className="text-right">{/* TODO: actions */}</TableCell>
           </TableRow>
         ))}
       </TableBody>
