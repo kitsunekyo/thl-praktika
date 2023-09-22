@@ -14,6 +14,13 @@ export default async function Home() {
 async function TrainingList() {
   const trainings = await getTrainnings();
 
+  // TODO: filter
+  /**
+   * - only show trainings that are in the future
+   * - only show trainings that are not full
+   * - max distance
+   */
+
   return (
     <section>
       <h1 className="mb-3 text-xl font-semibold">Praktika</h1>

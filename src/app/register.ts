@@ -69,6 +69,11 @@ export async function getTrainnings() {
       author: true,
       registrations: true,
     },
+    where: {
+      date: {
+        gte: new Date(),
+      },
+    },
   });
 
   return trainings.map((training) => ({

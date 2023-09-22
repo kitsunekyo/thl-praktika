@@ -17,8 +17,8 @@ export default async function Page() {
   const myTrainings = await getMyTrainings();
 
   return (
-    <div className="grid gap-8 md:grid-cols-2">
-      <div>
+    <div className="gap-8 md:grid md:grid-cols-2">
+      <div className="mb-10 md:mb-0">
         <h1 className="mb-3 text-xl font-semibold">Training eintragen</h1>
         <p className="mb-8 max-w-[70ch] text-sm leading-[1.8] text-gray-500">
           Du hast ein Training bei denen Praktikant:innen von THL dabei sein
