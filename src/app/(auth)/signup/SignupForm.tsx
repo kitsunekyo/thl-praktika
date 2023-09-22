@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, EyeIcon, EyeOffIcon } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -65,7 +65,7 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
             startTransition(async () => {
               const res = await register({ email, password, name });
 
-              if (res.error) {
+              if (res?.error) {
                 toast({
                   title: "Registrierung fehlgeschlagen",
                   description: "Bitte versuche es erneut.",
@@ -78,6 +78,8 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
                 title: "Registrierung erfolgreich",
                 description: "Du kannst dich nun anmelden.",
               });
+
+              redirect("/login");
             });
           },
         )}

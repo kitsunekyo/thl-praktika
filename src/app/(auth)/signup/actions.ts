@@ -1,7 +1,6 @@
 "use server";
 
 import { hash } from "bcrypt";
-import { redirect } from "next/navigation";
 
 import { prisma } from "@/lib/prisma";
 
@@ -42,6 +41,4 @@ export async function register({
       id: invitation.id,
     },
   });
-
-  redirect("/login");
 }
