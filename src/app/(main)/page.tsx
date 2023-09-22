@@ -49,15 +49,6 @@ async function getTraveltimeToUser(
   };
 }
 
-async function asyncFilter<T>(
-  arr: T[],
-  predicate: (value: T, index: number, array: T[]) => Promise<boolean>,
-) {
-  return Promise.all(arr.map(predicate)).then((results) =>
-    arr.filter((_v, index) => results[index]),
-  );
-}
-
 async function getFilteredTrainings({
   searchParams,
 }: {
