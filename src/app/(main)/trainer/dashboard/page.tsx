@@ -25,7 +25,7 @@ export default async function Page() {
   return (
     <div>
       <PageTitle>Trainer Dashboard</PageTitle>
-      <div className="gap-16 md:grid md:grid-cols-[500px,1fr]">
+      <div className="gap-16 md:grid lg:grid-cols-[500px,1fr]">
         <div className="mb-10 md:mb-0">
           <h2 className="mb-3 text-xl font-semibold">Training erstellen</h2>
           <p className="mb-8 max-w-[70ch] text-sm leading-[1.8] text-gray-500">
