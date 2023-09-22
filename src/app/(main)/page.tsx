@@ -6,6 +6,7 @@ import { PageTitle } from "@/components/PageTitle";
 import { TrainingCard } from "@/components/TrainingCard";
 import { getDuration, secondsToDuration } from "@/lib/date";
 import { getDirections } from "@/lib/mapquest";
+import { getServerSession } from "@/lib/next-auth";
 
 import { getMe } from "./profile/actions";
 import { TrainingFilter } from "./TrainingFilter";
@@ -17,6 +18,9 @@ export default async function Home({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  const session = await getServerSession();
+  const role = session?.user.role;
+
   const filteredTrainings = await filterTrainings({ searchParams });
 
   let content = <p>Keine Trainings gefunden</p>;
@@ -28,7 +32,7 @@ export default async function Home({
             <TrainingCard
               training={training}
               actions={
-                training.isRegistered ? (
+                role === "trainer" ? null : training.isRegistered ? (
                   <UnregisterButton trainingId={training.id} />
                 ) : training.maxInterns - training.registrations.length > 0 ? (
                   <RegisterButton trainingId={training.id} />
