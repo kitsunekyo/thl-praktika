@@ -11,6 +11,48 @@ import { TrainingFilter } from "./TrainingFilter";
 import { getTrainings } from "../register";
 import { RegisterButton, UnregisterButton } from "../register-buttons";
 
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const filteredTrainings = await filterTrainings({ searchParams });
+
+  let content = <p>Keine Trainings gefunden</p>;
+  if (filteredTrainings.length > 0) {
+    content = (
+      <ul className="space-y-4 md:w-full md:max-w-[600px]">
+        {filteredTrainings.map((training) => (
+          <li key={training.id}>
+            <TrainingCard
+              training={training}
+              actions={
+                training.isRegistered ? (
+                  <UnregisterButton trainingId={training.id} />
+                ) : training.maxInterns - training.registrations.length > 0 ? (
+                  <RegisterButton trainingId={training.id} />
+                ) : null
+              }
+            />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  return (
+    <section>
+      <h1 className="mb-6 text-2xl font-semibold md:mb-12">Praktika</h1>
+      <div className="gap-8 md:flex">
+        <aside className="mb-8 shrink-0 basis-80">
+          <TrainingFilter />
+        </aside>
+        {content}
+      </div>
+    </section>
+  );
+}
+
 function getUserAddress(user: Pick<User, "address" | "city" | "zipCode">) {
   return [user.address, [user.zipCode, user.city].filter(Boolean).join(" ")]
     .filter(Boolean)
@@ -92,46 +134,4 @@ async function filterTrainings({
     }
     return true;
   });
-}
-
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
-  const filteredTrainings = await filterTrainings({ searchParams });
-
-  let content = <p>Keine Trainings gefunden</p>;
-  if (filteredTrainings.length > 0) {
-    content = (
-      <ul className="space-y-2">
-        {filteredTrainings.map((training) => (
-          <li key={training.id}>
-            <TrainingCard
-              training={training}
-              actions={
-                training.isRegistered ? (
-                  <UnregisterButton trainingId={training.id} />
-                ) : training.maxInterns - training.registrations.length > 0 ? (
-                  <RegisterButton trainingId={training.id} />
-                ) : null
-              }
-            />
-          </li>
-        ))}
-      </ul>
-    );
-  }
-
-  return (
-    <section>
-      <h1 className="mb-6 text-2xl font-semibold md:mb-12">Praktika</h1>
-      <div className="gap-8 md:flex">
-        <aside className="mb-8 shrink-0 basis-80">
-          <TrainingFilter />
-        </aside>
-        {content}
-      </div>
-    </section>
-  );
 }

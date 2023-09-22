@@ -33,7 +33,7 @@ export async function TrainingCard({
 
   return (
     <div
-      className={cn("rounded border border-solid p-4 text-sm", {
+      className={cn("rounded border border-solid bg-white p-4 text-sm", {
         "opacity-50": isPast,
       })}
     >
