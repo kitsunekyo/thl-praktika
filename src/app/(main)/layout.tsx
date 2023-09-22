@@ -9,7 +9,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession();
-  console.log(session?.user);
 
   return (
     <div className="flex min-h-screen flex-col">
