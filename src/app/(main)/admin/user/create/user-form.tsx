@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -71,7 +70,12 @@ export function UserForm() {
               }
               return;
             }
-            const res = await createUser(data.email, data.password, data.role);
+            const res = await createUser(
+              data.email,
+              data.password,
+              data.name,
+              data.role,
+            );
             if (res?.error) {
               toast({
                 title: "Fehler beim Erstellen",
