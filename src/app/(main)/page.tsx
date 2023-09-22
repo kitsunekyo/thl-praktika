@@ -32,7 +32,7 @@ async function getTraveltimeToUser(
   }
 
   if (process.env.NODE_ENV === "development") {
-    // return { time: 4855, formattedTime: "01:11:20" };
+    return { time: 4855, formattedTime: "1 Stunde 2 Minuten" };
   }
 
   const directions = await getDirections(fromAddress, toAddress);
