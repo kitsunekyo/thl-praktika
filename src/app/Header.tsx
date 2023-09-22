@@ -71,7 +71,7 @@ export function Header({ user }: { user?: Session["user"] }) {
         <div className="mr-12">
           <Logo />
         </div>
-        <DesktopMenu />
+        <DesktopMenu user={user} />
         <div className="ml-auto hidden md:block">
           {!!user ? <UserMenu user={user} /> : <LoginButton />}
         </div>
