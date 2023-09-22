@@ -47,11 +47,12 @@ export default async function Home({
 
   return (
     <section>
-      <PageTitle>Praktika</PageTitle>
-
       <div className="gap-8 md:flex">
-        <aside className="mb-8 shrink-0 basis-80">
-          <TrainingFilter />
+        <aside className="relative mb-8 shrink-0 basis-80">
+          <div className="sticky top-12">
+            <PageTitle>Praktika</PageTitle>
+            <TrainingFilter />
+          </div>
         </aside>
         {content}
       </div>
