@@ -19,7 +19,7 @@ export function Logo({
     >
       <Link href="/" onClick={onNavigate}>
         <div className="flex items-center">
-          <PawPrintIcon className="mr-2 h-6 w-6" />
+          <PawPrintIcon className="mr-2 h-6 w-6 text-thl" />
           THL Praktika
         </div>
       </Link>
