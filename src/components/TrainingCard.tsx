@@ -5,7 +5,11 @@ import Link from "next/link";
 import React from "react";
 
 import { getMe } from "@/app/(main)/profile/actions";
-import { formatDurationShort, formatTrainingDate } from "@/lib/date";
+import {
+  formatDurationShort,
+  formatTrainingDate,
+  secondsToDuration,
+} from "@/lib/date";
 import { getDirections } from "@/lib/mapquest";
 import { cn, getInitials, range } from "@/lib/utils";
 
@@ -46,16 +50,6 @@ async function getTraveltimeToUser(
     }),
   };
 }
-
-function secondsToDuration(seconds: number): Duration {
-  const epoch = new Date(0);
-  const secondsAfterEpoch = new Date(seconds * 1000);
-  return intervalToDuration({
-    start: epoch,
-    end: secondsAfterEpoch,
-  });
-}
-
 export async function TrainingCard({
   training,
   actions,
