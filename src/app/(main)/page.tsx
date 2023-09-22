@@ -6,8 +6,8 @@ import { TrainingCard } from "@/components/TrainingCard";
 import { getDuration, secondsToDuration } from "@/lib/date";
 import { getDirections } from "@/lib/mapquest";
 
-import { Filter } from "./Filter";
 import { getMe } from "./profile/actions";
+import { TrainingFilter } from "./TrainingFilter";
 import { getTrainings } from "../register";
 import { RegisterButton, UnregisterButton } from "../register-buttons";
 
@@ -137,7 +137,7 @@ export default async function Home({
       <h1 className="mb-6 text-2xl font-semibold md:mb-12">Praktika</h1>
       <div className="gap-8 md:flex">
         <aside className="mb-8 shrink-0 basis-80">
-          <Filter />
+          <TrainingFilter />
         </aside>
         {content}
       </div>

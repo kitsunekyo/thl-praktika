@@ -10,7 +10,7 @@ import { useTransition } from "react";
 
 import { Badge } from "@/components/ui/badge";
 
-export function Filter() {
+export function TrainingFilter() {
   const { replace } = useRouter();
   const [pending, startTransition] = useTransition();
   const searchParams = useSearchParams();
