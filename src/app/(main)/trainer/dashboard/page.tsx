@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { TrainingCard } from "@/components/TrainingCard";
+import { getDuration } from "@/lib/date";
 import { getServerSession } from "@/lib/next-auth";
 
 import { getMyTrainings } from "./actions";
@@ -15,6 +16,10 @@ export default async function Page() {
   }
 
   const myTrainings = await getMyTrainings();
+  const trainings = myTrainings.map((training) => ({
+    ...training,
+    duration: getDuration(training.startTime, training.endTime),
+  }));
 
   return (
     <div className="gap-8 md:grid md:grid-cols-2">
@@ -34,7 +39,7 @@ export default async function Page() {
           </p>
         )}
         <ul className="space-y-2">
-          {myTrainings.map((training) => (
+          {trainings.map((training) => (
             <li key={training.id}>
               <TrainingCard
                 training={training}

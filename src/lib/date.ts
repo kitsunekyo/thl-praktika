@@ -1,33 +1,48 @@
 /* eslint-disable import/no-duplicates */
-import { format, setDefaultOptions, startOfDay, sub } from "date-fns";
+import {
+  format,
+  intervalToDuration,
+  setDefaultOptions,
+  startOfDay,
+  sub,
+} from "date-fns";
 import { deAT } from "date-fns/locale";
 
 setDefaultOptions({
   locale: deAT,
 });
 
-export function formatTrainingDate(
-  date: Date,
-  startTime: string,
-  endTime: string,
-) {
+/**
+ * gets the duration from time strings (eg. 13:35) in seconds
+ */
+export function getDuration(startTime: string, endTime: string) {
   const [startHours, startMinutes] = startTime.split(":");
   const [endHours, endMinutes] = endTime.split(":");
   const startSeconds =
     parseInt(startHours) * 60 * 60 + parseInt(startMinutes) * 60;
   const endSeconds = parseInt(endHours) * 60 * 60 + parseInt(endMinutes) * 60;
 
-  const hours = Math.floor((endSeconds - startSeconds) / 3600);
-  const minutes = Math.floor(((endSeconds - startSeconds) % 3600) / 60);
+  const seconds = endSeconds - startSeconds;
+  return seconds;
+}
 
-  let duration = "";
-  if (hours > 0) duration += `${hours}h`;
-  if (minutes > 0) duration += `${minutes}m`;
+export function formatDurationShort(seconds: number) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
 
-  return `${format(
-    new Date(date),
-    "do MMM yy",
-  )}, ${startTime} - ${endTime} (${duration})`;
+  let formattedDuration = "";
+  if (hours > 0) formattedDuration += `${hours}h`;
+  if (minutes > 0) formattedDuration += `${minutes}m`;
+
+  return formattedDuration;
+}
+
+export function formatTrainingDate(
+  date: Date,
+  startTime: string,
+  endTime: string,
+) {
+  return `${format(new Date(date), "do MMM yy")}, ${startTime} - ${endTime}`;
 }
 
 export function formatTimeValue(time: string) {
@@ -52,7 +67,16 @@ export function formatTimeValue(time: string) {
   return `${paddedHours}:${paddedMinutes}`;
 }
 
-const timeZoneOffset = new Date().getTimezoneOffset();
 export const getFixedDate = (date: Date) => {
+  const timeZoneOffset = new Date().getTimezoneOffset();
   return sub(startOfDay(date), { minutes: timeZoneOffset });
 };
+
+export function secondsToDuration(seconds: number): Duration {
+  const epoch = new Date(0);
+  const secondsAfterEpoch = new Date(seconds * 1000);
+  return intervalToDuration({
+    start: epoch,
+    end: secondsAfterEpoch,
+  });
+}

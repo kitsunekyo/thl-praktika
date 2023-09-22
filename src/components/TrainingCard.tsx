@@ -5,14 +5,14 @@ import Link from "next/link";
 import React from "react";
 
 import { getMe } from "@/app/(main)/profile/actions";
-import { formatTrainingDate } from "@/lib/date";
+import { formatDurationShort, formatTrainingDate } from "@/lib/date";
 import { getDirections } from "@/lib/mapquest";
 import { cn, getInitials, range } from "@/lib/utils";
 
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 
-async function getDistanceToUser(
+async function getTraveltimeToUser(
   user: Pick<User, "id" | "address" | "city" | "zipCode">,
 ) {
   const me = await getMe();
@@ -41,7 +41,9 @@ async function getDistanceToUser(
 
   return {
     time: directions.route.time,
-    formattedTime: directions.route.formattedTime,
+    formattedTime: formatDuration(secondsToDuration(directions.route.time), {
+      format: ["hours", "minutes"],
+    }),
   };
 }
 
@@ -60,18 +62,13 @@ export async function TrainingCard({
 }: {
   training: Training & {
     registrations: Registration[];
-    author: User;
+    author: Omit<User, "password">;
+    duration: number;
   };
   actions?: React.ReactNode;
 }) {
   const isPast = training.date < new Date();
-  const distance = await getDistanceToUser(training.author);
-  let travelDuration: undefined | string;
-  if (distance && distance.time >= 1) {
-    travelDuration = formatDuration(secondsToDuration(distance.time), {
-      format: ["hours", "minutes"],
-    });
-  }
+  const distance = await getTraveltimeToUser(training.author);
 
   return (
     <div
@@ -86,7 +83,8 @@ export async function TrainingCard({
             training.date,
             training.startTime,
             training.endTime,
-          )}
+          )}{" "}
+          ({formatDurationShort(training.duration)})
         </dd>
         <dd>
           {training.customAddress ? (
@@ -104,8 +102,8 @@ export async function TrainingCard({
               >
                 {getAddress(training.author)}{" "}
               </Link>
-              {!!travelDuration && (
-                <p className="text-xs">{travelDuration} entfernt</p>
+              {!!distance && (
+                <p className="text-xs">{distance.formattedTime} entfernt</p>
               )}
             </div>
           )}

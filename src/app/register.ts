@@ -60,10 +60,7 @@ export async function unregister(id: string) {
   revalidatePath("/");
 }
 
-export async function getTrainnings() {
-  const session = await getServerSession();
-  const userId = session?.user.id;
-
+export async function getTrainings() {
   const trainings = await prisma.training.findMany({
     include: {
       author: true,
@@ -76,8 +73,5 @@ export async function getTrainnings() {
     },
   });
 
-  return trainings.map((training) => ({
-    ...training,
-    isRegistered: training.registrations.some((r) => r.userId === userId),
-  }));
+  return trainings;
 }
