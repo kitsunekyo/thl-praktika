@@ -139,6 +139,7 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
                       type="button"
                       variant="ghost"
                       size="icon"
+                      className="shrink-0"
                       aria-label="Passwort verstecken"
                       onClick={() => setShowPassword(false)}
                     >
@@ -149,6 +150,7 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
                       type="button"
                       variant="ghost"
                       size="icon"
+                      className="shrink-0"
                       aria-label="Passwort anzeigen"
                       onClick={() => setShowPassword(true)}
                     >
