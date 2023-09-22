@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,11 +23,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { createUser } from "../actions";
+import { createUser, inviteUser } from "../actions";
 
 export const userSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(6),
+  password: z.union([z.string().min(6), z.literal("")]),
   role: z.string(),
 });
 
@@ -45,7 +46,11 @@ export function UserForm() {
       <form
         className="max-w-[300px] space-y-6"
         onSubmit={form.handleSubmit((data: z.infer<typeof userSchema>) => {
-          createUser(data.email, data.password, data.role);
+          if ("password" in data && data.password !== "") {
+            createUser(data.email, data.password, data.role);
+            return;
+          }
+          inviteUser(data.email, data.role);
         })}
       >
         <FormField
@@ -53,22 +58,9 @@ export function UserForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Email*</FormLabel>
               <FormControl>
                 <Input type="email" placeholder="good@pup.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Passwort</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -79,7 +71,7 @@ export function UserForm() {
           name="role"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Rolle</FormLabel>
+              <FormLabel>Rolle*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -96,7 +88,28 @@ export function UserForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">User Erstellen</Button>
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Passwort</FormLabel>
+              <FormControl>
+                <Input type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+              <FormDescription>
+                Du kannst Passwort leer lassen um den User einzuladen. Der User
+                kann sich später selbst registrieren.
+              </FormDescription>
+            </FormItem>
+          )}
+        />
+        <Button type="submit">
+          {form.getValues("password") === ""
+            ? "User einladen"
+            : "User erstellen"}
+        </Button>
       </form>
     </Form>
   );

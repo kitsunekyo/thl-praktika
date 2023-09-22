@@ -64,16 +64,29 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      const foundUser = await prisma.user.findFirst({
+    async signIn({ user }) {
+      const userExists = await prisma.user.findFirst({
+        where: {
+          id: user.id,
+        },
+      });
+      if (userExists) {
+        return true;
+      }
+      const invitation = await prisma.invitation.findFirst({
         where: {
           email: user.email,
         },
       });
-      if (!foundUser) {
-        return false;
+      if (invitation) {
+        await prisma.invitation.delete({
+          where: {
+            id: invitation.id,
+          },
+        });
+        return true;
       }
-      return true;
+      return false;
     },
     jwt: ({ token, user }) => {
       if (user) {

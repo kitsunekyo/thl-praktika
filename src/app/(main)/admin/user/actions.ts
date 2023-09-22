@@ -32,8 +32,8 @@ export async function createUser(
     throw new Error("must be admin");
   }
 
-  console.log("creating user", { email, password, role });
   const hashedPassword = await hash(password, 12);
+
   await prisma.user.create({
     data: {
       email,
@@ -42,5 +42,25 @@ export async function createUser(
     },
   });
 
-  redirect("/user");
+  redirect("/admin/user");
+}
+
+export async function inviteUser(email: string, role = "user") {
+  const session = await getServerSession();
+  const currentUser = session?.user;
+  if (!currentUser) {
+    throw new Error("must be authenticated");
+  }
+  if (currentUser.role !== "admin") {
+    throw new Error("not allowed");
+  }
+
+  await prisma.invitation.create({
+    data: {
+      email,
+      role,
+    },
+  });
+
+  redirect("/admin/user");
 }
