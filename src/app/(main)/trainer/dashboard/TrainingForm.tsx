@@ -233,7 +233,7 @@ export function TrainingForm() {
           )}
         />
         <Button type="submit" disabled={loading}>
-          Erstellen
+          Training erstellen
         </Button>
       </form>
     </Form>

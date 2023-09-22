@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
+import { PageTitle } from "@/components/PageTitle";
+
 import { getMe } from "./actions";
 import { ProfileForm } from "./ProfileForm";
 
@@ -13,7 +15,7 @@ export default async function Profile() {
 
   return (
     <div className="mx-auto max-w-[600px]">
-      <h1 className="mb-8 text-xl font-semibold">Dein Profil</h1>
+      <PageTitle>Dein Profil</PageTitle>
       <Image
         width={120}
         height={120}

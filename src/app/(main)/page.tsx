@@ -2,6 +2,7 @@ import { User } from "@prisma/client";
 import { formatDuration } from "date-fns";
 import { redirect } from "next/navigation";
 
+import { PageTitle } from "@/components/PageTitle";
 import { TrainingCard } from "@/components/TrainingCard";
 import { getDuration, secondsToDuration } from "@/lib/date";
 import { getDirections } from "@/lib/mapquest";
@@ -42,7 +43,8 @@ export default async function Home({
 
   return (
     <section>
-      <h1 className="mb-6 text-2xl font-semibold md:mb-12">Praktika</h1>
+      <PageTitle>Praktika</PageTitle>
+
       <div className="gap-8 md:flex">
         <aside className="mb-8 shrink-0 basis-80">
           <TrainingFilter />

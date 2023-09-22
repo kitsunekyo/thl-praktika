@@ -7,6 +7,7 @@ import type { Session, User } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import React, { useState } from "react";
 
+import { Logo } from "@/components/Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -178,16 +179,6 @@ function MobileMenu({ user, links }: { user?: User; links: typeof ALL_LINKS }) {
           </div>
         </SheetContent>
       </Sheet>
-    </div>
-  );
-}
-
-function Logo({ onNavigate }: { onNavigate?: () => void }) {
-  return (
-    <div className="spacing text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-gray-500">
-      <Link href="/" className="py-2" onClick={onNavigate}>
-        THL Praktika
-      </Link>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
+import { PageTitle } from "@/components/PageTitle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,15 +24,15 @@ export default async function UserPage() {
     redirect("/");
   }
   return (
-    <div>
-      <h1 className="mb-4 text-xl font-semibold">User</h1>
+    <>
+      <PageTitle>User</PageTitle>
       <div className="mb-8">
         <Link href="/admin/user/create">
           <Button variant="outline">User erstellen</Button>
         </Link>
       </div>
       <UserList />
-    </div>
+    </>
   );
 }
 

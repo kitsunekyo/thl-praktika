@@ -17,6 +17,9 @@ export async function getMyTrainings() {
   return prisma.training.findMany({
     where: {
       authorId: session.user.id,
+      date: {
+        gte: new Date(),
+      },
     },
     include: {
       author: true,

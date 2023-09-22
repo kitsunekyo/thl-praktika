@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 
+import { PageTitle } from "@/components/PageTitle";
 import {
   Table,
   TableBody,
@@ -33,10 +34,10 @@ export default async function RegistrationsPage() {
     redirect("/");
   }
   return (
-    <div>
-      <h1 className="mb-8 text-xl font-semibold">Anmeldungen für Praktika</h1>
+    <>
+      <PageTitle>Anmeldungen für Praktika</PageTitle>
       <Registrations />
-    </div>
+    </>
   );
 }
 
