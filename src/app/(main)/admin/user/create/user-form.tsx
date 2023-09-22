@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -22,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
 
 import { createUser, inviteUser } from "../actions";
 
@@ -33,6 +35,7 @@ export const userSchema = z.object({
 });
 
 export function UserForm() {
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof userSchema>>({
     resolver: zodResolver(userSchema),
     defaultValues: {
@@ -42,6 +45,7 @@ export function UserForm() {
       role: "user",
     },
   });
+  const [pending, startTransition] = useTransition();
 
   const isPasswordEmpty = form.getValues("password").length <= 0;
 
@@ -50,11 +54,37 @@ export function UserForm() {
       <form
         className="max-w-[300px] space-y-6"
         onSubmit={form.handleSubmit((data: z.infer<typeof userSchema>) => {
-          if (isPasswordEmpty) {
-            inviteUser(data.email, data.name, data.role);
-            return;
-          }
-          createUser(data.email, data.password, data.role);
+          startTransition(async () => {
+            if (isPasswordEmpty) {
+              const res = await inviteUser(data.email, data.name, data.role);
+              if (res?.error) {
+                toast({
+                  title: "Fehler beim Einladen",
+                  description: `${data.email} konnte nicht eingeladen werden. Versuch es nochmal.`,
+                  variant: "destructive",
+                });
+              } else {
+                toast({
+                  title: "User wurde eingeladen",
+                  description: `Es wurde eine Einladung an ${data.email} gesendet.`,
+                });
+              }
+              return;
+            }
+            const res = await createUser(data.email, data.password, data.role);
+            if (res?.error) {
+              toast({
+                title: "Fehler beim Erstellen",
+                description: `${data.email} konnte nicht erstellt werden. Versuch es nochmal.`,
+                variant: "destructive",
+              });
+            } else {
+              toast({
+                title: "User wurde erstellt",
+                description: `User ${data.email} wurde erstellt.`,
+              });
+            }
+          });
         })}
       >
         <FormField
@@ -110,7 +140,9 @@ export function UserForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">User einladen</Button>
+        <Button type="submit" disabled={pending}>
+          User einladen
+        </Button>
 
         <FormField
           control={form.control}
@@ -125,7 +157,7 @@ export function UserForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isPasswordEmpty}>
+        <Button type="submit" disabled={pending || isPasswordEmpty}>
           User erstellen
         </Button>
       </form>

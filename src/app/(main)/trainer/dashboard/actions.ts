@@ -52,7 +52,9 @@ export async function createTraining(
   const session = await getServerSession();
   const currentUser = session?.user;
   if (!currentUser) {
-    throw new Error("must be authenticated");
+    return {
+      error: "not authorized",
+    };
   }
   const training = createTrainingSchema.parse(payload);
   await prisma.training.create({

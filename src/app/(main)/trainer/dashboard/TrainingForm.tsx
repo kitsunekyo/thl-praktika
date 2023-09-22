@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, set } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, CheckIcon } from "lucide-react";
 import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -26,7 +26,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
-import { formatTimeValue, getFixedDate } from "@/lib/date";
+import { useToast } from "@/components/ui/use-toast";
+import { formatTimeValue, formatTrainingDate, getFixedDate } from "@/lib/date";
 import { cn } from "@/lib/utils";
 
 import { createTraining } from "./actions";
@@ -62,6 +63,7 @@ export const trainingSchema = z
 
 export function TrainingForm() {
   const [loading, startTransition] = useTransition();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof trainingSchema>>({
     resolver: zodResolver(trainingSchema),
@@ -80,8 +82,24 @@ export function TrainingForm() {
       <form
         onSubmit={form.handleSubmit(
           async (data: z.infer<typeof trainingSchema>) => {
-            startTransition(() => {
-              createTraining(data);
+            startTransition(async () => {
+              const res = await createTraining(data);
+              if (res?.error) {
+                toast({
+                  title: "Oops",
+                  description: `Das Training konnte nicht erstellt werden. Versuch es nochmal.`,
+                  variant: "destructive",
+                });
+              } else {
+                toast({
+                  title: "Training wurde erstellt",
+                  description: `Das Training für ${formatTrainingDate(
+                    data.date,
+                    data.startTime,
+                    data.endTime,
+                  )} wurde erstellt.`,
+                });
+              }
             });
           },
         )}

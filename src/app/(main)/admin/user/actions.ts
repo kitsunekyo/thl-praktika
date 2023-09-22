@@ -28,10 +28,14 @@ export async function createUser(
   const session = await getServerSession();
   const currentUser = session?.user;
   if (!currentUser) {
-    throw new Error("must be authenticated");
+    return {
+      error: "not authorized",
+    };
   }
   if (currentUser.role !== "admin") {
-    throw new Error("must be admin");
+    return {
+      error: "not authorized",
+    };
   }
 
   const hashedPassword = await hash(password, 12);
@@ -46,6 +50,7 @@ export async function createUser(
   });
 
   redirect("/admin/user");
+  return;
 }
 
 export async function inviteUser(email: string, name = "", role = "user") {
@@ -53,7 +58,9 @@ export async function inviteUser(email: string, name = "", role = "user") {
   const currentUser = session?.user;
 
   if (currentUser?.role !== "admin") {
-    throw new Error("not authorized");
+    return {
+      error: "not authorized",
+    };
   }
 
   const invitation = await prisma.invitation.findFirst({
@@ -63,7 +70,9 @@ export async function inviteUser(email: string, name = "", role = "user") {
   });
 
   if (invitation) {
-    throw new Error("invitation already exists");
+    return {
+      error: "invitation already exists",
+    };
   }
 
   const user = await prisma.user.findFirst({
@@ -73,7 +82,9 @@ export async function inviteUser(email: string, name = "", role = "user") {
   });
 
   if (user) {
-    throw new Error("user already exists");
+    return {
+      error: "user already exists",
+    };
   }
 
   await prisma.invitation.create({
@@ -96,7 +107,7 @@ export async function getInvitations() {
     throw new Error("must be authenticated");
   }
   if (currentUser.role !== "admin") {
-    throw new Error("not allowed");
+    throw new Error("not authorized");
   }
 
   return await prisma.invitation.findMany({

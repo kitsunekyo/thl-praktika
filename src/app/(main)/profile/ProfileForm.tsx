@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 
 import { updateProfile } from "./actions";
 
@@ -36,6 +37,7 @@ export const profileSchema = z.object({
 
 export function ProfileForm({ user }: { user: Omit<User, "password"> }) {
   const [loading, startTransition] = useTransition();
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -53,7 +55,19 @@ export function ProfileForm({ user }: { user: Omit<User, "password"> }) {
         className="space-y-6"
         onSubmit={form.handleSubmit((data: z.infer<typeof profileSchema>) => {
           startTransition(async () => {
-            await updateProfile(data);
+            const res = await updateProfile(data);
+            if (res?.error) {
+              toast({
+                title: "Oops",
+                description: `Dein Profil konnte nicht aktualisiert werden. Versuch es nochmal.`,
+                variant: "destructive",
+              });
+              return;
+            }
+            toast({
+              title: "Gespeichert",
+              description: `Deine Änderungen wurden gespeichert.`,
+            });
             form.reset(data);
           });
         })}

@@ -38,7 +38,7 @@ export async function updateProfile(
   const session = await getServerSession();
 
   if (!session?.user) {
-    return;
+    return { error: "not authorized" };
   }
 
   await prisma.user.update({

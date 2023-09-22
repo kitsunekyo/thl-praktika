@@ -20,6 +20,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 
 import { register } from "./actions";
 
@@ -46,6 +47,7 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
       password: "",
     },
   });
+  const { toast } = useToast();
 
   return (
     <Form {...form}>
@@ -60,8 +62,22 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
         className="space-y-6"
         onSubmit={form.handleSubmit(
           async ({ email, password, name }: z.infer<typeof loginSchema>) => {
-            startTransition(() => {
-              register({ email, password, name });
+            startTransition(async () => {
+              const res = await register({ email, password, name });
+
+              if (res.error) {
+                toast({
+                  title: "Registrierung fehlgeschlagen",
+                  description: "Bitte versuche es erneut.",
+                  variant: "destructive",
+                });
+                return;
+              }
+
+              toast({
+                title: "Registrierung erfolgreich",
+                description: "Du kannst dich nun anmelden.",
+              });
             });
           },
         )}

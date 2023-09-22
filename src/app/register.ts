@@ -9,7 +9,9 @@ export async function register(id: string) {
   const session = await getServerSession();
   const currentUser = session?.user;
   if (!currentUser) {
-    throw new Error("must be authenticated");
+    return {
+      error: "not authorized",
+    };
   }
 
   const isRegisteredAlready =
@@ -21,7 +23,9 @@ export async function register(id: string) {
     })) !== null;
 
   if (isRegisteredAlready) {
-    throw new Error("Already registered");
+    return {
+      error: "already registered",
+    };
   }
 
   await prisma.registration.create({
@@ -37,7 +41,9 @@ export async function unregister(id: string) {
   const session = await getServerSession();
   const currentUser = session?.user;
   if (!currentUser) {
-    throw new Error("must be authenticated");
+    return {
+      error: "not authorized",
+    };
   }
 
   const registration = await prisma.registration.findFirst({
@@ -48,7 +54,9 @@ export async function unregister(id: string) {
   });
 
   if (!registration) {
-    throw new Error("Did not find registration");
+    return {
+      error: "registration not found",
+    };
   }
 
   await prisma.registration.delete({
