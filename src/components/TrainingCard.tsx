@@ -1,55 +1,14 @@
 import { Registration, Training, User } from "@prisma/client";
-import { formatDuration, intervalToDuration } from "date-fns";
 import { UserCheckIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-import { getMe } from "@/app/(main)/profile/actions";
-import {
-  formatDurationShort,
-  formatTrainingDate,
-  secondsToDuration,
-} from "@/lib/date";
-import { getDirections } from "@/lib/mapquest";
+import { formatDurationShort, formatTrainingDate } from "@/lib/date";
 import { cn, getInitials, range } from "@/lib/utils";
 
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 
-async function getTraveltimeToUser(
-  user: Pick<User, "id" | "address" | "city" | "zipCode">,
-) {
-  const me = await getMe();
-  if (!me) {
-    return;
-  }
-  if (me.id === user.id) {
-    return;
-  }
-  const myAddress = getAddress(me);
-  const userAddress = getAddress(user);
-
-  if (!myAddress || !userAddress) {
-    return;
-  }
-
-  if (process.env.NODE_ENV === "development") {
-    return { time: 4855, formattedTime: "01:11:20" };
-  }
-
-  const directions = await getDirections(getAddress(me), getAddress(user));
-
-  if (directions.info.statuscode !== 0) {
-    return;
-  }
-
-  return {
-    time: directions.route.time,
-    formattedTime: formatDuration(secondsToDuration(directions.route.time), {
-      format: ["hours", "minutes"],
-    }),
-  };
-}
 export async function TrainingCard({
   training,
   actions,
@@ -58,11 +17,19 @@ export async function TrainingCard({
     registrations: Registration[];
     author: Omit<User, "password">;
     duration: number;
+    traveltime?: {
+      time: number;
+      formattedTime: string;
+    };
   };
   actions?: React.ReactNode;
 }) {
   const isPast = training.date < new Date();
-  const distance = await getTraveltimeToUser(training.author);
+  const address = getAddress(training.author);
+  const googleMapsUrl = `https://www.google.com/maps/place/${address.replaceAll(
+    " ",
+    "+",
+  )}`;
 
   return (
     <div
@@ -73,12 +40,11 @@ export async function TrainingCard({
       <dl className="space-y-2">
         <dd className="font-medium">{training.description}</dd>
         <dd>
-          {formatTrainingDate(
+          {`${formatTrainingDate(
             training.date,
             training.startTime,
             training.endTime,
-          )}{" "}
-          ({formatDurationShort(training.duration)})
+          )} (${formatDurationShort(training.duration)})`}
         </dd>
         <dd>
           {training.customAddress ? (
@@ -88,22 +54,25 @@ export async function TrainingCard({
           ) : (
             <div>
               <Link
-                href={`https://www.google.com/maps/place/${getAddress(
-                  training.author,
-                ).replaceAll(" ", "+")}`}
+                href={googleMapsUrl}
                 target="_blank"
                 className="underline hover:no-underline"
               >
-                {getAddress(training.author)}{" "}
+                {address}
               </Link>
-              {!!distance && (
-                <p className="text-xs">{distance.formattedTime} entfernt</p>
+              {!!training.traveltime && (
+                <p className="text-xs">
+                  {training.traveltime.formattedTime} entfernt
+                </p>
               )}
             </div>
           )}
         </dd>
         <dd>
-          <RegistrationStatus training={training} />
+          <RegistrationStatus
+            count={training.registrations.length}
+            max={training.maxInterns}
+          />
         </dd>
       </dl>
       <footer className="mt-4 flex items-center gap-4 border-t pt-4">
@@ -125,18 +94,12 @@ export async function TrainingCard({
   );
 }
 
-function RegistrationStatus({
-  training,
-}: {
-  training: Training & {
-    registrations: Registration[];
-  };
-}) {
-  const freeSpots = training.maxInterns - training.registrations.length;
+function RegistrationStatus({ count, max }: { count: number; max: number }) {
+  const freeSpots = max - count;
 
   return (
     <div className="flex items-center">
-      {range(training.registrations.length).map((i) => (
+      {range(count).map((i) => (
         <UserCheckIcon key={i} className="h-5 w-5" />
       ))}
       {range(freeSpots).map((i) => (
@@ -144,7 +107,7 @@ function RegistrationStatus({
       ))}
       {freeSpots > 0 ? (
         <Badge className="ml-2">
-          {training.registrations.length}/{training.maxInterns} angemeldet
+          {count}/{max} angemeldet
         </Badge>
       ) : (
         <Badge className="ml-2" variant="secondary">

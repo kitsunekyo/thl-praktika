@@ -32,7 +32,7 @@ async function getTraveltimeToUser(
   }
 
   if (process.env.NODE_ENV === "development") {
-    return { time: 4855, formattedTime: "01:11:20" };
+    // return { time: 4855, formattedTime: "01:11:20" };
   }
 
   const directions = await getDirections(fromAddress, toAddress);
@@ -47,6 +47,15 @@ async function getTraveltimeToUser(
       format: ["hours", "minutes"],
     }),
   };
+}
+
+async function asyncFilter<T>(
+  arr: T[],
+  predicate: (value: T, index: number, array: T[]) => Promise<boolean>,
+) {
+  return Promise.all(arr.map(predicate)).then((results) =>
+    arr.filter((_v, index) => results[index]),
+  );
 }
 
 async function getFilteredTrainings({
@@ -67,32 +76,31 @@ async function getFilteredTrainings({
     typeof duration === "string" ? parseInt(duration) : undefined;
   const parsedFree = typeof free === "string" ? parseInt(free) : undefined;
 
-  const trainings = await getTrainings();
-  const filtered = trainings
-    .map((training) => ({
+  const baseTrainings = await getTrainings();
+  const trainings = await Promise.all(
+    baseTrainings.map(async (training) => ({
       ...training,
-      // traveltime: getTraveltimeToUser(training.author, me),
+      traveltime: await getTraveltimeToUser(training.author, me),
       duration: getDuration(training.startTime, training.endTime),
       isRegistered: training.registrations.some((r) => r.userId === userId),
-    }))
-    .filter((t) => {
-      if (parsedDuration && t.duration < parsedDuration * 60 * 60) {
-        return false;
-      }
-      if (parsedFree && t.maxInterns - t.registrations.length < parsedFree) {
-        return false;
-      }
-      if (!parsedTraveltime) {
-        return true;
-      }
-      // const _traveltime = await t.traveltime;
-      // if (_traveltime && _traveltime.time > parsedTraveltime * 60) {
-      //   return false;
-      // }
-      return true;
-    });
+    })),
+  );
 
-  return filtered;
+  return trainings.filter((t) => {
+    if (parsedDuration && t.duration < parsedDuration * 60 * 60) {
+      return false;
+    }
+    if (parsedFree && t.maxInterns - t.registrations.length < parsedFree) {
+      return false;
+    }
+    if (!parsedTraveltime) {
+      return true;
+    }
+    if (t.traveltime && t.traveltime.time > parsedTraveltime * 60) {
+      return false;
+    }
+    return true;
+  });
 }
 
 export default async function Home({

@@ -73,15 +73,15 @@ export function Filter() {
 }
 
 const filterOptions = [
-  // {
-  //   key: "traveltime",
-  //   label: "Fahrtzeit",
-  //   options: [
-  //     { key: "30", label: "bis 30h" },
-  //     { key: "60", label: "bis 1h" },
-  //     { key: "120", label: "bis 2h" },
-  //   ],
-  // },
+  {
+    key: "traveltime",
+    label: "Fahrtzeit",
+    options: [
+      { key: "30", label: "bis 30h" },
+      { key: "60", label: "bis 1h" },
+      { key: "120", label: "bis 2h" },
+    ],
+  },
   {
     key: "free",
     label: "Freie Plätze",
