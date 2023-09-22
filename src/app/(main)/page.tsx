@@ -49,7 +49,7 @@ async function getTraveltimeToUser(
   };
 }
 
-async function getFilteredTrainings({
+async function filterTrainings({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -99,7 +99,7 @@ export default async function Home({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const filteredTrainings = await getFilteredTrainings({ searchParams });
+  const filteredTrainings = await filterTrainings({ searchParams });
 
   let content = <p>Keine Trainings gefunden</p>;
   if (filteredTrainings.length > 0) {
