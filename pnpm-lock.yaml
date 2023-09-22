@@ -13,6 +13,7 @@ specifiers:
   '@radix-ui/react-popover': ^1.0.6
   '@radix-ui/react-select': ^1.2.2
   '@radix-ui/react-slot': ^1.0.2
+  '@radix-ui/react-toast': ^1.1.4
   '@sentry/nextjs': ^7.70.0
   '@tailwindcss/typography': ^0.5.10
   '@types/bcrypt': ^5.0.0
@@ -63,6 +64,7 @@ dependencies:
   '@radix-ui/react-popover': 1.0.6_zkisbtryv3xtasf42ecsrjh3ky
   '@radix-ui/react-select': 1.2.2_zkisbtryv3xtasf42ecsrjh3ky
   '@radix-ui/react-slot': 1.0.2_gq4reeurwxuj4hvyerswzzqthy
+  '@radix-ui/react-toast': 1.1.4_zkisbtryv3xtasf42ecsrjh3ky
   '@sentry/nextjs': 7.70.0_next@13.5.2+react@18.2.0
   '@tailwindcss/typography': 0.5.10_tailwindcss@3.3.3
   '@types/bcrypt': 5.0.0
@@ -1018,6 +1020,38 @@ packages:
       '@radix-ui/react-compose-refs': 1.0.1_gq4reeurwxuj4hvyerswzzqthy
       '@types/react': 18.2.21
       react: 18.2.0
+    dev: false
+
+  /@radix-ui/react-toast/1.1.4_zkisbtryv3xtasf42ecsrjh3ky:
+    resolution: {integrity: sha512-wf+fc8DOywrpRK3jlPlWVe+ELYGHdKDaaARJZNuUTWyWYq7+ANCFLp4rTjZ/mcGkJJQ/vZ949Zis9xxEpfq9OA==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.22.15
+      '@radix-ui/primitive': 1.0.1
+      '@radix-ui/react-collection': 1.0.3_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-compose-refs': 1.0.1_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-context': 1.0.1_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-dismissable-layer': 1.0.4_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-portal': 1.0.3_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-presence': 1.0.1_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-primitive': 1.0.3_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-use-callback-ref': 1.0.1_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-use-controllable-state': 1.0.1_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-use-layout-effect': 1.0.1_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-visually-hidden': 1.0.3_zkisbtryv3xtasf42ecsrjh3ky
+      '@types/react': 18.2.21
+      '@types/react-dom': 18.2.7
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /@radix-ui/react-use-callback-ref/1.0.1_gq4reeurwxuj4hvyerswzzqthy:
