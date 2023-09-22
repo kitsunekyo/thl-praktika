@@ -5,6 +5,35 @@ import { useTransition } from "react";
 
 import { Badge } from "@/components/ui/badge";
 
+const filterOptions = [
+  {
+    key: "traveltime",
+    label: "Fahrtzeit",
+    options: [
+      { key: "30", label: "bis 30h" },
+      { key: "60", label: "bis 1h" },
+      { key: "120", label: "bis 2h" },
+    ],
+  },
+  {
+    key: "free",
+    label: "Freie Plätze",
+    options: [
+      { key: "1", label: "1+" },
+      { key: "2", label: "2+" },
+      { key: "3", label: "3+" },
+    ],
+  },
+  {
+    key: "duration",
+    label: "Trainingsdauer",
+    options: [
+      { key: "2", label: "ab 2h" },
+      { key: "4", label: "ab 4h" },
+    ],
+  },
+];
+
 export function TrainingFilter() {
   const { replace } = useRouter();
   const [pending, startTransition] = useTransition();
@@ -66,32 +95,3 @@ export function TrainingFilter() {
     </section>
   );
 }
-
-const filterOptions = [
-  {
-    key: "traveltime",
-    label: "Fahrtzeit",
-    options: [
-      { key: "30", label: "bis 30h" },
-      { key: "60", label: "bis 1h" },
-      { key: "120", label: "bis 2h" },
-    ],
-  },
-  {
-    key: "free",
-    label: "Freie Plätze",
-    options: [
-      { key: "1", label: "1+" },
-      { key: "2", label: "2+" },
-      { key: "3", label: "3+" },
-    ],
-  },
-  {
-    key: "duration",
-    label: "Trainingsdauer",
-    options: [
-      { key: "2", label: "ab 2h" },
-      { key: "4", label: "ab 4h" },
-    ],
-  },
-];
