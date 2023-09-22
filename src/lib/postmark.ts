@@ -11,13 +11,6 @@ export function sendEmail({
   body: string;
   to: string;
 }) {
-  // if (process.env.NODE_ENV === "development") {
-  //   console.log(
-  //     `POSTMARK(dev): sending email to "${to}" with subject "${subject}"`,
-  //   );
-  //   console.log("POSTMARK(dev): body:", body);
-  //   return;
-  // }
   client.sendEmail({
     From: "hi@mostviertel.tech",
     To: to,
