@@ -1,3 +1,4 @@
+import { MailIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
@@ -15,7 +16,7 @@ import {
 } from "@/components/ui/table";
 import { authOptions } from "@/lib/next-auth";
 
-import { getUsers } from "./actions";
+import { getInvitations, getUsers } from "./actions";
 import { UserActions } from "./UserActions";
 
 export default async function UserPage() {
@@ -25,19 +26,40 @@ export default async function UserPage() {
   }
   return (
     <>
-      <PageTitle>User</PageTitle>
-      <div className="mb-8">
-        <Link href="/admin/user/create">
-          <Button variant="outline">User erstellen</Button>
-        </Link>
+      <div className="flex-end flex">
+        <PageTitle>User und Einladungen</PageTitle>
+        <div className="ml-auto">
+          <Link href="/admin/user/create">
+            <Button>User einladen oder erstellen</Button>
+          </Link>
+        </div>
       </div>
-      <UserList />
+      <div className="space-y-12">
+        <section>
+          <div className="mb-6 flex items-center">
+            <MailIcon className="mr-2 h-4 w-5" />
+            <h2 className="font-bold">Einladungen</h2>
+          </div>
+          <InvitationList />
+        </section>
+        <section>
+          <div className="mb-6 flex items-center">
+            <UserIcon className="mr-2 h-4 w-5" />
+            <h2 className="font-bold">User</h2>
+          </div>
+          <UserList />
+        </section>
+      </div>
     </>
   );
 }
 
 async function UserList() {
   const users = await getUsers();
+
+  if (users.length === 0) {
+    return <p className="text-sm text-gray-400">Keine User.</p>;
+  }
 
   return (
     <Table>
@@ -60,6 +82,40 @@ async function UserList() {
             <TableCell className="text-right">
               <UserActions user={user} />
             </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+
+async function InvitationList() {
+  const invitations = await getInvitations();
+
+  if (invitations.length === 0) {
+    return (
+      <p className="text-sm text-gray-400">Keine ausstehenden Einladungen.</p>
+    );
+  }
+
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[100px]">Email</TableHead>
+          <TableHead>Rolle</TableHead>
+          <TableHead>Name</TableHead>
+          <TableHead></TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {invitations.map((invitation) => (
+          <TableRow key={invitation.id}>
+            <TableCell className="font-medium">{invitation.email}</TableCell>
+            <TableCell>
+              <Badge variant="outline">{invitation.role}</Badge>
+            </TableCell>
+            <TableCell className="text-right">actions</TableCell>
           </TableRow>
         ))}
       </TableBody>

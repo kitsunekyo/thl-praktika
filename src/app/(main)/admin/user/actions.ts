@@ -64,3 +64,18 @@ export async function inviteUser(email: string, role = "user") {
 
   redirect("/admin/user");
 }
+
+export async function getInvitations() {
+  const session = await getServerSession();
+  const currentUser = session?.user;
+  if (!currentUser) {
+    throw new Error("must be authenticated");
+  }
+  if (currentUser.role !== "admin") {
+    throw new Error("not allowed");
+  }
+
+  return await prisma.invitation.findMany({
+    select: { id: true, email: true, role: true },
+  });
+}
