@@ -23,24 +23,24 @@ export function getDirections(
   }).then((res) => res.json());
 }
 
-export interface DirectionResponse {
+interface DirectionResponse {
   route: Route;
   info: Info;
 }
 
-export interface Info {
+interface Info {
   statuscode: number;
   copyright: Copyright;
   messages: any[];
 }
 
-export interface Copyright {
+interface Copyright {
   text: string;
   imageUrl: string;
   imageAltText: string;
 }
 
-export interface Route {
+interface Route {
   sessionId: string;
   realTime: number;
   distance: number;
@@ -64,17 +64,17 @@ export interface Route {
   locationSequence: number[];
 }
 
-export interface BoundingBox {
+interface BoundingBox {
   ul: Lr;
   lr: Lr;
 }
 
-export interface Lr {
+interface Lr {
   lat: number;
   lng: number;
 }
 
-export interface Leg {
+interface Leg {
   index: number;
   hasTollRoad: boolean;
   hasHighway: boolean;
@@ -95,7 +95,7 @@ export interface Leg {
   maneuvers: Maneuver[];
 }
 
-export interface Maneuver {
+interface Maneuver {
   index: number;
   distance: number;
   narrative: string;
@@ -118,7 +118,7 @@ export enum TransportMode {
   Car = "car",
 }
 
-export interface Location {
+interface Location {
   street: string;
   adminArea6: string;
   adminArea6Type: string;
@@ -143,7 +143,7 @@ export interface Location {
   mapUrl: string;
 }
 
-export interface Options {
+interface Options {
   routeType: string;
   enhancedNarrative: boolean;
   doReverseGeocode: boolean;
