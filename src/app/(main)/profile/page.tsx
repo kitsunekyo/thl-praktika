@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { redirect } from "next/navigation";
 
 import { PageTitle } from "@/components/PageTitle";
 
@@ -10,7 +9,7 @@ export default async function Profile() {
   const user = await getMe();
 
   if (!user) {
-    redirect("/");
+    return null;
   }
 
   return (

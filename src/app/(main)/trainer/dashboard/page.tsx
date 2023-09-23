@@ -10,12 +10,6 @@ import { TrainingForm } from "./TrainingForm";
 import { TrainingListActions } from "./TrainingListActions";
 
 export default async function Page() {
-  const session = await getServerSession();
-
-  if (!session || session.user.role === "user") {
-    redirect("/");
-  }
-
   const myTrainings = await getMyTrainings();
   const trainings = myTrainings.map((training) => ({
     ...training,

@@ -30,7 +30,7 @@ async function getRegistrations() {
 
 export default async function RegistrationsPage() {
   const session = await getServerSession();
-  if (!session || session.user.role !== "admin") {
+  if (session?.user.role !== "admin") {
     redirect("/");
   }
   return (

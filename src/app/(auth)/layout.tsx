@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Footer } from "@/components/Footer";
 import { Logo } from "@/components/Logo";
 
-export default async function RootLayout({
+export default async function Layout({
   children,
 }: {
   children: React.ReactNode;

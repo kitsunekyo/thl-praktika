@@ -1,6 +1,5 @@
 import { User } from "@prisma/client";
 import { formatDuration } from "date-fns";
-import { redirect } from "next/navigation";
 
 import { PageTitle } from "@/components/PageTitle";
 import { TrainingCard } from "@/components/TrainingCard";
@@ -20,7 +19,6 @@ export default async function Home({
 }) {
   const session = await getServerSession();
   const role = session?.user.role;
-
   const filteredTrainings = await filterTrainings({ searchParams });
 
   let content = <p>Keine Trainings gefunden</p>;
@@ -105,7 +103,7 @@ async function filterTrainings({
 }) {
   const me = await getMe();
   if (!me) {
-    redirect("/login");
+    return [];
   }
   const userId = me.id;
 

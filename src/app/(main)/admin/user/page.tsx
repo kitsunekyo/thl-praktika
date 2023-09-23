@@ -1,7 +1,5 @@
 import { MailIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
 
 import { PageTitle } from "@/components/PageTitle";
 import { Badge } from "@/components/ui/badge";
@@ -14,17 +12,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { authOptions } from "@/lib/next-auth";
 
 import { getInvitations, getUsers } from "./actions";
 import { InvitationActions } from "./InvitationActions";
 import { UserActions } from "./UserActions";
 
 export default async function UserPage() {
-  const session = await getServerSession(authOptions);
-  if (!session || session.user.role !== "admin") {
-    redirect("/");
-  }
   return (
     <>
       <div className="flex items-baseline">

@@ -1,9 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import React from "react";
-
-import { getServerSession } from "@/lib/next-auth";
 
 import { SignupForm } from "./SignupForm";
 
@@ -12,11 +8,6 @@ export default async function Login({
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  const session = await getServerSession();
-  if (session) {
-    return redirect("/");
-  }
-
   const name =
     typeof searchParams.name === "string" ? searchParams.name : undefined;
   const email =
