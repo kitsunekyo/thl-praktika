@@ -39,12 +39,7 @@ const DESKTOP_LINKS = [
   },
   {
     href: "/admin/user",
-    label: "User",
-    roles: ["admin"],
-  },
-  {
-    href: "/admin/registration",
-    label: "Anmeldungen",
+    label: "Admin",
     roles: ["admin"],
   },
 ];

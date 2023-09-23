@@ -1,7 +1,6 @@
 import { MailIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 
-import { PageTitle } from "@/components/PageTitle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,32 +18,28 @@ import { UserActions } from "./UserActions";
 
 export default async function UserPage() {
   return (
-    <>
-      <div className="flex items-baseline">
-        <PageTitle>User und Einladungen</PageTitle>
-        <div className="ml-auto">
-          <Link href="/admin/user/create">
-            <Button>User einladen oder erstellen</Button>
+    <div className="space-y-12">
+      <section>
+        <div className="mb-6 flex items-center">
+          <MailIcon className="mr-2 h-4 w-5" />
+          <h2 className="font-bold">Einladungen</h2>
+          <Link href="/admin/user/create" className="ml-auto pl-4">
+            <Button size="sm">Benutzer einladen</Button>
           </Link>
         </div>
-      </div>
-      <div className="space-y-12">
-        <section>
-          <div className="mb-6 flex items-center">
-            <MailIcon className="mr-2 h-4 w-5" />
-            <h2 className="font-bold">Einladungen</h2>
-          </div>
-          <InvitationList />
-        </section>
-        <section>
-          <div className="mb-6 flex items-center">
-            <UserIcon className="mr-2 h-4 w-5" />
-            <h2 className="font-bold">User</h2>
-          </div>
-          <UserList />
-        </section>
-      </div>
-    </>
+        <InvitationList />
+      </section>
+      <section>
+        <div className="mb-6 flex items-center">
+          <UserIcon className="mr-2 h-4 w-5" />
+          <h2 className="font-bold">Benutzer</h2>
+          <Link href="/admin/user/create" className="ml-auto pl-4">
+            <Button size="sm">Benutzer erstellen</Button>
+          </Link>
+        </div>
+        <UserList />
+      </section>
+    </div>
   );
 }
 
@@ -62,13 +57,13 @@ async function UserList() {
           <TableHead className="w-[100px]">Email</TableHead>
           <TableHead>Rolle</TableHead>
           <TableHead>Name</TableHead>
-          <TableHead></TableHead>
+          <TableHead className="text-right"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {users.map((user) => (
           <TableRow key={user.id}>
-            <TableCell className="font-medium">{user.email}</TableCell>
+            <TableCell className="truncate font-medium">{user.email}</TableCell>
             <TableCell>
               <Badge variant="outline">{user.role}</Badge>
             </TableCell>
@@ -99,7 +94,7 @@ async function InvitationList() {
           <TableHead className="max-w-[100px]">Email</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Rolle</TableHead>
-          <TableHead></TableHead>
+          <TableHead className="text-right"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

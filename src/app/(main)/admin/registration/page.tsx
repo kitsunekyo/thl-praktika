@@ -1,6 +1,3 @@
-import { redirect } from "next/navigation";
-
-import { PageTitle } from "@/components/PageTitle";
 import {
   Table,
   TableBody,
@@ -10,7 +7,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatTrainingDate } from "@/lib/date";
-import { getServerSession } from "@/lib/next-auth";
 import { prisma } from "@/lib/prisma";
 
 import { ActionButtons } from "./ActionButtons";
@@ -29,19 +25,6 @@ async function getRegistrations() {
 }
 
 export default async function RegistrationsPage() {
-  const session = await getServerSession();
-  if (session?.user.role !== "admin") {
-    redirect("/");
-  }
-  return (
-    <>
-      <PageTitle>Anmeldungen für Praktika</PageTitle>
-      <Registrations />
-    </>
-  );
-}
-
-async function Registrations() {
   const registrations = await getRegistrations();
 
   if (registrations.length === 0) {
@@ -61,15 +44,20 @@ async function Registrations() {
       <TableBody>
         {registrations.map((registration) => (
           <TableRow key={registration.id}>
-            <TableCell>{registration.user.email}</TableCell>
             <TableCell>
+              {registration.user.name || registration.user.email}
+            </TableCell>
+            <TableCell className="truncate whitespace-nowrap">
               {formatTrainingDate(
                 registration.training.date,
                 registration.training.startTime,
                 registration.training.endTime,
               )}
             </TableCell>
-            <TableCell>{registration.training.author.email}</TableCell>
+            <TableCell className="truncate">
+              {registration.training.author.name ||
+                registration.training.author.email}
+            </TableCell>
             <TableCell className="text-right">
               <ActionButtons id={registration.id} />
             </TableCell>
