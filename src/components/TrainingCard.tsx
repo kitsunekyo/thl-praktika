@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 
 import { formatDurationShort, formatTrainingDate } from "@/lib/date";
+import { formatUserAddress } from "@/lib/user";
 import { cn, getInitials, range } from "@/lib/utils";
 
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -25,7 +26,7 @@ export async function TrainingCard({
   actions?: React.ReactNode;
 }) {
   const isPast = training.date < new Date();
-  const address = getAddress(training.author);
+  const address = formatUserAddress(training.author);
   const googleMapsUrl = `https://www.google.com/maps/place/${address.replaceAll(
     " ",
     "+",
@@ -116,10 +117,4 @@ function RegistrationStatus({ count, max }: { count: number; max: number }) {
       )}
     </div>
   );
-}
-
-function getAddress(user: Pick<User, "address" | "city" | "zipCode">) {
-  return [user.address, [user.zipCode, user.city].filter(Boolean).join(" ")]
-    .filter(Boolean)
-    .join(", ");
 }

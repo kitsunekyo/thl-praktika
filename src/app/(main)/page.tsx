@@ -6,8 +6,9 @@ import { TrainingCard } from "@/components/TrainingCard";
 import { getDuration, secondsToDuration } from "@/lib/date";
 import { getDirections } from "@/lib/mapquest";
 import { getServerSession } from "@/lib/next-auth";
+import { formatUserAddress } from "@/lib/user";
 
-import { getMe } from "./profile/actions";
+import { getProfile } from "./profile/actions";
 import { TrainingFilter } from "./TrainingFilter";
 import { getTrainings } from "../register";
 import { RegisterButton, UnregisterButton } from "../register-buttons";
@@ -15,33 +16,18 @@ import { RegisterButton, UnregisterButton } from "../register-buttons";
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Record<string, string | string[] | undefined>;
 }) {
   const session = await getServerSession();
-  const role = session?.user.role;
-  const filteredTrainings = await filterTrainings({ searchParams });
-
-  let content = <p>Keine Trainings gefunden</p>;
-  if (filteredTrainings.length > 0) {
-    content = (
-      <ul className="space-y-4 md:w-full md:max-w-[600px]">
-        {filteredTrainings.map((training) => (
-          <li key={training.id}>
-            <TrainingCard
-              training={training}
-              actions={
-                role === "trainer" ? null : training.isRegistered ? (
-                  <UnregisterButton trainingId={training.id} />
-                ) : training.maxInterns - training.registrations.length > 0 ? (
-                  <RegisterButton trainingId={training.id} />
-                ) : null
-              }
-            />
-          </li>
-        ))}
-      </ul>
-    );
-  }
+  const isTrainer = session?.user.role === "trainer";
+  const trainings = await filter({
+    trainings: await addMetadata(await getTrainings()),
+    filter: {
+      traveltime: Number(searchParams.traveltime),
+      duration: Number(searchParams.duration),
+      free: Number(searchParams.free),
+    },
+  });
 
   return (
     <section>
@@ -52,27 +38,43 @@ export default async function Home({
             <TrainingFilter />
           </div>
         </aside>
-        {content}
+        {trainings.length <= 0 ? (
+          <p>Keine Trainings gefunden</p>
+        ) : (
+          <ul className="space-y-4 md:w-full md:max-w-[600px]">
+            {trainings.map((t) => {
+              const hasFreeSpots = t.maxInterns - t.registrations.length > 0;
+              return (
+                <li key={t.id}>
+                  <TrainingCard
+                    training={t}
+                    actions={
+                      isTrainer ? null : t.isRegistered ? (
+                        <UnregisterButton trainingId={t.id} />
+                      ) : (
+                        hasFreeSpots && <RegisterButton trainingId={t.id} />
+                      )
+                    }
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
     </section>
   );
 }
 
-function getUserAddress(user: Pick<User, "address" | "city" | "zipCode">) {
-  return [user.address, [user.zipCode, user.city].filter(Boolean).join(" ")]
-    .filter(Boolean)
-    .join(", ");
-}
-
-async function getTraveltimeToUser(
+async function getTraveltime(
   fromUser: Pick<User, "id" | "address" | "city" | "zipCode">,
   toUser: Pick<User, "id" | "address" | "city" | "zipCode">,
 ) {
   if (fromUser.id === toUser.id) {
-    return;
+    return { time: 0, formattedTime: "0 Minuten" };
   }
-  const fromAddress = getUserAddress(fromUser);
-  const toAddress = getUserAddress(toUser);
+  const fromAddress = formatUserAddress(fromUser);
+  const toAddress = formatUserAddress(toUser);
 
   if (!fromAddress || !toAddress) {
     return;
@@ -96,45 +98,52 @@ async function getTraveltimeToUser(
   };
 }
 
-async function filterTrainings({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
-  const me = await getMe();
-  if (!me) {
-    return [];
-  }
-  const userId = me.id;
+async function addMetadata(
+  trainings: Awaited<ReturnType<typeof getTrainings>>,
+) {
+  const user = await getProfile();
 
-  const { traveltime, duration, free } = searchParams;
-  const parsedTraveltime =
-    typeof traveltime === "string" ? parseInt(traveltime) : undefined;
-  const parsedDuration =
-    typeof duration === "string" ? parseInt(duration) : undefined;
-  const parsedFree = typeof free === "string" ? parseInt(free) : undefined;
+  return Promise.all(
+    trainings.map(async (training) => {
+      let traveltime;
+      let isRegistered = false;
+      if (user) {
+        traveltime = await getTraveltime(training.author, user);
+        isRegistered = training.registrations.some((r) => r.userId === user.id);
+      }
+      const duration = getDuration(training.startTime, training.endTime);
 
-  const baseTrainings = await getTrainings();
-  const trainings = await Promise.all(
-    baseTrainings.map(async (training) => ({
-      ...training,
-      traveltime: await getTraveltimeToUser(training.author, me),
-      duration: getDuration(training.startTime, training.endTime),
-      isRegistered: training.registrations.some((r) => r.userId === userId),
-    })),
+      return {
+        ...training,
+        traveltime,
+        duration,
+        isRegistered,
+      };
+    }),
   );
+}
+
+async function filter({
+  trainings,
+  filter,
+}: {
+  trainings: Awaited<ReturnType<typeof addMetadata>>;
+  filter: { traveltime: number; duration: number; free: number };
+}) {
+  const { traveltime, duration, free } = filter;
 
   return trainings.filter((t) => {
-    if (parsedDuration && t.duration < parsedDuration * 60 * 60) {
+    if (!Number.isNaN(duration) && t.duration < duration * 60 * 60) {
       return false;
     }
-    if (parsedFree && t.maxInterns - t.registrations.length < parsedFree) {
+    if (!Number.isNaN(free) && t.maxInterns - t.registrations.length < free) {
       return false;
     }
-    if (!parsedTraveltime) {
-      return true;
-    }
-    if (t.traveltime && t.traveltime.time > parsedTraveltime * 60) {
+    if (
+      !Number.isNaN(traveltime) &&
+      t.traveltime &&
+      t.traveltime.time > traveltime * 60
+    ) {
       return false;
     }
     return true;

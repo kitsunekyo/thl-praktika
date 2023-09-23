@@ -2,11 +2,11 @@ import Image from "next/image";
 
 import { PageTitle } from "@/components/PageTitle";
 
-import { getMe } from "./actions";
+import { getProfile } from "./actions";
 import { ProfileForm } from "./ProfileForm";
 
 export default async function Profile() {
-  const user = await getMe();
+  const user = await getProfile();
 
   if (!user) {
     return null;

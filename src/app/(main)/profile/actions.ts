@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "@/lib/next-auth";
 import { prisma } from "@/lib/prisma";
 
-export async function getMe() {
+export async function getProfile() {
   const session = await getServerSession();
 
   if (!session?.user) {
