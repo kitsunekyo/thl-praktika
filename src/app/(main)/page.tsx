@@ -45,12 +45,12 @@ export default async function Home({
             <TrainingFilter />
           </div>
         </aside>
-        <div>
+        <div className="md:w-full md:max-w-[600px]">
           <p className="mb-4 text-sm text-muted-foreground">
             {trainingsCountLabel}
           </p>
           {filteredTrainings.length > 0 && (
-            <ul className="space-y-4 md:w-full md:max-w-[600px]">
+            <ul className="space-y-4">
               {filteredTrainings.map((t) => {
                 const hasFreeSpots = t.maxInterns - t.registrations.length > 0;
                 return (
