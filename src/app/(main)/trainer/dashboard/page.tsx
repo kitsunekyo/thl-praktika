@@ -1,9 +1,9 @@
 import { PageTitle } from "@/components/PageTitle";
 import { TrainingCard } from "@/components/TrainingCard";
 
-import { getMyTrainings } from "./actions";
 import { TrainingForm } from "./TrainingForm";
 import { TrainingListActions } from "./TrainingListActions";
+import { getMyTrainings } from "../actions";
 
 export default async function Page() {
   const trainings = await getMyTrainings();

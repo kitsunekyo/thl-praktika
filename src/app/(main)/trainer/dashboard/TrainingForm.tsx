@@ -30,7 +30,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { formatTimeValue, getFixedDate } from "@/lib/date";
 import { cn } from "@/lib/utils";
 
-import { createTraining } from "./actions";
+import { createTraining } from "../actions";
 
 export const formSchema = z
   .object({
