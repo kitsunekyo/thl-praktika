@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/table";
 
 import { getInvitations, getUsers } from "./actions";
-import { InvitationActions } from "./InvitationActions";
-import { UserActions } from "./UserActions";
+import { InvitationButtons } from "./InvitationButtons";
+import { UserButtons } from "./UserButtons";
 
 export default async function UserPage() {
   return (
@@ -69,7 +69,7 @@ async function UserList() {
             </TableCell>
             <TableCell>{user.name || "-"}</TableCell>
             <TableCell className="text-right">
-              <UserActions user={user} />
+              <UserButtons user={user} />
             </TableCell>
           </TableRow>
         ))}
@@ -106,7 +106,7 @@ async function InvitationList() {
               <Badge variant="outline">{invitation.role}</Badge>
             </TableCell>
             <TableCell className="text-right">
-              <InvitationActions invitation={invitation} />
+              <InvitationButtons invitation={invitation} />
             </TableCell>
           </TableRow>
         ))}

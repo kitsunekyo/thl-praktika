@@ -32,7 +32,7 @@ import { cn } from "@/lib/utils";
 
 import { createTraining } from "./actions";
 
-export const trainingSchema = z
+export const formSchema = z
   .object({
     description: z.string(),
     date: z.date(),
@@ -63,8 +63,8 @@ export function TrainingForm() {
   const [loading, startTransition] = useTransition();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof trainingSchema>>({
-    resolver: zodResolver(trainingSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       description: "",
       maxInterns: 3,
@@ -79,7 +79,7 @@ export function TrainingForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(
-          async (data: z.infer<typeof trainingSchema>) => {
+          async (data: z.infer<typeof formSchema>) => {
             startTransition(async () => {
               const start = set(data.date, {
                 hours: parseInt(data.startTime.split(":")[0]),

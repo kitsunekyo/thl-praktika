@@ -4,7 +4,7 @@ import { UserCheckIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-import { formatDurationShort, formatTrainingDate } from "@/lib/date";
+import { formatTrainingDate, secondsToDuration } from "@/lib/date";
 import { formatUserAddress } from "@/lib/user";
 import { cn, getInitials, range } from "@/lib/utils";
 
@@ -18,11 +18,7 @@ export async function TrainingCard({
   training: Training & {
     registrations: Registration[];
     author: Omit<User, "password">;
-    duration: number; // in seconds
-    traveltime?: {
-      time: number;
-      formattedTime: string;
-    };
+    traveltime?: number;
   };
   actions?: React.ReactNode;
 }) {
@@ -32,9 +28,11 @@ export async function TrainingCard({
     " ",
     "+",
   )}`;
-
   const duration = formatDuration(
     intervalToDuration({ start: training.start, end: training.end }),
+    {
+      format: ["hours", "minutes"],
+    },
   );
 
   return (
@@ -64,7 +62,10 @@ export async function TrainingCard({
               </Link>
               {!!training.traveltime && (
                 <p className="text-xs">
-                  {training.traveltime.formattedTime} entfernt
+                  {formatDuration(secondsToDuration(training.traveltime), {
+                    format: ["hours", "minutes"],
+                  })}{" "}
+                  entfernt
                 </p>
               )}
             </div>

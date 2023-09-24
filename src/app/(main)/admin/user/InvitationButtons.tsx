@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 import { deleteInvitation } from "./actions";
 
-export function InvitationActions({ invitation }: { invitation: Invitation }) {
+export function InvitationButtons({ invitation }: { invitation: Invitation }) {
   const [pending, startTransition] = useTransition();
 
   return (

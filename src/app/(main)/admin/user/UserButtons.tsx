@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 import { deleteUser } from "./actions";
 
-export function UserActions({ user }: { user: User }) {
+export function UserButtons({ user }: { user: User }) {
   const [pending, startTransition] = useTransition();
 
   return (

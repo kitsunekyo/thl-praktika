@@ -47,12 +47,11 @@ const createTrainingSchema = z.object({
   customAddress: z.boolean(),
 });
 
-export type CreateTraining = z.infer<typeof createTrainingSchema>;
+type CreateTraining = z.infer<typeof createTrainingSchema>;
 
 export async function createTraining(payload: CreateTraining) {
   const session = await getServerSession();
-  const currentUser = session?.user;
-  if (!currentUser) {
+  if (!session?.user) {
     return {
       error: "not authorized",
     };
@@ -61,7 +60,7 @@ export async function createTraining(payload: CreateTraining) {
   await prisma.training.create({
     data: {
       ...training,
-      authorId: currentUser.id,
+      authorId: session?.user.id,
     },
   });
   revalidatePath("/");
