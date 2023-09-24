@@ -84,12 +84,12 @@ async function filter({
   filter,
 }: {
   trainings: TrainingsWithMetadata;
-  filter: { traveltime: number; duration: number; free: number };
+  filter: { traveltime: number; duration: number /* in hours */; free: number };
 }) {
   const { traveltime, duration, free } = filter;
 
   return trainings.filter((t) => {
-    if (!Number.isNaN(duration) && t.duration < duration * 60 * 60) {
+    if (!Number.isNaN(duration) && t.duration < duration * 3600000) {
       return false;
     }
     if (!Number.isNaN(free) && t.maxInterns - t.registrations.length < free) {
