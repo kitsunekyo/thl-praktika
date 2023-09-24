@@ -49,9 +49,8 @@ export default async function RegistrationsPage() {
             </TableCell>
             <TableCell className="truncate whitespace-nowrap">
               {formatTrainingDate(
-                registration.training.date,
-                registration.training.startTime,
-                registration.training.endTime,
+                registration.training.start,
+                registration.training.end,
               )}
             </TableCell>
             <TableCell className="truncate">

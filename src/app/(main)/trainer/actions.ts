@@ -3,7 +3,6 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-import { getFixedDate } from "@/lib/date";
 import { getServerSession } from "@/lib/next-auth";
 import { prisma } from "@/lib/prisma";
 
@@ -17,7 +16,7 @@ export async function getMyTrainings() {
   return prisma.training.findMany({
     where: {
       authorId: session.user.id,
-      date: {
+      start: {
         gte: new Date(),
       },
     },
@@ -26,7 +25,7 @@ export async function getMyTrainings() {
       registrations: true,
     },
     orderBy: {
-      date: "asc",
+      start: "asc",
     },
   });
 }
@@ -42,19 +41,17 @@ export async function deleteTraining(id: string) {
 
 const createTrainingSchema = z.object({
   description: z.string().optional(),
-  date: z.date(),
-  startTime: z.string(),
-  endTime: z.string(),
+  start: z.date(),
+  end: z.date(),
   maxInterns: z.number(),
   customAddress: z.boolean(),
 });
 
-export async function createTraining(
-  payload: z.infer<typeof createTrainingSchema>,
-) {
+type CreateTraining = z.infer<typeof createTrainingSchema>;
+
+export async function createTraining(payload: CreateTraining) {
   const session = await getServerSession();
-  const currentUser = session?.user;
-  if (!currentUser) {
+  if (!session?.user) {
     return {
       error: "not authorized",
     };
@@ -63,8 +60,7 @@ export async function createTraining(
   await prisma.training.create({
     data: {
       ...training,
-      authorId: currentUser.id,
-      date: getFixedDate(training.date),
+      authorId: session?.user.id,
     },
   });
   revalidatePath("/");

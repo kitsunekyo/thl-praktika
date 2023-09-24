@@ -1,20 +1,12 @@
-import { redirect } from "next/navigation";
-
 import { PageTitle } from "@/components/PageTitle";
 import { TrainingCard } from "@/components/TrainingCard";
-import { getDuration } from "@/lib/date";
-import { getServerSession } from "@/lib/next-auth";
 
-import { getMyTrainings } from "./actions";
 import { TrainingForm } from "./TrainingForm";
 import { TrainingListActions } from "./TrainingListActions";
+import { getMyTrainings } from "../actions";
 
 export default async function Page() {
-  const myTrainings = await getMyTrainings();
-  const trainings = myTrainings.map((training) => ({
-    ...training,
-    duration: getDuration(training.startTime, training.endTime),
-  }));
+  const trainings = await getMyTrainings();
 
   return (
     <div>
@@ -30,7 +22,7 @@ export default async function Page() {
         </div>
         <section>
           <h2 className="mb-6 text-xl font-semibold">Geplante Trainings</h2>
-          {myTrainings.length === 0 && (
+          {trainings.length === 0 && (
             <p className="text-sm text-gray-500">
               Du hast noch keine Trainings eingetragen.
             </p>

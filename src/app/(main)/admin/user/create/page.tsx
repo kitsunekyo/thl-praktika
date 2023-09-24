@@ -1,6 +1,6 @@
 import { PageTitle } from "@/components/PageTitle";
 
-import { UserForm } from "./user-form";
+import { UserForm } from "./UserForm";
 
 export default function CreateUserPage() {
   return (

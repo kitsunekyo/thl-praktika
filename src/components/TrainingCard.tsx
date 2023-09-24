@@ -1,9 +1,10 @@
 import { Registration, Training, User } from "@prisma/client";
+import { formatDuration, intervalToDuration } from "date-fns";
 import { UserCheckIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-import { formatDurationShort, formatTrainingDate } from "@/lib/date";
+import { formatTrainingDate, secondsToDuration } from "@/lib/date";
 import { formatUserAddress } from "@/lib/user";
 import { cn, getInitials, range } from "@/lib/utils";
 
@@ -17,35 +18,33 @@ export async function TrainingCard({
   training: Training & {
     registrations: Registration[];
     author: Omit<User, "password">;
-    duration: number;
-    traveltime?: {
-      time: number;
-      formattedTime: string;
-    };
+    traveltime?: number;
   };
   actions?: React.ReactNode;
 }) {
-  const isPast = training.date < new Date();
+  const hasEnded = training.end < new Date();
   const address = formatUserAddress(training.author);
   const googleMapsUrl = `https://www.google.com/maps/place/${address.replaceAll(
     " ",
     "+",
   )}`;
+  const duration = formatDuration(
+    intervalToDuration({ start: training.start, end: training.end }),
+    {
+      format: ["hours", "minutes"],
+    },
+  );
 
   return (
     <div
       className={cn("rounded border border-solid bg-white p-4 text-sm", {
-        "opacity-50": isPast,
+        "opacity-50": hasEnded,
       })}
     >
       <dl className="space-y-2">
         <dd className="font-medium">{training.description}</dd>
         <dd>
-          {`${formatTrainingDate(
-            training.date,
-            training.startTime,
-            training.endTime,
-          )} (${formatDurationShort(training.duration)})`}
+          {`${formatTrainingDate(training.start, training.end)} (${duration})`}
         </dd>
         <dd>
           {training.customAddress ? (
@@ -63,7 +62,10 @@ export async function TrainingCard({
               </Link>
               {!!training.traveltime && (
                 <p className="text-xs">
-                  {training.traveltime.formattedTime} entfernt
+                  {formatDuration(secondsToDuration(training.traveltime), {
+                    format: ["hours", "minutes"],
+                  })}{" "}
+                  entfernt
                 </p>
               )}
             </div>

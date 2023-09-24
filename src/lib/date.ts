@@ -12,37 +12,12 @@ setDefaultOptions({
   locale: deAT,
 });
 
-/**
- * gets the duration from time strings (eg. 13:35) in seconds
- */
-export function getDuration(startTime: string, endTime: string) {
-  const [startHours, startMinutes] = startTime.split(":");
-  const [endHours, endMinutes] = endTime.split(":");
-  const startSeconds =
-    parseInt(startHours) * 60 * 60 + parseInt(startMinutes) * 60;
-  const endSeconds = parseInt(endHours) * 60 * 60 + parseInt(endMinutes) * 60;
+export function formatTrainingDate(startDate: Date, endDate: Date) {
+  const date = format(new Date(startDate), "do MMM yy");
+  const startTime = format(new Date(startDate), "HH:mm");
+  const endTime = format(new Date(endDate), "HH:mm");
 
-  const seconds = endSeconds - startSeconds;
-  return seconds;
-}
-
-export function formatDurationShort(seconds: number) {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-
-  let formattedDuration = "";
-  if (hours > 0) formattedDuration += `${hours}h`;
-  if (minutes > 0) formattedDuration += `${minutes}m`;
-
-  return formattedDuration;
-}
-
-export function formatTrainingDate(
-  date: Date,
-  startTime: string,
-  endTime: string,
-) {
-  return `${format(new Date(date), "do MMM yy")}, ${startTime} - ${endTime}`;
+  return `${date}, ${startTime} - ${endTime}`;
 }
 
 export function formatTimeValue(time: string) {

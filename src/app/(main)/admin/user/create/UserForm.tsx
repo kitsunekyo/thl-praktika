@@ -56,7 +56,7 @@ export function UserForm() {
           startTransition(async () => {
             if (isPasswordEmpty) {
               const res = await inviteUser(data.email, data.name, data.role);
-              if (res?.error) {
+              if (res.error) {
                 toast({
                   title: "Fehler beim Einladen",
                   description: `${data.email} konnte nicht eingeladen werden. Versuch es nochmal.`,
@@ -76,7 +76,7 @@ export function UserForm() {
               data.name,
               data.role,
             );
-            if (res?.error) {
+            if (res.error) {
               toast({
                 title: "Fehler beim Erstellen",
                 description: `${data.email} konnte nicht erstellt werden. Versuch es nochmal.`,

@@ -36,7 +36,7 @@ const filterOptions = [
       { key: "4", label: "ab 4h" },
     ],
   },
-];
+] as const;
 
 export function TrainingFilter() {
   const { replace } = useRouter();
