@@ -1,4 +1,5 @@
 import { Registration, Training, User } from "@prisma/client";
+import { formatDuration, intervalToDuration } from "date-fns";
 import { UserCheckIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -17,7 +18,7 @@ export async function TrainingCard({
   training: Training & {
     registrations: Registration[];
     author: Omit<User, "password">;
-    duration: number;
+    duration: number; // in seconds
     traveltime?: {
       time: number;
       formattedTime: string;
@@ -25,27 +26,27 @@ export async function TrainingCard({
   };
   actions?: React.ReactNode;
 }) {
-  const isPast = training.date < new Date();
+  const hasEnded = training.end < new Date();
   const address = formatUserAddress(training.author);
   const googleMapsUrl = `https://www.google.com/maps/place/${address.replaceAll(
     " ",
     "+",
   )}`;
 
+  const duration = formatDuration(
+    intervalToDuration({ start: training.start, end: training.end }),
+  );
+
   return (
     <div
       className={cn("rounded border border-solid bg-white p-4 text-sm", {
-        "opacity-50": isPast,
+        "opacity-50": hasEnded,
       })}
     >
       <dl className="space-y-2">
         <dd className="font-medium">{training.description}</dd>
         <dd>
-          {`${formatTrainingDate(
-            training.date,
-            training.startTime,
-            training.endTime,
-          )} (${formatDurationShort(training.duration)})`}
+          {`${formatTrainingDate(training.start, training.end)} (${duration})`}
         </dd>
         <dd>
           {training.customAddress ? (

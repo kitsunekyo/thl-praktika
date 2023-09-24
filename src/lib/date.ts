@@ -26,7 +26,8 @@ export function getDuration(startTime: string, endTime: string) {
   return seconds;
 }
 
-export function formatDurationShort(seconds: number) {
+export function formatDurationShort(milliseconds: number) {
+  const seconds = milliseconds / 1000;
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
 
@@ -37,12 +38,12 @@ export function formatDurationShort(seconds: number) {
   return formattedDuration;
 }
 
-export function formatTrainingDate(
-  date: Date,
-  startTime: string,
-  endTime: string,
-) {
-  return `${format(new Date(date), "do MMM yy")}, ${startTime} - ${endTime}`;
+export function formatTrainingDate(startDate: Date, endDate: Date) {
+  const date = format(new Date(startDate), "do MMM yy");
+  const startTime = format(new Date(startDate), "HH:mm");
+  const endTime = format(new Date(endDate), "HH:mm");
+
+  return `${date}, ${startTime} - ${endTime}`;
 }
 
 export function formatTimeValue(time: string) {

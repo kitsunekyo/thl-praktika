@@ -1,9 +1,5 @@
-import { redirect } from "next/navigation";
-
 import { PageTitle } from "@/components/PageTitle";
 import { TrainingCard } from "@/components/TrainingCard";
-import { getDuration } from "@/lib/date";
-import { getServerSession } from "@/lib/next-auth";
 
 import { getMyTrainings } from "./actions";
 import { TrainingForm } from "./TrainingForm";
@@ -13,8 +9,10 @@ export default async function Page() {
   const myTrainings = await getMyTrainings();
   const trainings = myTrainings.map((training) => ({
     ...training,
-    duration: getDuration(training.startTime, training.endTime),
+    duration: training.end.getTime() - training.start.getTime(),
   }));
+
+  console.log(trainings);
 
   return (
     <div>

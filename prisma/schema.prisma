@@ -69,18 +69,18 @@ model VerificationToken {
 }
 
 model Invitation {
-  id    String  @id @default(cuid())
-  email String
-  name  String?
-  role  String  @default("user")
+  id        String   @id @default(cuid())
+  email     String
+  name      String?
+  createdAt DateTime @default(now())
+  role      String   @default("user")
 }
 
 model Training {
   id            String         @id @default(cuid())
   createdAt     DateTime       @default(now())
-  date          DateTime
-  startTime     String
-  endTime       String
+  start         DateTime
+  end           DateTime
   description   String?
   maxInterns    Int
   registrations Registration[]

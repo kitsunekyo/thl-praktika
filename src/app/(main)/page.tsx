@@ -3,15 +3,15 @@ import { formatDuration } from "date-fns";
 
 import { PageTitle } from "@/components/PageTitle";
 import { TrainingCard } from "@/components/TrainingCard";
-import { getDuration, secondsToDuration } from "@/lib/date";
+import { secondsToDuration } from "@/lib/date";
 import { getDirections } from "@/lib/mapquest";
 import { getServerSession } from "@/lib/next-auth";
 import { formatUserAddress } from "@/lib/user";
 
 import { getProfile } from "./profile/actions";
+import { RegisterButton, UnregisterButton } from "./register-buttons";
 import { TrainingFilter } from "./TrainingFilter";
 import { getTrainings } from "../register";
-import { RegisterButton, UnregisterButton } from "../register-buttons";
 
 export default async function Home({
   searchParams,
@@ -111,7 +111,7 @@ async function addMetadata(
         traveltime = await getTraveltime(training.author, user);
         isRegistered = training.registrations.some((r) => r.userId === user.id);
       }
-      const duration = getDuration(training.startTime, training.endTime);
+      const duration = training.end.getTime() - training.start.getTime();
 
       return {
         ...training,

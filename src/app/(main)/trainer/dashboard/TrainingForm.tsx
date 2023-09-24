@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, set } from "date-fns";
-import { CalendarIcon, CheckIcon } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -27,14 +27,14 @@ import {
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { formatTimeValue, formatTrainingDate, getFixedDate } from "@/lib/date";
+import { formatTimeValue, getFixedDate } from "@/lib/date";
 import { cn } from "@/lib/utils";
 
 import { createTraining } from "./actions";
 
 export const trainingSchema = z
   .object({
-    description: z.string().optional(),
+    description: z.string(),
     date: z.date(),
     startTime: z.string(),
     endTime: z.string(),
@@ -43,20 +43,18 @@ export const trainingSchema = z
   })
   .refine(
     (data) => {
-      const [startHours, startMinutes] = data.startTime.split(":");
-      const start = set(new Date(), {
-        hours: parseInt(startHours),
-        minutes: parseInt(startMinutes),
+      const start = set(data.date, {
+        hours: parseInt(data.startTime.split(":")[0]),
+        minutes: parseInt(data.startTime.split(":")[1]),
       });
-      const [endHours, endMinutes] = data.endTime.split(":");
-      const end = set(new Date(), {
-        hours: parseInt(endHours),
-        minutes: parseInt(endMinutes),
+      const end = set(data.date, {
+        hours: parseInt(data.endTime.split(":")[0]),
+        minutes: parseInt(data.endTime.split(":")[1]),
       });
       return start < end;
     },
     {
-      message: "muss später sein",
+      message: "Ende muss nach Start sein.",
       path: ["endTime"],
     },
   );
@@ -83,7 +81,16 @@ export function TrainingForm() {
         onSubmit={form.handleSubmit(
           async (data: z.infer<typeof trainingSchema>) => {
             startTransition(async () => {
-              const res = await createTraining(data);
+              const start = set(data.date, {
+                hours: parseInt(data.startTime.split(":")[0]),
+                minutes: parseInt(data.startTime.split(":")[1]),
+              });
+              const end = set(data.date, {
+                hours: parseInt(data.endTime.split(":")[0]),
+                minutes: parseInt(data.endTime.split(":")[1]),
+              });
+              const res = await createTraining({ ...data, start, end });
+
               if (res?.error) {
                 toast({
                   title: "Oops",
@@ -93,11 +100,6 @@ export function TrainingForm() {
               } else {
                 toast({
                   title: "Training wurde erstellt",
-                  description: `Das Training für ${formatTrainingDate(
-                    data.date,
-                    data.startTime,
-                    data.endTime,
-                  )} wurde erstellt.`,
                 });
               }
             });

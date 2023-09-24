@@ -75,12 +75,12 @@ export async function getTrainings() {
       registrations: true,
     },
     where: {
-      date: {
+      start: {
         gte: new Date(),
       },
     },
     orderBy: {
-      date: "asc",
+      start: "asc",
     },
   });
 
