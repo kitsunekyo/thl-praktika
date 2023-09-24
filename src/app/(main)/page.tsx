@@ -29,6 +29,13 @@ export default async function Home({
     },
   });
 
+  let trainingsCountLabel: string;
+  if (filteredTrainings.length === 0) {
+    trainingsCountLabel = "Kein Training gefunden";
+  } else {
+    trainingsCountLabel = `${filteredTrainings.length} Trainings gefunden`;
+  }
+
   return (
     <section>
       <div className="gap-8 md:flex">
@@ -38,29 +45,32 @@ export default async function Home({
             <TrainingFilter />
           </div>
         </aside>
-        {filteredTrainings.length <= 0 ? (
-          <p>Keine Trainings gefunden</p>
-        ) : (
-          <ul className="space-y-4 md:w-full md:max-w-[600px]">
-            {filteredTrainings.map((t) => {
-              const hasFreeSpots = t.maxInterns - t.registrations.length > 0;
-              return (
-                <li key={t.id}>
-                  <TrainingCard
-                    training={t}
-                    actions={
-                      isTrainer ? null : t.isRegistered ? (
-                        <UnregisterButton trainingId={t.id} />
-                      ) : (
-                        hasFreeSpots && <RegisterButton trainingId={t.id} />
-                      )
-                    }
-                  />
-                </li>
-              );
-            })}
-          </ul>
-        )}
+        <div>
+          <p className="mb-4 text-sm text-muted-foreground">
+            {trainingsCountLabel}
+          </p>
+          {filteredTrainings.length > 0 && (
+            <ul className="space-y-4 md:w-full md:max-w-[600px]">
+              {filteredTrainings.map((t) => {
+                const hasFreeSpots = t.maxInterns - t.registrations.length > 0;
+                return (
+                  <li key={t.id}>
+                    <TrainingCard
+                      training={t}
+                      actions={
+                        isTrainer ? null : t.isRegistered ? (
+                          <UnregisterButton trainingId={t.id} />
+                        ) : (
+                          hasFreeSpots && <RegisterButton trainingId={t.id} />
+                        )
+                      }
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
       </div>
     </section>
   );
