@@ -92,12 +92,7 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
             <FormItem>
               <FormLabel>Email*</FormLabel>
               <FormControl>
-                <Input
-                  type="email"
-                  placeholder="good@pup.com"
-                  required
-                  {...field}
-                />
+                <Input type="email" required {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -111,12 +106,7 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input
-                  type="text"
-                  data-1p-ignore
-                  placeholder="Sam S."
-                  {...field}
-                />
+                <Input type="text" data-1p-ignore {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -17,13 +17,11 @@ export default async function Login({
     <>
       <h1 className="mb-6 text-center text-4xl font-bold">Registrieren</h1>
       <SignupForm name={name} email={email} />
-      <div className="mt-12 text-center">
-        <p>Du hast bereits einen Account?</p>
-        <p>
-          <Link href="/login" className="font-semibold underline">
-            Anmelden
-          </Link>
-        </p>
+      <div className="mt-6 text-center text-sm">
+        <p className="text-muted-foreground">Du hast bereits einen Account?</p>
+        <Link href="/login" className="underline hover:no-underline">
+          Anmelden
+        </Link>
       </div>
     </>
   );

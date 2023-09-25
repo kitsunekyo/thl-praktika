@@ -12,9 +12,13 @@ export default async function middleware(
 
   if (
     isAuthenticated &&
-    ["/login", "/signup", "/auth-error"].some((path) =>
-      req.nextUrl.pathname.startsWith(path),
-    )
+    [
+      "/login",
+      "/signup",
+      "/auth-error",
+      "/forgot-password",
+      "/reset-password",
+    ].some((path) => req.nextUrl.pathname.startsWith(path))
   ) {
     return NextResponse.redirect(new URL("/", req.url));
   }
@@ -37,3 +41,5 @@ export default async function middleware(
   // @ts-expect-error
   return authMiddleware(req, event);
 }
+
+export const config = { matcher: ["/", "/admin(.*)", "/trainer(.*)"] };

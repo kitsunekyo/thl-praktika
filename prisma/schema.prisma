@@ -103,3 +103,13 @@ model Registration {
   @@index([trainingId])
   @@index([userId])
 }
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  email     String
+  secret    String   @unique
+  expires   DateTime
+
+  @@unique([secret, email])
+}

@@ -66,12 +66,7 @@ export function LoginForm({ email }: { email?: string }) {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input
-                  type="email"
-                  placeholder="good@pup.com"
-                  required
-                  {...field}
-                />
+                <Input type="email" required {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
