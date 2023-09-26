@@ -3,6 +3,7 @@ import Image from "next/image";
 import { PageTitle } from "@/components/PageTitle";
 
 import { getProfile } from "./actions";
+import { ChangePasswordForm } from "./ChangePasswordForm";
 import { ProfileForm } from "./ProfileForm";
 
 export default async function Profile() {
@@ -23,6 +24,8 @@ export default async function Profile() {
         className="mb-4 rounded-full"
       />
       <ProfileForm user={user} />
+      <hr className="my-8" />
+      <ChangePasswordForm />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use server";
 
 import { User } from "@prisma/client";
+import { hash } from "bcrypt";
 import { revalidatePath } from "next/cache";
 
 import { getServerSession } from "@/lib/next-auth";
@@ -49,4 +50,20 @@ export async function updateProfile(
   });
 
   revalidatePath("/profile");
+}
+
+export async function changePassword(password: string) {
+  const session = await getServerSession();
+  if (!session) {
+    return { error: "not authenticated" };
+  }
+
+  await prisma.user.update({
+    where: {
+      id: session.user.id,
+    },
+    data: {
+      password: await hash(password, 12),
+    },
+  });
 }
