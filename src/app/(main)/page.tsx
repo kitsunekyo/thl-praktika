@@ -1,3 +1,5 @@
+import { addDays, endOfDay, format, startOfDay } from "date-fns";
+
 import { PageTitle } from "@/components/PageTitle";
 import { TrainingCard } from "@/components/TrainingCard";
 import { getServerSession } from "@/lib/next-auth";
@@ -26,6 +28,14 @@ export default async function Home({
       traveltime: Number(searchParams.traveltime),
       duration: Number(searchParams.duration),
       free: Number(searchParams.free),
+      from:
+        typeof searchParams.from === "string"
+          ? startOfDay(new Date(searchParams.from))
+          : undefined,
+      to:
+        typeof searchParams.to === "string"
+          ? endOfDay(new Date(searchParams.to))
+          : undefined,
     },
   });
 
@@ -94,7 +104,13 @@ async function filter({
   filter,
 }: {
   trainings: TrainingsWithMetadata;
-  filter: { traveltime: number; duration: number /* in hours */; free: number };
+  filter: {
+    traveltime: number;
+    duration: number /* in hours */;
+    free: number;
+    from?: Date;
+    to?: Date;
+  };
 }) {
   const { traveltime, duration, free } = filter;
 
@@ -110,6 +126,12 @@ async function filter({
       t.traveltime !== undefined &&
       t.traveltime > traveltime * 60
     ) {
+      return false;
+    }
+    if (filter.from && t.start < filter.from) {
+      return false;
+    }
+    if (filter.to && t.end >= filter.to) {
       return false;
     }
     return true;

@@ -1,10 +1,29 @@
 "use client";
 
-import { ClockIcon, MapIcon, UserIcon } from "lucide-react";
+/* eslint-disable import/no-duplicates */
+import { endOfDay, format, setDefaultOptions, startOfDay } from "date-fns";
+import { deAT } from "date-fns/locale";
+import {
+  CalendarIcon,
+  ClockIcon,
+  MapIcon,
+  UserIcon,
+  XIcon,
+} from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
+import { DateRange } from "react-day-picker";
 
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+
+import { Button } from "./ui/button";
+import { Calendar } from "./ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+
+setDefaultOptions({
+  locale: deAT,
+});
 
 const filterOptions = [
   {
@@ -43,6 +62,35 @@ export function TrainingFilter() {
   const [pending, startTransition] = useTransition();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+
+  const [date, setDate] = useState<DateRange | undefined>(() => {
+    const fromParam = searchParams.get("from");
+    const toParam = searchParams.get("to");
+
+    if (!fromParam) {
+      return;
+    }
+
+    let from;
+    const fromDate = new Date(fromParam);
+    if (isNaN(fromDate.getTime())) {
+      return;
+    }
+    from = fromDate;
+
+    let to;
+    if (toParam) {
+      const toDate = new Date(toParam);
+      if (!isNaN(toDate.getTime())) {
+        to = toDate;
+      }
+    }
+
+    return {
+      from,
+      to,
+    };
+  });
 
   function updateFilter(key: string, value: string | null) {
     if (pending) return;
@@ -99,6 +147,85 @@ export function TrainingFilter() {
           </ul>
         </div>
       ))}
+
+      <div>
+        <div className="mb-2 flex items-center">
+          <CalendarIcon className="mr-2 h-4 w-5" />
+          <p className="font-medium">Zeitraum</p>
+        </div>
+        <Popover>
+          <div className="flex items-center gap-2">
+            <PopoverTrigger asChild>
+              <Button
+                id="date"
+                variant={"outline"}
+                className={cn(
+                  "w-full items-center justify-start text-left text-xs font-normal",
+                  !date && "text-muted-foreground",
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date?.from ? (
+                  date.to ? (
+                    <>
+                      {format(date.from, "dd LLL, yy")} -
+                      <CalendarIcon className="mx-2 h-4 w-4" />
+                      {format(date.to, "dd LLL, yy")}
+                    </>
+                  ) : (
+                    format(date.from, "dd LLL, yy")
+                  )
+                ) : (
+                  <span>Datum auswählen</span>
+                )}
+              </Button>
+            </PopoverTrigger>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="shrink-0"
+              onClick={() => {
+                setDate(undefined);
+                const params = new URLSearchParams(window.location.search);
+                params.delete("from");
+                params.delete("to");
+                startTransition(() => {
+                  replace(`${pathname}?${params.toString()}`);
+                });
+              }}
+            >
+              <XIcon className="h-4 w-4" />
+            </Button>
+          </div>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              initialFocus
+              mode="range"
+              defaultMonth={date?.from}
+              selected={date}
+              onSelect={(v) => {
+                if (pending) return;
+                setDate(v);
+                const params = new URLSearchParams(window.location.search);
+                if (!v?.from) {
+                  params.delete("from");
+                  params.delete("to");
+                }
+                if (v?.from) {
+                  params.set("from", format(startOfDay(v.from), "yyyy-MM-dd"));
+                }
+                if (v?.to) {
+                  params.set("to", format(endOfDay(v.to), "yyyy-MM-dd"));
+                }
+                startTransition(() => {
+                  replace(`${pathname}?${params.toString()}`);
+                });
+              }}
+              numberOfMonths={2}
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
     </section>
   );
 }
