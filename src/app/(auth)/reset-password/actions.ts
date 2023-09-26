@@ -30,6 +30,7 @@ export async function resetPassword(
   const isTokenValid = await getIsTokenValid(tokenId);
 
   if (!isTokenValid) {
+    console.error("invalid password reset token");
     return { error: "token invalid" };
   }
 
@@ -40,11 +41,13 @@ export async function resetPassword(
   });
 
   if (!tokenItem) {
+    console.error("password reset token not found");
     return { error: "token invalid" };
   }
 
   const isSecretCorrect = await compare(tokenValue, tokenItem.secret);
   if (!isSecretCorrect) {
+    console.error("password reset token secret incorrect");
     return { error: "token invalid" };
   }
 

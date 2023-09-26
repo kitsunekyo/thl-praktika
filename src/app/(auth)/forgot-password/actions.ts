@@ -14,6 +14,7 @@ export async function forgotPassword(email: string) {
   });
 
   if (!user) {
+    console.error("User not found");
     return;
   }
 

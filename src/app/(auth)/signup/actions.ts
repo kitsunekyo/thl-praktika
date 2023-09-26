@@ -20,6 +20,7 @@ export async function register({
   });
 
   if (!invitation) {
+    console.error(`no invitation found for ${email}`);
     return {
       error: "No invitation found",
     };
