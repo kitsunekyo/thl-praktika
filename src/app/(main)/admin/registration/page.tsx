@@ -28,7 +28,11 @@ export default async function RegistrationsPage() {
   const registrations = await getRegistrations();
 
   if (registrations.length === 0) {
-    return <p className="text-gray-400">Es gibt noch keine Anmeldungen.</p>;
+    return (
+      <p className="text-sm text-muted-foreground">
+        Es gibt noch keine Anmeldungen.
+      </p>
+    );
   }
 
   return (

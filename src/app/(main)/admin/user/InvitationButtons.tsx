@@ -1,6 +1,7 @@
 "use client";
 
 import { Invitation } from "@prisma/client";
+import { TrashIcon } from "lucide-react";
 import { useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -13,8 +14,8 @@ export function InvitationButtons({ invitation }: { invitation: Invitation }) {
   return (
     <div className="flex items-center justify-end gap-2">
       <Button
-        size="sm"
-        variant="destructive"
+        size="icon"
+        variant="ghost"
         disabled={pending}
         onClick={() => {
           startTransition(() => {
@@ -22,7 +23,7 @@ export function InvitationButtons({ invitation }: { invitation: Invitation }) {
           });
         }}
       >
-        Löschen
+        <TrashIcon className="h-4 w-4" />
       </Button>
     </div>
   );
