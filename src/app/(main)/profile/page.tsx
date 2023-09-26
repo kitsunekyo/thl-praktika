@@ -19,6 +19,7 @@ export default async function Profile() {
       <Image
         width={120}
         height={120}
+        priority
         src={user.image || "/img/avatar.jpg"}
         alt="Avatar"
         className="mb-4 rounded-full"
