@@ -1,9 +1,10 @@
-import { addDays, endOfDay, format, startOfDay } from "date-fns";
+import { endOfDay, startOfDay } from "date-fns";
 
 import { PageTitle } from "@/components/PageTitle";
 import { TrainingCard } from "@/components/TrainingCard";
 import { getServerSession } from "@/lib/next-auth";
 
+import { getProfile } from "./profile/actions";
 import { RegisterButton, UnregisterButton } from "./register-buttons";
 import {
   computeDuration,
@@ -19,6 +20,7 @@ export default async function Home({
   searchParams: Record<string, string | string[] | undefined>;
 }) {
   const session = await getServerSession();
+  const profile = await getProfile();
   const isTrainer = session?.user.role === "trainer";
 
   const trainings = await getTrainings();
@@ -46,13 +48,17 @@ export default async function Home({
     trainingsCountLabel = `${filteredTrainings.length} Trainings gefunden`;
   }
 
+  const hasAddress = Boolean(
+    profile?.address || profile?.zipCode || profile?.city,
+  );
+
   return (
     <section>
       <div className="gap-8 md:flex">
         <aside className="relative mb-8 shrink-0 basis-80">
           <div className="sticky top-12">
             <PageTitle>Praktika</PageTitle>
-            <TrainingFilter />
+            <TrainingFilter hasAddress={hasAddress} />
           </div>
         </aside>
         <div className="md:w-full md:max-w-[600px]">

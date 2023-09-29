@@ -6,10 +6,12 @@ import { deAT } from "date-fns/locale";
 import {
   CalendarIcon,
   ClockIcon,
+  LockIcon,
   MapIcon,
   UserIcon,
   XIcon,
 } from "lucide-react";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { DateRange } from "react-day-picker";
@@ -17,6 +19,7 @@ import { DateRange } from "react-day-picker";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
+import { Alert } from "./ui/alert";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
@@ -57,7 +60,7 @@ const filterOptions = [
   },
 ] as const;
 
-export function TrainingFilter() {
+export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
   const { replace } = useRouter();
   const [pending, startTransition] = useTransition();
   const searchParams = useSearchParams();
@@ -107,47 +110,18 @@ export function TrainingFilter() {
     });
   }
 
+  function clearDate() {
+    setDate(undefined);
+    const params = new URLSearchParams(window.location.search);
+    params.delete("from");
+    params.delete("to");
+    startTransition(() => {
+      replace(`${pathname}?${params.toString()}`);
+    });
+  }
+
   return (
     <section className="space-y-6 text-sm" aria-label="filter">
-      {filterOptions.map(({ icon: Icon, ...filter }) => (
-        <div key={filter.label}>
-          <div className="mb-2 flex items-center">
-            <Icon className="mr-2 h-4 w-5" />
-            <p className="font-medium">{filter.label}</p>
-          </div>
-          <ul className="flex flex-wrap items-center gap-1">
-            <li>
-              <Badge
-                variant={
-                  !searchParams.get(filter.key) ? "default" : "secondary"
-                }
-                className="cursor-pointer"
-                onClick={() => updateFilter(filter.key, null)}
-                aria-disabled={pending}
-              >
-                alle
-              </Badge>
-            </li>
-            {filter.options.map((option) => (
-              <li key={option.key}>
-                <Badge
-                  variant={
-                    searchParams.get(filter.key) === option.key
-                      ? "default"
-                      : "secondary"
-                  }
-                  className="cursor-pointer"
-                  onClick={() => updateFilter(filter.key, option.key)}
-                  aria-disabled={pending}
-                >
-                  {option.label}
-                </Badge>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-
       <div>
         <div className="mb-2 flex items-center">
           <CalendarIcon className="mr-2 h-4 w-5" />
@@ -160,7 +134,7 @@ export function TrainingFilter() {
                 id="date"
                 variant={"outline"}
                 className={cn(
-                  "w-full items-center justify-start text-left text-xs font-normal",
+                  "group w-full items-center justify-start text-left text-xs font-normal",
                   !date && "text-muted-foreground",
                 )}
               >
@@ -168,34 +142,28 @@ export function TrainingFilter() {
                 {date?.from ? (
                   date.to ? (
                     <>
-                      {format(date.from, "dd LLL, yy")} -
-                      <CalendarIcon className="mx-2 h-4 w-4" />
-                      {format(date.to, "dd LLL, yy")}
+                      {format(date.from, "dd. LLL yy")} -{" "}
+                      {format(date.to, "dd. LLL yy")}
                     </>
                   ) : (
-                    format(date.from, "dd LLL, yy")
+                    format(date.from, "dd. LLL yy")
                   )
                 ) : (
-                  <span>Datum auswählen</span>
+                  <span>Filter nach Datum</span>
                 )}
+                {date?.from || date?.to ? (
+                  <button
+                    className="ml-auto block translate-x-4 p-3"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      clearDate();
+                    }}
+                  >
+                    <XIcon className="h-4 w-4" />
+                  </button>
+                ) : null}
               </Button>
             </PopoverTrigger>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="shrink-0"
-              onClick={() => {
-                setDate(undefined);
-                const params = new URLSearchParams(window.location.search);
-                params.delete("from");
-                params.delete("to");
-                startTransition(() => {
-                  replace(`${pathname}?${params.toString()}`);
-                });
-              }}
-            >
-              <XIcon className="h-4 w-4" />
-            </Button>
           </div>
           <PopoverContent className="w-auto p-0" align="start">
             <Calendar
@@ -226,6 +194,54 @@ export function TrainingFilter() {
           </PopoverContent>
         </Popover>
       </div>
+      {filterOptions.map(({ icon: Icon, ...filter }) => (
+        <div key={filter.label}>
+          <div className="mb-2 flex items-center">
+            <Icon className="mr-2 h-4 w-5" />
+            <p className="font-medium">{filter.label}</p>
+          </div>
+          {filter.key === "traveltime" && !hasAddress ? (
+            <Alert className="text-xs text-muted-foreground">
+              Trage deine Adresse im{" "}
+              <Link href="/profile" className="underline hover:no-underline">
+                Profil
+              </Link>{" "}
+              ein, um nach Fahrtzeit filtern zu können
+            </Alert>
+          ) : (
+            <ul className="flex flex-wrap items-center gap-1">
+              <li>
+                <Badge
+                  variant={
+                    !searchParams.get(filter.key) ? "default" : "secondary"
+                  }
+                  className="cursor-pointer"
+                  onClick={() => updateFilter(filter.key, null)}
+                  aria-disabled={pending}
+                >
+                  alle
+                </Badge>
+              </li>
+              {filter.options.map((option) => (
+                <li key={option.key}>
+                  <Badge
+                    variant={
+                      searchParams.get(filter.key) === option.key
+                        ? "default"
+                        : "secondary"
+                    }
+                    className="cursor-pointer"
+                    onClick={() => updateFilter(filter.key, option.key)}
+                    aria-disabled={pending}
+                  >
+                    {option.label}
+                  </Badge>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
     </section>
   );
 }
