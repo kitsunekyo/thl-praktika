@@ -58,6 +58,8 @@ function TrainingItem({
 }: {
   training: Awaited<ReturnType<typeof getMyTrainings>>[number];
 }) {
+  const hasRegistrations = Boolean(training.registrations.length);
+
   return (
     <div className="rounded border border-solid bg-white p-4 text-sm">
       <dl className="space-y-2">
@@ -67,7 +69,7 @@ function TrainingItem({
           <TrainingDate start={training.start} end={training.end} />
         </dd>
         <dd>
-          {training.registrations.length ? (
+          {hasRegistrations ? (
             <Collapsible className="space-y-2" defaultOpen>
               <div className="flex items-center space-x-2">
                 <TrainingRegistrations
@@ -137,7 +139,10 @@ function TrainingItem({
         </dd>
       </dl>
       <footer className="mt-4 flex items-center gap-4 border-t pt-4">
-        <TrainingListActions id={training.id} />
+        <TrainingListActions
+          id={training.id}
+          hasRegistrations={hasRegistrations}
+        />
       </footer>
     </div>
   );
