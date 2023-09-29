@@ -31,11 +31,11 @@ export async function TrainingCard({
   return (
     <div className="rounded border border-solid bg-white p-4 text-sm">
       <dl className="space-y-2">
-        <dd className="font-medium">{training.description}</dd>
         <dd className="flex items-center">
           <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
           <TrainingDate start={training.start} end={training.end} />
         </dd>
+        <dd className="font-medium">{training.description}</dd>
         <dd>
           <TrainingLocation training={training} />
         </dd>
