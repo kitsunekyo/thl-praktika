@@ -13,7 +13,7 @@ setDefaultOptions({
 });
 
 export function formatTrainingDate(startDate: Date, endDate: Date) {
-  const date = format(new Date(startDate), "do MMM yy");
+  const date = format(new Date(startDate), "do MMMM yy");
   const startTime = format(new Date(startDate), "HH:mm");
   const endTime = format(new Date(endDate), "HH:mm");
 
