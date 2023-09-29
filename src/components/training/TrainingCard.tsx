@@ -30,11 +30,11 @@ export async function TrainingCard({
 }) {
   return (
     <div className="rounded border border-solid bg-white p-4 text-sm">
-      <dl className="space-y-2">
-        <dd className="flex items-center">
-          <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
-          <TrainingDate start={training.start} end={training.end} />
-        </dd>
+      <header className="-mx-4 -mt-4 flex items-center border-b bg-gray-50 px-4 py-2">
+        <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
+        <TrainingDate start={training.start} end={training.end} />
+      </header>
+      <dl className="space-y-2 pt-4">
         <dd className="font-medium">{training.description}</dd>
         <dd>
           <TrainingLocation training={training} />

@@ -9,6 +9,10 @@ export function TrainingDate({ start, end }: { start: Date; end: Date }) {
       format: ["hours", "minutes"],
     },
   );
-
-  return `${formatTrainingDate(start, end)} (${duration})`;
+  return (
+    <div className="flex w-full items-center">
+      <span>{formatTrainingDate(start, end)}</span>
+      <span className="ml-auto text-xs text-muted-foreground">{duration}</span>
+    </div>
+  );
 }
