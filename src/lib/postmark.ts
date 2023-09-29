@@ -3,13 +3,10 @@ import { ServerClient } from "postmark";
 const client = new ServerClient(process.env.POSTMARK_API_TOKEN || "");
 
 export function sendInvitationMail({ to, name }: { to: string; name: string }) {
-  const templateId =
-    process.env.NODE_ENV === "development" ? 33246448 : 33246306;
-
   const payload = {
     From: "hi@mostviertel.tech",
     To: to,
-    TemplateId: templateId,
+    TemplateAlias: "user-invitation",
     MessageStream: "outbound",
     TemplateModel: {
       product_url: process.env.NEXTAUTH_URL,
@@ -32,13 +29,10 @@ export function sendForgotPasswordMail({
   tokenId: string;
   tokenValue: string;
 }) {
-  const templateId =
-    process.env.NODE_ENV === "development" ? 33276953 : 33277711;
-
   const payload = {
     From: "hi@mostviertel.tech",
     To: to,
-    TemplateId: templateId,
+    TemplateAlias: "forgot-password",
     MessageStream: "outbound",
     TemplateModel: {
       product_url: process.env.NEXTAUTH_URL,
@@ -48,4 +42,30 @@ export function sendForgotPasswordMail({
 
   client.sendEmailWithTemplate(payload);
   console.log("forgot password mail sent", payload);
+}
+
+export function sendTrainingCancelledMail({
+  to,
+  trainer,
+  date,
+}: {
+  to: string;
+  trainer: string;
+  date: string;
+}) {
+  const payload = {
+    From: "hi@mostviertel.tech",
+    To: to,
+    TemplateAlias: "training-cancelled",
+    MessageStream: "outbound",
+    TemplateModel: {
+      product_url: process.env.NEXTAUTH_URL,
+      trainer,
+      date,
+      action_url: process.env.NEXTAUTH_URL,
+    },
+  };
+
+  client.sendEmailWithTemplate(payload);
+  console.log("training cancelled mail sent", payload);
 }
