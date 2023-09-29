@@ -34,8 +34,13 @@ export function UserMenu({ user }: { user: User }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-[180px]">
         <DropdownMenuItem>
+          <Link href="/trainings" className="w-full">
+            Anmeldungen
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
           <Link href="/profile" className="w-full">
-            Mein Profil
+            Profil
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />

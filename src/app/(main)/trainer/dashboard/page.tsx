@@ -32,9 +32,7 @@ export default async function Page() {
           <TrainingForm />
         </div>
         <section>
-          <h2 className="mb-6 text-xl font-semibold">
-            Deine geplanten Trainings
-          </h2>
+          <h2 className="mb-6 text-xl font-semibold">Deine Trainings</h2>
           {trainings.length === 0 && (
             <p className="text-sm text-gray-500">
               Du hast noch keine Trainings eingetragen.

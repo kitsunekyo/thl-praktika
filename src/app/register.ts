@@ -86,3 +86,25 @@ export async function getTrainings() {
 
   return trainings;
 }
+
+export async function getMyTrainings() {
+  const session = await getServerSession();
+  const currentUser = session?.user;
+  if (!currentUser) {
+    throw new Error("could not get user");
+  }
+
+  return prisma.training.findMany({
+    where: {
+      registrations: {
+        some: {
+          userId: currentUser.id,
+        },
+      },
+    },
+    include: {
+      author: true,
+      registrations: true,
+    },
+  });
+}

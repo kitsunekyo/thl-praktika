@@ -2,10 +2,10 @@ import { Registration, Training, User } from "@prisma/client";
 
 import { getTraveltime } from "@/lib/user";
 
-import { getProfile } from "./profile/actions";
+import { getProfile } from "../app/(main)/profile/actions";
 
 type WithRegistrations<T> = T & { registrations: Registration[] };
-type WithAuthor<T> = T & { author: User };
+type WithAuthor<T> = T & { author: Omit<User, "password"> };
 
 /**
  * @param duration in milliseconds

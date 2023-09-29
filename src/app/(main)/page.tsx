@@ -1,3 +1,4 @@
+import { Registration, Training, User } from "@prisma/client";
 import { endOfDay, startOfDay } from "date-fns";
 
 import { PageTitle } from "@/components/PageTitle";
@@ -6,12 +7,12 @@ import { getServerSession } from "@/lib/next-auth";
 
 import { getProfile } from "./profile/actions";
 import { RegisterButton, UnregisterButton } from "./register-buttons";
+import { TrainingFilter } from "../../components/TrainingFilter";
 import {
   computeDuration,
   computeIsRegistered,
   computeTraveltime,
-} from "./training";
-import { TrainingFilter } from "../../components/TrainingFilter";
+} from "../../lib/training";
 import { getTrainings } from "../register";
 
 export default async function Home({
@@ -95,19 +96,6 @@ export default async function Home({
   );
 }
 
-type TrainingsWithMetadata = Awaited<ReturnType<typeof addMetadata>>;
-async function addMetadata(
-  trainings: Awaited<ReturnType<typeof getTrainings>>,
-) {
-  return Promise.all(
-    trainings.map(async (training) => {
-      return await computeTraveltime(
-        await computeIsRegistered(await computeDuration(training)),
-      );
-    }),
-  );
-}
-
 async function filter({
   trainings,
   filter,
@@ -145,4 +133,20 @@ async function filter({
     }
     return true;
   });
+}
+
+type TrainingsWithMetadata = Awaited<ReturnType<typeof addMetadata>>;
+async function addMetadata<
+  T extends Training & {
+    author: Omit<User, "password">;
+    registrations: Registration[];
+  },
+>(trainings: T[]) {
+  return Promise.all(
+    trainings.map(async (training) => {
+      return await computeTraveltime(
+        await computeIsRegistered(await computeDuration(training)),
+      );
+    }),
+  );
 }
