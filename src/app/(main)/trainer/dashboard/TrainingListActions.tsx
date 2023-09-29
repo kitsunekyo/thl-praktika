@@ -35,12 +35,7 @@ export function TrainingListActions({
       {hasRegistrations ? (
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button
-              variant="destructive"
-              size="sm"
-              className="ml-auto"
-              disabled={loading}
-            >
+            <Button variant="destructive" size="sm" disabled={loading}>
               <BanIcon className="mr-2 h-4 w-4" /> Absagen
             </Button>
           </AlertDialogTrigger>
@@ -71,7 +66,6 @@ export function TrainingListActions({
         <Button
           variant="outline"
           size="sm"
-          className="ml-auto"
           disabled={loading}
           onClick={() => {
             startTransition(() => {

@@ -138,7 +138,7 @@ function TrainingItem({
           )}
         </dd>
       </dl>
-      <footer className="mt-4 flex items-center gap-4 border-t pt-4">
+      <footer className="mt-4 flex items-center gap-4">
         <TrainingListActions
           id={training.id}
           hasRegistrations={hasRegistrations}
