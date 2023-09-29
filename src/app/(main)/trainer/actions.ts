@@ -24,7 +24,11 @@ export async function getMyTrainings() {
     },
     include: {
       author: true,
-      registrations: true,
+      registrations: {
+        include: {
+          user: true,
+        },
+      },
     },
     orderBy: {
       start: "asc",

@@ -1,8 +1,17 @@
 import { Registration, Training } from "@prisma/client";
+import { ChevronsUpDown, MailIcon, MapIcon } from "lucide-react";
 
 import { PageTitle } from "@/components/PageTitle";
 import { TrainingDate } from "@/components/training/TrainingDate";
 import { TrainingRegistrations } from "@/components/training/TrainingRegistrations";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { formatUserAddress } from "@/lib/user";
 
 import { TrainingForm } from "./TrainingForm";
 import { TrainingListActions } from "./TrainingListActions";
@@ -48,9 +57,7 @@ export default async function Page() {
 function TrainingItem({
   training,
 }: {
-  training: Training & {
-    registrations: Registration[];
-  };
+  training: Awaited<ReturnType<typeof getMyTrainings>>[number];
 }) {
   return (
     <div className="rounded border border-solid bg-white p-4 text-sm">
@@ -60,10 +67,74 @@ function TrainingItem({
           <TrainingDate start={training.start} end={training.end} />
         </dd>
         <dd>
-          <TrainingRegistrations
-            count={training.registrations.length}
-            max={training.maxInterns}
-          />
+          <Collapsible className="space-y-2" defaultOpen>
+            <div className="flex items-center space-x-2">
+              <CollapsibleTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <ChevronsUpDown className="h-4 w-4" />
+                  <span className="sr-only">Toggle</span>
+                </Button>
+              </CollapsibleTrigger>
+              <TrainingRegistrations
+                count={training.registrations.length}
+                max={training.maxInterns}
+              />
+            </div>
+            <CollapsibleContent className="space-y-2">
+              <h3 className="mb-2 text-xs font-medium">
+                Angemeldete Praktikant:innen
+              </h3>
+              {training.registrations.length ? (
+                training.registrations.map(({ user, id }) => (
+                  <div key={id} className="rounded-md border px-4 py-3 text-sm">
+                    <div className="flex items-center">
+                      <Avatar size="default" className="mr-4">
+                        <AvatarImage src={user.image || "/img/avatar.jpg"} />
+                      </Avatar>
+                      <dl>
+                        {user.name && <dd>{user.name}</dd>}
+                        <dd className="flex items-center text-xs text-muted-foreground">
+                          <MailIcon className="mr-2 h-3 w-3" />
+                          {user.phone ? (
+                            <>
+                              <a
+                                href={`tel:${user.phone}`}
+                                className="underline"
+                              >
+                                {user.phone}
+                              </a>
+                              <span className="mx-2">&middot;</span>
+                            </>
+                          ) : null}
+                          <a
+                            href={`mailto:${user.email}`}
+                            className="underline"
+                          >
+                            {user.email}
+                          </a>
+                        </dd>
+                        {
+                          <dd className="flex items-center text-xs text-muted-foreground">
+                            {formatUserAddress(user) !== "" && (
+                              <>
+                                <MapIcon className="mr-2 h-3 w-3" />
+                                <span className="sr-only">Adresse:</span>{" "}
+                                {formatUserAddress(user)}
+                              </>
+                            )}
+                          </dd>
+                        }
+                      </dl>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-muted-foreground">
+                  Es hat sich noch niemand angemeldet
+                </p>
+              )}
+            </CollapsibleContent>
+          </Collapsible>
         </dd>
       </dl>
       <footer className="mt-4 flex items-center gap-4 border-t pt-4">
