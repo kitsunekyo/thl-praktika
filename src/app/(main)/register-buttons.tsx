@@ -13,7 +13,6 @@ export function RegisterButton({ trainingId }: { trainingId: string }) {
   const { toast } = useToast();
   return (
     <Button
-      variant="ghost"
       size="sm"
       disabled={loading}
       onClick={() =>
@@ -45,7 +44,7 @@ export function UnregisterButton({ trainingId }: { trainingId: string }) {
   const { toast } = useToast();
   return (
     <Button
-      variant="ghost"
+      variant="secondary"
       size="sm"
       disabled={loading}
       onClick={() =>

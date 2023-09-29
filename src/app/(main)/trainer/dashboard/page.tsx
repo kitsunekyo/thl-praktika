@@ -61,12 +61,12 @@ function TrainingItem({
   const hasRegistrations = Boolean(training.registrations.length);
 
   return (
-    <div className="rounded border border-solid bg-white p-4 text-sm">
-      <header className="-mx-4 -mt-4 flex items-center border-b bg-gray-50 px-4 py-2">
+    <div className="rounded border border-solid bg-white text-sm">
+      <header className="flex items-center border-b bg-gray-50 px-4 py-2">
         <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
         <TrainingDate start={training.start} end={training.end} />
       </header>
-      <dl className="space-y-2 pt-4">
+      <dl className="space-y-2 p-4">
         <dd className="font-medium">{training.description}</dd>
         <dd>
           {hasRegistrations ? (
@@ -138,7 +138,7 @@ function TrainingItem({
           )}
         </dd>
       </dl>
-      <footer className="mt-4 flex items-center gap-4">
+      <footer className="flex items-center gap-4 px-4 pb-4">
         <TrainingListActions
           id={training.id}
           hasRegistrations={hasRegistrations}
