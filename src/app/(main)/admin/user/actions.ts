@@ -2,7 +2,6 @@
 
 import { hash } from "bcrypt";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 import { sendInvitationMail } from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
@@ -14,14 +13,8 @@ export async function getUsers() {
 }
 
 export async function deleteUser(id: string) {
-  try {
-    await prisma.user.delete({ where: { id } });
-    revalidatePath("/user");
-  } catch {
-    return {
-      error: "something went wrong",
-    };
-  }
+  await prisma.user.delete({ where: { id } });
+  revalidatePath("/user");
 }
 
 export async function createUser(
@@ -30,68 +23,64 @@ export async function createUser(
   name?: string,
   role = "user",
 ) {
-  try {
-    const hashedPassword = await hash(password, 12);
+  const hashedPassword = await hash(password, 12);
 
-    await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        name,
-        role,
-      },
-    });
+  const user = await prisma.user.create({
+    data: {
+      email,
+      password: hashedPassword,
+      name,
+      role,
+    },
+  });
 
-    redirect("/admin/user");
-  } catch {
+  if (!user) {
     return {
-      error: "something went wrong",
+      error: "user already exists",
     };
   }
 }
 
 export async function inviteUser(email: string, name = "", role = "user") {
-  try {
-    const invitation = await prisma.invitation.findFirst({
-      where: {
-        email,
-      },
-    });
+  const invitation = await prisma.invitation.findFirst({
+    where: {
+      email,
+    },
+  });
 
-    if (invitation) {
-      return {
-        error: "invitation already exists",
-      };
-    }
-
-    const user = await prisma.user.findFirst({
-      where: {
-        email,
-      },
-    });
-
-    if (user) {
-      return {
-        error: "user already exists",
-      };
-    }
-
-    await prisma.invitation.create({
-      data: {
-        email,
-        name,
-        role,
-      },
-    });
-
-    sendInvitationMail({ to: email, name });
-
-    redirect("/admin/user");
-  } catch {
+  if (invitation) {
     return {
-      error: "something went wrong",
+      error: "invitation already exists",
     };
   }
+
+  const user = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
+
+  if (user) {
+    return {
+      error: "user already exists",
+    };
+  }
+
+  const inv = await prisma.invitation.create({
+    data: {
+      email,
+      name,
+      role,
+    },
+  });
+
+  if (!inv) {
+    return {
+      error: "could not create invitation",
+    };
+  }
+
+  sendInvitationMail({ to: email, name });
 }
 
 export async function getInvitations() {
@@ -99,12 +88,6 @@ export async function getInvitations() {
 }
 
 export async function deleteInvitation(id: string) {
-  try {
-    await prisma.invitation.delete({ where: { id } });
-    revalidatePath("/user");
-  } catch {
-    return {
-      error: "something went wrong",
-    };
-  }
+  await prisma.invitation.delete({ where: { id } });
+  revalidatePath("/user");
 }

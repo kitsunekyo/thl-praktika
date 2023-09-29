@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { redirect } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -56,7 +57,7 @@ export function UserForm() {
           startTransition(async () => {
             if (isPasswordEmpty) {
               const res = await inviteUser(data.email, data.name, data.role);
-              if (res.error) {
+              if (res?.error) {
                 toast({
                   title: "Fehler beim Einladen",
                   description: `${data.email} konnte nicht eingeladen werden. Versuch es nochmal.`,
@@ -67,6 +68,7 @@ export function UserForm() {
                   title: "User wurde eingeladen",
                   description: `Es wurde eine Einladung an ${data.email} gesendet.`,
                 });
+                redirect("/admin/user");
               }
               return;
             }
@@ -76,7 +78,7 @@ export function UserForm() {
               data.name,
               data.role,
             );
-            if (res.error) {
+            if (res?.error) {
               toast({
                 title: "Fehler beim Erstellen",
                 description: `${data.email} konnte nicht erstellt werden. Versuch es nochmal.`,
@@ -88,6 +90,8 @@ export function UserForm() {
                 description: `User ${data.email} wurde erstellt.`,
               });
             }
+
+            redirect("/admin/user");
           });
         })}
       >
