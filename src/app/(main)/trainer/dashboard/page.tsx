@@ -62,8 +62,7 @@ function TrainingItem({
 
   return (
     <div className="rounded border border-solid bg-white text-sm">
-      <header className="flex items-center border-b bg-gray-50 px-4 py-2">
-        <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
+      <header className="border-b bg-gray-50 px-4 py-2">
         <TrainingDate start={training.start} end={training.end} />
       </header>
       <dl className="space-y-2 p-4">
