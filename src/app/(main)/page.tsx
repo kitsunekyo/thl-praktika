@@ -69,6 +69,9 @@ export default async function Home({
             <ul className="space-y-4">
               {filteredTrainings.map((t) => {
                 const hasFreeSpots = t.maxInterns - t.registrations.length > 0;
+                const isOwner = t.authorId === session?.user.id;
+                const canRegister = !isOwner && !isTrainer && hasFreeSpots;
+
                 return (
                   <li key={t.id}>
                     <TrainingCard
@@ -77,7 +80,7 @@ export default async function Home({
                         isTrainer ? null : t.isRegistered ? (
                           <UnregisterButton trainingId={t.id} />
                         ) : (
-                          hasFreeSpots && <RegisterButton trainingId={t.id} />
+                          canRegister && <RegisterButton trainingId={t.id} />
                         )
                       }
                     />
