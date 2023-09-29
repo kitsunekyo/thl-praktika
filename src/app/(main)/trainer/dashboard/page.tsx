@@ -1,5 +1,4 @@
-import { Registration, Training } from "@prisma/client";
-import { ChevronsUpDown, MailIcon, MapIcon } from "lucide-react";
+import { CalendarIcon, ChevronsUpDown, MailIcon, MapIcon } from "lucide-react";
 
 import { PageTitle } from "@/components/PageTitle";
 import { TrainingDate } from "@/components/training/TrainingDate";
@@ -63,29 +62,28 @@ function TrainingItem({
     <div className="rounded border border-solid bg-white p-4 text-sm">
       <dl className="space-y-2">
         <dd className="font-medium">{training.description}</dd>
-        <dd>
+        <dd className="flex items-center">
+          <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
           <TrainingDate start={training.start} end={training.end} />
         </dd>
         <dd>
-          <Collapsible className="space-y-2" defaultOpen>
-            <div className="flex items-center space-x-2">
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <ChevronsUpDown className="h-4 w-4" />
-                  <span className="sr-only">Toggle</span>
-                </Button>
-              </CollapsibleTrigger>
-              <TrainingRegistrations
-                count={training.registrations.length}
-                max={training.maxInterns}
-              />
-            </div>
-            <CollapsibleContent className="space-y-2">
-              <h3 className="mb-2 text-xs font-medium">
-                Angemeldete Praktikant:innen
-              </h3>
-              {training.registrations.length ? (
-                training.registrations.map(({ user, id }) => (
+          {training.registrations.length ? (
+            <Collapsible className="space-y-2" defaultOpen>
+              <div className="flex items-center space-x-2">
+                <TrainingRegistrations
+                  count={training.registrations.length}
+                  max={training.maxInterns}
+                />
+                <CollapsibleTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-8 w-8 p-2">
+                    <ChevronsUpDown className="h-4 w-4" />
+                    <span className="sr-only">Toggle</span>
+                  </Button>
+                </CollapsibleTrigger>
+              </div>
+              <CollapsibleContent className="space-y-2">
+                <h3 className="font-medium">Angemeldete Praktikant:innen</h3>
+                {training.registrations.map(({ user, id }) => (
                   <div key={id} className="rounded-md border px-4 py-3 text-sm">
                     <div className="flex items-center">
                       <Avatar size="default" className="mr-4">
@@ -127,14 +125,15 @@ function TrainingItem({
                       </dl>
                     </div>
                   </div>
-                ))
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  Es hat sich noch niemand angemeldet
-                </p>
-              )}
-            </CollapsibleContent>
-          </Collapsible>
+                ))}
+              </CollapsibleContent>
+            </Collapsible>
+          ) : (
+            <TrainingRegistrations
+              count={training.registrations.length}
+              max={training.maxInterns}
+            />
+          )}
         </dd>
       </dl>
       <footer className="mt-4 flex items-center gap-4 border-t pt-4">

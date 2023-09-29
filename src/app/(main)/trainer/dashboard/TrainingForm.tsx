@@ -75,36 +75,37 @@ export function TrainingForm() {
     },
   });
 
+  async function handleSubmit(data: z.infer<typeof formSchema>) {
+    startTransition(async () => {
+      const start = set(data.date, {
+        hours: parseInt(data.startTime.split(":")[0]),
+        minutes: parseInt(data.startTime.split(":")[1]),
+      });
+      const end = set(data.date, {
+        hours: parseInt(data.endTime.split(":")[0]),
+        minutes: parseInt(data.endTime.split(":")[1]),
+      });
+      const res = await createTraining({ ...data, start, end });
+
+      if (res?.error) {
+        toast({
+          title: "Oops",
+          description: `Das Training konnte nicht erstellt werden. Versuch es nochmal.`,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Training wurde erstellt",
+        });
+        form.reset();
+      }
+    });
+  }
+
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(
-          async (data: z.infer<typeof formSchema>) => {
-            startTransition(async () => {
-              const start = set(data.date, {
-                hours: parseInt(data.startTime.split(":")[0]),
-                minutes: parseInt(data.startTime.split(":")[1]),
-              });
-              const end = set(data.date, {
-                hours: parseInt(data.endTime.split(":")[0]),
-                minutes: parseInt(data.endTime.split(":")[1]),
-              });
-              const res = await createTraining({ ...data, start, end });
-
-              if (res?.error) {
-                toast({
-                  title: "Oops",
-                  description: `Das Training konnte nicht erstellt werden. Versuch es nochmal.`,
-                  variant: "destructive",
-                });
-              } else {
-                toast({
-                  title: "Training wurde erstellt",
-                });
-              }
-            });
-          },
-        )}
+        onSubmit={form.handleSubmit(handleSubmit)}
         className="mx-auto space-y-4 md:space-y-8"
       >
         <FormField

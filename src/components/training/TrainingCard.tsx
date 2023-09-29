@@ -1,9 +1,10 @@
 import { Registration, Training, User } from "@prisma/client";
-import { formatDuration, intervalToDuration } from "date-fns";
+import { formatDuration } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-import { formatTrainingDate, secondsToDuration } from "@/lib/date";
+import { secondsToDuration } from "@/lib/date";
 import { formatUserAddress } from "@/lib/user";
 import { getInitials } from "@/lib/utils";
 
@@ -31,7 +32,8 @@ export async function TrainingCard({
     <div className="rounded border border-solid bg-white p-4 text-sm">
       <dl className="space-y-2">
         <dd className="font-medium">{training.description}</dd>
-        <dd>
+        <dd className="flex items-center">
+          <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
           <TrainingDate start={training.start} end={training.end} />
         </dd>
         <dd>
