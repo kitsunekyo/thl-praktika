@@ -1,4 +1,4 @@
-import { CalendarIcon, ChevronsUpDown, MailIcon, MapIcon } from "lucide-react";
+import { ChevronsUpDown, MailIcon, MapIcon } from "lucide-react";
 
 import { PageTitle } from "@/components/PageTitle";
 import { TrainingDate } from "@/components/training/TrainingDate";

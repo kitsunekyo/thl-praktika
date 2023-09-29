@@ -1,6 +1,5 @@
 import { Registration, Training, User } from "@prisma/client";
 import { formatDuration } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
