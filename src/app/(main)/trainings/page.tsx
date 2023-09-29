@@ -13,9 +13,7 @@ export default async function Trainings() {
 
   return (
     <>
-      <h1 className="mb-4 text-2xl font-semibold">
-        Meine Praktika Anmeldungen
-      </h1>
+      <PageTitle>Meine Praktika Anmeldungen</PageTitle>
       {trainings.length > 0 ? (
         <TrainingList trainings={trainings} />
       ) : (
@@ -41,11 +39,14 @@ function TrainingList({
   })[];
 }) {
   return (
-    <ul className="space-y-4">
+    <ul className="max-w-2xl space-y-4">
       {trainings.map((t) => {
         return (
           <li key={t.id}>
-            <TrainingCard training={t} />
+            <TrainingCard
+              training={t}
+              actions={<UnregisterButton trainingId={t.id} />}
+            />
           </li>
         );
       })}
