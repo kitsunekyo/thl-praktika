@@ -22,7 +22,6 @@ export async function TrainingCard({
   };
   actions?: React.ReactNode;
 }) {
-  const hasEnded = training.end < new Date();
   const address = formatUserAddress(training.author);
   const googleMapsUrl = `https://www.google.com/maps/place/${address.replaceAll(
     " ",
@@ -36,11 +35,7 @@ export async function TrainingCard({
   );
 
   return (
-    <div
-      className={cn("rounded border border-solid bg-white p-4 text-sm", {
-        "opacity-50": hasEnded,
-      })}
-    >
+    <div className={cn("rounded border border-solid bg-white p-4 text-sm")}>
       <dl className="space-y-2">
         <dd className="font-medium">{training.description}</dd>
         <dd>
