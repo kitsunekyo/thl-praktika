@@ -1,7 +1,7 @@
 import { endOfDay, startOfDay } from "date-fns";
 
 import { PageTitle } from "@/components/PageTitle";
-import { TrainingCard } from "@/components/TrainingCard";
+import { TrainingCard } from "@/components/training/TrainingCard";
 import { getServerSession } from "@/lib/next-auth";
 
 import { getProfile } from "./profile/actions";

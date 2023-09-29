@@ -11,10 +11,14 @@ export function TrainingListActions({ id }: { id: string }) {
   const [loading, startTransition] = useTransition();
 
   return (
-    <div className="ml-auto flex items-center gap-2">
+    <div className="flex w-full items-center gap-2">
+      {/* <Button size="sm" variant="secondary">
+        Bearbeiten
+      </Button> */}
       <Button
-        variant="default"
+        variant="destructive"
         size="sm"
+        className="ml-auto"
         disabled={loading}
         onClick={() => {
           startTransition(() => {

@@ -1,5 +1,8 @@
+import { Registration, Training } from "@prisma/client";
+
 import { PageTitle } from "@/components/PageTitle";
-import { TrainingCard } from "@/components/TrainingCard";
+import { TrainingDate } from "@/components/training/TrainingDate";
+import { TrainingRegistrations } from "@/components/training/TrainingRegistrations";
 
 import { TrainingForm } from "./TrainingForm";
 import { TrainingListActions } from "./TrainingListActions";
@@ -21,7 +24,9 @@ export default async function Page() {
           <TrainingForm />
         </div>
         <section>
-          <h2 className="mb-6 text-xl font-semibold">Geplante Trainings</h2>
+          <h2 className="mb-6 text-xl font-semibold">
+            Deine geplanten Trainings
+          </h2>
           {trainings.length === 0 && (
             <p className="text-sm text-gray-500">
               Du hast noch keine Trainings eingetragen.
@@ -30,17 +35,40 @@ export default async function Page() {
           <ul className="space-y-4">
             {trainings.map((training) => (
               <li key={training.id}>
-                <TrainingCard
-                  training={training}
-                  actions={
-                    <TrainingListActions id={training.id} key={training.id} />
-                  }
-                />
+                <TrainingItem training={training} />
               </li>
             ))}
           </ul>
         </section>
       </div>
+    </div>
+  );
+}
+
+function TrainingItem({
+  training,
+}: {
+  training: Training & {
+    registrations: Registration[];
+  };
+}) {
+  return (
+    <div className="rounded border border-solid bg-white p-4 text-sm">
+      <dl className="space-y-2">
+        <dd className="font-medium">{training.description}</dd>
+        <dd>
+          <TrainingDate start={training.start} end={training.end} />
+        </dd>
+        <dd>
+          <TrainingRegistrations
+            count={training.registrations.length}
+            max={training.maxInterns}
+          />
+        </dd>
+      </dl>
+      <footer className="mt-4 flex items-center gap-4 border-t pt-4">
+        <TrainingListActions id={training.id} />
+      </footer>
     </div>
   );
 }
