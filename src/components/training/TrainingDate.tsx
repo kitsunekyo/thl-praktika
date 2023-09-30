@@ -14,7 +14,9 @@ export function TrainingDate({ start, end }: { start: Date; end: Date }) {
     <div className="flex w-full items-center">
       <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
       <span>{formatTrainingDate(start, end)}</span>
-      <span className="ml-auto text-xs text-muted-foreground">{duration}</span>
+      <span className="ml-auto whitespace-nowrap text-xs text-muted-foreground">
+        {duration}
+      </span>
     </div>
   );
 }

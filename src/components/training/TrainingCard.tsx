@@ -67,7 +67,11 @@ function TrainingAuthor({
 }) {
   return (
     <div className="flex min-w-0 shrink items-center gap-2">
-      <Avatar>
+      <Avatar className="shrink-0 sm:hidden" size="sm">
+        <AvatarImage src={image || "/img/avatar.jpg"} />
+        <AvatarFallback>{getInitials({ name, email })}</AvatarFallback>
+      </Avatar>
+      <Avatar className="hidden shrink-0 sm:block">
         <AvatarImage src={image || "/img/avatar.jpg"} />
         <AvatarFallback>{getInitials({ name, email })}</AvatarFallback>
       </Avatar>
