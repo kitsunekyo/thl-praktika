@@ -6,7 +6,7 @@ import { useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
-import { register, unregister } from "../register";
+import { register, unregister } from "../training-actions";
 
 export function RegisterButton({ trainingId }: { trainingId: string }) {
   const [loading, startTransition] = useTransition();

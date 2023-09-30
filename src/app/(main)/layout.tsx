@@ -1,7 +1,6 @@
 import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 import { getServerSession } from "@/lib/next-auth";
-
-import { Header } from "../../components/Header";
 
 export default async function Layout({
   children,

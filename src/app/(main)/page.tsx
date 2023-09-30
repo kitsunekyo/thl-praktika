@@ -13,7 +13,7 @@ import {
   computeIsRegistered,
   computeTraveltime,
 } from "../../lib/training";
-import { getTrainings } from "../register";
+import { getTrainings } from "../training-actions";
 
 export default async function Home({
   searchParams,

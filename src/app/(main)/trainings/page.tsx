@@ -1,7 +1,7 @@
 import { Registration, Training, User } from "@prisma/client";
 import Link from "next/link";
 
-import { getMyTrainings } from "@/app/register";
+import { getMyTrainings } from "@/app/training-actions";
 import { PageTitle } from "@/components/PageTitle";
 import { TrainingCard } from "@/components/training/TrainingCard";
 
