@@ -10,7 +10,8 @@ export function Footer() {
           <div className="mb-6 space-y-4 md:mb-0">
             <Logo light={true} />
             <p className="max-w-xs text-xs text-gray-400">
-              Diese App ist ein privates Projekt.
+              Diese App ist ein privates Projekt. Du kannst Feedback oder
+              Support Anfragen an hi@mostviertel.tech senden.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-8 text-sm sm:grid-cols-3 sm:gap-6">
