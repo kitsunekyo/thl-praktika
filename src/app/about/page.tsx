@@ -285,7 +285,7 @@ function CallToAction() {
             hi@mostviertel.tech melden.
           </p>
           <Image
-            className="z-1 mx-auto max-w-[500px]"
+            className="z-1 mx-auto md:max-w-[500px]"
             src="/img/dog-laptop.svg"
             width={913}
             height={297}
