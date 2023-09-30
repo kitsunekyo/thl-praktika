@@ -10,7 +10,7 @@ import { Button } from "./ui/button";
 export function Header({ user }: { user?: Session["user"] }) {
   return (
     <header className="border-b">
-      <div className="container flex flex-wrap items-center py-2">
+      <div className="container flex min-h-[60px] flex-wrap items-center py-2">
         <div className="mr-12">
           <Logo />
         </div>

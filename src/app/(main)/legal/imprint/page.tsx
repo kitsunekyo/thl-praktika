@@ -20,6 +20,10 @@ export default function Page() {
           <br /> Email: hi@mostviertel.tech <br />
         </p>
         <p>
+          Diese Webseite und deren Inhalte sind ein privates Projekt und stehen
+          in keiner Verbindung mit dem gemeinnützigen Verein Tiere Helfen Leben.
+        </p>
+        <p>
           <strong>Urheberrecht:</strong> Die Inhalte dieser Webseite
           unterliegen, soweit dies rechtlich möglich ist, diversen Schutzrechten
           (z.B dem Urheberrecht). Jegliche Verwendung/Verbreitung von
