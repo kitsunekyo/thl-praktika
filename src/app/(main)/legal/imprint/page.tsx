@@ -19,7 +19,10 @@ export default function Page() {
           <strong>Kontaktdaten:</strong>
           <br /> Email: hi@mostviertel.tech <br />
         </p>
-        <p>Diese Webseite und deren Inhalte sind ein privates Projekt.</p>
+        <p>
+          Diese Webseite und deren Inhalte sind ein privates Projekt. Ich kann
+          daher leider keine Gewährleistung garantieren.
+        </p>
         <p>
           <strong>Urheberrecht:</strong> Die Inhalte dieser Webseite
           unterliegen, soweit dies rechtlich möglich ist, diversen Schutzrechten
@@ -31,18 +34,18 @@ export default function Page() {
           <strong>Haftungsausschluss:</strong> Trotz sorgfältiger inhaltlicher
           Kontrolle übernimmt der Webseitenbetreiber dieser Webseite keine
           Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten
-          Seiten sind ausschließlich deren Betreiber verantwortlich. Sollten Sie
+          Seiten sind ausschließlich deren Betreiber verantwortlich. Solltest du
           dennoch auf ausgehende Links aufmerksam werden, welche auf eine
-          Webseite mit rechtswidriger Tätigkeit/Information verweisen, ersuchen
-          wir um dementsprechenden Hinweis, um diese nach § 17 Abs. 2 ECG
+          Webseite mit rechtswidriger Tätigkeit/Information verweisen, ersuche
+          ich um dementsprechenden Hinweis, um diese nach § 17 Abs. 2 ECG
           umgehend zu entfernen.
         </p>
         <p>
           Die Urheberrechte Dritter werden vom Betreiber dieser Webseite mit
-          größter Sorgfalt beachtet. Sollten Sie trotzdem auf eine
-          Urheberrechtsverletzung aufmerksam werden, bitten wir um einen
+          größter Sorgfalt beachtet. Solltest du trotzdem auf eine
+          Urheberrechtsverletzung aufmerksam werden, bitte ich um einen
           entsprechenden Hinweis. Bei Bekanntwerden derartiger
-          Rechtsverletzungen werden wir den betroffenen Inhalt umgehend
+          Rechtsverletzungen werde ich den betroffenen Inhalt umgehend
           entfernen.
         </p>
       </article>
