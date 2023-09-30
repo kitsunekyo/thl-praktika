@@ -2,7 +2,13 @@ import { ServerClient } from "postmark";
 
 const client = new ServerClient(process.env.POSTMARK_API_TOKEN || "");
 
-export function sendInvitationMail({ to, name }: { to: string; name: string }) {
+export async function sendInvitationMail({
+  to,
+  name,
+}: {
+  to: string;
+  name: string;
+}) {
   const payload = {
     From: "hi@mostviertel.tech",
     To: to,
@@ -16,11 +22,11 @@ export function sendInvitationMail({ to, name }: { to: string; name: string }) {
     },
   };
 
-  client.sendEmailWithTemplate(payload);
+  await client.sendEmailWithTemplate(payload);
   console.log("invitation mail sent", payload);
 }
 
-export function sendForgotPasswordMail({
+export async function sendForgotPasswordMail({
   to,
   tokenId,
   tokenValue,
@@ -40,11 +46,11 @@ export function sendForgotPasswordMail({
     },
   };
 
-  client.sendEmailWithTemplate(payload);
+  await client.sendEmailWithTemplate(payload);
   console.log("forgot password mail sent", payload);
 }
 
-export function sendTrainingCancelledMail({
+export async function sendTrainingCancelledMail({
   to,
   trainer,
   date,
@@ -66,6 +72,6 @@ export function sendTrainingCancelledMail({
     },
   };
 
-  client.sendEmailWithTemplate(payload);
+  await client.sendEmailWithTemplate(payload);
   console.log("training cancelled mail sent", payload);
 }
