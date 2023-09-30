@@ -80,6 +80,14 @@ export const authOptions: AuthOptions = {
         },
       });
       if (invitation) {
+        await prisma.user.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            role: invitation.role,
+          },
+        });
         await prisma.invitation.delete({
           where: {
             id: invitation.id,
