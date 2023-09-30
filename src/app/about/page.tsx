@@ -74,7 +74,7 @@ function Hero() {
             <p className="mx-auto mt-8 max-w-[70ch] text-gray-700 dark:text-gray-300">
               Über 230 Praktika Stunden zwischen 20 Studierenden und 40
               Praxisanleiter:innen zu koordinieren, kann viel Zeit und Energie
-              kosten.
+              kosten. Muss es aber nicht!
             </p>
             <div className="mt-16 flex flex-wrap justify-center gap-x-6 gap-y-4">
               <Link
