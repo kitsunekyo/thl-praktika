@@ -15,10 +15,13 @@ export function Footer() {
           </div>
           <div className="grid grid-cols-2 gap-8 text-sm sm:grid-cols-3 sm:gap-6">
             <div>
-              <h2 className="mb-6 font-semibold uppercase text-white">
-                Rechtliche Infos
-              </h2>
+              <h2 className="mb-6 font-semibold uppercase text-white">Infos</h2>
               <ul className="space-y-4 font-medium text-gray-400">
+                <li>
+                  <Link href="/about" className="hover:underline">
+                    Über diese App
+                  </Link>
+                </li>
                 <li>
                   <Link href="/legal/privacy" className="hover:underline">
                     Datenschutzerklärung
