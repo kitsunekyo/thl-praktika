@@ -155,7 +155,6 @@ function TrainerFeatures() {
                 Gib mit nur wenigen Klicks an wann und wo ein Training
                 stattfindet, und wie viele Praktikant:innen teilnehmen können.
               </p>
-              ICCreateIconF
             </div>
           </div>
         </div>
