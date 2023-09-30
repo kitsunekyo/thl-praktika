@@ -65,7 +65,7 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user }) {
+    async signIn({ user, account }) {
       const userExists = await prisma.user.findFirst({
         where: {
           id: user.id,
@@ -79,23 +79,42 @@ export const authOptions: AuthOptions = {
           email: user.email,
         },
       });
-      if (invitation) {
-        await prisma.user.update({
-          where: {
-            id: user.id,
-          },
-          data: {
-            role: invitation.role,
-          },
-        });
-        await prisma.invitation.delete({
-          where: {
-            id: invitation.id,
-          },
-        });
-        return true;
+      if (!invitation) {
+        return false;
       }
-      return false;
+      if (!account) {
+        return false;
+      }
+      await prisma.account.create({
+        data: {
+          userId: user.id,
+          type: account.type,
+          provider: account.provider,
+          providerAccountId: account.providerAccountId,
+          refresh_token: account.refresh_token,
+          access_token: account.access_token,
+          expires_at: account.expires_at,
+          token_type: account.token_type,
+          scope: account.scope,
+          id_token: account.id_token,
+          session_state: account.session_state,
+        },
+      });
+      await prisma.user.create({
+        data: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          image: user.image,
+          role: invitation.role,
+        },
+      });
+      await prisma.invitation.delete({
+        where: {
+          id: invitation.id,
+        },
+      });
+      return true;
     },
     jwt: ({ token, user }) => {
       if (user) {
