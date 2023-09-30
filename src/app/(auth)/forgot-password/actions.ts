@@ -29,10 +29,13 @@ export async function forgotPassword(email: string) {
       expires: expirationDate,
     },
   });
-
-  sendForgotPasswordMail({
-    to: user.email,
-    tokenId: token.id,
-    tokenValue: secret,
-  });
+  try {
+    sendForgotPasswordMail({
+      to: user.email,
+      tokenId: token.id,
+      tokenValue: secret,
+    });
+  } catch (e) {
+    console.error(e);
+  }
 }
