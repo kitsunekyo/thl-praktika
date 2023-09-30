@@ -21,8 +21,10 @@ export async function sendInvitationMail({
       action_url: `${process.env.NEXTAUTH_URL}/signup?email=${to}&name=${name}`,
     },
   };
-
-  await client.sendEmailWithTemplate(payload);
+  if (process.env.NODE_ENV === "production") {
+    await client.sendEmailWithTemplate(payload);
+    return;
+  }
   console.log("invitation mail sent", payload);
 }
 
@@ -45,8 +47,10 @@ export async function sendForgotPasswordMail({
       action_url: `${process.env.NEXTAUTH_URL}/reset-password?t=${tokenId}&v=${tokenValue}`,
     },
   };
-
-  await client.sendEmailWithTemplate(payload);
+  if (process.env.NODE_ENV === "production") {
+    await client.sendEmailWithTemplate(payload);
+    return;
+  }
   console.log("forgot password mail sent", payload);
 }
 
@@ -71,7 +75,10 @@ export async function sendTrainingCancelledMail({
       action_url: process.env.NEXTAUTH_URL,
     },
   };
+  if (process.env.NODE_ENV === "production") {
+    await client.sendEmailWithTemplate(payload);
+    return;
+  }
 
-  await client.sendEmailWithTemplate(payload);
   console.log("training cancelled mail sent", payload);
 }
