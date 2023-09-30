@@ -34,7 +34,7 @@ const filterOptions = [
     icon: MapIcon,
     label: "Fahrtzeit",
     options: [
-      { key: "30", label: "bis 30h" },
+      { key: "30", label: "bis 30m" },
       { key: "60", label: "bis 1h" },
       { key: "120", label: "bis 2h" },
     ],
