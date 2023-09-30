@@ -22,6 +22,12 @@ export default async function Login({
         <Link href="/login" className="underline hover:no-underline">
           Anmelden
         </Link>
+        <Link
+          href="/about"
+          className="mt-4 block text-muted-foreground underline hover:no-underline"
+        >
+          Über diese App
+        </Link>
       </div>
     </>
   );

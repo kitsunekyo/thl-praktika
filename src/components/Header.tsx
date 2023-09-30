@@ -1,5 +1,5 @@
+import Link from "next/link";
 import { Session } from "next-auth";
-import { signIn } from "next-auth/react";
 
 import { Logo } from "./Logo";
 import { DesktopNav } from "./nav/DesktopNav";
@@ -26,8 +26,10 @@ export function Header({ user }: { user?: Session["user"] }) {
 
 function LoginButton() {
   return (
-    <Button onClick={() => signIn()} size="sm">
-      Anmelden
-    </Button>
+    <Link href="/login">
+      <Button size="sm" variant="link">
+        Anmelden
+      </Button>
+    </Link>
   );
 }

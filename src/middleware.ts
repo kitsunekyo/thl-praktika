@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware";
 
+const publicPaths = ["/legal", "/about"];
+
 const publicOnlyPaths = [
   "/login",
   "/signup",
@@ -12,8 +14,11 @@ const publicOnlyPaths = [
 export default withAuth(
   function middleware(req) {
     const path = req.nextUrl.pathname;
+    if (publicPaths.some((p) => path.startsWith(p))) {
+      return NextResponse.next();
+    }
 
-    if (publicOnlyPaths.includes(path)) {
+    if (publicOnlyPaths.some((p) => path.startsWith(p))) {
       if (!!req.nextauth.token) {
         return NextResponse.redirect(new URL("/", req.url));
       }
