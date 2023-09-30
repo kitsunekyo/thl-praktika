@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware";
 
-const publicPaths = ["/legal", "/about"];
+const publicPaths = ["/legal", "/about", "/img"];
 
 const publicOnlyPaths = [
   "/login",
