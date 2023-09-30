@@ -17,8 +17,9 @@ export default function Page() {
         </p>
         <ul>
           <li>
-            Unsere Website unter mostviertel.tech besuchen oder eine unserer
-            Websites besuchen, die auf diese Datenschutzerklärung verweisen
+            Unsere Website unter thl-praktika.vercel.app besuchen oder eine
+            unserer Websites besuchen, die auf diese Datenschutzerklärung
+            verweisen
           </li>
           <li>
             Auf andere Arten mit uns in Bezug stehen, einschließlich Verkäufen,
