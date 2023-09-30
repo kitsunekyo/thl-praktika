@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import { hash } from "bcrypt";
 const prisma = new PrismaClient();
 
+const DEMO_PASSWORD = "thldemo07";
+
 (async () => {
   try {
     await prisma.user.deleteMany();
@@ -32,7 +34,7 @@ const prisma = new PrismaClient();
           role: "user",
           city: "Wien",
           zipCode: "1010",
-          password: await hash("demo", 12),
+          password: await hash(DEMO_PASSWORD, 12),
         },
         {
           id: "demo-user2",
@@ -41,7 +43,7 @@ const prisma = new PrismaClient();
           role: "user",
           city: "Purgstall",
           zipCode: "3251",
-          password: await hash("demo", 12),
+          password: await hash(DEMO_PASSWORD, 12),
         },
         {
           id: "demo-user3",
@@ -50,7 +52,7 @@ const prisma = new PrismaClient();
           role: "user",
           city: "Loosdorf",
           zipCode: "3382",
-          password: await hash("demo", 12),
+          password: await hash(DEMO_PASSWORD, 12),
         },
         {
           id: "demo-trainer1",
@@ -59,7 +61,7 @@ const prisma = new PrismaClient();
           role: "trainer",
           city: "Wien",
           zipCode: "1070",
-          password: await hash("demo", 12),
+          password: await hash(DEMO_PASSWORD, 12),
         },
         {
           id: "demo-trainer2",
@@ -68,7 +70,7 @@ const prisma = new PrismaClient();
           role: "trainer",
           city: "Oberndorf",
           zipCode: "3281",
-          password: await hash("demo", 12),
+          password: await hash(DEMO_PASSWORD, 12),
         },
         {
           id: "demo-trainer3",
@@ -77,7 +79,7 @@ const prisma = new PrismaClient();
           role: "trainer",
           city: "Ansfelden",
           zipCode: "4052",
-          password: await hash("demo", 12),
+          password: await hash(DEMO_PASSWORD, 12),
         },
       ],
     });
