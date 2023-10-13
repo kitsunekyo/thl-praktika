@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { formatTimeValue, getFixedDate } from "@/lib/date";
+import { getFixedDate } from "@/lib/date";
 import { cn } from "@/lib/utils";
 
 import { createTraining } from "../actions";
@@ -69,7 +69,7 @@ export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
       description: "",
       maxInterns: 3,
       date: add(getFixedDate(new Date()), { days: 1 }),
-      startTime: "12:00",
+      startTime: "09:00",
       endTime: "17:00",
       customAddress: false,
     },
@@ -105,10 +105,7 @@ export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="mx-auto space-y-4"
-      >
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         <div className="md:flex md:gap-4">
           <FormField
             control={form.control}
@@ -158,18 +155,7 @@ export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      placeholder="08:00"
-                      maxLength={5}
-                      data-1p-ignore
-                      {...field}
-                      onFocus={(e) => e.currentTarget.select()}
-                      onBlur={(e) => {
-                        const newValue = formatTimeValue(e.currentTarget.value);
-                        form.setValue(field.name, newValue);
-                        field.onBlur();
-                      }}
-                    />
+                    <Input type="time" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -184,18 +170,7 @@ export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      placeholder="17:00"
-                      maxLength={5}
-                      data-1p-ignore
-                      {...field}
-                      onFocus={(e) => e.currentTarget.select()}
-                      onBlur={(e) => {
-                        const newValue = formatTimeValue(e.currentTarget.value);
-                        form.setValue(field.name, newValue);
-                        field.onBlur();
-                      }}
-                    />
+                    <Input type="time" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
