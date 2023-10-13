@@ -4,6 +4,7 @@ import { endOfDay, startOfDay } from "date-fns";
 import { PageTitle } from "@/components/PageTitle";
 import { TrainingCard } from "@/components/training/TrainingCard";
 import { getServerSession } from "@/lib/next-auth";
+import { formatUserAddress } from "@/lib/user";
 
 import { getProfile } from "./profile/actions";
 import { RegisterButton, UnregisterButton } from "./register-buttons";
@@ -49,7 +50,7 @@ export default async function Home({
     trainingsCountLabel = `${filteredTrainings.length} Trainings gefunden`;
   }
 
-  const hasAddress = Boolean(
+  const userHasAddress = Boolean(
     profile?.address || profile?.zipCode || profile?.city,
   );
 
@@ -58,7 +59,7 @@ export default async function Home({
       <div className="gap-8 md:flex">
         <aside className="relative mb-8 shrink-0 basis-80">
           <div className="sticky top-12">
-            <TrainingFilter hasAddress={hasAddress} />
+            <TrainingFilter hasAddress={userHasAddress} />
           </div>
         </aside>
         <div className="md:w-full md:max-w-[600px]">

@@ -1,9 +1,10 @@
 import { Registration, Training, User } from "@prisma/client";
-import { formatDuration } from "date-fns";
+import { formatDuration, intervalToDuration } from "date-fns";
+import { MapPinIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-import { secondsToDuration } from "@/lib/date";
+import { formatTrainingDate, secondsToDuration } from "@/lib/date";
 import { formatUserAddress } from "@/lib/user";
 import { getInitials } from "@/lib/utils";
 
@@ -27,16 +28,56 @@ export async function TrainingCard({
   training: TrainingWithMetadata;
   actions?: React.ReactNode;
 }) {
+  const address = formatUserAddress(training.author);
+  const duration = formatDuration(
+    intervalToDuration({ start: training.start, end: training.end }),
+    {
+      format: ["hours", "minutes"],
+    },
+  );
+
   return (
     <div className="rounded border border-solid bg-white text-sm">
-      <header className="border-b bg-gray-50 px-4 py-2">
-        <TrainingDate start={training.start} end={training.end} />
+      <header className="flex items-center border-b bg-gray-50 px-4 py-2">
+        <div className="flex gap-2">
+          <Avatar className="shrink-0 sm:hidden" size="sm">
+            <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
+            <AvatarFallback>
+              {getInitials({
+                name: training.author.name,
+                email: training.author.email,
+              })}
+            </AvatarFallback>
+          </Avatar>
+          <Avatar className="hidden shrink-0 sm:block">
+            <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
+            <AvatarFallback>
+              {getInitials({
+                name: training.author.name,
+                email: training.author.email,
+              })}
+            </AvatarFallback>
+          </Avatar>
+          <dl>
+            <dd>{training.author.name || training.author.email}</dd>
+            <dd className="text-xs text-muted-foreground">
+              {formatTrainingDate(training.start, training.end)}
+            </dd>
+          </dl>
+        </div>
+        <div className="ml-auto hidden text-xs text-muted-foreground md:block">
+          {duration}
+        </div>
       </header>
       <dl className="space-y-2 p-4">
-        <dd className="font-medium">{training.description}</dd>
-        <dd>
-          <TrainingLocation training={training} />
-        </dd>
+        {!!address && (
+          <TrainingLocation
+            address={address}
+            customAddress={training.customAddress}
+            traveltime={training.traveltime}
+          />
+        )}
+        <dd>{training.description}</dd>
         <dd>
           <TrainingRegistrations
             count={training.registrations.length}
@@ -44,53 +85,26 @@ export async function TrainingCard({
           />
         </dd>
       </dl>
-      <footer className="flex items-center gap-4 px-4 pb-4">
-        <TrainingAuthor
-          name={training.author.name}
-          email={training.author.email}
-          image={training.author.image}
-        />
-        <div className="ml-auto flex items-center gap-2">{actions}</div>
-      </footer>
+      <footer className="flex items-center gap-4 px-4 pb-4">{actions}</footer>
     </div>
   );
 }
 
-function TrainingAuthor({
-  name,
-  email,
-  image,
+function TrainingLocation({
+  address,
+  customAddress,
+  traveltime,
 }: {
-  name: string | null;
-  email: string;
-  image: string | null;
+  address: string;
+  customAddress?: boolean;
+  traveltime?: number;
 }) {
-  return (
-    <div className="flex min-w-0 shrink items-center gap-2">
-      <Avatar className="shrink-0 sm:hidden" size="sm">
-        <AvatarImage src={image || "/img/avatar.jpg"} />
-        <AvatarFallback>{getInitials({ name, email })}</AvatarFallback>
-      </Avatar>
-      <Avatar className="hidden shrink-0 sm:block">
-        <AvatarImage src={image || "/img/avatar.jpg"} />
-        <AvatarFallback>{getInitials({ name, email })}</AvatarFallback>
-      </Avatar>
-      <dd className="min-w-0 shrink text-xs">
-        {!!name && <p className="truncate font-medium">{name}</p>}
-        <p className="truncate">{email}</p>
-      </dd>
-    </div>
-  );
-}
-
-function TrainingLocation({ training }: { training: TrainingWithMetadata }) {
-  const address = formatUserAddress(training.author);
   const googleMapsUrl = `https://www.google.com/maps/place/${address.replaceAll(
     " ",
     "+",
   )}`;
 
-  if (training.customAddress) {
+  if (customAddress) {
     return (
       <span className="text-gray-400">
         Adresse wird persönlich bekannt gegeben
@@ -99,22 +113,25 @@ function TrainingLocation({ training }: { training: TrainingWithMetadata }) {
   }
 
   return (
-    <div>
-      <Link
-        href={googleMapsUrl}
-        target="_blank"
-        className="underline hover:no-underline"
-      >
-        {address}
-      </Link>
-      {!!training.traveltime && (
-        <p className="text-xs">
-          {formatDuration(secondsToDuration(training.traveltime), {
-            format: ["hours", "minutes"],
-          })}{" "}
-          entfernt
-        </p>
-      )}
+    <div className="flex items-start gap-2 leading-none">
+      <MapPinIcon className="h-4 w-4 text-muted-foreground" />
+      <div className="space-y-1">
+        <Link
+          href={googleMapsUrl}
+          target="_blank"
+          className="underline hover:no-underline"
+        >
+          {address}
+        </Link>
+        {!!traveltime && (
+          <p className="text-xs">
+            {formatDuration(secondsToDuration(traveltime), {
+              format: ["hours", "minutes"],
+            })}{" "}
+            entfernt
+          </p>
+        )}
+      </div>
     </div>
   );
 }

@@ -22,7 +22,7 @@ export function TrainingRegistrations({
         <UserIcon key={i} className="h-5 w-5 text-gray-400" />
       ))}
       {freeSpots > 0 ? (
-        <Badge className="ml-2">
+        <Badge className="ml-2" variant="outline">
           {count}/{max} angemeldet
         </Badge>
       ) : (

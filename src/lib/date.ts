@@ -17,7 +17,7 @@ export function formatTrainingDate(startDate: Date, endDate: Date) {
   const startTime = format(new Date(startDate), "HH:mm");
   const endTime = format(new Date(endDate), "HH:mm");
 
-  return `${date}, ${startTime} - ${endTime}`;
+  return `${date} von ${startTime} bis ${endTime}`;
 }
 
 export function formatTimeValue(time: string) {
