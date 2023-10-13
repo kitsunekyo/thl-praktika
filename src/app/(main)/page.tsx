@@ -58,7 +58,6 @@ export default async function Home({
       <div className="gap-8 md:flex">
         <aside className="relative mb-8 shrink-0 basis-80">
           <div className="sticky top-12">
-            <PageTitle>Praktika</PageTitle>
             <TrainingFilter hasAddress={hasAddress} />
           </div>
         </aside>
