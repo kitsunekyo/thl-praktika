@@ -107,37 +107,8 @@ export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="mx-auto space-y-4 md:space-y-8"
+        className="mx-auto space-y-4"
       >
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Beschreibung</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Welpengruppe, Kleinhunde, etc."
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="maxInterns"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Maximale Anzahl an Praktikant:innen</FormLabel>
-              <FormControl>
-                <Input type="number" min={1} max={6} {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <div className="md:flex md:gap-4">
           <FormField
             control={form.control}
@@ -232,6 +203,35 @@ export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
             />
           </div>
         </div>
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Beschreibung</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Welpengruppe, Kleinhunde. Abstand halten."
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="maxInterns"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Maximale Anzahl an Praktikant:innen</FormLabel>
+              <FormControl>
+                <Input type="number" min={1} max={6} {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="customAddress"
