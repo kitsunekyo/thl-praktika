@@ -23,14 +23,14 @@ export function CreateTrainingButton({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
-    <div className="mb-8 flex items-center gap-2">
+    <div className="mb-8 flex items-center gap-2 rounded-xl bg-gray-100 p-4 py-6">
       <Avatar className="shrink-0">
         <AvatarImage src={profile.image || "/img/avatar.jpg"} />
         <AvatarFallback>{getInitials(profile)}</AvatarFallback>
       </Avatar>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <button className="flex h-10 w-full items-center rounded-full border bg-gray-50 px-4 text-left text-sm text-gray-500 transition-colors hover:bg-gray-100">
+          <button className="flex h-10 w-full items-center rounded-full bg-white/80 px-4 text-left text-sm text-gray-500">
             Erstelle ein Training
           </button>
         </DialogTrigger>
