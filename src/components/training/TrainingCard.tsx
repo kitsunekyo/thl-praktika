@@ -85,7 +85,9 @@ export async function TrainingCard({
           />
         </dd>
       </dl>
-      <footer className="flex items-center gap-4 px-4 pb-4">{actions}</footer>
+      {!!actions && (
+        <footer className="flex items-center gap-4 px-4 pb-4">{actions}</footer>
+      )}
     </div>
   );
 }
