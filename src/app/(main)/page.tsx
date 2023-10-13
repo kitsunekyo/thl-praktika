@@ -3,9 +3,12 @@ import { endOfDay, startOfDay } from "date-fns";
 
 import { PageTitle } from "@/components/PageTitle";
 import { TrainingCard } from "@/components/training/TrainingCard";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getServerSession } from "@/lib/next-auth";
 import { formatUserAddress } from "@/lib/user";
+import { getInitials } from "@/lib/utils";
 
+import { CreateTrainingButton } from "./CreateTrainingButton";
 import { getProfile } from "./profile/actions";
 import { RegisterButton, UnregisterButton } from "./register-buttons";
 import { TrainingFilter } from "../../components/TrainingFilter";
@@ -24,6 +27,10 @@ export default async function Home({
   const session = await getServerSession();
   const profile = await getProfile();
   const isTrainer = session?.user.role === "trainer";
+
+  if (!profile) {
+    return null;
+  }
 
   const trainings = await getTrainings();
   const filteredTrainings = await filter({
@@ -51,7 +58,7 @@ export default async function Home({
   }
 
   const userHasAddress = Boolean(
-    profile?.address || profile?.zipCode || profile?.city,
+    profile.address || profile.zipCode || profile.city,
   );
 
   return (
@@ -63,6 +70,7 @@ export default async function Home({
           </div>
         </aside>
         <div className="md:w-full md:max-w-[600px]">
+          {isTrainer && <CreateTrainingButton profile={profile} />}
           <p className="mb-4 text-sm text-muted-foreground">
             {trainingsCountLabel}
           </p>

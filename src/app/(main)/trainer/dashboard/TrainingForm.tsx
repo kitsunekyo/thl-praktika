@@ -59,7 +59,7 @@ export const formSchema = z
     },
   );
 
-export function TrainingForm() {
+export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
   const [loading, startTransition] = useTransition();
   const { toast } = useToast();
 
@@ -98,6 +98,7 @@ export function TrainingForm() {
           title: "Training wurde erstellt",
         });
         form.reset();
+        onSubmit?.();
       }
     });
   }
