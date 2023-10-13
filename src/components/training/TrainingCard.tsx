@@ -37,19 +37,10 @@ export async function TrainingCard({
   );
 
   return (
-    <div className="rounded border border-solid bg-white text-sm">
-      <header className="flex items-center border-b bg-gray-50 px-4 py-2">
+    <div className="rounded-xl border bg-white text-sm">
+      <header className="flex items-start px-4 pt-4">
         <div className="flex gap-2">
-          <Avatar className="shrink-0 sm:hidden" size="sm">
-            <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
-            <AvatarFallback>
-              {getInitials({
-                name: training.author.name,
-                email: training.author.email,
-              })}
-            </AvatarFallback>
-          </Avatar>
-          <Avatar className="hidden shrink-0 sm:block">
+          <Avatar className="shrink-0">
             <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
             <AvatarFallback>
               {getInitials({
@@ -59,7 +50,9 @@ export async function TrainingCard({
             </AvatarFallback>
           </Avatar>
           <dl>
-            <dd>{training.author.name || training.author.email}</dd>
+            <dd className="font-medium">
+              {training.author.name || training.author.email}
+            </dd>
             <dd className="text-xs text-muted-foreground">
               {formatTrainingDate(training.start, training.end)}
             </dd>
@@ -70,6 +63,7 @@ export async function TrainingCard({
         </div>
       </header>
       <dl className="space-y-2 p-4">
+        <dd className="mb-4">{training.description}</dd>
         {!!address && (
           <TrainingLocation
             address={address}
@@ -77,7 +71,6 @@ export async function TrainingCard({
             traveltime={training.traveltime}
           />
         )}
-        <dd>{training.description}</dd>
         <dd>
           <TrainingRegistrations
             count={training.registrations.length}
