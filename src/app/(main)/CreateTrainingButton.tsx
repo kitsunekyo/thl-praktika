@@ -34,7 +34,7 @@ export function CreateTrainingButton({
             Erstelle ein Training
           </button>
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className="md:max-w-2xl">
           <DialogHeader>
             <DialogTitle className="mb-4">Training erstellen</DialogTitle>
             <TrainingForm onSubmit={() => setIsDialogOpen(false)} />
