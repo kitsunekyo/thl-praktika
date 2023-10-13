@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format, set } from "date-fns";
+import { add, format, set } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -68,7 +68,7 @@ export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
     defaultValues: {
       description: "",
       maxInterns: 3,
-      date: getFixedDate(new Date()),
+      date: add(getFixedDate(new Date()), { days: 1 }),
       startTime: "12:00",
       endTime: "17:00",
       customAddress: false,
