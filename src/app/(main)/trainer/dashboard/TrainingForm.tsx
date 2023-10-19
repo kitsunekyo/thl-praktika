@@ -119,7 +119,7 @@ export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
                       <Button
                         variant="outline"
                         className={cn(
-                          "flex w-full pl-3 text-left font-normal md:w-[240px]",
+                          "flex w-full gap-2 text-left font-normal md:max-w-[240px]",
                           !field.value && "text-muted-foreground",
                         )}
                       >
@@ -140,7 +140,6 @@ export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
                       disabled={(date) =>
                         date < new Date() || date < new Date("1900-01-01")
                       }
-                      initialFocus
                     />
                   </PopoverContent>
                 </Popover>
