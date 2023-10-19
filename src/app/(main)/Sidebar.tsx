@@ -12,7 +12,10 @@ import { usePathname } from "next/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
+export function Sidebar({
+  className,
+  role,
+}: React.HTMLAttributes<HTMLDivElement> & { role?: string }) {
   return (
     <div className={cn("relative pb-12", className)}>
       <div className="sticky top-0 space-y-4 py-6">
@@ -28,19 +31,21 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
             </SidebarLink>
           </div>
         </div>
-        <div className="px-3">
-          <Title>Admin</Title>
-          <div className="space-y-1">
-            <SidebarLink href="/admin/users">
-              <UsersIcon className="mr-2 h-4 w-4" />
-              Benutzer
-            </SidebarLink>
-            <SidebarLink href="/admin/invitations">
-              <MailsIcon className="mr-2 h-4 w-4" />
-              Einladungen
-            </SidebarLink>
+        {role === "admin" && (
+          <div className="px-3">
+            <Title>Admin</Title>
+            <div className="space-y-1">
+              <SidebarLink href="/admin/users">
+                <UsersIcon className="mr-2 h-4 w-4" />
+                Benutzer
+              </SidebarLink>
+              <SidebarLink href="/admin/invitations">
+                <MailsIcon className="mr-2 h-4 w-4" />
+                Einladungen
+              </SidebarLink>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -2,29 +2,24 @@
 
 import { LogOutIcon, MenuIcon } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { User } from "next-auth";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 
 import { Sidebar } from "@/app/(main)/Sidebar";
-import { cn, getInitials } from "@/lib/utils";
+import { getInitials } from "@/lib/utils";
 
-import { PRIMARY_NAV_LINKS, USER_NAV_LINKS, canSeeLink } from "./links";
 import { Logo } from "../Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../ui/sheet";
 
-const MOBILE_NAV_LINKS = [...PRIMARY_NAV_LINKS, ...USER_NAV_LINKS];
-
 export function MobileNav({
   user,
   className,
 }: React.HTMLAttributes<HTMLDivElement> & { user?: User }) {
-  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const links = MOBILE_NAV_LINKS.filter((link) => canSeeLink(link, user));
+  const role = user?.role;
 
   function close() {
     setMobileMenuOpen(false);
@@ -44,7 +39,7 @@ export function MobileNav({
             <Logo onNavigate={close} />
           </SheetHeader>
           <div className="-ml-6 -mr-6">
-            <Sidebar />
+            <Sidebar role={role} />
           </div>
           <div className="mt-auto">
             <hr className="py-2" />

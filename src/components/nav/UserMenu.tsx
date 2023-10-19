@@ -15,7 +15,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { getInitials } from "@/lib/utils";
 
-import { USER_NAV_LINKS } from "./links";
+export const USER_NAV_LINKS = [
+  {
+    href: "/profile",
+    label: "Profil",
+  },
+];
 
 export function UserMenu({ user }: { user: User }) {
   return (
