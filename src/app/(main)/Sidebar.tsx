@@ -12,14 +12,11 @@ import { usePathname } from "next/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-export function Sidebar({ className }: SidebarProps) {
+export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div className={cn("relative pb-12", className)}>
       <div className="sticky top-0 space-y-4 py-6">
         <div className="px-3">
-          <Title>Praktika</Title>
           <div className="space-y-1">
             <SidebarLink href="/">
               <LayoutGridIcon className="mr-2 h-4 w-4" />
