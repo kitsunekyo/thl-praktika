@@ -1,5 +1,6 @@
 "use client";
 
+import { CalendarPlusIcon } from "lucide-react";
 import { useState } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -23,14 +24,15 @@ export function CreateTrainingButton({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
-    <div className="mb-8 flex items-center gap-2 rounded-xl bg-gray-100 p-4 py-6">
+    <div className="r mb-8 flex items-center gap-2">
       <Avatar className="shrink-0">
         <AvatarImage src={profile.image || "/img/avatar.jpg"} />
         <AvatarFallback>{getInitials(profile)}</AvatarFallback>
       </Avatar>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <button className="flex h-10 w-full items-center rounded-full bg-white/80 px-4 text-left text-sm text-gray-500">
+          <button className="flex h-12 w-full items-center gap-2 rounded-full bg-gray-100 px-4 text-sm text-gray-600 transition-colors hover:bg-gray-200">
+            <CalendarPlusIcon className="h-4 w-4" />
             Erstelle ein Training
           </button>
         </DialogTrigger>
