@@ -63,7 +63,9 @@ export async function TrainingCard({
         </div>
       </header>
       <dl className="space-y-2 p-4">
-        <dd className="mb-4">{training.description}</dd>
+        {training.description && (
+          <dd className="mb-4">{training.description}</dd>
+        )}
         {!!address && (
           <TrainingLocation
             address={address}
