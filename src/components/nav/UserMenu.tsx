@@ -21,17 +21,17 @@ export function UserMenu({ user }: { user: User }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="rounded focus:outline-none">
-        <div className="flex items-center">
-          {user.name && (
-            <span className="mr-2 min-w-0 max-w-[160px] shrink truncate text-xs">
-              Hi, {user.name}
-            </span>
-          )}
+        <div className="flex items-center gap-2">
           <Avatar>
             <AvatarImage src={user.image || "/img/avatar.jpg"} />
             <AvatarFallback>{getInitials(user)}</AvatarFallback>
           </Avatar>
-          <ChevronDownIcon className="ml-2 hidden h-4 w-4 lg:block" />
+          {user.name && (
+            <span className="min-w-0 max-w-[160px] shrink truncate text-xs font-medium">
+              {user.name}
+            </span>
+          )}
+          <ChevronDownIcon className="hidden h-4 w-4 lg:block" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-[180px]">

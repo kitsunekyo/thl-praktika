@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getMyTrainings } from "@/app/training-actions";
 import { PageTitle } from "@/components/PageTitle";
 import { TrainingCard } from "@/components/training/TrainingCard";
+import { Separator } from "@/components/ui/separator";
 
 import { computeDuration, computeTraveltime } from "../../../lib/training";
 import { UnregisterButton } from "../register-buttons";
@@ -12,8 +13,11 @@ export default async function Trainings() {
   const trainings = await addMetadata(await getMyTrainings());
 
   return (
-    <>
-      <PageTitle>Meine Praktika Anmeldungen</PageTitle>
+    <div className="py-6">
+      <PageTitle content="Deine Anmeldungen für Praktika.">
+        Anmeldungen
+      </PageTitle>
+      <Separator className="my-4" />
       {trainings.length > 0 ? (
         <TrainingList trainings={trainings} />
       ) : (
@@ -26,7 +30,7 @@ export default async function Trainings() {
           </Link>
         </p>
       )}
-    </>
+    </div>
   );
 }
 

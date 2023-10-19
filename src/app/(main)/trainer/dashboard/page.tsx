@@ -1,6 +1,5 @@
 import { ChevronsUpDown, MailIcon, MapIcon } from "lucide-react";
 
-import { PageTitle } from "@/components/PageTitle";
 import { TrainingDate } from "@/components/training/TrainingDate";
 import { TrainingRegistrations } from "@/components/training/TrainingRegistrations";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
@@ -10,6 +9,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { Separator } from "@/components/ui/separator";
 import { formatUserAddress } from "@/lib/user";
 
 import { TrainingForm } from "./TrainingForm";
@@ -20,19 +20,21 @@ export default async function Page() {
   const trainings = await getMyTrainings();
 
   return (
-    <div>
-      <PageTitle>Trainer Dashboard</PageTitle>
+    <div className="py-6">
+      <div className="flex items-center justify-between">
+        <div className="space-y-1">
+          <h2 className="text-2xl font-semibold tracking-tight">Trainings</h2>
+          <p className="text-sm text-muted-foreground">
+            Erstelle und verwalte deine Trainings.
+          </p>
+        </div>
+      </div>
+      <Separator className="my-4" />
       <div className="gap-16 md:grid lg:grid-cols-[500px,1fr]">
         <div className="mb-10 md:mb-0">
-          <h2 className="mb-3 text-xl font-semibold">Training erstellen</h2>
-          <p className="mb-8 max-w-[70ch] text-sm leading-[1.8] text-gray-500">
-            Du hast ein Training bei denen Praktikant:innen von THL dabei sein
-            können? Trage es hier ein, damit sie sich dafür anmelden können.
-          </p>
           <TrainingForm />
         </div>
         <section>
-          <h2 className="mb-6 text-xl font-semibold">Deine Trainings</h2>
           {trainings.length === 0 && (
             <p className="text-sm text-gray-500">
               Du hast noch keine Trainings eingetragen.

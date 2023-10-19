@@ -25,16 +25,16 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 
-import { createUser, inviteUser } from "../actions";
+import { createUser } from "../actions";
 
 export const userSchema = z.object({
   email: z.string().email(),
-  name: z.string().optional(),
-  password: z.union([z.string().min(6), z.literal("")]),
+  name: z.string(),
+  password: z.string().min(6),
   role: z.string(),
 });
 
-export function UserForm() {
+export function CreateUserForm() {
   const { toast } = useToast();
   const form = useForm<z.infer<typeof userSchema>>({
     resolver: zodResolver(userSchema),
@@ -55,23 +55,6 @@ export function UserForm() {
         className="max-w-[300px] space-y-6"
         onSubmit={form.handleSubmit((data: z.infer<typeof userSchema>) => {
           startTransition(async () => {
-            if (isPasswordEmpty) {
-              const res = await inviteUser(data.email, data.name, data.role);
-              if (res?.error) {
-                toast({
-                  title: "Fehler beim Einladen",
-                  description: `${data.email} konnte nicht eingeladen werden. Versuch es nochmal.`,
-                  variant: "destructive",
-                });
-              } else {
-                toast({
-                  title: "User wurde eingeladen",
-                  description: `Es wurde eine Einladung an ${data.email} gesendet.`,
-                });
-                redirect("/admin/user");
-              }
-              return;
-            }
             const res = await createUser(
               data.email,
               data.password,
@@ -91,7 +74,7 @@ export function UserForm() {
               });
             }
 
-            redirect("/admin/user");
+            redirect("/admin/users");
           });
         })}
       >
@@ -102,7 +85,7 @@ export function UserForm() {
             <FormItem>
               <FormLabel>Email*</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="good@pup.com" {...field} />
+                <Input type="email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -137,29 +120,20 @@ export function UserForm() {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input
-                  type="text"
-                  data-1p-ignore
-                  placeholder="Sam S"
-                  {...field}
-                />
+                <Input type="text" data-1p-ignore {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={pending}>
-          User einladen
-        </Button>
-
         <FormField
           control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Passwort</FormLabel>
+              <FormLabel>Passwort*</FormLabel>
               <FormControl>
-                <Input type="password" {...field} />
+                <Input type="password" required {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

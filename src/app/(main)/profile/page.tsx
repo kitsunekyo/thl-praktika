@@ -14,8 +14,7 @@ export default async function Profile() {
   }
 
   return (
-    <div className="mx-auto max-w-[600px]">
-      <PageTitle>Dein Profil</PageTitle>
+    <div className="max-w-[600px] py-6">
       <Image
         width={120}
         height={120}

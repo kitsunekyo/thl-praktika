@@ -62,44 +62,42 @@ export default async function Home({
   );
 
   return (
-    <section>
-      <div className="gap-8 md:flex">
-        <aside className="relative mb-8 shrink-0 basis-80">
-          <div className="sticky top-12">
-            <TrainingFilter hasAddress={userHasAddress} />
-          </div>
-        </aside>
-        <div className="md:w-full md:max-w-[600px]">
-          {isTrainer && <CreateTrainingButton profile={profile} />}
-          <p className="mb-4 text-sm text-muted-foreground">
-            {trainingsCountLabel}
-          </p>
-          {filteredTrainings.length > 0 && (
-            <ul className="space-y-4">
-              {filteredTrainings.map((t) => {
-                const hasFreeSpots = t.maxInterns - t.registrations.length > 0;
-                const isOwner = t.authorId === session?.user.id;
-                const canRegister = !isOwner && !isTrainer && hasFreeSpots;
-
-                return (
-                  <li key={t.id}>
-                    <TrainingCard
-                      training={t}
-                      actions={
-                        isTrainer ? null : t.isRegistered ? (
-                          <UnregisterButton trainingId={t.id} />
-                        ) : (
-                          canRegister && <RegisterButton trainingId={t.id} />
-                        )
-                      }
-                    />
-                  </li>
-                );
-              })}
-            </ul>
-          )}
+    <section className="gap-8 md:flex md:py-6">
+      <aside className="relative mb-8 shrink-0 basis-80">
+        <div className="sticky top-0 py-6">
+          <TrainingFilter hasAddress={userHasAddress} />
         </div>
-      </div>
+      </aside>
+      <main className="md:w-full md:max-w-[600px] md:py-6">
+        {isTrainer && <CreateTrainingButton profile={profile} />}
+        <p className="mb-4 text-sm text-muted-foreground">
+          {trainingsCountLabel}
+        </p>
+        {filteredTrainings.length > 0 && (
+          <ul className="space-y-4">
+            {filteredTrainings.map((t) => {
+              const hasFreeSpots = t.maxInterns - t.registrations.length > 0;
+              const isOwner = t.authorId === session?.user.id;
+              const canRegister = !isOwner && !isTrainer && hasFreeSpots;
+
+              return (
+                <li key={t.id}>
+                  <TrainingCard
+                    training={t}
+                    actions={
+                      isTrainer ? null : t.isRegistered ? (
+                        <UnregisterButton trainingId={t.id} />
+                      ) : (
+                        canRegister && <RegisterButton trainingId={t.id} />
+                      )
+                    }
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </main>
     </section>
   );
 }

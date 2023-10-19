@@ -7,6 +7,7 @@ import { User } from "next-auth";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 
+import { Sidebar } from "@/app/(main)/Sidebar";
 import { cn, getInitials } from "@/lib/utils";
 
 import { PRIMARY_NAV_LINKS, USER_NAV_LINKS, canSeeLink } from "./links";
@@ -17,7 +18,10 @@ import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../ui/sheet";
 
 const MOBILE_NAV_LINKS = [...PRIMARY_NAV_LINKS, ...USER_NAV_LINKS];
 
-export function MobileNav({ user }: { user?: User }) {
+export function MobileNav({
+  user,
+  className,
+}: React.HTMLAttributes<HTMLDivElement> & { user?: User }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const links = MOBILE_NAV_LINKS.filter((link) => canSeeLink(link, user));
@@ -27,7 +31,7 @@ export function MobileNav({ user }: { user?: User }) {
   }
 
   return (
-    <div className="ml-auto flex pl-2 md:hidden">
+    <div className={className}>
       <Sheet open={mobileMenuOpen} onOpenChange={(v) => setMobileMenuOpen(v)}>
         <SheetTrigger asChild>
           <Button type="button" variant="ghost" size="icon">
@@ -39,24 +43,9 @@ export function MobileNav({ user }: { user?: User }) {
           <SheetHeader className="my-8 text-left">
             <Logo onNavigate={close} />
           </SheetHeader>
-          <nav aria-label="Navigation">
-            <ul className="space-y-2 text-sm font-semibold">
-              {links.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    onClick={close}
-                    className={cn(
-                      "-mx-4 block rounded px-4 py-3 hover:bg-accent/60",
-                      pathname === link.href && "bg-accent/60",
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <div className="-ml-6 -mr-6">
+            <Sidebar />
+          </div>
           <div className="mt-auto">
             <hr className="py-2" />
             {!!user && (

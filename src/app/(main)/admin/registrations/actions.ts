@@ -11,5 +11,5 @@ export async function deleteRegistration(id: string) {
     },
   });
 
-  revalidatePath("/admin/registration");
+  revalidatePath("/admin/registrations");
 }

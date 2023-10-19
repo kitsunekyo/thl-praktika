@@ -11,7 +11,7 @@ export const PRIMARY_NAV_LINKS = [
     roles: ["trainer", "admin"],
   },
   {
-    href: "/admin/user",
+    href: "/admin/users",
     label: "Admin",
     roles: ["admin"],
   },
@@ -21,10 +21,6 @@ export const USER_NAV_LINKS = [
   {
     href: "/profile",
     label: "Profil",
-  },
-  {
-    href: "/trainings",
-    label: "Anmeldungen",
   },
 ];
 
