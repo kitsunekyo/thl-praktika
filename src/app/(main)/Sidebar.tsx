@@ -2,6 +2,7 @@
 
 import {
   CalendarCheck2Icon,
+  CalendarDaysIcon,
   LayoutGridIcon,
   MailsIcon,
   UsersIcon,
@@ -31,6 +32,17 @@ export function Sidebar({
             </SidebarLink>
           </div>
         </div>
+        {role === "trainer" && (
+          <div className="px-3">
+            <Title>Trainer</Title>
+            <div className="space-y-1">
+              <SidebarLink href="/trainer/dashboard">
+                <CalendarDaysIcon className="mr-2 h-4 w-4" />
+                Trainings
+              </SidebarLink>
+            </div>
+          </div>
+        )}
         {role === "admin" && (
           <div className="px-3">
             <Title>Admin</Title>
