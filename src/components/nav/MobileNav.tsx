@@ -6,7 +6,7 @@ import { User } from "next-auth";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 
-import { Sidebar } from "@/app/(main)/Sidebar";
+import { Navigation } from "@/app/(main)/Navigation";
 import { getInitials } from "@/lib/utils";
 
 import { Logo } from "../Logo";
@@ -39,7 +39,7 @@ export function MobileNav({
             <Logo onNavigate={close} />
           </SheetHeader>
           <div className="-ml-6 -mr-6">
-            <Sidebar role={role} />
+            <Navigation role={role} />
           </div>
           <div className="mt-auto">
             <hr className="py-2" />

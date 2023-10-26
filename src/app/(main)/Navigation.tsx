@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export function Sidebar({
+export function Navigation({
   className,
   role,
 }: React.HTMLAttributes<HTMLDivElement> & { role?: string }) {
