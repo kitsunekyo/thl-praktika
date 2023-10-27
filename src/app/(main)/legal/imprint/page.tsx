@@ -2,7 +2,7 @@ import { PageTitle } from "@/components/PageTitle";
 
 export default function Page() {
   return (
-    <>
+    <div className="py-6">
       <PageTitle>Impressum</PageTitle>
       <article className="prose">
         <h2>
@@ -49,6 +49,6 @@ export default function Page() {
           entfernen.
         </p>
       </article>
-    </>
+    </div>
   );
 }

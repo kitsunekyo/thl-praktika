@@ -2,7 +2,7 @@ import { PageTitle } from "@/components/PageTitle";
 
 export default function Page() {
   return (
-    <>
+    <div className="py-6">
       <PageTitle>Privacy Policy</PageTitle>
       <article className="prose">
         <h2>Datenschutzerklärung</h2>
@@ -589,6 +589,6 @@ export default function Page() {
           Datenschutzrechtsgesuch aus und senden Sie es an hi@mostviertel.tech.
         </p>
       </article>
-    </>
+    </div>
   );
 }
