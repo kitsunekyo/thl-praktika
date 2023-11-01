@@ -6,8 +6,8 @@ import { deAT } from "date-fns/locale";
 import {
   CalendarIcon,
   ClockIcon,
-  LockIcon,
   MapIcon,
+  SlidersHorizontalIcon,
   UserIcon,
   XIcon,
 } from "lucide-react";
@@ -22,6 +22,11 @@ import { cn } from "@/lib/utils";
 import { Alert } from "./ui/alert";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "./ui/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 setDefaultOptions({
@@ -65,6 +70,7 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
   const [pending, startTransition] = useTransition();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(true);
 
   const [date, setDate] = useState<DateRange | undefined>(() => {
     const fromParam = searchParams.get("from");
@@ -97,6 +103,7 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
 
   function updateFilter(key: string, value: string | null) {
     if (pending) return;
+    if (searchParams.get(key) === value) return;
 
     const params = new URLSearchParams(window.location.search);
     if (value === null) {
@@ -121,127 +128,172 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
   }
 
   return (
-    <section className="space-y-6 text-sm" aria-label="filter">
-      <div>
-        <div className="mb-2 flex items-center">
-          <CalendarIcon className="mr-2 h-4 w-5" />
-          <p className="font-medium">Zeitraum</p>
-        </div>
-        <Popover>
-          <div className="flex items-center gap-2">
-            <PopoverTrigger asChild>
-              <Button
-                id="date"
-                variant={"outline"}
-                className={cn(
-                  "group w-full items-center justify-start text-left text-xs font-normal",
-                  !date && "text-muted-foreground",
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {date?.from ? (
-                  date.to ? (
-                    <>
-                      {format(date.from, "dd. LLL yy")} -{" "}
-                      {format(date.to, "dd. LLL yy")}
-                    </>
-                  ) : (
-                    format(date.from, "dd. LLL yy")
-                  )
-                ) : (
-                  <span>Filter nach Datum</span>
-                )}
-                {date?.from || date?.to ? (
-                  <button
-                    className="ml-auto block translate-x-4 p-3"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      clearDate();
-                    }}
-                  >
-                    <XIcon className="h-4 w-4" />
-                  </button>
-                ) : null}
-              </Button>
-            </PopoverTrigger>
-          </div>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              initialFocus
-              mode="range"
-              defaultMonth={date?.from}
-              selected={date}
-              onSelect={(v) => {
-                if (pending) return;
-                setDate(v);
-                const params = new URLSearchParams(window.location.search);
-                if (!v?.from) {
-                  params.delete("from");
-                  params.delete("to");
-                }
-                if (v?.from) {
-                  params.set("from", format(startOfDay(v.from), "yyyy-MM-dd"));
-                }
-                if (v?.to) {
-                  params.set("to", format(endOfDay(v.to), "yyyy-MM-dd"));
-                }
-                startTransition(() => {
-                  replace(`${pathname}?${params.toString()}`);
-                });
-              }}
-              numberOfMonths={2}
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
-      {filterOptions.map(({ icon: Icon, ...filter }) => (
-        <div key={filter.label}>
-          <div className="mb-2 flex items-center">
-            <Icon className="mr-2 h-4 w-5" />
-            <p className="font-medium">{filter.label}</p>
-          </div>
-          {filter.key === "traveltime" && !hasAddress ? (
-            <Alert className="text-xs text-muted-foreground">
-              Trage deine Adresse im{" "}
-              <Link href="/profile" className="underline hover:no-underline">
-                Profil
-              </Link>{" "}
-              ein, um nach Fahrtzeit filtern zu können
-            </Alert>
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <div className="flex h-9 items-center text-sm">
+        Filter
+        <CollapsibleTrigger asChild>
+          {isOpen ? (
+            <Button variant="ghost" size="sm" className="ml-2 w-9 p-0">
+              <SlidersHorizontalIcon className="h-4 w-4" />
+              <span className="sr-only">Toggle</span>
+            </Button>
           ) : (
-            <ul className="flex flex-wrap items-center gap-1">
-              <li>
-                <Badge
-                  variant={
-                    !searchParams.get(filter.key) ? "default" : "secondary"
-                  }
-                  className="cursor-pointer"
-                  onClick={() => updateFilter(filter.key, null)}
-                  aria-disabled={pending}
-                >
-                  alle
-                </Badge>
-              </li>
-              {filter.options.map((option) => (
-                <li key={option.key}>
-                  <Badge
-                    variant={
-                      searchParams.get(filter.key) === option.key
-                        ? "default"
-                        : "secondary"
-                    }
-                    className="cursor-pointer"
-                    onClick={() => updateFilter(filter.key, option.key)}
-                    aria-disabled={pending}
-                  >
-                    {option.label}
-                  </Badge>
-                </li>
-              ))}
-            </ul>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="ml-2 w-9 bg-gray-100 p-0 "
+            >
+              <SlidersHorizontalIcon className="h-4 w-4" />
+              <span className="sr-only">Toggle</span>
+            </Button>
           )}
-        </div>
-      ))}
-    </section>
+        </CollapsibleTrigger>
+      </div>
+      <CollapsibleContent>
+        <section className="space-y-6 pt-4 text-sm" aria-label="filter">
+          <div>
+            <div className="mb-2 flex items-center">
+              <CalendarIcon className="mr-2 h-4 w-5" />
+              <p className="font-medium">Zeitraum</p>
+            </div>
+            <Popover>
+              <div className="flex items-center gap-2">
+                <PopoverTrigger asChild>
+                  <Button
+                    id="date"
+                    variant={"outline"}
+                    className={cn(
+                      "group w-full items-center justify-start text-left text-xs font-normal",
+                      !date && "text-muted-foreground",
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date?.from ? (
+                      date.to ? (
+                        <>
+                          {format(date.from, "dd. LLL yy")} -{" "}
+                          {format(date.to, "dd. LLL yy")}
+                        </>
+                      ) : (
+                        format(date.from, "dd. LLL yy")
+                      )
+                    ) : (
+                      <span>Filter nach Datum</span>
+                    )}
+                    {date?.from || date?.to ? (
+                      <button
+                        className="ml-auto block translate-x-4 p-3"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          clearDate();
+                        }}
+                      >
+                        <XIcon className="h-4 w-4" />
+                      </button>
+                    ) : null}
+                  </Button>
+                </PopoverTrigger>
+              </div>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  initialFocus
+                  mode="range"
+                  defaultMonth={date?.from}
+                  selected={date}
+                  onSelect={(v) => {
+                    if (pending) return;
+                    setDate(v);
+                    const params = new URLSearchParams(window.location.search);
+                    if (!v?.from) {
+                      params.delete("from");
+                      params.delete("to");
+                    }
+                    if (v?.from) {
+                      params.set(
+                        "from",
+                        format(startOfDay(v.from), "yyyy-MM-dd"),
+                      );
+                    }
+                    if (v?.to) {
+                      params.set("to", format(endOfDay(v.to), "yyyy-MM-dd"));
+                    }
+                    startTransition(() => {
+                      replace(`${pathname}?${params.toString()}`);
+                    });
+                  }}
+                  numberOfMonths={2}
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+          {filterOptions.map(({ icon: Icon, ...filter }) => (
+            <div key={filter.label}>
+              <div className="mb-2 flex items-center">
+                <Icon className="mr-2 h-4 w-5" />
+                <p className="font-medium">{filter.label}</p>
+              </div>
+              {filter.key === "traveltime" && !hasAddress ? (
+                <Alert className="text-xs text-muted-foreground">
+                  Trage deine Adresse im{" "}
+                  <Link
+                    href="/profile"
+                    className="underline hover:no-underline"
+                  >
+                    Profil
+                  </Link>{" "}
+                  ein, um nach Fahrtzeit filtern zu können
+                </Alert>
+              ) : (
+                <ul className="flex flex-wrap items-center gap-1">
+                  <li>
+                    <FilterOption
+                      selected={!searchParams.get(filter.key)}
+                      pending={pending}
+                      onClick={() => updateFilter(filter.key, null)}
+                    >
+                      alle
+                    </FilterOption>
+                  </li>
+                  {filter.options.map((option) => (
+                    <li key={option.key}>
+                      <FilterOption
+                        selected={searchParams.get(filter.key) === option.key}
+                        pending={pending}
+                        onClick={() => updateFilter(filter.key, option.key)}
+                      >
+                        {option.label}
+                      </FilterOption>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </section>
+      </CollapsibleContent>
+    </Collapsible>
+  );
+}
+
+function FilterOption({
+  selected,
+  pending,
+  onClick,
+  children,
+}: {
+  selected: boolean;
+  pending: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <Badge
+      variant={selected ? "default" : "secondary"}
+      className={cn({ "cursor-pointer": !selected })}
+      onClick={onClick}
+      aria-disabled={pending}
+    >
+      {children}
+    </Badge>
   );
 }
