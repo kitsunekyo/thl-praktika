@@ -8,7 +8,7 @@ import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { createTraining } from "@/app/(main)/trainer/actions";
+import { createTraining } from "@/app/(main)/trainers/actions";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {

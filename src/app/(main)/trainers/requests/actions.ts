@@ -38,7 +38,7 @@ export async function createTrainingRequest({
     },
   });
 
-  revalidatePath("/trainer/requests");
+  revalidatePath("/trainers/requests");
 }
 
 export async function getTrainingRequests(
@@ -74,5 +74,5 @@ export async function deleteTrainingRequest(id: string) {
     },
   });
 
-  revalidatePath("/trainer/requests");
+  revalidatePath("/trainers/requests");
 }

@@ -72,7 +72,7 @@ export async function deleteTraining(id: string) {
     });
   });
 
-  revalidatePath("/trainer");
+  revalidatePath("/trainers");
 }
 
 const createTrainingSchema = z.object({

@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 
-import { deleteTraining } from "../../app/(main)/trainer/actions";
+import { deleteTraining } from "../../app/(main)/trainers/actions";
 
 export function TrainingActions({
   id,
