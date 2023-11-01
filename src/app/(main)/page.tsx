@@ -51,10 +51,10 @@ export default async function Home({
   });
 
   let trainingsCountLabel: string;
-  if (filteredTrainings.length === 0) {
-    trainingsCountLabel = "Kein Training gefunden";
+  if (filteredTrainings.length === trainings.length) {
+    trainingsCountLabel = `${filteredTrainings.length} Praktika`;
   } else {
-    trainingsCountLabel = `${filteredTrainings.length} Praktika gefunden`;
+    trainingsCountLabel = `${filteredTrainings.length} von ${trainings.length} Praktika`;
   }
 
   const userHasAddress = Boolean(
