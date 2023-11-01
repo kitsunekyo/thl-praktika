@@ -3,10 +3,9 @@
 import { UserMinusIcon, UserPlusIcon } from "lucide-react";
 import { useTransition } from "react";
 
+import { register, unregister } from "@/app/(main)/trainings/actions";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-
-import { register, unregister } from "../training-actions";
 
 export function RegisterButton({ trainingId }: { trainingId: string }) {
   const [loading, startTransition] = useTransition();
@@ -29,7 +28,7 @@ export function RegisterButton({ trainingId }: { trainingId: string }) {
           }
           toast({
             title: "Angemeldet",
-            description: "Du hast dich für das Training angemeldet.",
+            description: "Du hast dich für das Praktikum angemeldet.",
           });
         })
       }
@@ -39,6 +38,7 @@ export function RegisterButton({ trainingId }: { trainingId: string }) {
     </Button>
   );
 }
+
 export function UnregisterButton({ trainingId }: { trainingId: string }) {
   const [loading, startTransition] = useTransition();
   const { toast } = useToast();
@@ -61,7 +61,7 @@ export function UnregisterButton({ trainingId }: { trainingId: string }) {
           }
           toast({
             title: "Abgemeldet",
-            description: "Du hast dich vom Training abgemeldet.",
+            description: "Du hast dich vom Praktikum abgemeldet.",
           });
         })
       }

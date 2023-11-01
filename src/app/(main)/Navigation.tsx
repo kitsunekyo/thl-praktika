@@ -3,6 +3,7 @@
 import {
   CalendarCheck2Icon,
   CalendarDaysIcon,
+  ContactIcon,
   LayoutGridIcon,
   MailsIcon,
   UsersIcon,
@@ -18,31 +19,26 @@ export function Navigation({
   role,
 }: React.HTMLAttributes<HTMLDivElement> & { role?: string }) {
   return (
-    <div className={cn("relative pb-12", className)}>
+    <aside className={cn("relative pb-12", className)}>
       <div className="sticky top-0 space-y-4 py-6">
         <div className="px-3">
           <div className="space-y-1">
             <SidebarLink href="/">
               <LayoutGridIcon className="mr-2 h-4 w-4" />
-              Übersicht
+              Praktika
             </SidebarLink>
-            <SidebarLink href="/trainings">
-              <CalendarCheck2Icon className="mr-2 h-4 w-4" />
-              Anmeldungen
+            {role !== "trainer" && (
+              <SidebarLink href="/trainings">
+                <CalendarCheck2Icon className="mr-2 h-4 w-4" />
+                Anmeldungen
+              </SidebarLink>
+            )}
+            <SidebarLink href="/trainer">
+              <ContactIcon className="mr-2 h-4 w-4" />
+              Trainer:innen
             </SidebarLink>
           </div>
         </div>
-        {role === "trainer" && (
-          <div className="px-3">
-            <Title>Trainer</Title>
-            <div className="space-y-1">
-              <SidebarLink href="/trainer/dashboard">
-                <CalendarDaysIcon className="mr-2 h-4 w-4" />
-                Trainings
-              </SidebarLink>
-            </div>
-          </div>
-        )}
         {role === "admin" && (
           <div className="px-3">
             <Title>Admin</Title>
@@ -59,7 +55,7 @@ export function Navigation({
           </div>
         )}
       </div>
-    </div>
+    </aside>
   );
 }
 

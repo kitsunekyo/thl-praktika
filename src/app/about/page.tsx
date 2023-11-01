@@ -181,7 +181,7 @@ function TrainerFeatures() {
                 Automatische Emails
               </h5>
               <p className="text-gray-600 dark:text-gray-300">
-                Wenn du ein Training absagen musst werden alle Teilnehmer:innen
+                Wenn du ein Praktikum absagen musst werden alle Teilnehmer:innen
                 automatisch benachrichtigt.
               </p>
             </div>

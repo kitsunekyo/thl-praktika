@@ -1,13 +1,12 @@
 import { Registration, Training, User } from "@prisma/client";
 import Link from "next/link";
 
-import { getMyTrainings } from "@/app/training-actions";
+import { getMyTrainings } from "@/app/(main)/trainings/actions";
 import { PageTitle } from "@/components/PageTitle";
+import { UnregisterButton } from "@/components/training/register-buttons";
 import { TrainingCard } from "@/components/training/TrainingCard";
 import { Separator } from "@/components/ui/separator";
-
-import { computeDuration, computeTraveltime } from "../../../lib/training";
-import { UnregisterButton } from "../register-buttons";
+import { computeDuration, computeTraveltime } from "@/lib/training";
 
 export default async function Trainings() {
   const trainings = await addMetadata(await getMyTrainings());
@@ -22,7 +21,7 @@ export default async function Trainings() {
         <TrainingList trainings={trainings} />
       ) : (
         <p className="text-muted-foreground">
-          Du hast dich noch für keine Trainings als Praktikant:in angemeldet.
+          Du hast dich noch für keine Praktika angemeldet.
           <br />
           Suche nach passenden{" "}
           <Link href="/" className="underline">
@@ -39,7 +38,19 @@ function TrainingList({
 }: {
   trainings: (Training & {
     author: Omit<User, "password">;
-    registrations: Registration[];
+    registrations: (Registration & {
+      user: Pick<
+        User,
+        | "id"
+        | "image"
+        | "name"
+        | "phone"
+        | "email"
+        | "address"
+        | "city"
+        | "zipCode"
+      >;
+    })[];
   })[];
 }) {
   return (

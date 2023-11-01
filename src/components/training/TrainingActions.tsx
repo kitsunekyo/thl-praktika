@@ -16,9 +16,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 
-import { deleteTraining } from "../actions";
+import { deleteTraining } from "../../app/(main)/trainer/actions";
 
-export function TrainingListActions({
+export function TrainingActions({
   id,
   hasRegistrations = false,
 }: {
@@ -29,9 +29,6 @@ export function TrainingListActions({
 
   return (
     <div className="flex w-full items-center gap-2">
-      {/* <Button size="sm" variant="secondary">
-        Bearbeiten
-      </Button> */}
       {hasRegistrations ? (
         <AlertDialog>
           <AlertDialogTrigger asChild>
@@ -43,8 +40,8 @@ export function TrainingListActions({
             <AlertDialogHeader>
               <AlertDialogTitle>Bist du sicher?</AlertDialogTitle>
               <AlertDialogDescription>
-                Alle Praktikant:innen, die sich für das Training angemeldet
-                haben werden per E-Mail benachrichtigt, dass das Training
+                Alle Praktikant:innen, die sich für das Praktikum angemeldet
+                haben werden per E-Mail benachrichtigt, dass das Praktikum
                 abgesagt wurde.
               </AlertDialogDescription>
             </AlertDialogHeader>

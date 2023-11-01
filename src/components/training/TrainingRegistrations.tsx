@@ -2,8 +2,6 @@ import { UserCheckIcon, UserIcon } from "lucide-react";
 
 import { range } from "@/lib/utils";
 
-import { Badge } from "../ui/badge";
-
 export function TrainingRegistrations({
   count,
   max,
@@ -22,13 +20,11 @@ export function TrainingRegistrations({
         <UserIcon key={i} className="h-5 w-5 text-gray-400" />
       ))}
       {freeSpots > 0 ? (
-        <Badge className="ml-2" variant="outline">
+        <span className="ml-2 text-xs">
           {count}/{max} angemeldet
-        </Badge>
+        </span>
       ) : (
-        <Badge className="ml-2" variant="secondary">
-          voll
-        </Badge>
+        <span className="ml-2 text-xs">voll</span>
       )}
     </div>
   );

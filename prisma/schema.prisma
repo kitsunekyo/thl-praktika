@@ -54,10 +54,12 @@ model User {
   zipCode       String?
   phone         String?
 
-  accounts      Account[]
-  sessions      Session[]
-  trainings     Training[]
-  registrations Registration[]
+  accounts         Account[]
+  sessions         Session[]
+  trainings        Training[]
+  registrations    Registration[]
+  sentRequests     TrainingRequest[] @relation("user")
+  receivedRequests TrainingRequest[] @relation("trainer")
 }
 
 model VerificationToken {
@@ -112,4 +114,16 @@ model PasswordResetToken {
   expires   DateTime
 
   @@unique([secret, email])
+}
+
+model TrainingRequest {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  userId    String
+  trainerId String
+  user      User     @relation("user", fields: [userId], references: [id], onDelete: Cascade)
+  trainer   User     @relation("trainer", fields: [trainerId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([trainerId])
 }

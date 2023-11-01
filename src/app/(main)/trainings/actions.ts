@@ -72,7 +72,11 @@ export async function getTrainings() {
   const trainings = await prisma.training.findMany({
     include: {
       author: true,
-      registrations: true,
+      registrations: {
+        include: {
+          user: true,
+        },
+      },
     },
     where: {
       start: {
@@ -104,7 +108,11 @@ export async function getMyTrainings() {
     },
     include: {
       author: true,
-      registrations: true,
+      registrations: {
+        include: {
+          user: true,
+        },
+      },
     },
   });
 }

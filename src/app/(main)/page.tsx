@@ -1,23 +1,23 @@
 import { Registration, Training, User } from "@prisma/client";
 import { endOfDay, startOfDay } from "date-fns";
 
-import { PageTitle } from "@/components/PageTitle";
+import {
+  RegisterButton,
+  UnregisterButton,
+} from "@/components/training/register-buttons";
+import { TrainingActions } from "@/components/training/TrainingActions";
 import { TrainingCard } from "@/components/training/TrainingCard";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { TrainingFilter } from "@/components/TrainingFilter";
 import { getServerSession } from "@/lib/next-auth";
-import { formatUserAddress } from "@/lib/user";
-import { getInitials } from "@/lib/utils";
-
-import { CreateTrainingButton } from "./CreateTrainingButton";
-import { getProfile } from "./profile/actions";
-import { RegisterButton, UnregisterButton } from "./register-buttons";
-import { TrainingFilter } from "../../components/TrainingFilter";
 import {
   computeDuration,
   computeIsRegistered,
   computeTraveltime,
-} from "../../lib/training";
-import { getTrainings } from "../training-actions";
+} from "@/lib/training";
+
+import { CreateTrainingButton } from "./CreateTrainingButton";
+import { getProfile } from "./profile/actions";
+import { getTrainings } from "./trainings/actions";
 
 export default async function Home({
   searchParams,
@@ -54,7 +54,7 @@ export default async function Home({
   if (filteredTrainings.length === 0) {
     trainingsCountLabel = "Kein Training gefunden";
   } else {
-    trainingsCountLabel = `${filteredTrainings.length} Trainings gefunden`;
+    trainingsCountLabel = `${filteredTrainings.length} Praktika gefunden`;
   }
 
   const userHasAddress = Boolean(
@@ -78,14 +78,33 @@ export default async function Home({
             {filteredTrainings.map((t) => {
               const hasFreeSpots = t.maxInterns - t.registrations.length > 0;
               const isOwner = t.authorId === session?.user.id;
-              const canRegister = !isOwner && !isTrainer && hasFreeSpots;
+              const canRegister = !isOwner && hasFreeSpots;
+              const hasRegistrations = Boolean(t.registrations.length);
+
+              if (isTrainer) {
+                return (
+                  <li key={t.id}>
+                    <TrainingCard
+                      training={t}
+                      actions={
+                        isOwner && (
+                          <TrainingActions
+                            id={t.id}
+                            hasRegistrations={hasRegistrations}
+                          />
+                        )
+                      }
+                    />
+                  </li>
+                );
+              }
 
               return (
                 <li key={t.id}>
                   <TrainingCard
                     training={t}
                     actions={
-                      isTrainer ? null : t.isRegistered ? (
+                      t.isRegistered ? (
                         <UnregisterButton trainingId={t.id} />
                       ) : (
                         canRegister && <RegisterButton trainingId={t.id} />
@@ -145,7 +164,19 @@ type TrainingsWithMetadata = Awaited<ReturnType<typeof addMetadata>>;
 async function addMetadata<
   T extends Training & {
     author: Omit<User, "password">;
-    registrations: Registration[];
+    registrations: (Registration & {
+      user: Pick<
+        User,
+        | "id"
+        | "image"
+        | "name"
+        | "phone"
+        | "email"
+        | "address"
+        | "city"
+        | "zipCode"
+      >;
+    })[];
   },
 >(trainings: T[]) {
   return Promise.all(

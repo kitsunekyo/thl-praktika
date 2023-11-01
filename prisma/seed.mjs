@@ -23,7 +23,6 @@ const DEMO_PASSWORD = "thldemo07";
         password: hashed,
       },
     });
-    console.log("Created admin user");
 
     await prisma.user.createMany({
       data: [
@@ -83,62 +82,61 @@ const DEMO_PASSWORD = "thldemo07";
         },
       ],
     });
-    console.log("Created demo users");
 
     await prisma.training.createMany({
       data: [
         {
           authorId: "demo-trainer1",
-          description: "Training 1",
+          description: "Praktikum 1",
           start: new Date("2023-11-01T15:00:00.000Z"),
           end: new Date("2023-11-01T17:00:00.000Z"),
           maxInterns: 1,
         },
         {
           authorId: "demo-trainer1",
-          description: "Training 2",
+          description: "Praktikum 2",
           start: new Date("2023-11-02T14:00:00.000Z"),
           end: new Date("2023-11-02T15:00:00.000Z"),
           maxInterns: 1,
         },
         {
           authorId: "demo-trainer1",
-          description: "Training 3",
+          description: "Praktikum 3",
           start: new Date("2023-11-01T10:00:00.000Z"),
           end: new Date("2023-11-01T12:00:00.000Z"),
           maxInterns: 2,
         },
         {
           authorId: "demo-trainer2",
-          description: "Training 1",
+          description: "Praktikum 1",
           start: new Date("2023-11-04T10:00:00.000Z"),
           end: new Date("2023-11-04T12:00:00.000Z"),
           maxInterns: 2,
         },
         {
           authorId: "demo-trainer2",
-          description: "Training 2",
+          description: "Praktikum 2",
           start: new Date("2023-11-04T15:00:00.000Z"),
           end: new Date("2023-11-04T18:00:00.000Z"),
           maxInterns: 2,
         },
         {
           authorId: "demo-trainer3",
-          description: "Training 1",
+          description: "Praktikum 1",
           start: new Date("2023-11-10T17:00:00.000Z"),
           end: new Date("2023-11-10T18:00:00.000Z"),
           maxInterns: 2,
         },
         {
           authorId: "demo-trainer3",
-          description: "Training 2",
+          description: "Praktikum 2",
           start: new Date("2023-11-10T12:00:00.000Z"),
           end: new Date("2023-11-10T13:30:00.000Z"),
           maxInterns: 5,
         },
       ],
     });
-    console.log("Created demo trainings");
+    console.log("Added demo data");
   } catch (e) {
     console.error(e);
     process.exit(1);

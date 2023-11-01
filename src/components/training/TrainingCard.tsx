@@ -4,16 +4,27 @@ import { MapPinIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
+import { CollapsibleRegistrations } from "@/app/(main)/CollapsibleRegistrations";
 import { formatTrainingDate, secondsToDuration } from "@/lib/date";
 import { formatUserAddress } from "@/lib/user";
 import { getInitials } from "@/lib/utils";
 
-import { TrainingDate } from "./TrainingDate";
-import { TrainingRegistrations } from "./TrainingRegistrations";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 type TrainingWithMetadata = Training & {
-  registrations: Registration[];
+  registrations: (Registration & {
+    user: Pick<
+      User,
+      | "id"
+      | "image"
+      | "name"
+      | "phone"
+      | "email"
+      | "address"
+      | "city"
+      | "zipCode"
+    >;
+  })[];
   author: Pick<
     User,
     "address" | "city" | "zipCode" | "id" | "email" | "image" | "name"
@@ -62,22 +73,19 @@ export async function TrainingCard({
           {duration}
         </div>
       </header>
-      <dl className="space-y-2 p-4">
-        {training.description && (
-          <dd className="mb-4">{training.description}</dd>
-        )}
+      <dl className="space-y-4 p-4">
+        {training.description && <dd>{training.description}</dd>}
         {!!address && (
-          <TrainingLocation
-            address={address}
-            customAddress={training.customAddress}
-            traveltime={training.traveltime}
-          />
+          <dd>
+            <TrainingLocation
+              address={address}
+              customAddress={training.customAddress}
+              traveltime={training.traveltime}
+            />
+          </dd>
         )}
         <dd>
-          <TrainingRegistrations
-            count={training.registrations.length}
-            max={training.maxInterns}
-          />
+          <CollapsibleRegistrations training={training} />
         </dd>
       </dl>
       {!!actions && (

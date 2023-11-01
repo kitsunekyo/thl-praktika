@@ -7,6 +7,7 @@ import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import { createTraining } from "@/app/(main)/trainer/actions";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -29,8 +30,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { getFixedDate } from "@/lib/date";
 import { cn } from "@/lib/utils";
-
-import { createTraining } from "../actions";
 
 export const formSchema = z
   .object({
@@ -90,12 +89,12 @@ export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
       if (res?.error) {
         toast({
           title: "Oops",
-          description: `Das Training konnte nicht erstellt werden. Versuch es nochmal.`,
+          description: `Das Praktikum konnte nicht erstellt werden. Versuch es nochmal.`,
           variant: "destructive",
         });
       } else {
         toast({
-          title: "Training wurde erstellt",
+          title: "Praktikum wurde erstellt",
         });
         form.reset();
         onSubmit?.();
@@ -220,7 +219,7 @@ export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
               <div className="space-y-1 leading-none">
                 <FormLabel>Abweichende Adresse</FormLabel>
                 <FormDescription>
-                  Falls das Training an einer anderen Adresse stattfindet, als
+                  Falls das Praktikum an einer anderen Adresse stattfindet, als
                   die in deinem Profil hinterlegte. (zB bei einem Kunden / einer
                   Kundin)
                 </FormDescription>
@@ -229,7 +228,7 @@ export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
           )}
         />
         <Button type="submit" disabled={loading}>
-          Training erstellen
+          Praktikum erstellen
         </Button>
       </form>
     </Form>
