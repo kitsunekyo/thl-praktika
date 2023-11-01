@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { formatDistance } from "date-fns";
 
 import { PageTitle } from "@/components/PageTitle";
 import { Separator } from "@/components/ui/separator";
@@ -43,7 +43,7 @@ async function ReceivedTrainingRequests({
   if (!requests?.length) {
     return (
       <p className="text-sm text-gray-400">
-        Du hast noch keine Praktika Anfragen bekommen.
+        Du hast keine unbeantworteten Praktika Anfragen.
       </p>
     );
   }
@@ -52,10 +52,10 @@ async function ReceivedTrainingRequests({
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Student:in</TableHead>
+          <TableHead className="w-[200px]">Praktikant:in</TableHead>
           <TableHead className="w-[100px]"></TableHead>
-          <TableHead className="text-right">erhalten am</TableHead>
-          <TableHead className="text-right"></TableHead>
+          <TableHead></TableHead>
+          <TableHead className="text-right">erhalten</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -65,10 +65,10 @@ async function ReceivedTrainingRequests({
               {request.user.name}
             </TableCell>
             <TableCell>{request.user.email}</TableCell>
+            <TableCell>{request.user.phone}</TableCell>
             <TableCell className="text-right">
-              {format(request.createdAt, "do MMM yy HH:mm")}
+              vor {formatDistance(request.createdAt, new Date())}
             </TableCell>
-            <TableCell className="text-right"></TableCell>
           </TableRow>
         ))}
       </TableBody>

@@ -120,7 +120,7 @@ export function TrainingForm({
             name="date"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Datum</FormLabel>
+                <FormLabel>Datum*</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -206,7 +206,7 @@ export function TrainingForm({
           name="maxInterns"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Maximale Anzahl an Praktikanten</FormLabel>
+              <FormLabel>Maximale Anzahl an Praktikanten (1-6)*</FormLabel>
               <FormControl>
                 <Input type="number" min={1} max={6} {...field} />
               </FormControl>

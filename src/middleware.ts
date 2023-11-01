@@ -31,10 +31,14 @@ export default withAuth(
 
     const role = req.nextauth.token.role;
 
-    if (path.startsWith("/admin") && role !== "admin") {
+    const firstPathSegment: string | undefined = path
+      .split("/")
+      .filter((p) => p !== "")?.[0];
+
+    if (firstPathSegment === "admin" && role !== "admin") {
       return NextResponse.redirect(new URL("/", req.url));
     }
-    if (path.startsWith("/trainer") && role !== "trainer") {
+    if (firstPathSegment === "trainer" && role !== "trainer") {
       return NextResponse.redirect(new URL("/", req.url));
     }
 

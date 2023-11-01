@@ -5,7 +5,11 @@ import { revalidatePath } from "next/cache";
 import { sendInvitationMail } from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
 
-export async function inviteUser(email: string, name = "", role = "user") {
+export async function inviteUser(
+  email: string,
+  name = "",
+  role: "user" | "trainer" | "admin" = "user",
+) {
   const invitation = await prisma.invitation.findFirst({
     where: {
       email,
@@ -44,7 +48,7 @@ export async function inviteUser(email: string, name = "", role = "user") {
     };
   }
 
-  sendInvitationMail({ to: email, name });
+  sendInvitationMail({ to: email, name, role });
 }
 
 export async function getInvitations() {

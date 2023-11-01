@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 import { getServerSession } from "@/lib/next-auth";
+import { sendTrainingRequestReceivedMail } from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
 
 export async function createTrainingRequest({
@@ -31,11 +32,28 @@ export async function createTrainingRequest({
     };
   }
 
+  const trainer = await prisma.user.findFirst({
+    where: {
+      id: trainerId,
+    },
+  });
+
+  if (!trainer) {
+    return {
+      error: "trainer does not exist",
+    };
+  }
+
   await prisma.trainingRequest.create({
     data: {
       userId: session.user.id,
       trainerId: trainerId,
     },
+  });
+
+  sendTrainingRequestReceivedMail({
+    to: trainer.email,
+    userName: session.user.name || session.user.email,
   });
 
   revalidatePath("/trainers/requests");
@@ -53,6 +71,7 @@ export async function getTrainingRequests(
           name: true,
           email: true,
           image: true,
+          phone: true,
         },
       },
       trainer: {
@@ -61,6 +80,7 @@ export async function getTrainingRequests(
           name: true,
           email: true,
           image: true,
+          phone: true,
         },
       },
     },

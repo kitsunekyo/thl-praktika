@@ -1,4 +1,4 @@
-import { differenceInDays, format, formatDuration } from "date-fns";
+import { differenceInDays, formatDistance } from "date-fns";
 import Link from "next/link";
 
 import { PageTitle } from "@/components/PageTitle";
@@ -13,7 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { secondsToDuration } from "@/lib/date";
 import { getServerSession } from "@/lib/next-auth";
 import { formatAddress } from "@/lib/user";
 import { getInitials } from "@/lib/utils";
@@ -38,10 +37,11 @@ export default async function Page() {
         content={
           <>
             Sende Praktika Anfragen an Trainer:innen. Sie erhalten eine
-            Benachrichtigung mit der Bitte Praktika einzutragen, für die du dich
-            anmelden kannst. <br />
-            Nachdem du eine Anfrage gesendet hast musst du 7 Tage warten, bevor
-            du die nächste senden kannst.
+            Benachrichtigung mit der Bitte Praktika einzutragen.
+            <br />
+            Warte bitte 7 Tage nachdem du eine Anfrage gesendet hast, bevor du
+            die nächste sendest, um die Trainer:innen nicht mit Emails zu
+            überfluten.
           </>
         }
       >
@@ -51,7 +51,7 @@ export default async function Page() {
       <TrainerList trainers={trainers} requests={myRequests} />
       <div className="my-8" />
       <h2 className="mb-4 font-medium">Gesendete Anfragen</h2>
-      <MyTrainingRequests requests={myRequests} />
+      <SentTrainingRequests requests={myRequests} />
     </div>
   );
 }
@@ -95,7 +95,7 @@ async function TrainerList({
         return (
           <Card key={trainer.id} className="flex flex-col gap-4 p-4">
             <div className="flex grow gap-4">
-              <Avatar className="shrink-0">
+              <Avatar className="shrink-0" size="lg">
                 <AvatarImage src={trainer.image || "/img/avatar.jpg"} />
                 <AvatarFallback>
                   {getInitials({
@@ -134,7 +134,7 @@ async function TrainerList({
   );
 }
 
-async function MyTrainingRequests({
+async function SentTrainingRequests({
   requests,
 }: {
   requests?: Awaited<ReturnType<typeof getTrainingRequests>>;
@@ -147,29 +147,31 @@ async function MyTrainingRequests({
     );
   }
 
+  // TODO: delete disabled to prevent email spam until i have an idea how to solve this
+
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Trainer:in</TableHead>
+          <TableHead className="w-[200px]">Trainer:in</TableHead>
           <TableHead className="w-[100px]"></TableHead>
-          <TableHead className="text-right">gesendet am</TableHead>
-          <TableHead className="text-right"></TableHead>
+          <TableHead className="text-right">gesendet</TableHead>
+          {/* <TableHead className="w-[50px] text-right"></TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>
         {requests.map((request) => (
           <TableRow key={request.id}>
             <TableCell className="truncate font-medium">
-              {request.user.name}
+              {request.trainer.name}
             </TableCell>
             <TableCell>{request.trainer.email}</TableCell>
             <TableCell className="text-right">
-              {format(request.createdAt, "do MMM yy HH:mm")}
+              {formatDistance(request.createdAt, new Date())}
             </TableCell>
-            <TableCell className="text-right">
+            {/* <TableCell className="text-right">
               <DeleteButton requestId={request.id} />
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         ))}
       </TableBody>

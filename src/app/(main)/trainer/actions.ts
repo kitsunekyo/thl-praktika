@@ -5,7 +5,10 @@ import { z } from "zod";
 
 import { formatTrainingDate } from "@/lib/date";
 import { getServerSession } from "@/lib/next-auth";
-import { sendTrainingCancelledMail } from "@/lib/postmark";
+import {
+  sendTrainingCancelledMail,
+  sendTrainingRegistrationNotificationMail,
+} from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
 
 export async function getMyTrainings() {
@@ -63,7 +66,6 @@ export async function deleteTraining(id: string) {
   });
 
   const registeredUsers = training.registrations.map((r) => r.user.email);
-
   registeredUsers.forEach((email) => {
     sendTrainingCancelledMail({
       to: email,
@@ -95,11 +97,37 @@ export async function createTraining(payload: CreateTraining) {
     };
   }
   const training = createTrainingSchema.parse(payload);
+
   await prisma.training.create({
     data: {
       ...training,
       authorId: session?.user.id,
     },
   });
-  revalidatePath("/");
+
+  const trainingRequests = await prisma.trainingRequest.findMany({
+    where: {
+      trainerId: session.user.id,
+    },
+    select: {
+      id: true,
+      user: true,
+    },
+  });
+
+  const subscribedUsers = trainingRequests.map((r) => r.user.email);
+  subscribedUsers.forEach((email) => {
+    sendTrainingRegistrationNotificationMail({
+      to: email,
+      trainerName: session.user.name || "Ein:e Trainer:in",
+    });
+  });
+
+  await prisma.trainingRequest.deleteMany({
+    where: {
+      trainerId: session.user.id,
+    },
+  });
+
+  revalidatePath("/trainers/requests");
 }
