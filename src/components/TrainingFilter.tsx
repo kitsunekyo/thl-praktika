@@ -1,8 +1,6 @@
 "use client";
 
-/* eslint-disable import/no-duplicates */
-import { endOfDay, format, setDefaultOptions, startOfDay } from "date-fns";
-import { deAT } from "date-fns/locale";
+import { endOfDay, format, startOfDay } from "date-fns";
 import {
   CalendarIcon,
   ClockIcon,
@@ -28,10 +26,6 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-
-setDefaultOptions({
-  locale: deAT,
-});
 
 const filterOptions = [
   {

@@ -15,14 +15,13 @@ import {
 } from "@/components/ui/table";
 import { secondsToDuration } from "@/lib/date";
 import { getServerSession } from "@/lib/next-auth";
-import { formatAddress, getTraveltime } from "@/lib/user";
+import { formatAddress } from "@/lib/user";
 import { getInitials } from "@/lib/utils";
 
 import { getTrainers } from "./actions";
 import { DeleteButton } from "./DeleteTrainingRequestButton";
 import { getTrainingRequests } from "./requests/actions";
 import { RequestTrainingButton } from "./RequestTrainingButton";
-import { getProfile } from "../profile/actions";
 
 export default async function Page() {
   const session = await getServerSession();
@@ -35,7 +34,17 @@ export default async function Page() {
 
   return (
     <div className="py-6">
-      <PageTitle content="Sende Praktika Anfragen an Trainer:innen. Sie erhalten eine Benachrichtigung mit der Bitte Praktika einzutragen, für die du dich anmelden kannst.">
+      <PageTitle
+        content={
+          <>
+            Sende Praktika Anfragen an Trainer:innen. Sie erhalten eine
+            Benachrichtigung mit der Bitte Praktika einzutragen, für die du dich
+            anmelden kannst. <br />
+            Nachdem du eine Anfrage gesendet hast musst du 7 Tage warten, bevor
+            du die nächste senden kannst.
+          </>
+        }
+      >
         Trainer:innen
       </PageTitle>
       <Separator className="my-4" />
@@ -54,12 +63,6 @@ async function TrainerList({
   trainers: Awaited<ReturnType<typeof getTrainers>>;
   requests: Awaited<ReturnType<typeof getTrainingRequests>>;
 }) {
-  const user = await getProfile();
-
-  if (!user) {
-    throw new Error("Couldn't load profile");
-  }
-
   if (trainers.length === 0) {
     return (
       <p className="text-sm text-gray-400">Keine Trainer:innen verfügbar.</p>
@@ -68,7 +71,7 @@ async function TrainerList({
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {trainers.map(async (trainer) => {
+      {trainers.map((trainer) => {
         const address = formatAddress({
           address: trainer.address,
           city: trainer.city,
@@ -78,7 +81,6 @@ async function TrainerList({
           " ",
           "+",
         )}`;
-        const traveltime = await getTraveltime(user, trainer);
         const requestCooldownInDays = 7;
         const hasRecentlyRequested = Boolean(
           requests
@@ -91,25 +93,25 @@ async function TrainerList({
         );
 
         return (
-          <Card key={trainer.id} className="flex gap-4 p-4">
-            <Avatar className="shrink-0">
-              <AvatarImage src={trainer.image || "/img/avatar.jpg"} />
-              <AvatarFallback>
-                {getInitials({
-                  name: trainer.name,
-                  email: trainer.email,
-                })}
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex flex-1 flex-col justify-between text-sm">
-              <dl className="text-muted-foreground">
-                {trainer.name && (
-                  <dd className="font-medium text-black">{trainer.name}</dd>
-                )}
-                <dd>{trainer.email}</dd>
-                {trainer.phone && <dd>{trainer.phone}</dd>}
-                {!!address && (
-                  <>
+          <Card key={trainer.id} className="flex flex-col gap-4 p-4">
+            <div className="flex grow gap-4">
+              <Avatar className="shrink-0">
+                <AvatarImage src={trainer.image || "/img/avatar.jpg"} />
+                <AvatarFallback>
+                  {getInitials({
+                    name: trainer.name,
+                    email: trainer.email,
+                  })}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex flex-1 flex-col justify-between text-sm">
+                <dl className="text-muted-foreground">
+                  {trainer.name && (
+                    <dd className="font-medium text-black">{trainer.name}</dd>
+                  )}
+                  <dd>{trainer.email}</dd>
+                  {trainer.phone && <dd>{trainer.phone}</dd>}
+                  {!!address && (
                     <Link
                       href={googleMapsUrl}
                       target="_blank"
@@ -117,24 +119,14 @@ async function TrainerList({
                     >
                       {address}
                     </Link>
-                    {!!traveltime && (
-                      <p className="text-xs">
-                        {formatDuration(secondsToDuration(traveltime), {
-                          format: ["hours", "minutes"],
-                        })}{" "}
-                        entfernt
-                      </p>
-                    )}
-                  </>
-                )}
-              </dl>
-              <div className="pt-2">
-                <RequestTrainingButton
-                  trainerId={trainer.id}
-                  disabled={hasRecentlyRequested}
-                />
+                  )}
+                </dl>
               </div>
             </div>
+            <RequestTrainingButton
+              trainerId={trainer.id}
+              disabled={hasRecentlyRequested}
+            />
           </Card>
         );
       })}

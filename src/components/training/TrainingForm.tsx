@@ -3,12 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@prisma/client";
 import { add, format, set } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, InfoIcon } from "lucide-react";
 import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { createTraining } from "@/app/(main)/trainers/actions";
+import { createTraining } from "@/app/(main)/trainer/actions";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -206,7 +206,7 @@ export function TrainingForm({
           name="maxInterns"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Maximale Anzahl an Praktikant:innen</FormLabel>
+              <FormLabel>Maximale Anzahl an Praktikanten</FormLabel>
               <FormControl>
                 <Input type="number" min={1} max={6} {...field} />
               </FormControl>
@@ -256,9 +256,21 @@ export function TrainingForm({
             )}
           />
         </div>
-        <p className="text-xs text-muted-foreground">
-          Die Adresse des Praktikums wird aus deinem Profil vorausgefüllt.
-        </p>
+        <aside className="space-y-2 pt-8">
+          <div className="flex gap-2">
+            <InfoIcon className="h-4 w-4 shrink-0 opacity-50" />
+            <p className="text-xs text-muted-foreground">
+              Die Adresse wird aus deinem Profil vorausgefüllt.
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <InfoIcon className="h-4 w-4 shrink-0 opacity-50" />
+            <p className="text-xs text-muted-foreground">
+              Beim Erstellen werden Studenten die bei dir ein Praktikum
+              angefragt haben automatisch benachrichtigt.
+            </p>
+          </div>
+        </aside>
         <div className="flex">
           <Button type="submit" disabled={loading} className="ml-auto">
             Praktikum erstellen

@@ -49,15 +49,9 @@ export function RequestTrainingButton({
 
   if (disabled) {
     return (
-      <div className="space-y-2">
-        <p className="text-xs italic text-gray-400">
-          Nachdem du eine Anfrage gesendet hast musst du 7 Tage warten, bevor du
-          die nächste senden kannst.
-        </p>
-        <Button size="sm" disabled={disabled}>
-          Praktikum angefragt
-        </Button>
-      </div>
+      <Button size="sm" disabled={disabled}>
+        Praktikum angefragt
+      </Button>
     );
   }
 

@@ -1,0 +1,77 @@
+import { format } from "date-fns";
+
+import { PageTitle } from "@/components/PageTitle";
+import { Separator } from "@/components/ui/separator";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
+import { CreateTrainingButton } from "../CreateTrainingButton";
+import { getProfile } from "../profile/actions";
+import { getTrainingRequests } from "../trainers/requests/actions";
+
+export default async function Page() {
+  const profile = await getProfile();
+  if (!profile) {
+    throw new Error("Unauthorized");
+  }
+  const requests = await getTrainingRequests({ trainerId: profile.id });
+
+  return (
+    <div className="py-6">
+      <PageTitle content="Hier findest du Praktika Anfragen, die dir von Stundenten gesendet wurden.">
+        Praktika Anfragen
+      </PageTitle>
+      <Separator className="my-4" />
+      <CreateTrainingButton profile={profile} />
+      <div className="my-4" />
+      <ReceivedTrainingRequests requests={requests} />
+    </div>
+  );
+}
+
+async function ReceivedTrainingRequests({
+  requests,
+}: {
+  requests?: Awaited<ReturnType<typeof getTrainingRequests>>;
+}) {
+  if (!requests?.length) {
+    return (
+      <p className="text-sm text-gray-400">
+        Du hast noch keine Praktika Anfragen bekommen.
+      </p>
+    );
+  }
+
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[100px]">Student:in</TableHead>
+          <TableHead className="w-[100px]"></TableHead>
+          <TableHead className="text-right">erhalten am</TableHead>
+          <TableHead className="text-right"></TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {requests.map((request) => (
+          <TableRow key={request.id}>
+            <TableCell className="truncate font-medium">
+              {request.user.name}
+            </TableCell>
+            <TableCell>{request.user.email}</TableCell>
+            <TableCell className="text-right">
+              {format(request.createdAt, "do MMM yy HH:mm")}
+            </TableCell>
+            <TableCell className="text-right"></TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}

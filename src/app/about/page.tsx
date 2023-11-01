@@ -132,7 +132,7 @@ function TrainerFeatures() {
           </div>
           <p className="text-gray-600 dark:text-gray-300">
             Erfahre mehr über die Funktionen, die die Koordination und
-            Kommunikation von Praktika Möglichkeiten mit den Student:innen
+            Kommunikation von Praktika Möglichkeiten mit den Studenten
             vereinfachen.
           </p>
         </div>
@@ -154,7 +154,7 @@ function TrainerFeatures() {
               </h5>
               <p className="text-gray-600 dark:text-gray-300">
                 Gib mit nur wenigen Klicks an wann und wo ein Training
-                stattfindet, und wie viele Praktikant:innen teilnehmen können.
+                stattfindet, und wie viele Praktikanten teilnehmen können.
               </p>
             </div>
           </div>
@@ -167,8 +167,8 @@ function TrainerFeatures() {
                 Kein WhatsApp Spam
               </h5>
               <p className="text-gray-600 dark:text-gray-300">
-                Ermögliche es Student:innen sich mit nur einem Klick für
-                Praktika anzumelden, ohne jedem einzeln antworten zu müssen.
+                Ermögliche es Studenten sich mit nur einem Klick für Praktika
+                anzumelden, ohne jedem einzeln antworten zu müssen.
               </p>
             </div>
           </div>

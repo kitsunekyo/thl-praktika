@@ -21,7 +21,7 @@ export function CreateTrainingButton({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
-    <div className="r mb-8 flex items-center gap-2">
+    <div className="flex items-center gap-2">
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
           <button className="flex h-12 w-full items-center gap-2 rounded bg-gray-100 px-4 text-sm text-gray-500 transition-colors hover:bg-gray-200">
@@ -32,11 +32,11 @@ export function CreateTrainingButton({
         <DialogContent className="md:max-w-2xl">
           <DialogHeader>
             <DialogTitle className="mb-4">Praktikum erstellen</DialogTitle>
-            <TrainingForm
-              onSubmit={() => setIsDialogOpen(false)}
-              profile={profile}
-            />
           </DialogHeader>
+          <TrainingForm
+            onSubmit={() => setIsDialogOpen(false)}
+            profile={profile}
+          />
         </DialogContent>
       </Dialog>
     </div>

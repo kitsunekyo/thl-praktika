@@ -1,4 +1,7 @@
+/* eslint-disable import/no-duplicates */
 import "./globals.css";
+import { setDefaultOptions } from "date-fns";
+import { deAT } from "date-fns/locale";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 
@@ -7,6 +10,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { Providers } from "./Providers";
 
 const inter = Inter({ subsets: ["latin"] });
+
+setDefaultOptions({
+  locale: deAT,
+});
 
 export const metadata: Metadata = {
   title: "THL Praktika",
@@ -30,6 +37,7 @@ export default async function RootLayout({
         <Providers>
           {children}
           <Toaster />
+          {/* <DateFnsLocale /> */}
         </Providers>
       </body>
     </html>

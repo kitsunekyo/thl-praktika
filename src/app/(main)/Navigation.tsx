@@ -4,6 +4,7 @@ import {
   CalendarCheck2Icon,
   CalendarDaysIcon,
   ContactIcon,
+  GraduationCapIcon,
   LayoutGridIcon,
   MailsIcon,
   UsersIcon,
@@ -23,7 +24,7 @@ export function Navigation({
       <div className="sticky top-0 space-y-4 py-6">
         <div className="px-3">
           <div className="space-y-1">
-            <SidebarLink href="/">
+            <SidebarLink href="/" exact>
               <LayoutGridIcon className="mr-2 h-4 w-4" />
               Praktika
             </SidebarLink>
@@ -31,6 +32,12 @@ export function Navigation({
               <SidebarLink href="/trainings">
                 <CalendarCheck2Icon className="mr-2 h-4 w-4" />
                 Anmeldungen
+              </SidebarLink>
+            )}
+            {role === "trainer" && (
+              <SidebarLink href="/trainer" exact>
+                <GraduationCapIcon className="mr-2 h-4 w-4" />
+                Praktika Anfragen
               </SidebarLink>
             )}
             <SidebarLink href="/trainers">
@@ -62,12 +69,12 @@ export function Navigation({
 function SidebarLink({
   children,
   href,
+  exact,
   ...props
-}: React.ComponentProps<typeof Link>) {
+}: React.ComponentProps<typeof Link> & { exact?: boolean }) {
   const pathname = usePathname();
-  const isRootLink = href === "/";
 
-  const isActive = isRootLink
+  const isActive = exact
     ? pathname === href
     : pathname.startsWith(href.toString());
 

@@ -3,6 +3,7 @@
 import { BanIcon } from "lucide-react";
 import { useTransition } from "react";
 
+import { deleteTraining } from "@/app/(main)/trainer/actions";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,8 +16,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-
-import { deleteTraining } from "../../app/(main)/trainers/actions";
 
 export function TrainingActions({
   id,
@@ -40,9 +39,9 @@ export function TrainingActions({
             <AlertDialogHeader>
               <AlertDialogTitle>Bist du sicher?</AlertDialogTitle>
               <AlertDialogDescription>
-                Alle Praktikant:innen, die sich für das Praktikum angemeldet
-                haben werden per E-Mail benachrichtigt, dass das Praktikum
-                abgesagt wurde.
+                Alle Praktikanten, die sich für das Praktikum angemeldet haben
+                werden per E-Mail benachrichtigt, dass das Praktikum abgesagt
+                wurde.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
