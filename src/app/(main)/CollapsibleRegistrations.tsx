@@ -16,7 +16,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { formatUserAddress } from "@/lib/user";
 
 export function CollapsibleRegistrations({
   training,

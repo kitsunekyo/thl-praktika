@@ -6,7 +6,7 @@ import React from "react";
 
 import { CollapsibleRegistrations } from "@/app/(main)/CollapsibleRegistrations";
 import { formatTrainingDate, secondsToDuration } from "@/lib/date";
-import { formatUserAddress } from "@/lib/user";
+import { formatAddress } from "@/lib/user";
 import { getInitials } from "@/lib/utils";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -39,7 +39,11 @@ export async function TrainingCard({
   training: TrainingWithMetadata;
   actions?: React.ReactNode;
 }) {
-  const address = formatUserAddress(training.author);
+  const address = formatAddress({
+    address: training.address,
+    city: training.city,
+    zipCode: training.zipCode,
+  });
   const duration = formatDuration(
     intervalToDuration({ start: training.start, end: training.end }),
     {
@@ -78,8 +82,7 @@ export async function TrainingCard({
         {!!address && (
           <dd>
             <TrainingLocation
-              address={address}
-              customAddress={training.customAddress}
+              location={address}
               traveltime={training.traveltime}
             />
           </dd>
@@ -96,26 +99,16 @@ export async function TrainingCard({
 }
 
 function TrainingLocation({
-  address,
-  customAddress,
+  location,
   traveltime,
 }: {
-  address: string;
-  customAddress?: boolean;
+  location: string;
   traveltime?: number;
 }) {
-  const googleMapsUrl = `https://www.google.com/maps/place/${address.replaceAll(
+  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${location.replaceAll(
     " ",
     "+",
   )}`;
-
-  if (customAddress) {
-    return (
-      <span className="text-gray-400">
-        Adresse wird persönlich bekannt gegeben
-      </span>
-    );
-  }
 
   return (
     <div className="flex items-start gap-2 leading-none">
@@ -126,7 +119,7 @@ function TrainingLocation({
           target="_blank"
           className="underline hover:no-underline"
         >
-          {address}
+          {location}
         </Link>
         {!!traveltime && (
           <p className="text-xs">

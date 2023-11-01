@@ -88,7 +88,9 @@ model Training {
   registrations Registration[]
   authorId      String
   author        User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  customAddress Boolean        @default(false)
+  address       String?
+  city          String?
+  zipCode       String?
 
   @@index([authorId])
 }

@@ -80,7 +80,9 @@ const createTrainingSchema = z.object({
   start: z.date(),
   end: z.date(),
   maxInterns: z.number(),
-  customAddress: z.boolean(),
+  address: z.string(),
+  city: z.string(),
+  zipCode: z.string(),
 });
 
 type CreateTraining = z.infer<typeof createTrainingSchema>;

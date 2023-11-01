@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/table";
 import { secondsToDuration } from "@/lib/date";
 import { getServerSession } from "@/lib/next-auth";
-import { formatUserAddress, getTraveltime } from "@/lib/user";
+import { formatAddress, getTraveltime } from "@/lib/user";
 import { getInitials } from "@/lib/utils";
 
 import { getTrainers } from "./actions";
@@ -69,7 +69,11 @@ async function TrainerList({
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {trainers.map(async (trainer) => {
-        const address = formatUserAddress(trainer);
+        const address = formatAddress({
+          address: trainer.address,
+          city: trainer.city,
+          zipCode: trainer.zipCode,
+        });
         const googleMapsUrl = `https://www.google.com/maps/place/${address.replaceAll(
           " ",
           "+",

@@ -69,7 +69,7 @@ export default async function Home({
         </div>
       </aside>
       <main className="md:w-full md:max-w-[600px] md:py-6">
-        {isTrainer && <CreateTrainingButton />}
+        {isTrainer && <CreateTrainingButton profile={profile} />}
         <p className="mb-4 text-sm text-muted-foreground">
           {trainingsCountLabel}
         </p>

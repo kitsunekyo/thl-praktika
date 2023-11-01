@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { User } from "@prisma/client";
 import { add, format, set } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import React, { useTransition } from "react";
@@ -10,11 +11,9 @@ import * as z from "zod";
 import { createTraining } from "@/app/(main)/trainer/actions";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -38,7 +37,9 @@ export const formSchema = z
     startTime: z.string(),
     endTime: z.string(),
     maxInterns: z.coerce.number(),
-    customAddress: z.boolean(),
+    city: z.string(),
+    zipCode: z.string(),
+    address: z.string(),
   })
   .refine(
     (data) => {
@@ -58,7 +59,13 @@ export const formSchema = z
     },
   );
 
-export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
+export function TrainingForm({
+  profile,
+  onSubmit,
+}: {
+  profile: Pick<User, "address" | "city" | "zipCode">;
+  onSubmit?: () => void;
+}) {
   const [loading, startTransition] = useTransition();
   const { toast } = useToast();
 
@@ -70,7 +77,9 @@ export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
       date: add(getFixedDate(new Date()), { days: 1 }),
       startTime: "09:00",
       endTime: "17:00",
-      customAddress: false,
+      city: profile.city || "",
+      zipCode: profile.zipCode || "",
+      address: profile.address || "",
     },
   });
 
@@ -207,29 +216,54 @@ export function TrainingForm({ onSubmit }: { onSubmit?: () => void }) {
         />
         <FormField
           control={form.control}
-          name="customAddress"
+          name="address"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+            <FormItem>
+              <FormLabel>Adresse</FormLabel>
               <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
+                <Input {...field} />
               </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>Abweichende Adresse</FormLabel>
-                <FormDescription>
-                  Falls das Praktikum an einer anderen Adresse stattfindet, als
-                  die in deinem Profil hinterlegte. (zB bei einem Kunden / einer
-                  Kundin)
-                </FormDescription>
-              </div>
+              <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={loading}>
-          Praktikum erstellen
-        </Button>
+
+        <div className="space-y-6 md:flex md:gap-4 md:space-y-0">
+          <FormField
+            control={form.control}
+            name="zipCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Postleitzahl</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem className="flex-grow">
+                <FormLabel>Stadt</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Die Adresse des Praktikums wird aus deinem Profil vorausgefüllt.
+        </p>
+        <div className="flex">
+          <Button type="submit" disabled={loading} className="ml-auto">
+            Praktikum erstellen
+          </Button>
+        </div>
       </form>
     </Form>
   );

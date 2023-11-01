@@ -1,5 +1,6 @@
 "use client";
 
+import { User } from "@prisma/client";
 import { CalendarPlusIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -12,7 +13,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export function CreateTrainingButton() {
+export function CreateTrainingButton({
+  profile,
+}: {
+  profile: Pick<User, "id" | "city" | "address" | "zipCode">;
+}) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
@@ -27,7 +32,10 @@ export function CreateTrainingButton() {
         <DialogContent className="md:max-w-2xl">
           <DialogHeader>
             <DialogTitle className="mb-4">Praktikum erstellen</DialogTitle>
-            <TrainingForm onSubmit={() => setIsDialogOpen(false)} />
+            <TrainingForm
+              onSubmit={() => setIsDialogOpen(false)}
+              profile={profile}
+            />
           </DialogHeader>
         </DialogContent>
       </Dialog>

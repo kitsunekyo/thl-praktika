@@ -2,10 +2,10 @@ import { User } from "@prisma/client";
 
 import { getDirections } from "./mapquest";
 
-export function formatUserAddress(
-  user: Pick<User, "address" | "city" | "zipCode">,
-) {
-  return [user.address, [user.zipCode, user.city].filter(Boolean).join(" ")]
+type Address = Pick<User, "address" | "city" | "zipCode">;
+
+export function formatAddress({ address, city, zipCode }: Address) {
+  return [address, [zipCode, city].filter(Boolean).join(" ")]
     .filter(Boolean)
     .join(", ");
 }
@@ -13,15 +13,12 @@ export function formatUserAddress(
 /**
  * @returns traveltime in seconds
  */
-export async function getTraveltime(
-  fromUser: Pick<User, "id" | "address" | "city" | "zipCode">,
-  toUser: Pick<User, "id" | "address" | "city" | "zipCode">,
-) {
-  if (fromUser.id === toUser.id) {
+export async function getTraveltime(from: Address, to: Address) {
+  const fromAddress = formatAddress(from);
+  const toAddress = formatAddress(to);
+  if (fromAddress === toAddress) {
     return 0;
   }
-  const fromAddress = formatUserAddress(fromUser);
-  const toAddress = formatUserAddress(toUser);
 
   if (!fromAddress || !toAddress) {
     return;
