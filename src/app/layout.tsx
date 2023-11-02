@@ -21,6 +21,7 @@ setDefaultOptions({
 export const metadata: Metadata = {
   title: "THL Praktika",
   description: "THL Praktikums Planung",
+  metadataBase: new URL(process.env.NEXTAUTH_URL || "http://localhost:3000"),
 };
 
 export const viewport: Viewport = {
