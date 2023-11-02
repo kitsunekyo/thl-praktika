@@ -9,6 +9,7 @@ const publicPaths = [
   "/favicon.ico",
   "/twitter-image.jpg",
   "/robots.txt",
+  "/api/uploadthing",
 ];
 
 const authPaths = [

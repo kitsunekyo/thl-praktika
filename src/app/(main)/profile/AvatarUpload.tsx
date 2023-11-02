@@ -27,16 +27,16 @@ export function AvatarUpload() {
           ) : (
             "Profilbild wählen"
           ),
-        allowedContent: "Bilddatei (.png, .jpg) maximal 2MB",
+        allowedContent: "Bilddatei (<2MB)",
       }}
       endpoint="imageUploader"
-      onClientUploadComplete={(res) => {
+      onClientUploadComplete={async (res) => {
         const file = res?.[0];
         if (!file) {
           return;
         }
         const url = file.url;
-        updateProfilePicture(url);
+        await updateProfilePicture(url);
       }}
       onUploadError={() => {
         toast({
