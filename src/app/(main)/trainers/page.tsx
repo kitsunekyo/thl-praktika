@@ -37,10 +37,6 @@ export default async function Page() {
           <>
             Sende Praktika Anfragen an Trainer:innen. Sie erhalten eine
             Benachrichtigung mit der Bitte Praktika einzutragen.
-            <br />
-            Warte bitte 7 Tage nachdem du eine Anfrage gesendet hast, bevor du
-            die nächste sendest, um die Trainer:innen nicht mit Emails zu
-            überfluten.
           </>
         }
       >
