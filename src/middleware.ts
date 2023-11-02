@@ -7,6 +7,7 @@ const publicPaths = [
   "/img",
   "/opengraph-image.jpg",
   "/favicon.ico",
+  "/apple-icon.ico",
   "/twitter-image.jpg",
   "/robots.txt",
   "/api/uploadthing",
