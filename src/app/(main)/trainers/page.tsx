@@ -164,8 +164,8 @@ async function SentTrainingRequests({
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[200px]">Trainer:in</TableHead>
-          <TableHead className="w-[100px]"></TableHead>
+          <TableHead>Trainer:in</TableHead>
+          <TableHead></TableHead>
           <TableHead className="text-right">gesendet</TableHead>
           {/* <TableHead className="w-[50px] text-right"></TableHead> */}
         </TableRow>
@@ -173,12 +173,18 @@ async function SentTrainingRequests({
       <TableBody>
         {requests.map((request) => (
           <TableRow key={request.id}>
-            <TableCell className="truncate font-medium">
-              {request.trainer.name}
+            <TableCell>
+              <div className="max-w-[80px] truncate md:max-w-xs">
+                {request.trainer.name}
+              </div>
             </TableCell>
-            <TableCell>{request.trainer.email}</TableCell>
+            <TableCell>
+              <div className="max-w-[80px] truncate md:max-w-xs">
+                {request.trainer.email}
+              </div>
+            </TableCell>
             <TableCell className="text-right">
-              {formatDistance(request.createdAt, new Date())}
+              vor {formatDistance(request.createdAt, new Date())}
             </TableCell>
             {/* <TableCell className="text-right">
               <DeleteButton requestId={request.id} />

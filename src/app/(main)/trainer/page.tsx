@@ -52,8 +52,8 @@ async function ReceivedTrainingRequests({
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[200px]">Praktikant:in</TableHead>
-          <TableHead className="w-[100px]"></TableHead>
+          <TableHead>Praktikant:in</TableHead>
+          <TableHead></TableHead>
           <TableHead></TableHead>
           <TableHead className="text-right">erhalten</TableHead>
         </TableRow>
@@ -61,10 +61,16 @@ async function ReceivedTrainingRequests({
       <TableBody>
         {requests.map((request) => (
           <TableRow key={request.id}>
-            <TableCell className="truncate font-medium">
-              {request.user.name}
+            <TableCell>
+              <div className="max-w-[80px] truncate md:max-w-xs">
+                {request.user.name}
+              </div>
             </TableCell>
-            <TableCell>{request.user.email}</TableCell>
+            <TableCell>
+              <div className="max-w-[80px] truncate md:max-w-xs">
+                {request.user.email}
+              </div>
+            </TableCell>
             <TableCell>{request.user.phone}</TableCell>
             <TableCell className="text-right">
               vor {formatDistance(request.createdAt, new Date())}
