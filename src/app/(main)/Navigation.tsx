@@ -18,29 +18,33 @@ import { cn } from "@/lib/utils";
 export function Navigation({
   className,
   role,
-}: React.HTMLAttributes<HTMLDivElement> & { role?: string }) {
+  onNavigate,
+}: React.HTMLAttributes<HTMLDivElement> & {
+  role?: string;
+  onNavigate?: () => void;
+}) {
   return (
     <aside className={cn("relative pb-12", className)}>
       <div className="sticky top-0 space-y-4 py-6">
         <div className="px-3">
           <div className="space-y-1">
-            <SidebarLink href="/" exact>
+            <SidebarLink href="/" exact onClick={onNavigate}>
               <LayoutGridIcon className="mr-2 h-4 w-4" />
               Praktika
             </SidebarLink>
             {role !== "trainer" && (
-              <SidebarLink href="/trainings">
+              <SidebarLink href="/trainings" onClick={onNavigate}>
                 <CalendarCheck2Icon className="mr-2 h-4 w-4" />
                 Anmeldungen
               </SidebarLink>
             )}
             {role === "trainer" && (
-              <SidebarLink href="/trainer" exact>
+              <SidebarLink href="/trainer" exact onClick={onNavigate}>
                 <GraduationCapIcon className="mr-2 h-4 w-4" />
                 Praktika Anfragen
               </SidebarLink>
             )}
-            <SidebarLink href="/trainers">
+            <SidebarLink href="/trainers" onClick={onNavigate}>
               <ContactIcon className="mr-2 h-4 w-4" />
               Trainer:innen
             </SidebarLink>
@@ -50,11 +54,11 @@ export function Navigation({
           <div className="px-3">
             <Title>Admin</Title>
             <div className="space-y-1">
-              <SidebarLink href="/admin/users">
+              <SidebarLink href="/admin/users" onClick={onNavigate}>
                 <UsersIcon className="mr-2 h-4 w-4" />
                 Benutzer
               </SidebarLink>
-              <SidebarLink href="/admin/invitations">
+              <SidebarLink href="/admin/invitations" onClick={onNavigate}>
                 <MailsIcon className="mr-2 h-4 w-4" />
                 Einladungen
               </SidebarLink>

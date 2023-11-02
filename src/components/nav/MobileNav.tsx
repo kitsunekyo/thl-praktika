@@ -41,7 +41,10 @@ export function MobileNav({
             <Logo onNavigate={close} />
           </SheetHeader>
           <div className="-ml-6 -mr-6">
-            <Navigation role={role} />
+            <Navigation
+              role={role}
+              onNavigate={() => setMobileMenuOpen(false)}
+            />
           </div>
           <div className="mt-auto">
             <hr className="py-2" />
