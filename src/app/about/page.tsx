@@ -66,13 +66,10 @@ function Hero() {
           />
           <div className="mx-auto text-center lg:w-2/3">
             <h1 className="text-5xl font-bold text-gray-900 dark:text-white md:text-6xl xl:text-7xl">
-              Plane deine Praktika{" "}
-              <span className="text-primary dark:text-white">
-                stressfrei und entspannt.
-              </span>
+              Praktika stressfrei und unkompliziert planen
             </h1>
             <p className="mx-auto mt-8 max-w-[70ch] text-gray-700 dark:text-gray-300">
-              Über 230 Praktika Stunden zwischen 20 Studierenden und 40
+              Mehr als 200 Praktika Stunden zwischen 20 Student:innen und 40
               Praxisanleiter:innen zu koordinieren, kann viel Zeit und Energie
               kosten. Muss es aber nicht!
             </p>
@@ -89,26 +86,29 @@ function Hero() {
             <div className="mt-16 hidden grid-cols-3 justify-between gap-8 border-y border-gray-100 py-8 dark:border-gray-800 sm:grid">
               <div className="text-left">
                 <h6 className="text-lg font-semibold text-gray-700 dark:text-white">
+                  Praktika anbieten
+                </h6>
+                <p className="mt-2 text-gray-500">
+                  Erstelle ein Praktikum und informiere alle interessierten
+                  Student:innen auf einmal.
+                </p>
+              </div>
+              <div className="text-left">
+                <h6 className="text-lg font-semibold text-gray-700 dark:text-white">
                   1-Klick Anmeldung
                 </h6>
                 <p className="mt-2 text-gray-500">
-                  Melde dich mit nur einem Klick für Praktika an.
+                  Schnell und unkompliziert: Ein Klick, und du bist für dein
+                  Wunschpraktikum angemeldet.
                 </p>
               </div>
               <div className="text-left">
                 <h6 className="text-lg font-semibold text-gray-700 dark:text-white">
-                  Praktika Filter
+                  Automatisierte Emails
                 </h6>
                 <p className="mt-2 text-gray-500">
-                  Filtere Praktika nach Fahrtzeit, Plätze, Dauer und mehr.
-                </p>
-              </div>
-              <div className="text-left">
-                <h6 className="text-lg font-semibold text-gray-700 dark:text-white">
-                  Automatische Emails
-                </h6>
-                <p className="mt-2 text-gray-500">
-                  Minimaler Kommunikationsaufwand bei Absagen und Anmeldungen.
+                  Du musst dich um nichts kümmern! Automatische
+                  Benachrichtigungen zu Anmeldungen und Absagen.
                 </p>
               </div>
             </div>
@@ -131,9 +131,10 @@ function TrainerFeatures() {
             <Sparkle />
           </div>
           <p className="text-gray-600 dark:text-gray-300">
-            Erfahre mehr über die Funktionen, die die Koordination und
-            Kommunikation von Praktika Möglichkeiten mit den Studenten
-            vereinfachen.
+            Monatelang auf eine Flut Emails und WhatsApp Nachrichten für
+            Praktikums Anfragen antworten zu müssen ist echt anstrengend. Hier
+            kannst du Praktika mit nur wenigen Klicks erstellen, und alle
+            interessierten Student:innen wissen sofort bescheid.
           </p>
         </div>
         <Image
@@ -150,11 +151,12 @@ function TrainerFeatures() {
             <FormInputIcon className="h-8 w-8" />
             <div className="space-y-2">
               <h5 className="text-xl font-semibold text-gray-700 transition dark:text-white">
-                Einfaches Erstellen
+                Praktika auf Anfrage
               </h5>
               <p className="text-gray-600 dark:text-gray-300">
-                Gib mit nur wenigen Klicks an wann und wo ein Training
-                stattfindet, und wie viele Praktikanten teilnehmen können.
+                Student:innen können dir Anfragen zu Praktika schicken. Sobald
+                du ein Praktikum erstellt hast, werden alle interessierten
+                automatisch per Mail benachrichtigt.
               </p>
             </div>
           </div>
@@ -167,8 +169,9 @@ function TrainerFeatures() {
                 Kein WhatsApp Spam
               </h5>
               <p className="text-gray-600 dark:text-gray-300">
-                Ermögliche es Studenten sich mit nur einem Klick für Praktika
-                anzumelden, ohne jedem einzeln antworten zu müssen.
+                Ermögliche es Studenten:innn sich mit nur einem Klick für
+                Praktika anzumelden, ohne dass du auf jede Nachricht einzeln
+                antworten musst.
               </p>
             </div>
           </div>
@@ -181,8 +184,8 @@ function TrainerFeatures() {
                 Automatische Emails
               </h5>
               <p className="text-gray-600 dark:text-gray-300">
-                Wenn du ein Praktikum absagen musst werden alle Teilnehmer:innen
-                automatisch benachrichtigt.
+                Wenn du ein Praktikum absagen musst, werden alle
+                Teilnehmer:innen automatisch benachrichtigt.
               </p>
             </div>
           </div>
@@ -204,8 +207,9 @@ function UserFeatures() {
             <Sparkle />
           </div>
           <p className="text-gray-600 dark:text-gray-300">
-            So hilft dir die App dabei, Praktika zu finden und zu planen ohne
-            Trainer:innen mit WhatApp Nachrichten zu überfluten.
+            So hilft dir die App dabei, die richtigen Praktika für dich zu
+            finden und zu planen ohne Trainer:innen mit WhatApp Nachrichten zu
+            überfluten.
           </p>
         </div>
         <Image
