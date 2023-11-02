@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 
 export const loginSchema = z.object({
   email: z.string().email({ message: "Ungültige Email" }),
@@ -58,7 +59,6 @@ export function LoginForm({ email }: { email?: string }) {
           },
         )}
       >
-        <GoogleSignInButton />
         <FormField
           control={form.control}
           name="email"
@@ -88,6 +88,12 @@ export function LoginForm({ email }: { email?: string }) {
         <Button type="submit" className="w-full" disabled={loading}>
           Anmelden
         </Button>
+        <div className="flex items-center gap-4">
+          <Separator className="shrink" />
+          <span className="text-sm">oder</span>
+          <Separator className="shrink" />
+        </div>
+        <GoogleSignInButton />
       </form>
     </Form>
   );
