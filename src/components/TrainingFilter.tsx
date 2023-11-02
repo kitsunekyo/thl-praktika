@@ -59,12 +59,17 @@ const filterOptions = [
   },
 ] as const;
 
+const viewportWidth = Math.max(
+  document.documentElement.clientWidth || 0,
+  window.innerWidth || 0,
+);
+
 export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
   const { replace } = useRouter();
   const [pending, startTransition] = useTransition();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(viewportWidth >= 768 ? true : false);
 
   const [date, setDate] = useState<DateRange | undefined>(() => {
     const fromParam = searchParams.get("from");
@@ -144,7 +149,7 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
         </CollapsibleTrigger>
       </div>
       <CollapsibleContent>
-        <section className="space-y-6 pt-4 text-sm" aria-label="filter">
+        <section className="space-y-6 pb-6 pt-4 text-sm" aria-label="filter">
           <div>
             <div className="mb-2 flex items-center">
               <CalendarIcon className="mr-2 h-4 w-5" />

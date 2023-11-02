@@ -63,12 +63,12 @@ export default async function Home({
 
   return (
     <section className="gap-8 md:flex md:py-6">
-      <aside className="relative mb-8 shrink-0 basis-80">
-        <div className="sticky top-0 py-6">
+      <aside className="relative shrink-0 basis-80">
+        <div className="sticky top-0 py-4 md:py-6">
           <TrainingFilter hasAddress={userHasAddress} />
         </div>
       </aside>
-      <main className="md:w-full md:max-w-[600px] md:py-6">
+      <main className="mb-6 md:w-full md:max-w-[600px] md:py-6">
         {isTrainer && (
           <div className="mb-8 ">
             <CreateTrainingButton profile={profile} />
