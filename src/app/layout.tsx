@@ -1,12 +1,15 @@
 /* eslint-disable import/no-duplicates */
 import "./globals.css";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { setDefaultOptions } from "date-fns";
 import { deAT } from "date-fns/locale";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { extractRouterConfig } from "uploadthing/server";
 
 import { Toaster } from "@/components/ui/toaster";
 
+import { ourFileRouter } from "./api/uploadthing/core";
 import { Providers } from "./Providers";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -34,10 +37,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <Providers>
           {children}
           <Toaster />
-          {/* <DateFnsLocale /> */}
         </Providers>
       </body>
     </html>

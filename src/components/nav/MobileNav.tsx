@@ -1,8 +1,8 @@
 "use client";
 
+import { User } from "@prisma/client";
 import { LogOutIcon, MenuIcon } from "lucide-react";
 import Link from "next/link";
-import { User } from "next-auth";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 
@@ -17,7 +17,9 @@ import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../ui/sheet";
 export function MobileNav({
   user,
   className,
-}: React.HTMLAttributes<HTMLDivElement> & { user?: User }) {
+}: React.HTMLAttributes<HTMLDivElement> & {
+  user?: Pick<User, "name" | "image" | "role" | "id" | "email">;
+}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const role = user?.role;
 

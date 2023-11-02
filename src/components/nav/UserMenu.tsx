@@ -1,8 +1,8 @@
 "use client";
 
+import { User } from "@prisma/client";
 import { ChevronDownIcon, LogOutIcon } from "lucide-react";
 import Link from "next/link";
-import type { User } from "next-auth";
 import { signOut } from "next-auth/react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -22,7 +22,7 @@ export const USER_NAV_LINKS = [
   },
 ];
 
-export function UserMenu({ user }: { user: User }) {
+export function UserMenu({ user }: { user: Pick<User, "name" | "image"> }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="rounded focus:outline-none">

@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
-import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -82,6 +81,7 @@ export function ChangePasswordForm() {
                 <div className="flex items-center gap-2">
                   <Input
                     type={showPassword ? "text" : "password"}
+                    autoComplete="new-password"
                     required
                     {...field}
                   />

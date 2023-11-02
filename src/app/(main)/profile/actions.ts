@@ -11,10 +11,10 @@ export async function getProfile() {
   const session = await getServerSession();
 
   if (!session?.user) {
-    return null;
+    return;
   }
 
-  return prisma.user.findUnique({
+  return prisma.user.findFirstOrThrow({
     where: {
       id: session.user.id,
     },
@@ -31,6 +31,25 @@ export async function getProfile() {
       phone: true,
     },
   });
+}
+
+export async function updateProfilePicture(imageUrl: string) {
+  const session = await getServerSession();
+
+  if (!session?.user) {
+    return { error: "not authorized" };
+  }
+
+  await prisma.user.update({
+    where: {
+      id: session.user.id,
+    },
+    data: {
+      image: imageUrl,
+    },
+  });
+
+  revalidatePath("/profile");
 }
 
 export async function updateProfile(

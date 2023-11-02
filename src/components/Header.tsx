@@ -1,12 +1,16 @@
+import { User } from "@prisma/client";
 import Link from "next/link";
-import { Session } from "next-auth";
 
 import { Logo } from "./Logo";
 import { MobileNav } from "./nav/MobileNav";
 import { UserMenu } from "./nav/UserMenu";
 import { Button } from "./ui/button";
 
-export function Header({ user }: { user?: Session["user"] }) {
+export function Header({
+  user,
+}: {
+  user?: Pick<User, "name" | "image" | "role" | "id" | "email">;
+}) {
   return (
     <header className="flex min-h-[62px] flex-wrap items-center px-4 py-2">
       <div className="mr-12">
