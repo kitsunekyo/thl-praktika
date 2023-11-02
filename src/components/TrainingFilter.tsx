@@ -62,7 +62,7 @@ const filterOptions = [
 ] as const;
 
 const viewportWidth = Math.max(
-  document.documentElement.clientWidth || 0,
+  document?.documentElement.clientWidth || 0,
   window.innerWidth || 0,
 );
 
