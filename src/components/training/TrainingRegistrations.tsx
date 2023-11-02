@@ -21,7 +21,7 @@ export function TrainingRegistrations({
       ))}
       {freeSpots > 0 ? (
         <span className="ml-2 text-xs">
-          {count}/{max} angemeldet
+          {count}/{max} Anmeldungen
         </span>
       ) : (
         <span className="ml-2 text-xs">voll</span>
