@@ -18,7 +18,6 @@ import { formatAddress } from "@/lib/user";
 import { getInitials } from "@/lib/utils";
 
 import { getTrainers } from "./actions";
-import { DeleteButton } from "./DeleteTrainingRequestButton";
 import { getTrainingRequests } from "./requests/actions";
 import { RequestTrainingButton } from "./RequestTrainingButton";
 
@@ -47,11 +46,23 @@ export default async function Page() {
       >
         Trainer:innen
       </PageTitle>
+
       <Separator className="my-4" />
-      <TrainerList trainers={trainers} requests={myRequests} />
+
+      <TrainerList
+        trainers={trainers}
+        requests={myRequests}
+        role={session.user.role}
+      />
+
       <div className="my-8" />
-      <h2 className="mb-4 font-medium">Gesendete Anfragen</h2>
-      <SentTrainingRequests requests={myRequests} />
+
+      {session.user.role === "user" && (
+        <>
+          <h2 className="mb-4 font-medium">Gesendete Anfragen</h2>
+          <SentTrainingRequests requests={myRequests} />
+        </>
+      )}
     </div>
   );
 }
@@ -59,9 +70,11 @@ export default async function Page() {
 async function TrainerList({
   trainers,
   requests,
+  role = "user",
 }: {
   trainers: Awaited<ReturnType<typeof getTrainers>>;
   requests: Awaited<ReturnType<typeof getTrainingRequests>>;
+  role?: string;
 }) {
   if (trainers.length === 0) {
     return (
@@ -123,10 +136,12 @@ async function TrainerList({
                 </dl>
               </div>
             </div>
-            <RequestTrainingButton
-              trainerId={trainer.id}
-              disabled={hasRecentlyRequested}
-            />
+            {role === "user" && (
+              <RequestTrainingButton
+                trainerId={trainer.id}
+                disabled={hasRecentlyRequested}
+              />
+            )}
           </Card>
         );
       })}
