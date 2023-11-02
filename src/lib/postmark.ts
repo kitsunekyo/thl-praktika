@@ -28,7 +28,7 @@ export async function sendInvitationMail({
     await client.sendEmailWithTemplate(payload);
     return;
   }
-  console.log("mail sent", payload);
+  console.log("mock: mail sent", payload);
 }
 
 export async function sendTrainingRegistrationNotificationMail({
@@ -52,7 +52,7 @@ export async function sendTrainingRegistrationNotificationMail({
     await client.sendEmailWithTemplate(payload);
     return;
   }
-  console.log("mail sent", payload);
+  console.log("mock: mail sent", payload);
 }
 
 export async function sendTrainingRequestReceivedMail({
@@ -76,7 +76,7 @@ export async function sendTrainingRequestReceivedMail({
     await client.sendEmailWithTemplate(payload);
     return;
   }
-  console.log("mail sent", payload);
+  console.log("mock: mail sent", payload);
 }
 
 export async function sendForgotPasswordMail({
@@ -102,7 +102,7 @@ export async function sendForgotPasswordMail({
     await client.sendEmailWithTemplate(payload);
     return;
   }
-  console.log("mail sent", payload);
+  console.log("mock: mail sent", payload);
 }
 
 export async function sendTrainingCancelledMail({
@@ -131,5 +131,5 @@ export async function sendTrainingCancelledMail({
     return;
   }
 
-  console.log("mail sent", payload);
+  console.log("mock: mail sent", payload);
 }

@@ -47,7 +47,7 @@ export async function inviteUser(
       error: "could not create invitation",
     };
   }
-
+  revalidatePath("/admin/invitations");
   sendInvitationMail({ to: email, name, role });
 }
 
