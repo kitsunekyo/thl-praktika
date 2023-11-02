@@ -30,7 +30,7 @@ import { inviteUser } from "../actions";
 export const userSchema = z.object({
   email: z.string().email(),
   name: z.string().optional(),
-  role: z.string(),
+  role: z.union([z.literal("user"), z.literal("trainer"), z.literal("admin")]),
 });
 
 export function InviteUserForm() {
