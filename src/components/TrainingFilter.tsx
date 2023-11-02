@@ -3,6 +3,8 @@
 import { endOfDay, format, startOfDay } from "date-fns";
 import {
   CalendarIcon,
+  ChevronsDownUpIcon,
+  ChevronsUpDownIcon,
   ClockIcon,
   MapIcon,
   SlidersHorizontalIcon,
@@ -132,17 +134,13 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
         Filter
         <CollapsibleTrigger asChild>
           {isOpen ? (
-            <Button variant="ghost" size="sm" className="ml-2 w-9 p-0">
-              <SlidersHorizontalIcon className="h-4 w-4" />
+            <Button variant="ghost" size="sm" className="ml-auto w-9 p-0">
+              <ChevronsDownUpIcon className="h-4 w-4" />
               <span className="sr-only">Toggle</span>
             </Button>
           ) : (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="ml-2 w-9 bg-gray-100 p-0 "
-            >
-              <SlidersHorizontalIcon className="h-4 w-4" />
+            <Button variant="ghost" size="sm" className="ml-auto w-9 p-0">
+              <ChevronsUpDownIcon className="h-4 w-4" />
               <span className="sr-only">Toggle</span>
             </Button>
           )}
