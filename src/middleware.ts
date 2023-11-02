@@ -1,9 +1,17 @@
 import { NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware";
 
-const publicPaths = ["/legal", "/about", "/img"];
+const publicPaths = [
+  "/legal",
+  "/about",
+  "/img",
+  "/opengraph-image.jpg",
+  "/favicon.ico",
+  "/twitter-image.jpg",
+  "/robots.txt",
+];
 
-const publicOnlyPaths = [
+const authPaths = [
   "/login",
   "/signup",
   "/auth-error",
@@ -18,7 +26,7 @@ export default withAuth(
       return NextResponse.next();
     }
 
-    if (publicOnlyPaths.some((p) => path.startsWith(p))) {
+    if (authPaths.some((p) => path.startsWith(p))) {
       if (!!req.nextauth.token) {
         return NextResponse.redirect(new URL("/", req.url));
       }
