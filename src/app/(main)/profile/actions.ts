@@ -14,7 +14,7 @@ export async function getProfile() {
     return;
   }
 
-  return prisma.user.findFirstOrThrow({
+  return prisma.user.findFirst({
     where: {
       id: session.user.id,
     },
