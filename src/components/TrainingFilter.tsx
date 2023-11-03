@@ -30,16 +30,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 const filterOptions = [
   {
-    key: "traveltime",
-    icon: MapIcon,
-    label: "Fahrtzeit",
-    options: [
-      { key: "30", label: "bis 30min" },
-      { key: "60", label: "bis 1h" },
-      { key: "120", label: "bis 2h" },
-    ],
-  },
-  {
     key: "free",
     icon: UserIcon,
     label: "Freie Plätze",
@@ -56,6 +46,16 @@ const filterOptions = [
     options: [
       { key: "2", label: "ab 2h" },
       { key: "4", label: "ab 4h" },
+    ],
+  },
+  {
+    key: "traveltime",
+    icon: MapIcon,
+    label: "Fahrtzeit",
+    options: [
+      { key: "30", label: "bis 30min" },
+      { key: "60", label: "bis 1h" },
+      { key: "120", label: "bis 2h" },
     ],
   },
 ] as const;
