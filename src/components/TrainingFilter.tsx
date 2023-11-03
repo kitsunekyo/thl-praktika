@@ -146,7 +146,7 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
           <div>
             <div className="mb-2 flex items-center">
               <CalendarIcon className="mr-2 h-4 w-5" />
-              <p className="font-medium">Zeitraum</p>
+              <p className="font-medium">Zeitraum (von / bis)</p>
             </div>
             <Popover>
               <div className="flex items-center gap-2">
