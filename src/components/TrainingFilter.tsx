@@ -7,7 +7,6 @@ import {
   ChevronsUpDownIcon,
   ClockIcon,
   MapIcon,
-  SlidersHorizontalIcon,
   UserIcon,
   XIcon,
 } from "lucide-react";
@@ -61,11 +60,7 @@ const filterOptions = [
   },
 ] as const;
 
-const viewportWidth = Math.max(
-  document?.documentElement.clientWidth || 0,
-  window.innerWidth || 0,
-);
-
+const viewportWidth = window.innerWidth || 0;
 export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
   const { replace } = useRouter();
   const [pending, startTransition] = useTransition();
