@@ -52,12 +52,12 @@ async function UserList() {
         {users.map((user) => (
           <TableRow key={user.id}>
             <TableCell className="font-medium">
-              <div className="md:max-w-auto max-w-[80px] truncate">
+              <div className="max-w-[80px] truncate md:max-w-none">
                 {user.email}
               </div>
             </TableCell>
             <TableCell>
-              <div className="md:max-w-auto max-w-[60px] truncate">
+              <div className="max-w-[60px] truncate md:max-w-none">
                 {user.name || "-"}
               </div>
             </TableCell>
