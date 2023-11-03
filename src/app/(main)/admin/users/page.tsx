@@ -51,11 +51,19 @@ async function UserList() {
       <TableBody>
         {users.map((user) => (
           <TableRow key={user.id}>
-            <TableCell className="truncate font-medium">{user.email}</TableCell>
+            <TableCell className="font-medium">
+              <div className="md:max-w-auto max-w-[80px] truncate">
+                {user.email}
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="md:max-w-auto max-w-[60px] truncate">
+                {user.name || "-"}
+              </div>
+            </TableCell>
             <TableCell>
               <Badge variant="outline">{user.role}</Badge>
             </TableCell>
-            <TableCell>{user.name || "-"}</TableCell>
             <TableCell className="text-right">
               <UserButtons user={user} />
             </TableCell>

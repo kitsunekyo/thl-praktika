@@ -53,8 +53,16 @@ async function InvitationList() {
       <TableBody>
         {invitations.map((invitation) => (
           <TableRow key={invitation.id}>
-            <TableCell className="font-medium">{invitation.email}</TableCell>
-            <TableCell>{invitation.name}</TableCell>
+            <TableCell className="font-medium">
+              <div className="max-w-[80px] truncate md:max-w-none">
+                {invitation.email}
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="max-w-[60px] truncate md:max-w-none">
+                {invitation.name}
+              </div>
+            </TableCell>
             <TableCell>
               <Badge variant="outline">{invitation.role}</Badge>
             </TableCell>
