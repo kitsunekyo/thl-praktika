@@ -66,12 +66,12 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account }) {
-      const userExists = await prisma.user.findFirst({
+      const existingUser = await prisma.user.findFirst({
         where: {
           id: user.id,
         },
       });
-      if (userExists) {
+      if (existingUser) {
         return true;
       }
       const invitation = await prisma.invitation.findFirst({
