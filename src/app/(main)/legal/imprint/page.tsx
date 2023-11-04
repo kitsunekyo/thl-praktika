@@ -3,7 +3,9 @@ import { PageTitle } from "@/components/PageTitle";
 export default function Page() {
   return (
     <div className="py-6">
-      <PageTitle>Impressum</PageTitle>
+      <div className="mb-4">
+        <PageTitle>Impressum</PageTitle>
+      </div>
       <article className="prose">
         <h2>
           Informationen und Offenlegung gemäß &sect;5 (1) ECG, &sect; 25
