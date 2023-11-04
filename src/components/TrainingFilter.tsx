@@ -60,14 +60,12 @@ const filterOptions = [
   },
 ] as const;
 
-const viewportWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-
 export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
   const { replace } = useRouter();
   const [pending, startTransition] = useTransition();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(viewportWidth >= 768 ? true : false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const [date, setDate] = useState<DateRange | undefined>(() => {
     const fromParam = searchParams.get("from");
