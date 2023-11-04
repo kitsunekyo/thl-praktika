@@ -72,6 +72,14 @@ export const authOptions: AuthOptions = {
         },
       });
       if (existingUser) {
+        await prisma.user.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            lastLogin: new Date(),
+          },
+        });
         return true;
       }
       const invitation = await prisma.invitation.findFirst({

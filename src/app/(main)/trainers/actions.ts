@@ -15,6 +15,7 @@ export async function getTrainers() {
       city: true,
       zipCode: true,
       phone: true,
+      lastLogin: true,
     },
   });
 }

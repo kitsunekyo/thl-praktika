@@ -1,3 +1,4 @@
+import { formatDistance } from "date-fns";
 import Link from "next/link";
 
 import { PageTitle } from "@/components/PageTitle";
@@ -45,6 +46,9 @@ async function UserList() {
           <TableHead className="w-[100px]">Email</TableHead>
           <TableHead>Rolle</TableHead>
           <TableHead>Name</TableHead>
+          <TableHead className="hidden text-right md:table-cell">
+            zuletzt online
+          </TableHead>
           <TableHead className="text-right"></TableHead>
         </TableRow>
       </TableHeader>
@@ -63,6 +67,13 @@ async function UserList() {
             </TableCell>
             <TableCell>
               <Badge variant="outline">{user.role}</Badge>
+            </TableCell>
+            <TableCell className="hidden text-right md:table-cell">
+              <p>
+                {user.lastLogin
+                  ? `vor ${formatDistance(user.lastLogin, new Date())}`
+                  : "-"}
+              </p>
             </TableCell>
             <TableCell className="text-right">
               <UserButtons user={user} />

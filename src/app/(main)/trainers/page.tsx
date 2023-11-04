@@ -129,6 +129,14 @@ async function TrainerList({
                       {address}
                     </Link>
                   )}
+                  <dd className="mt-2 text-xs">
+                    {trainer.lastLogin
+                      ? `zuletzt angemeldet vor ${formatDistance(
+                          trainer.lastLogin,
+                          new Date(),
+                        )}`
+                      : "hat sich noch nicht angemeldet"}
+                  </dd>
                 </dl>
               </div>
             </div>
