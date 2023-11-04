@@ -35,7 +35,11 @@ export const profileSchema = z.object({
   zipCode: z.string().optional(),
 });
 
-export function ProfileForm({ user }: { user: Omit<User, "password"> }) {
+export function ProfileForm({
+  user,
+}: {
+  user: Pick<User, "name" | "phone" | "address" | "city" | "zipCode" | "email">;
+}) {
   const [loading, startTransition] = useTransition();
   const { toast } = useToast();
   const form = useForm<z.infer<typeof profileSchema>>({
