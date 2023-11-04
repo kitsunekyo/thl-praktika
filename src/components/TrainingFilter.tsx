@@ -60,7 +60,8 @@ const filterOptions = [
   },
 ] as const;
 
-const viewportWidth = window.innerWidth || 0;
+const viewportWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+
 export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
   const { replace } = useRouter();
   const [pending, startTransition] = useTransition();
