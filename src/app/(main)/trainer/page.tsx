@@ -135,6 +135,7 @@ function TrainingList({
               actions={
                 <TrainingActions
                   id={t.id}
+                  training={t}
                   hasRegistrations={hasRegistrations}
                 />
               }

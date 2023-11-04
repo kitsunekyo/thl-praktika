@@ -93,6 +93,7 @@ export default async function Home({
                       actions={
                         isOwner && (
                           <TrainingActions
+                            training={t}
                             id={t.id}
                             hasRegistrations={hasRegistrations}
                           />

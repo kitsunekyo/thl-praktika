@@ -1,4 +1,8 @@
+import { Training } from "@prisma/client";
 import { ServerClient } from "postmark";
+
+import { formatTrainingDate } from "./date";
+import { formatAddress } from "./user";
 
 const client = new ServerClient(process.env.POSTMARK_API_TOKEN || "");
 
@@ -123,6 +127,43 @@ export async function sendTrainingCancelledMail({
       product_url: process.env.NEXTAUTH_URL,
       trainer,
       date,
+      action_url: process.env.NEXTAUTH_URL,
+    },
+  };
+  if (process.env.NODE_ENV === "production") {
+    await client.sendEmailWithTemplate(payload);
+    return;
+  }
+
+  console.log("mock: mail sent", payload);
+}
+
+export async function sendTrainingUpdatedMail({
+  to,
+  userName,
+  trainerName,
+  training,
+}: {
+  to: string;
+  userName: string;
+  trainerName: string;
+  training: Pick<
+    Training,
+    "description" | "start" | "end" | "address" | "city" | "zipCode"
+  >;
+}) {
+  const payload = {
+    From: "hi@mostviertel.tech",
+    To: to,
+    TemplateAlias: "training-updated",
+    MessageStream: "outbound",
+    TemplateModel: {
+      user_name: userName,
+      trainer_name: trainerName,
+      date: formatTrainingDate(training.start, training.end),
+      description: training.description || "",
+      address: formatAddress(training),
+      product_url: process.env.NEXTAUTH_URL,
       action_url: process.env.NEXTAUTH_URL,
     },
   };

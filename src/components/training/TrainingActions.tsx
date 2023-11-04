@@ -1,7 +1,8 @@
 "use client";
 
-import { BanIcon } from "lucide-react";
-import { useTransition } from "react";
+import { Training } from "@prisma/client";
+import { BanIcon, CalendarPlusIcon, PenIcon } from "lucide-react";
+import { useState, useTransition } from "react";
 
 import { deleteTraining } from "@/app/(main)/trainer/actions";
 import {
@@ -17,17 +18,46 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 
+import { EditTrainingForm } from "./EditTrainingForm";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+
 export function TrainingActions({
+  training,
   id,
   hasRegistrations = false,
 }: {
   id: string;
+  training: Training;
   hasRegistrations?: boolean;
 }) {
   const [loading, startTransition] = useTransition();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
     <div className="flex w-full items-center gap-2">
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogTrigger asChild>
+          <Button size="sm" variant="outline">
+            <PenIcon className="mr-2 h-4 w-4" />
+            Bearbeiten
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="md:max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="mb-4">Praktikum bearbeiten</DialogTitle>
+          </DialogHeader>
+          <EditTrainingForm
+            training={training}
+            onSubmit={() => setIsDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
       {hasRegistrations ? (
         <AlertDialog>
           <AlertDialogTrigger asChild>

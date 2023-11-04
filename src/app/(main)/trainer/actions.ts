@@ -8,6 +8,7 @@ import { getServerSession } from "@/lib/next-auth";
 import {
   sendTrainingCancelledMail,
   sendTrainingRegistrationNotificationMail,
+  sendTrainingUpdatedMail,
 } from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
 
@@ -77,8 +78,8 @@ export async function deleteTraining(id: string) {
   revalidatePath("/trainers");
 }
 
-const createTrainingSchema = z.object({
-  description: z.string().optional(),
+const trainingSchema = z.object({
+  description: z.string(),
   start: z.date(),
   end: z.date(),
   maxInterns: z.number(),
@@ -87,7 +88,7 @@ const createTrainingSchema = z.object({
   zipCode: z.string(),
 });
 
-type CreateTraining = z.infer<typeof createTrainingSchema>;
+type CreateTraining = z.infer<typeof trainingSchema>;
 
 export async function createTraining(payload: CreateTraining) {
   const session = await getServerSession();
@@ -96,7 +97,7 @@ export async function createTraining(payload: CreateTraining) {
       error: "not authorized",
     };
   }
-  const training = createTrainingSchema.parse(payload);
+  const training = trainingSchema.parse(payload);
 
   await prisma.training.create({
     data: {
@@ -130,4 +131,49 @@ export async function createTraining(payload: CreateTraining) {
   });
 
   revalidatePath("/trainers/requests");
+}
+
+export async function updateTraining(
+  id: string,
+  payload: Omit<z.infer<typeof trainingSchema>, "maxInterns">,
+) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    return {
+      error: "not authorized",
+    };
+  }
+  const data = trainingSchema.parse(payload);
+
+  await prisma.training.update({
+    where: {
+      id,
+    },
+    data,
+  });
+
+  const registrations = await prisma.registration.findMany({
+    where: {
+      trainingId: id,
+    },
+    select: {
+      user: true,
+    },
+  });
+
+  const registeredUsers = registrations.map((r) => ({
+    email: r.user.email,
+    name: r.user.name,
+  }));
+
+  registeredUsers.forEach((user) => {
+    sendTrainingUpdatedMail({
+      to: user.email,
+      userName: user.name || "",
+      trainerName: session.user.name || "Ein:e Trainer:in",
+      training: data,
+    });
+  });
+
+  revalidatePath("/trainings");
 }
