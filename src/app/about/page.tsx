@@ -136,10 +136,10 @@ function TrainerFeatures() {
             <Sparkle />
           </div>
           <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">
-            Monatelang auf eine zig Emails und WhatsApp Nachrichten für
-            Praktikums Anfragen antworten zu müssen ist echt anstrengend. Hier
-            kannst du Praktika mit nur wenigen Klicks erstellen, und alle
-            interessierten Student:innen wissen sofort bescheid.
+            Für Praktikums Anfragen auf eine zig Emails und WhatsApp Nachrichten
+            antworten zu müssen ist echt anstrengend. Hier kannst du Praktika
+            mit nur wenigen Klicks erstellen, und alle interessierten
+            Student:innen wissen sofort bescheid.
           </p>
         </div>
         <Image
@@ -173,7 +173,7 @@ function TrainerFeatures() {
                 Einfache Kommunikation
               </h5>
               <p className="text-gray-600">
-                Studenten:innn können sich mit nur einem Klick für Praktika
+                Student:innen können sich mit nur einem Klick für Praktika
                 anzumelden, ohne dass du auf jede Nachricht einzeln antworten
                 musst.
               </p>
