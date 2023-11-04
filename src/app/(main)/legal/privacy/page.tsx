@@ -174,6 +174,9 @@ export default function Page() {
           <li>Postanschriften</li>
           <li>Benutzernamen</li>
           <li>Passwörter</li>
+          <li>Profilbilder</li>
+          <li>Adressen von Benutzern</li>
+          <li>Adressen von Praktika</li>
         </ul>
         <p>
           <strong>Sensible Informationen:</strong> Wir verarbeiten keine
