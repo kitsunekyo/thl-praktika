@@ -50,10 +50,10 @@ function Hero() {
     <div className="relative">
       <div
         aria-hidden="true"
-        className="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20"
+        className="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40"
       >
-        <div className="h-56 bg-gradient-to-br from-yellow-200/40 to-yellow-400 blur-[106px] dark:from-blue-700"></div>
-        <div className="h-32 bg-gradient-to-r from-red-400 to-orange-300 blur-[106px] dark:to-indigo-600"></div>
+        <div className="h-56 bg-gradient-to-br from-yellow-200/40 to-yellow-400 blur-[106px]"></div>
+        <div className="h-32 bg-gradient-to-r from-red-400 to-orange-300 blur-[106px]"></div>
       </div>
       <div className="container">
         <div className="relative ml-auto pt-8">
@@ -65,10 +65,10 @@ function Hero() {
             alt="Hund mit Uhr"
           />
           <div className="mx-auto text-center lg:w-2/3">
-            <h1 className="text-5xl font-bold text-gray-900 dark:text-white md:text-6xl xl:text-7xl">
+            <h1 className="text-5xl font-bold text-gray-900 md:text-6xl xl:text-7xl">
               Praktika stressfrei und unkompliziert planen
             </h1>
-            <p className="mx-auto mt-8 max-w-[70ch] text-gray-700 dark:text-gray-300">
+            <p className="mx-auto mt-8 max-w-[70ch] text-gray-700">
               Mehr als 200 Praktika Stunden zwischen 20 Student:innen und 40
               Praxisanleiter:innen zu koordinieren, kann viel Zeit und Energie
               kosten. Muss es aber nicht!
@@ -83,9 +83,9 @@ function Hero() {
                 </span>
               </Link>
             </div>
-            <div className="mt-16 hidden grid-cols-3 justify-between gap-8 border-y border-gray-100 py-8 dark:border-gray-800 sm:grid">
+            <div className="mt-16 hidden grid-cols-3 justify-between gap-8 border-y border-gray-100 py-8 sm:grid">
               <div className="text-left">
-                <h6 className="text-lg font-semibold text-gray-700 dark:text-white">
+                <h6 className="text-lg font-semibold text-gray-700">
                   Praktika anbieten
                 </h6>
                 <p className="mt-2 text-gray-500">
@@ -94,7 +94,7 @@ function Hero() {
                 </p>
               </div>
               <div className="text-left">
-                <h6 className="text-lg font-semibold text-gray-700 dark:text-white">
+                <h6 className="text-lg font-semibold text-gray-700">
                   1-Klick Anmeldung
                 </h6>
                 <p className="mt-2 text-gray-500">
@@ -103,7 +103,7 @@ function Hero() {
                 </p>
               </div>
               <div className="text-left">
-                <h6 className="text-lg font-semibold text-gray-700 dark:text-white">
+                <h6 className="text-lg font-semibold text-gray-700">
                   Automatisierte Emails
                 </h6>
                 <p className="mt-2 text-gray-500">
@@ -122,73 +122,123 @@ function Hero() {
 function TrainerFeatures() {
   return (
     <div className="container">
-      <div className="items-end md:flex">
+      <div className="flex flex-col items-end gap-16 md:flex-row">
+        <Image
+          className="max-w-[300px] md:hidden"
+          src="/img/dog-mirror.svg"
+          width={697}
+          height={568}
+          alt="Hund vor einem Spiegel"
+        />
         <div className="md:w-2/3 lg:w-1/2">
           <div className="flex">
-            <h2 className="mb-8 text-2xl font-bold text-gray-700 dark:text-white md:text-4xl">
-              Für dich als Trainer:in
-            </h2>
+            <h2 className="mb-8 text-4xl font-bold">Für dich als Trainer:in</h2>
             <Sparkle />
           </div>
-          <p className="text-gray-600 dark:text-gray-300">
-            Monatelang auf eine Flut Emails und WhatsApp Nachrichten für
+          <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">
+            Monatelang auf eine zig Emails und WhatsApp Nachrichten für
             Praktikums Anfragen antworten zu müssen ist echt anstrengend. Hier
             kannst du Praktika mit nur wenigen Klicks erstellen, und alle
             interessierten Student:innen wissen sofort bescheid.
           </p>
         </div>
         <Image
-          className="max-w-[300px]"
+          className="hidden max-w-[300px] md:block"
           src="/img/dog-mirror.svg"
           width={697}
           height={568}
           alt="Hund vor einem Spiegel"
         />
       </div>
-      <div className="mt-16 grid divide-x divide-y divide-gray-100 overflow-hidden rounded-3xl border border-gray-100 text-gray-600 dark:divide-gray-700 dark:border-gray-700 sm:grid-cols-2 lg:grid-cols-3 lg:divide-y-0">
-        <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10 dark:bg-gray-800">
+      <div className="mt-16 grid divide-x divide-y divide-gray-100 overflow-hidden rounded-3xl border border-gray-100 text-gray-600 sm:grid-cols-2 lg:grid-cols-3 lg:divide-y-0">
+        <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
           <div className="relative space-y-4 p-8 py-12">
             <FormInputIcon className="h-8 w-8" />
             <div className="space-y-2">
-              <h5 className="text-xl font-semibold text-gray-700 transition dark:text-white">
+              <h5 className="text-xl font-semibold text-gray-700 transition">
                 Praktika auf Anfrage
               </h5>
-              <p className="text-gray-600 dark:text-gray-300">
-                Student:innen können dir Anfragen zu Praktika schicken. Sobald
-                du ein Praktikum erstellt hast, werden alle interessierten
-                automatisch per Mail benachrichtigt.
+              <p className="text-gray-600">
+                Du erhälst Praktika Anfragen per Mail. In der Übersicht siehst
+                du wer dir wann eine Anfrage geschickt hat.
               </p>
             </div>
           </div>
         </div>
-        <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10 dark:bg-gray-800">
+        <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
           <div className="relative space-y-4 p-8 py-12">
             <MessageCircleIcon className="h-8 w-8" />
             <div className="space-y-2">
-              <h5 className="text-xl font-semibold text-gray-700 transition dark:text-white">
-                Kein WhatsApp Spam
+              <h5 className="text-xl font-semibold text-gray-700 transition">
+                Einfache Kommunikation
               </h5>
-              <p className="text-gray-600 dark:text-gray-300">
-                Ermögliche es Studenten:innn sich mit nur einem Klick für
-                Praktika anzumelden, ohne dass du auf jede Nachricht einzeln
-                antworten musst.
+              <p className="text-gray-600">
+                Studenten:innn können sich mit nur einem Klick für Praktika
+                anzumelden, ohne dass du auf jede Nachricht einzeln antworten
+                musst.
               </p>
             </div>
           </div>
         </div>
-        <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10 dark:bg-gray-800">
+        <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
           <div className="relative space-y-4 p-8 py-12">
             <MailsIcon className="h-8 w-8" />
             <div className="space-y-2">
-              <h5 className="text-xl font-semibold text-gray-700 transition dark:text-white">
+              <h5 className="text-xl font-semibold text-gray-700 transition">
                 Automatische Emails
               </h5>
-              <p className="text-gray-600 dark:text-gray-300">
-                Wenn du ein Praktikum absagen musst, werden alle
-                Teilnehmer:innen automatisch benachrichtigt.
+              <p className="text-gray-600">
+                Wenn du ein Praktikum erstellst oder absagen musst, werden alle
+                automatisch benachrichtigt.
               </p>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="my-32 grid items-center gap-16 md:grid-cols-6">
+        <div className="md:col-span-2">
+          <h3 className="mb-6 text-2xl font-semibold leading-snug md:text-3xl">
+            Behalte die Übersicht über Praktika Anfragen
+          </h3>
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            Du siehst alle unbeantworteten Anfragen auf einen Blick. Sobald du
+            ein Praktikum erstellst, werden alle, die eine Anfrage geschickt
+            haben per Email benachrichtigt.
+          </p>
+        </div>
+        <div className="relative aspect-video w-full max-w-4xl md:col-span-4">
+          <Image
+            src="/img/requests.png"
+            alt="Praktika Anfragen"
+            className="overflow-hidden rounded-2xl object-cover ring-1 ring-slate-900/10"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 1282px"
+          />
+        </div>
+      </div>
+
+      <div className="my-32 grid items-center gap-16 md:grid-cols-6">
+        <div className="md:order-last md:col-span-2">
+          <h3 className="mb-6 text-2xl font-semibold leading-snug md:text-3xl">
+            Erstelle Praktika für Student:innen
+          </h3>
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            Trage alle wichtigen Details zu deinem angebotenen Praktikum ein.
+            Wann und wo es stattfindet, und wieviele Praktikant:innen teilnehmen
+            können.
+          </p>
+        </div>
+        <div className="relative aspect-video w-full max-w-4xl md:col-span-4">
+          <Image
+            src="/img/create-training.png"
+            alt="Praktikum erstellen Dialog"
+            className="overflow-hidden rounded-2xl object-cover ring-1 ring-slate-900/10"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 1282px"
+          />
         </div>
       </div>
     </div>
@@ -198,15 +248,20 @@ function TrainerFeatures() {
 function UserFeatures() {
   return (
     <div className="container">
-      <div className="items-end md:flex">
+      <div className="flex flex-col items-end gap-16 md:flex-row">
+        <Image
+          src="/img/dog-bucket.svg"
+          className="max-w-[220px] md:hidden"
+          width={368}
+          height={420}
+          alt="Hund mit Eimer am Kopf"
+        />
         <div className="md:w-2/3 lg:w-1/2">
           <div className="flex">
-            <h2 className="mb-8 text-2xl font-bold text-gray-700 dark:text-white md:text-4xl">
-              Für dich als Student:in
-            </h2>
+            <h2 className="mb-8 text-4xl font-bold">Für dich als Student:in</h2>
             <Sparkle />
           </div>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">
             So hilft dir die App dabei, die richtigen Praktika für dich zu
             finden und zu planen ohne Trainer:innen mit WhatApp Nachrichten zu
             überfluten.
@@ -214,54 +269,121 @@ function UserFeatures() {
         </div>
         <Image
           src="/img/dog-bucket.svg"
-          className="max-w-[220px]"
+          className="hidden max-w-[220px] md:block"
           width={368}
           height={420}
           alt="Hund mit Eimer am Kopf"
         />
       </div>
-      <div className="mt-16 grid divide-x divide-y divide-gray-100 overflow-hidden rounded-3xl border border-gray-100 text-gray-600 dark:divide-gray-700 dark:border-gray-700 sm:grid-cols-2 lg:grid-cols-3 lg:divide-y-0">
-        <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10 dark:bg-gray-800">
+      <div className="mt-16 grid divide-x divide-y divide-gray-100 overflow-hidden rounded-3xl border border-gray-100 text-gray-600 sm:grid-cols-2 lg:grid-cols-3 lg:divide-y-0">
+        <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
           <div className="relative space-y-4 p-8 py-12">
             <UserPlus2Icon className="h-8 w-8" />
             <div className="space-y-2">
-              <h5 className="text-xl font-semibold text-gray-700 transition dark:text-white">
+              <h5 className="text-xl font-semibold text-gray-700 transition">
                 1-Klick Anmeldung
               </h5>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-gray-600">
                 Du kannst genau sehen wie viele Plätze bei Praktika noch frei
                 sind, und dich mit nur einem Klick für anmelden.
               </p>
             </div>
           </div>
         </div>
-        <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10 dark:bg-gray-800">
+        <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
           <div className="relative space-y-4 p-8 py-12">
             <SlidersIcon className="h-8 w-8" />
             <div className="space-y-2">
-              <h5 className="text-xl font-semibold text-gray-700 transition dark:text-white">
+              <h5 className="text-xl font-semibold text-gray-700 transition">
                 Praktika Filter
               </h5>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-gray-600">
                 Filtere Praktika nach Fahrtzeit, Datum, Dauer und mehr, und
                 finde die optimalen Praktika für dich.
               </p>
             </div>
           </div>
         </div>
-        <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10 dark:bg-gray-800">
+        <div className="group relative bg-white transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
           <div className="relative space-y-4 p-8 py-12">
             <CalendarDaysIcon className="h-8 w-8" />
             <div className="space-y-2">
-              <h5 className="text-xl font-semibold text-gray-700 transition dark:text-white">
+              <h5 className="text-xl font-semibold text-gray-700 transition">
                 Behalte die Übersicht
               </h5>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-gray-600">
                 Hab immer im Blick wann und wo deine Praktika stattfinden, und
                 wofür du dich angemeldet hast.
               </p>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="my-32 grid items-center gap-16 md:grid-cols-6">
+        <div className="md:col-span-2">
+          <h3 className="mb-6 text-2xl font-semibold leading-snug md:text-3xl">
+            Sende Praktika Anfragen
+          </h3>
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            Mit nur einem Klick kannst du eine Anfrage an Trainer:innen senden.
+            Sobald ein Training von der Person erstellt wird, wirst du per Mail
+            benachrichtigt.
+          </p>
+        </div>
+        <div className="relative aspect-video w-full max-w-4xl md:col-span-4">
+          <Image
+            src="/img/trainer.png"
+            alt="Trainer Liste"
+            className="overflow-hidden rounded-2xl object-cover ring-1 ring-slate-900/10"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 1282px"
+          />
+        </div>
+      </div>
+
+      <div className="my-32 grid items-center gap-16 md:grid-cols-6">
+        <div className="md:order-last md:col-span-2">
+          <h3 className="mb-6 text-2xl font-semibold leading-snug md:text-3xl">
+            Finde das richtige Praktikum für dich
+          </h3>
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            Du kannst Praktika nach Fahrtzeit, Datum, Dauer und mehr filtern,
+            und so das passande Praktikum für dich finden.
+          </p>
+        </div>
+        <div className="relative aspect-video w-full max-w-4xl md:col-span-4">
+          <Image
+            src="/img/home.png"
+            alt="Praktika suchen"
+            className="overflow-hidden rounded-2xl object-cover ring-1 ring-slate-900/10"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 1282px"
+          />
+        </div>
+      </div>
+
+      <div className="my-32 grid items-center gap-16 md:grid-cols-6">
+        <div className="md:col-span-2">
+          <h3 className="mb-6 text-2xl font-semibold leading-snug md:text-3xl">
+            Deine Anmeldungen auf einem Blick
+          </h3>
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            Behalte immer im Blick wann und wo deine Praktika stattfinden, und
+            wofür du dich angemeldet hast.
+          </p>
+        </div>
+        <div className="relative aspect-video w-full max-w-4xl md:col-span-4">
+          <Image
+            src="/img/trainings.png"
+            alt="Deine Praktika Anmeldungen"
+            className="overflow-hidden rounded-2xl object-cover ring-1 ring-slate-900/10"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 1282px"
+          />
         </div>
       </div>
     </div>
@@ -273,17 +395,17 @@ function CallToAction() {
     <div className="relative py-8">
       <div
         aria-hidden="true"
-        className="absolute inset-0 m-auto grid h-max w-full grid-cols-2 -space-x-52 opacity-40 dark:opacity-20"
+        className="absolute inset-0 m-auto grid h-max w-full grid-cols-2 -space-x-52 opacity-40"
       >
-        <div className="h-56 bg-gradient-to-br from-yellow-200/20 to-yellow-400 blur-[106px] dark:from-blue-700"></div>
-        <div className="h-32 bg-gradient-to-r from-red-400 to-orange-300 blur-[106px] dark:to-indigo-600"></div>
+        <div className="h-56 bg-gradient-to-br from-yellow-200/20 to-yellow-400 blur-[106px]"></div>
+        <div className="h-32 bg-gradient-to-r from-red-400 to-orange-300 blur-[106px]"></div>
       </div>
       <div className="container relative z-10">
         <div className="m-auto mt-6 space-y-6 md:w-8/12 lg:w-7/12">
-          <h1 className="text-center text-4xl font-bold text-gray-800 dark:text-white md:text-5xl">
+          <h1 className="text-center text-4xl font-bold text-gray-800 md:text-5xl">
             Wie kann ich dabei sein?
           </h1>
-          <p className="text-center text-xl text-gray-600 dark:text-gray-300">
+          <p className="text-center text-xl text-gray-600">
             Die App ist nur mit einer Einladung zugänglich. Solltest du noch
             keine Einladung erhalten haben, kannst du dich bei
             hi@mostviertel.tech melden.
