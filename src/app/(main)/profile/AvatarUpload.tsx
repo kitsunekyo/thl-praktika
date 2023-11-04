@@ -27,7 +27,7 @@ export function AvatarUpload() {
           ) : (
             "Profilbild wählen"
           ),
-        allowedContent: "Bilddatei (<2MB)",
+        allowedContent: "Bilddatei (.jpg, .png, .gif, <2MB)",
       }}
       endpoint="imageUploader"
       onClientUploadComplete={async (res) => {
