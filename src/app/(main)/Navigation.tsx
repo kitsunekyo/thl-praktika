@@ -2,7 +2,6 @@
 
 import {
   CalendarCheck2Icon,
-  CalendarDaysIcon,
   ContactIcon,
   GraduationCapIcon,
   LayoutGridIcon,
@@ -29,23 +28,23 @@ export function Navigation({
         <div className="px-3">
           <div className="space-y-1">
             <SidebarLink href="/" exact onClick={onNavigate}>
-              <LayoutGridIcon className="mr-2 h-4 w-4" />
+              <LayoutGridIcon className="mr-2 h-4 w-4 shrink-0" />
               Praktika
             </SidebarLink>
-            {role !== "trainer" && (
+            {role === "user" && (
               <SidebarLink href="/trainings" onClick={onNavigate}>
-                <CalendarCheck2Icon className="mr-2 h-4 w-4" />
-                Anmeldungen
+                <CalendarCheck2Icon className="mr-2 h-4 w-4 shrink-0" />
+                Meine Praktika
               </SidebarLink>
             )}
             {role === "trainer" && (
               <SidebarLink href="/trainer" exact onClick={onNavigate}>
-                <GraduationCapIcon className="mr-2 h-4 w-4" />
-                Praktika Anfragen
+                <GraduationCapIcon className="mr-2 h-4 w-4 shrink-0" />
+                Meine Praktika
               </SidebarLink>
             )}
             <SidebarLink href="/trainers" onClick={onNavigate}>
-              <ContactIcon className="mr-2 h-4 w-4" />
+              <ContactIcon className="mr-2 h-4 w-4 shrink-0" />
               Trainer:innen
             </SidebarLink>
           </div>
@@ -55,11 +54,11 @@ export function Navigation({
             <Title>Admin</Title>
             <div className="space-y-1">
               <SidebarLink href="/admin/users" onClick={onNavigate}>
-                <UsersIcon className="mr-2 h-4 w-4" />
+                <UsersIcon className="mr-2 h-4 w-4 shrink-0" />
                 Benutzer
               </SidebarLink>
               <SidebarLink href="/admin/invitations" onClick={onNavigate}>
-                <MailsIcon className="mr-2 h-4 w-4" />
+                <MailsIcon className="mr-2 h-4 w-4 shrink-0" />
                 Einladungen
               </SidebarLink>
             </div>

@@ -1,6 +1,9 @@
+import { Registration, Training, User } from "@prisma/client";
 import { formatDistance } from "date-fns";
 
 import { PageTitle } from "@/components/PageTitle";
+import { TrainingActions } from "@/components/training/TrainingActions";
+import { TrainingCard } from "@/components/training/TrainingCard";
 import { Separator } from "@/components/ui/separator";
 import {
   Table,
@@ -11,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { getMyTrainings } from "./actions";
 import { CreateTrainingButton } from "../CreateTrainingButton";
 import { getProfile } from "../profile/actions";
 import { getTrainingRequests } from "../trainers/requests/actions";
@@ -24,13 +28,15 @@ export default async function Page() {
 
   return (
     <div className="py-6">
-      <PageTitle content="Hier findest du Praktika Anfragen, die dir von Stundenten gesendet wurden.">
-        Praktika Anfragen
+      <PageTitle content="Hier findest du deine erstellten Praktika und Anfragen. Du kannst sehen wer angemeldet ist, und falls ein Training ausfällt kannst du Praktika hier absagen.">
+        Meine Praktika
       </PageTitle>
       <Separator className="my-4" />
       <CreateTrainingButton profile={profile} />
       <div className="my-4" />
       <ReceivedTrainingRequests requests={requests} />
+      <div className="my-4" />
+      <Trainings />
     </div>
   );
 }
@@ -79,5 +85,63 @@ async function ReceivedTrainingRequests({
         ))}
       </TableBody>
     </Table>
+  );
+}
+
+async function Trainings() {
+  const trainings = await getMyTrainings();
+
+  return (
+    <div className="py-6">
+      {trainings.length > 0 ? (
+        <TrainingList trainings={trainings} />
+      ) : (
+        <p className="text-muted-foreground">
+          Du hast noch keine Praktika erstellt
+        </p>
+      )}
+    </div>
+  );
+}
+
+function TrainingList({
+  trainings,
+}: {
+  trainings: (Training & {
+    author: Omit<User, "password">;
+    registrations: (Registration & {
+      user: Pick<
+        User,
+        | "id"
+        | "image"
+        | "name"
+        | "phone"
+        | "email"
+        | "address"
+        | "city"
+        | "zipCode"
+      >;
+    })[];
+  })[];
+}) {
+  return (
+    <ul className="max-w-2xl space-y-4">
+      {trainings.map((t) => {
+        const hasRegistrations = Boolean(t.registrations.length);
+        return (
+          <li key={t.id}>
+            <TrainingCard
+              training={t}
+              actions={
+                <TrainingActions
+                  id={t.id}
+                  hasRegistrations={hasRegistrations}
+                />
+              }
+            />
+          </li>
+        );
+      })}
+    </ul>
   );
 }
