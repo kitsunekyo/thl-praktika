@@ -28,14 +28,17 @@ export default async function Page() {
 
   return (
     <div className="py-6">
-      <PageTitle content="Hier findest du deine erstellten Praktika und Anfragen. Du kannst sehen wer angemeldet ist, und falls ein Training ausfällt kannst du Praktika hier absagen.">
+      <PageTitle content="Hier findest du Praktika Anfragen die dir Student:innen geschickt haben. Wenn du ein neues Praktikum erstellst, werden alle in dieser Liste benachrichtigt.">
+        Meine Anfragen
+      </PageTitle>
+      <Separator className="my-4" />
+      <ReceivedTrainingRequests requests={requests} />
+      <div className="my-16" />
+      <PageTitle content="Hier findest du deine erstellten Praktika. Du kannst sehen wer angemeldet ist, kannst Praktika bearbeiten oder absagen.">
         Meine Praktika
       </PageTitle>
       <Separator className="my-4" />
       <CreateTrainingButton profile={profile} />
-      <div className="my-4" />
-      <ReceivedTrainingRequests requests={requests} />
-      <div className="my-4" />
       <Trainings />
     </div>
   );
@@ -96,8 +99,8 @@ async function Trainings() {
       {trainings.length > 0 ? (
         <TrainingList trainings={trainings} />
       ) : (
-        <p className="text-muted-foreground">
-          Du hast noch keine Praktika erstellt
+        <p className="text-sm text-gray-400">
+          Du hast keine verfügbaren Praktika.
         </p>
       )}
     </div>
