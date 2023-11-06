@@ -104,7 +104,7 @@ function Hero() {
               </div>
               <div className="text-left">
                 <h6 className="text-lg font-semibold text-gray-700">
-                  Automatisierte Emails
+                  Automatisierte E-Mails
                 </h6>
                 <p className="mt-2 text-gray-500">
                   Du musst dich um nichts kümmern! Automatische
@@ -136,10 +136,10 @@ function TrainerFeatures() {
             <Sparkle />
           </div>
           <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">
-            Für Praktikums Anfragen auf eine zig Emails und WhatsApp Nachrichten
-            antworten zu müssen ist echt anstrengend. Hier kannst du Praktika
-            mit nur wenigen Klicks erstellen, und alle interessierten
-            Student:innen wissen sofort bescheid.
+            Für Praktikums-Anfragen auf eine Vielzahl Nachrichten antworten zu
+            müssen ist echt anstrengend. Hier kannst du Praktika mit nur wenigen
+            Klicks erstellen und alle interessierten Student:innen wissen sofort
+            bescheid.
           </p>
         </div>
         <Image
@@ -159,8 +159,8 @@ function TrainerFeatures() {
                 Praktika auf Anfrage
               </h5>
               <p className="text-gray-600">
-                Du erhälst Praktika Anfragen per Mail. In der Übersicht siehst
-                du wer dir wann eine Anfrage geschickt hat.
+                Du erhälst Praktika-Anfragen per Mail. In der Übersicht siehst
+                du, wer dir wann eine Anfrage geschickt hat.
               </p>
             </div>
           </div>
@@ -174,7 +174,7 @@ function TrainerFeatures() {
               </h5>
               <p className="text-gray-600">
                 Student:innen können sich mit nur einem Klick für Praktika
-                anzumelden, ohne dass du auf jede Nachricht einzeln antworten
+                anmelden, ohne dass du auf jede Nachricht einzeln antworten
                 musst.
               </p>
             </div>
@@ -185,7 +185,7 @@ function TrainerFeatures() {
             <MailsIcon className="h-8 w-8" />
             <div className="space-y-2">
               <h5 className="text-xl font-semibold text-gray-700 transition">
-                Automatische Emails
+                Automatische E-Mails
               </h5>
               <p className="text-gray-600">
                 Wenn du ein Praktikum erstellst oder absagen musst, werden alle
@@ -204,7 +204,7 @@ function TrainerFeatures() {
           <p className="text-lg leading-relaxed text-muted-foreground">
             Du siehst alle unbeantworteten Anfragen auf einen Blick. Sobald du
             ein Praktikum erstellst, werden alle, die eine Anfrage geschickt
-            haben per Email benachrichtigt.
+            haben per E-Mail benachrichtigt.
           </p>
         </div>
         <div className="relative aspect-video w-full max-w-4xl md:col-span-4">
@@ -226,8 +226,8 @@ function TrainerFeatures() {
           </h3>
           <p className="text-lg leading-relaxed text-muted-foreground">
             Trage alle wichtigen Details zu deinem angebotenen Praktikum ein.
-            Wann und wo es stattfindet, und wieviele Praktikant:innen teilnehmen
-            können.
+            Wann und wo es stattfindet, und wie viele Praktikant:innen
+            teilnehmen können.
           </p>
         </div>
         <div className="relative aspect-video w-full max-w-4xl md:col-span-4">
@@ -285,7 +285,7 @@ function UserFeatures() {
               </h5>
               <p className="text-gray-600">
                 Du kannst genau sehen wie viele Plätze bei Praktika noch frei
-                sind, und dich mit nur einem Klick für anmelden.
+                sind und dich mit nur einem Klick für anmelden.
               </p>
             </div>
           </div>
@@ -298,8 +298,8 @@ function UserFeatures() {
                 Praktika Filter
               </h5>
               <p className="text-gray-600">
-                Filtere Praktika nach Fahrtzeit, Datum, Dauer und mehr, und
-                finde die optimalen Praktika für dich.
+                Filtere Praktika nach Fahrtzeit, Datum, Dauer und mehr und finde
+                die optimalen Praktika für dich.
               </p>
             </div>
           </div>
@@ -312,7 +312,7 @@ function UserFeatures() {
                 Behalte die Übersicht
               </h5>
               <p className="text-gray-600">
-                Hab immer im Blick wann und wo deine Praktika stattfinden, und
+                Hab immer im Blick, wann und wo deine Praktika stattfinden, und
                 wofür du dich angemeldet hast.
               </p>
             </div>
