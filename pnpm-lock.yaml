@@ -129,8 +129,8 @@ dependencies:
     specifier: 8.4.29
     version: 8.4.29
   postmark:
-    specifier: ^3.0.19
-    version: 3.0.19
+    specifier: ^3.1.2
+    version: 3.1.2
   prettier:
     specifier: ^3.0.3
     version: 3.0.3
@@ -4389,8 +4389,8 @@ packages:
       source-map-js: 1.0.2
     dev: false
 
-  /postmark@3.0.19:
-    resolution: {integrity: sha512-ujO8OnL1P60qXCwqLrsQqB4aGHaxrvYP3+wCLilUthKmAv9q88nMFHw5VganNljPmzurrVwvyczQc3AUijP2aw==}
+  /postmark@3.1.2:
+    resolution: {integrity: sha512-nm5vZR75Fk7coboWVMysq6eWZHMOUZAXOl+JXD3O1rzjOlZ9eYYq++/WyrheTyl0L4h97XJkftanFVU7OCTCDw==}
     dependencies:
       axios: 0.25.0
     transitivePeerDependencies:
