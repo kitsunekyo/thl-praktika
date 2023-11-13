@@ -1,3 +1,4 @@
+import { TrainingDate } from "@/components/training/TrainingDate";
 import {
   Table,
   TableBody,
@@ -6,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatTrainingDate } from "@/lib/date";
 import { prisma } from "@/lib/prisma";
 
 import { ActionButtons } from "./ActionButtons";
@@ -52,10 +52,10 @@ export default async function RegistrationsPage() {
               {registration.user.name || registration.user.email}
             </TableCell>
             <TableCell className="truncate whitespace-nowrap">
-              {formatTrainingDate(
-                registration.training.start,
-                registration.training.end,
-              )}
+              <TrainingDate
+                start={registration.training.start}
+                end={registration.training.end}
+              />
             </TableCell>
             <TableCell className="truncate">
               {registration.training.author.name ||
