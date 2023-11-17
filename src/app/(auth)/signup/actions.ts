@@ -43,3 +43,20 @@ export async function register({
     },
   });
 }
+
+export async function validateInvitation(id: string) {
+  const invitation = await prisma.invitation.findFirst({
+    where: {
+      id,
+      createdAt: {
+        gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days
+      },
+    },
+  });
+
+  if (!invitation) {
+    return false;
+  }
+
+  return true;
+}

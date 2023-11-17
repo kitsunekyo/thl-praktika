@@ -9,9 +9,11 @@ const client = new ServerClient(process.env.POSTMARK_API_TOKEN || "");
 export async function sendInvitationMail({
   to,
   name,
+  id,
   role = "user",
 }: {
   to: string;
+  id: string;
   name: string;
   role?: "user" | "trainer" | "admin";
 }) {
@@ -25,7 +27,7 @@ export async function sendInvitationMail({
       product_url: process.env.NEXTAUTH_URL,
       name: name,
       invite_sender_name: "Alex",
-      action_url: `${process.env.NEXTAUTH_URL}/signup?email=${to}&name=${name}`,
+      action_url: `${process.env.NEXTAUTH_URL}/signup?email=${to}&name=${name}&id=${id}`,
     },
   };
   if (process.env.NODE_ENV === "production") {

@@ -48,7 +48,7 @@ export async function inviteUser(
     };
   }
   revalidatePath("/admin/invitations");
-  sendInvitationMail({ to: email, name, role });
+  sendInvitationMail({ to: email, name, role, id: inv.id });
 }
 
 export async function getInvitations() {
