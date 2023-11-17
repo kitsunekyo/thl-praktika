@@ -1,4 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import * as Sentry from "@sentry/nextjs";
 import { compare } from "bcrypt";
 import {
   AuthOptions,
@@ -80,6 +81,7 @@ export const authOptions: AuthOptions = {
             lastLogin: new Date(),
           },
         });
+        Sentry.setUser({ email: user.email, id: user.id });
         return true;
       }
       const invitation = await prisma.invitation.findFirst({
