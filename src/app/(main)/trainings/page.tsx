@@ -8,6 +8,8 @@ import { TrainingCard } from "@/components/training/TrainingCard";
 import { Separator } from "@/components/ui/separator";
 import { computeDuration, computeTraveltime } from "@/lib/training";
 
+export const dynamic = "force-dynamic";
+
 export default async function Trainings() {
   const trainings = await addMetadata(await getMyTrainings());
 

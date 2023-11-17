@@ -21,6 +21,8 @@ import { getTrainers } from "./actions";
 import { getTrainingRequests } from "./requests/actions";
 import { RequestTrainingButton } from "./RequestTrainingButton";
 
+export const dynamic = "force-dynamic";
+
 export default async function Page() {
   const session = await getServerSession();
   if (!session) {

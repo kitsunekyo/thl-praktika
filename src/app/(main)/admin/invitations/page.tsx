@@ -16,6 +16,8 @@ import {
 import { getInvitations } from "./actions";
 import { InvitationButtons } from "./InvitationButtons";
 
+export const dynamic = "force-dynamic";
+
 export default async function UserPage() {
   return (
     <section className="py-6">
