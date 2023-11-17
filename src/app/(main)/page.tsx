@@ -8,7 +8,7 @@ import {
 import { TrainingActions } from "@/components/training/TrainingActions";
 import { TrainingCard } from "@/components/training/TrainingCard";
 import { TrainingFilter } from "@/components/TrainingFilter";
-import { getServerSession } from "@/lib/next-auth";
+import { getServerSession } from "@/lib/getServerSession";
 import {
   computeDuration,
   computeIsRegistered,

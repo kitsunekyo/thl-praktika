@@ -4,7 +4,7 @@ import { User } from "@prisma/client";
 import { hash } from "bcrypt";
 import { revalidatePath } from "next/cache";
 
-import { getServerSession } from "@/lib/next-auth";
+import { getServerSession } from "@/lib/getServerSession";
 import { prisma } from "@/lib/prisma";
 
 export async function getProfile() {

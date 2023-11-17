@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { formatTrainingDate } from "@/lib/date";
-import { getServerSession } from "@/lib/next-auth";
+import { getServerSession } from "@/lib/getServerSession";
 import {
   sendTrainingCancelledMail,
   sendTrainingRegistrationNotificationMail,

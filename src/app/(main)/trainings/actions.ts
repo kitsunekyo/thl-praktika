@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-import { getServerSession } from "@/lib/next-auth";
+import { getServerSession } from "@/lib/getServerSession";
 import { prisma } from "@/lib/prisma";
 
 export async function register(id: string) {
