@@ -84,7 +84,7 @@ model Training {
   createdAt     DateTime       @default(now())
   start         DateTime
   end           DateTime
-  description   String?
+  description   String?        @db.Text
   maxInterns    Int
   registrations Registration[]
   authorId      String
