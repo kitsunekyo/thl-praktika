@@ -51,6 +51,37 @@ export async function inviteUser(
   sendInvitationMail({ to: email, name, role, id: inv.id });
 }
 
+export async function resendInvitation(id: string) {
+  const invitation = await prisma.invitation.findFirst({
+    where: {
+      id,
+    },
+  });
+
+  if (!invitation) {
+    return {
+      error: "invitation does not exist",
+    };
+  }
+
+  await prisma.invitation.update({
+    where: {
+      id,
+    },
+    data: {
+      createdAt: new Date(),
+    },
+  });
+
+  sendInvitationMail({
+    to: invitation.email,
+    name: invitation.name || "",
+    role: invitation.role as "user" | "trainer",
+    id: invitation.id,
+  });
+  revalidatePath("/admin/invitations");
+}
+
 export async function getInvitations() {
   return await prisma.invitation.findMany();
 }

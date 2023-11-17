@@ -1,18 +1,37 @@
 "use client";
 
 import { Invitation } from "@prisma/client";
-import { TrashIcon } from "lucide-react";
+import { MailQuestionIcon, TrashIcon } from "lucide-react";
 import { useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
-import { deleteInvitation } from "./actions";
+import { deleteInvitation, resendInvitation } from "./actions";
 
 export function InvitationButtons({ invitation }: { invitation: Invitation }) {
   const [pending, startTransition] = useTransition();
+  const { toast } = useToast();
 
   return (
     <div className="flex items-center justify-end gap-2">
+      <Button
+        size="icon"
+        variant="ghost"
+        disabled={pending}
+        onClick={() => {
+          startTransition(() => {
+            resendInvitation(invitation.id);
+            toast({
+              title: "Einladungs E-Mail versendet",
+              description:
+                "Die Einladung wurde erneut an die angegebene E-Mail Adresse versendet.",
+            });
+          });
+        }}
+      >
+        <MailQuestionIcon className="h-4 w-4" />
+      </Button>
       <Button
         size="icon"
         variant="ghost"
