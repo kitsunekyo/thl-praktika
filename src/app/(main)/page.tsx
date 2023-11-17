@@ -19,8 +19,6 @@ import { CreateTrainingButton } from "./CreateTrainingButton";
 import { getProfile } from "./profile/actions";
 import { getTrainings } from "./trainings/actions";
 
-export const dynamic = "force-dynamic";
-
 export default async function Home({
   searchParams,
 }: {

@@ -5,8 +5,6 @@ import { AvatarUpload } from "./AvatarUpload";
 import { ChangePasswordForm } from "./ChangePasswordForm";
 import { ProfileForm } from "./ProfileForm";
 
-export const dynamic = "force-dynamic";
-
 export default async function Profile() {
   const user = await getProfile();
 

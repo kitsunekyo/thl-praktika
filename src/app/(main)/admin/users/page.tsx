@@ -17,8 +17,6 @@ import {
 import { getUsers } from "./actions";
 import { UserButtons } from "./UserButtons";
 
-export const dynamic = "force-dynamic";
-
 export default async function UserPage() {
   return (
     <section className="py-6">

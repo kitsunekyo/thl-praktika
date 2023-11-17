@@ -24,8 +24,6 @@ async function getRegistrations() {
   });
 }
 
-export const dynamic = "force-dynamic";
-
 export default async function RegistrationsPage() {
   const registrations = await getRegistrations();
 

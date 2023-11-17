@@ -19,8 +19,6 @@ import { CreateTrainingButton } from "../CreateTrainingButton";
 import { getProfile } from "../profile/actions";
 import { getTrainingRequests } from "../trainers/requests/actions";
 
-export const dynamic = "force-dynamic";
-
 export default async function Page() {
   const profile = await getProfile();
   if (!profile) {
