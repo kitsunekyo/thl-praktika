@@ -20,7 +20,7 @@ export default async function Trainings() {
       {trainings.length > 0 ? (
         <TrainingList trainings={trainings} />
       ) : (
-        <p className="text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           Du hast dich noch für keine Praktika angemeldet.
           <br />
           Suche nach passenden{" "}
