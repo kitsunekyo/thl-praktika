@@ -1,3 +1,4 @@
+import { formatDistance } from "date-fns";
 import Link from "next/link";
 
 import { PageTitle } from "@/components/PageTitle";
@@ -47,6 +48,7 @@ async function InvitationList() {
           <TableHead className="max-w-[100px]">Email</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Rolle</TableHead>
+          <TableHead className="text-right">eingeladen</TableHead>
           <TableHead className="text-right"></TableHead>
         </TableRow>
       </TableHeader>
@@ -65,6 +67,9 @@ async function InvitationList() {
             </TableCell>
             <TableCell>
               <Badge variant="outline">{invitation.role}</Badge>
+            </TableCell>
+            <TableCell className="hidden text-right md:table-cell">
+              <p>{`vor ${formatDistance(invitation.createdAt, new Date())}`}</p>
             </TableCell>
             <TableCell className="text-right">
               <InvitationButtons invitation={invitation} />
