@@ -39,6 +39,22 @@ async function UserList() {
     return <p className="text-sm text-gray-400">Keine User.</p>;
   }
 
+  const sortedUsers = [...users].sort((a, b) => {
+    if (a.lastLogin && b.lastLogin) {
+      return b.lastLogin.getTime() - a.lastLogin.getTime();
+    }
+
+    if (a.lastLogin) {
+      return -1;
+    }
+
+    if (b.lastLogin) {
+      return 1;
+    }
+
+    return 0;
+  });
+
   return (
     <Table>
       <TableHeader>
@@ -53,7 +69,7 @@ async function UserList() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {users.map((user) => (
+        {sortedUsers.map((user) => (
           <TableRow key={user.id}>
             <TableCell className="font-medium">
               <div className="max-w-[80px] truncate md:max-w-none">
