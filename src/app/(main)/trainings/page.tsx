@@ -60,7 +60,9 @@ function TrainingList({
           <li key={t.id}>
             <TrainingCard
               training={t}
-              actions={<UnregisterButton trainingId={t.id} />}
+              actions={
+                t.end > new Date() && <UnregisterButton trainingId={t.id} />
+              }
             />
           </li>
         );
