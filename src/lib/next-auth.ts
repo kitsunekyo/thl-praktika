@@ -1,10 +1,7 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import * as Sentry from "@sentry/nextjs";
 import { compare } from "bcrypt";
-import {
-  AuthOptions,
-  getServerSession as NEXT_getServerSession,
-  User,
-} from "next-auth";
+import { AuthOptions, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 
@@ -24,7 +21,6 @@ export const authOptions: AuthOptions = {
         email: {
           label: "Email",
           type: "email",
-          placeholder: "alex@example.com",
         },
         password: { label: "Passwort", type: "password" },
       },
@@ -80,6 +76,7 @@ export const authOptions: AuthOptions = {
             lastLogin: new Date(),
           },
         });
+        Sentry.setUser({ email: user.email, id: user.id });
         return true;
       }
       const invitation = await prisma.invitation.findFirst({
@@ -144,9 +141,6 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: "/login",
     error: "/auth-error",
+    signOut: "/logout",
   },
 };
-
-export async function getServerSession() {
-  return NEXT_getServerSession(authOptions);
-}

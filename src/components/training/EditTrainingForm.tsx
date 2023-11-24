@@ -1,14 +1,14 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Training, User } from "@prisma/client";
-import { add, format, set } from "date-fns";
+import { Training } from "@prisma/client";
+import { format, set } from "date-fns";
 import { CalendarIcon, InfoIcon } from "lucide-react";
 import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { createTraining, updateTraining } from "@/app/(main)/trainer/actions";
+import { updateTraining } from "@/app/(main)/trainer/actions";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {

@@ -15,7 +15,6 @@ const nextConfig = {
 
 module.exports = nextConfig;
 
-
 // Injected content via Sentry wizard below
 
 const { withSentryConfig } = require("@sentry/nextjs");
@@ -29,7 +28,7 @@ module.exports = withSentryConfig(
     // Suppresses source map uploading logs during build
     silent: true,
     org: "alex-spieslechner-6a490ed3c",
-    project: "javascript-nextjs",
+    project: "thl-praktika",
   },
   {
     // For all available options, see:
@@ -49,5 +48,5 @@ module.exports = withSentryConfig(
 
     // Automatically tree-shake Sentry logger statements to reduce bundle size
     disableLogger: true,
-  }
+  },
 );

@@ -5,10 +5,11 @@ import Link from "next/link";
 import React from "react";
 
 import { CollapsibleRegistrations } from "@/app/(main)/CollapsibleRegistrations";
-import { formatTrainingDate, secondsToDuration } from "@/lib/date";
+import { secondsToDuration } from "@/lib/date";
 import { formatAddress } from "@/lib/user";
 import { getInitials } from "@/lib/utils";
 
+import { TrainingDate } from "./TrainingDate";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 type TrainingWithMetadata = Training & {
@@ -69,7 +70,7 @@ export async function TrainingCard({
               {training.author.name || training.author.email}
             </dd>
             <dd className="text-xs text-muted-foreground">
-              {formatTrainingDate(training.start, training.end)}
+              <TrainingDate start={training.start} end={training.end} />
             </dd>
           </dl>
         </div>

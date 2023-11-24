@@ -1,21 +1,30 @@
 /* eslint-disable import/no-duplicates */
 import {
-  format,
   intervalToDuration,
   setDefaultOptions,
   startOfDay,
   sub,
 } from "date-fns";
 import { deAT } from "date-fns/locale";
+import { format } from "date-fns-tz";
 
 setDefaultOptions({
   locale: deAT,
 });
 
 export function formatTrainingDate(startDate: Date, endDate: Date) {
-  const date = format(new Date(startDate), "do MMM yy");
-  const startTime = format(new Date(startDate), "HH:mm");
-  const endTime = format(new Date(endDate), "HH:mm");
+  const date = format(new Date(startDate), "do MMM yy", {
+    timeZone: "Europe/Vienna",
+    locale: deAT,
+  });
+  const startTime = format(new Date(startDate), "HH:mm", {
+    timeZone: "Europe/Vienna",
+    locale: deAT,
+  });
+  const endTime = format(new Date(endDate), "HH:mm", {
+    timeZone: "Europe/Vienna",
+    locale: deAT,
+  });
 
   return `${date} von ${startTime} bis ${endTime}`;
 }

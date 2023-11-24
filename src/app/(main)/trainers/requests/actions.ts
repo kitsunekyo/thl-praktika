@@ -3,7 +3,7 @@
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-import { getServerSession } from "@/lib/next-auth";
+import { getServerSession } from "@/lib/getServerSession";
 import { sendTrainingRequestReceivedMail } from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
 

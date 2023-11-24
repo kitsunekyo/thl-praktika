@@ -1,8 +1,10 @@
+/* eslint-disable import/no-duplicates */
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@prisma/client";
-import { add, format, set } from "date-fns";
+import { add, format, set, setDefaultOptions } from "date-fns";
+import { deAT } from "date-fns/locale";
 import { CalendarIcon, InfoIcon } from "lucide-react";
 import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -29,6 +31,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { getFixedDate } from "@/lib/date";
 import { cn } from "@/lib/utils";
+
+setDefaultOptions({
+  locale: deAT,
+});
 
 export const formSchema = z
   .object({
