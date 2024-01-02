@@ -1,5 +1,7 @@
 import { Registration, Training, User } from "@prisma/client";
 import { endOfDay, startOfDay } from "date-fns";
+import Image from "next/image";
+import Link from "next/link";
 
 import {
   RegisterButton,
@@ -74,6 +76,7 @@ export default async function Home({
             <CreateTrainingButton profile={profile} />
           </div>
         )}
+        {trainings.length === 0 && <NoTrainings />}
         <p className="mb-4 text-sm text-muted-foreground">
           {trainingsCountLabel}
         </p>
@@ -123,6 +126,31 @@ export default async function Home({
         )}
       </main>
     </section>
+  );
+}
+
+function NoTrainings() {
+  return (
+    <>
+      <Image
+        src="/img/dog-bucket.svg"
+        className="h-40"
+        width={196}
+        height={224}
+        alt="Hund mit Eimer am Kopf"
+      />
+      <h3 className="mb-2 mt-6 text-xl font-bold tracking-tight sm:text-xl">
+        Keine Praktika gefunden
+      </h3>
+
+      <p className="mb-6 text-muted-foreground">
+        Aktuell hat niemand ein Praktikum eingetragen. Du kannst bei{" "}
+        <Link href="/trainers" className="underline">
+          Trainer:innen
+        </Link>{" "}
+        eine Anfrage stellen .
+      </p>
+    </>
   );
 }
 
