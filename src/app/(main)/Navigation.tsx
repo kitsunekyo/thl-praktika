@@ -1,11 +1,13 @@
 "use client";
 
 import {
+  BugIcon,
   CalendarCheck2Icon,
   ContactIcon,
   GraduationCapIcon,
   LayoutGridIcon,
   MailsIcon,
+  MessageCircleIcon,
   UsersIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -64,6 +66,25 @@ export function Navigation({
             </div>
           </div>
         )}
+        <div className="mt-auto px-3">
+          <Title>Hilfe</Title>
+          <div className="space-y-1">
+            <SidebarLink
+              href="mailto:hi@mostviertel.tech?subject=Problem"
+              onClick={onNavigate}
+            >
+              <BugIcon className="mr-2 h-4 w-4 shrink-0" />
+              Problem melden
+            </SidebarLink>
+            <SidebarLink
+              href="mailto:hi@mostviertel.tech?subject=Feedback"
+              onClick={onNavigate}
+            >
+              <MessageCircleIcon className="mr-2 h-4 w-4 shrink-0" />
+              Feedback geben
+            </SidebarLink>
+          </div>
+        </div>
       </div>
     </aside>
   );
