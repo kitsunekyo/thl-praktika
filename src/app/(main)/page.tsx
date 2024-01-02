@@ -76,10 +76,10 @@ export default async function Home({
             <CreateTrainingButton profile={profile} />
           </div>
         )}
-        {trainings.length === 0 && <NoTrainings />}
         <p className="mb-4 text-sm text-muted-foreground">
           {trainingsCountLabel}
         </p>
+        {trainings.length === 0 && <NoTrainings />}
         {filteredTrainings.length > 0 && (
           <ul className="space-y-4">
             {filteredTrainings.map((t) => {
