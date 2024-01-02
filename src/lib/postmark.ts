@@ -140,6 +140,38 @@ export async function sendTrainingCancelledMail({
   console.log("mock: mail sent", payload);
 }
 
+export async function sendRegistrationCancelledMail({
+  to,
+  user,
+  trainerName,
+  date,
+}: {
+  to: string;
+  trainerName: string;
+  user: string;
+  date: string;
+}) {
+  const payload = {
+    From: "hi@mostviertel.tech",
+    To: to,
+    TemplateAlias: "registration-cancelled",
+    MessageStream: "outbound",
+    TemplateModel: {
+      product_url: process.env.NEXTAUTH_URL,
+      user,
+      name: trainerName,
+      date,
+      action_url: process.env.NEXTAUTH_URL,
+    },
+  };
+  if (process.env.NODE_ENV === "production") {
+    await client.sendEmailWithTemplate(payload);
+    return;
+  }
+
+  console.log("mock: mail sent", payload);
+}
+
 export async function sendTrainingUpdatedMail({
   to,
   userName,

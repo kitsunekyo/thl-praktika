@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { getServerSession } from "@/lib/getServerSession";
+import { sendRegistrationCancelledMail } from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
 
 export async function register(id: string) {
@@ -51,6 +52,18 @@ export async function unregister(id: string) {
       trainingId: id,
       userId: currentUser.id,
     },
+    include: {
+      training: {
+        include: {
+          author: {
+            select: {
+              name: true,
+              email: true,
+            },
+          },
+        },
+      },
+    },
   });
 
   if (!registration) {
@@ -63,6 +76,13 @@ export async function unregister(id: string) {
     where: {
       id: registration.id,
     },
+  });
+
+  sendRegistrationCancelledMail({
+    to: registration.training.author.email,
+    trainerName: registration.training.author.name || "",
+    user: currentUser.name || currentUser.email,
+    date: registration.training.start.toLocaleString(),
   });
 
   revalidatePath("/");
