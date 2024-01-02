@@ -4,6 +4,7 @@ import { compare } from "bcrypt";
 import { AuthOptions, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
+import { signOut } from "next-auth/react";
 
 import { prisma } from "./prisma";
 import { Role } from "../../next-auth";
@@ -121,20 +122,28 @@ export const authOptions: AuthOptions = {
       });
       return true;
     },
-    jwt: ({ token, user }) => {
-      if (user) {
-        token.id = user.id;
-        token.role = user.role;
-        token.name = user.name;
+    jwt: async ({ token, user }) => {
+      const u = await prisma.user.findUnique({
+        where: {
+          id: token.sub,
+        },
+      });
+
+      if (!u) {
+        signOut();
+        return token;
       }
+
+      token.id = u.id;
+      token.role = u.role;
+      token.name = u.name;
+
       return token;
     },
     session: ({ session, token }) => {
-      if (token) {
-        session.user.id = token.id;
-        session.user.role = token.role || "user";
-        session.user.name = token.name || "";
-      }
+      session.user.id = token.id;
+      session.user.role = token.role || "user";
+      session.user.name = token.name || "";
       return session;
     },
   },
