@@ -37,7 +37,7 @@ export function Navigation({
                 Meine Praktika
               </SidebarLink>
             )}
-            {role === "trainer" && (
+            {role !== "user" && (
               <SidebarLink href="/trainer" exact onClick={onNavigate}>
                 <GraduationCapIcon className="mr-2 h-4 w-4 shrink-0" />
                 Meine Praktika

@@ -26,7 +26,7 @@ export default async function Home({
 }) {
   const session = await getServerSession();
   const profile = await getProfile();
-  const isTrainer = session?.user.role === "trainer";
+  const isTrainer = session?.user.role !== "user";
 
   if (!profile) {
     return null;

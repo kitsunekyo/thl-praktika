@@ -140,7 +140,7 @@ async function TrainerList({
                 </dl>
               </div>
             </div>
-            {role === "user" && (
+            {role !== "trainer" && (
               <RequestTrainingButton
                 trainerId={trainer.id}
                 disabled={hasRecentlyRequested}
