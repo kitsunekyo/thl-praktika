@@ -68,17 +68,21 @@ export function CollapsibleRegistrations({
         </CollapsibleTrigger>
       </div>
       <CollapsibleContent className="space-y-2">
-        {training.registrations.map(({ user, id }) => (
-          <div
-            key={id}
-            className="flex items-center gap-2 rounded-md border px-3 py-2 text-xs"
-          >
-            <Avatar size="xs">
-              <AvatarImage src={user.image || "/img/avatar.jpg"} />
-            </Avatar>
-            <dl>{user.name && <dd>{user.name}</dd>}</dl>
-          </div>
-        ))}
+        {training.registrations.map(({ user, id }) => {
+          const userText = [user.name, user.email, user.phone].join(" - ");
+
+          return (
+            <div
+              key={id}
+              className="flex items-center gap-2 rounded-md border px-3 py-2 text-xs"
+            >
+              <Avatar size="xs">
+                <AvatarImage src={user.image || "/img/avatar.jpg"} />
+              </Avatar>
+              <div>{userText}</div>
+            </div>
+          );
+        })}
       </CollapsibleContent>
     </Collapsible>
   );
