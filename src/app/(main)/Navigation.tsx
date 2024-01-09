@@ -78,10 +78,6 @@ export function Navigation({
         )}
         <div className="mt-auto px-3">
           <Title>Hilfe</Title>
-          <p className="my-2 px-4 text-xs text-muted-foreground">
-            Wenn etwas nicht so funktioniert wie es soll, oder du dir eine
-            Funktion wünscht, lass es mich wissen.
-          </p>
           <div className="space-y-1">
             <SidebarLink
               href="mailto:hi@mostviertel.tech?subject=Problem"
