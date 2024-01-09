@@ -6,6 +6,7 @@ import {
   MailIcon,
   MapIcon,
 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 import { TrainingRegistrations } from "@/components/training/TrainingRegistrations";
@@ -68,21 +69,16 @@ export function CollapsibleRegistrations({
         </CollapsibleTrigger>
       </div>
       <CollapsibleContent className="space-y-2">
-        {training.registrations.map(({ user, id }) => {
-          const userText = [user.name, user.email, user.phone].join(" - ");
-
-          return (
-            <div
-              key={id}
-              className="flex items-center gap-2 rounded-md border px-3 py-2 text-xs"
-            >
+        {training.registrations.map(({ user, id }) => (
+          <Link key={id} href={`/profile/${user.id}`}>
+            <div className="flex items-center gap-2 rounded-md border px-3 py-2 text-xs">
               <Avatar size="xs">
                 <AvatarImage src={user.image || "/img/avatar.jpg"} />
               </Avatar>
-              <div>{userText}</div>
+              <span className="underline hover:no-underline">{user.name}</span>
             </div>
-          );
-        })}
+          </Link>
+        ))}
       </CollapsibleContent>
     </Collapsible>
   );
