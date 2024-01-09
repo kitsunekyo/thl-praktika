@@ -75,7 +75,7 @@ export function CollapsibleRegistrations({
               <Avatar size="xs">
                 <AvatarImage src={user.image || "/img/avatar.jpg"} />
               </Avatar>
-              <div>{user.name}</div>
+              <span className="underline hover:no-underline">{user.name}</span>
             </div>
           </Link>
         ))}

@@ -8,6 +8,8 @@ import {
   LayoutGridIcon,
   MailsIcon,
   MessageCircleIcon,
+  UserCircleIcon,
+  Users2Icon,
   UsersIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -45,9 +47,17 @@ export function Navigation({
                 Meine Praktika
               </SidebarLink>
             )}
+            <SidebarLink href="/profile" onClick={onNavigate}>
+              <UserCircleIcon className="mr-2 h-4 w-4 shrink-0" />
+              Mein Profil
+            </SidebarLink>
             <SidebarLink href="/trainers" onClick={onNavigate}>
               <ContactIcon className="mr-2 h-4 w-4 shrink-0" />
               Trainer:innen
+            </SidebarLink>
+            <SidebarLink href="/users" onClick={onNavigate}>
+              <Users2Icon className="mr-2 h-4 w-4 shrink-0" />
+              Praktikanten
             </SidebarLink>
           </div>
         </div>
