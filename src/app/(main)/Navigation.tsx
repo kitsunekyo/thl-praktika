@@ -6,8 +6,8 @@ import {
   ContactIcon,
   GraduationCapIcon,
   LayoutGridIcon,
+  ListRestartIcon,
   MailsIcon,
-  MessageCircleIcon,
   UserCircleIcon,
   Users2Icon,
   UsersIcon,
@@ -84,14 +84,14 @@ export function Navigation({
               onClick={onNavigate}
             >
               <BugIcon className="mr-2 h-4 w-4 shrink-0" />
-              Problem melden
+              Problem oder Feedback senden
             </SidebarLink>
             <SidebarLink
               href="mailto:hi@mostviertel.tech?subject=Feedback"
               onClick={onNavigate}
             >
-              <MessageCircleIcon className="mr-2 h-4 w-4 shrink-0" />
-              Feedback geben
+              <ListRestartIcon className="mr-2 h-4 w-4 shrink-0" />
+              Änderungsverlauf
             </SidebarLink>
           </div>
         </div>
