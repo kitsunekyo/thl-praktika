@@ -47,7 +47,7 @@ export function Navigation({
                 Meine Praktika
               </SidebarLink>
             )}
-            <SidebarLink href="/profile" onClick={onNavigate}>
+            <SidebarLink href="/profile" onClick={onNavigate} exact>
               <UserCircleIcon className="mr-2 h-4 w-4 shrink-0" />
               Mein Profil
             </SidebarLink>
