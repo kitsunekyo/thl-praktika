@@ -169,7 +169,7 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
                         format(date.from, "dd. LLL yy")
                       )
                     ) : (
-                      <span>Filter nach Datum</span>
+                      <span>Wähle ein Datum</span>
                     )}
                     {date?.from || date?.to ? (
                       <button
@@ -225,14 +225,14 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
               </div>
               {filter.key === "traveltime" && !hasAddress ? (
                 <Alert className="text-xs text-muted-foreground">
-                  Trage deine Adresse im{" "}
+                  Vervollständige dein{" "}
                   <Link
                     href="/profile"
                     className="underline hover:no-underline"
                   >
                     Profil
                   </Link>{" "}
-                  ein, um nach Fahrtzeit filtern zu können
+                  um nach Fahrtzeit filtern zu können!
                 </Alert>
               ) : (
                 <ul className="flex flex-wrap items-center gap-1">
