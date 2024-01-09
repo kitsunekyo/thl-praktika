@@ -42,17 +42,9 @@ export default async function Page() {
       >
         Trainer:innen
       </PageTitle>
-
       <Separator className="my-4" />
-
-      <TrainerList
-        trainers={trainers}
-        requests={myRequests}
-        role={session.user.role}
-      />
-
+      <TrainerList trainers={trainers} requests={myRequests} />
       <div className="my-8" />
-
       {session.user.role === "user" && (
         <>
           <h2 className="mb-4 font-medium">Gesendete Anfragen</h2>
@@ -68,11 +60,9 @@ const REQUEST_COOLDOWN_IN_DAYS = 7;
 async function TrainerList({
   trainers,
   requests,
-  role = "user",
 }: {
   trainers: Awaited<ReturnType<typeof getTrainers>>;
   requests: Awaited<ReturnType<typeof getTrainingRequests>>;
-  role?: string;
 }) {
   if (trainers.length === 0) {
     return (
@@ -105,13 +95,13 @@ function LastLogin({ date }: { date: Date | null }) {
   return (
     <span>
       {date
-        ? `zuletzt angemeldet vor ${formatDistance(date, new Date())}`
-        : "hat sich noch nicht angemeldet"}
+        ? `zuletzt online vor ${formatDistance(date, new Date())}`
+        : "noch nicht online"}
     </span>
   );
 }
 
-function TrainerCard({
+async function TrainerCard({
   trainer,
   hasRecentlyRequested,
 }: {
@@ -128,6 +118,10 @@ function TrainerCard({
   };
   hasRecentlyRequested?: boolean;
 }) {
+  const session = await getServerSession();
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
   const address = formatAddress({
     address: trainer.address,
     city: trainer.city,
@@ -153,7 +147,7 @@ function TrainerCard({
               })}
             </AvatarFallback>
           </Avatar>
-          <h3 className="mt-4 text-sm font-medium text-gray-900">
+          <h3 className="mt-2 text-sm font-medium text-gray-900">
             {trainer.name}
           </h3>
         </Link>
@@ -178,32 +172,32 @@ function TrainerCard({
           ) : null}
         </dl>
       </div>
-      <div>
-        <div className="-mt-px flex divide-x divide-gray-200">
-          <div className="flex w-0 flex-1 gap-2">
+      <div className="-mt-px flex divide-x divide-gray-200">
+        <div className="flex w-0 flex-1 gap-2">
+          <a
+            href={`mailto:${trainer.email}`}
+            className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+          >
+            <MailIcon className="h-5 w-5" aria-hidden="true" />
+          </a>
+          {trainer.phone ? (
             <a
-              href={`mailto:${trainer.email}`}
-              className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+              href={`tel:${trainer.phone}`}
+              className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
             >
-              <MailIcon className="h-5 w-5" aria-hidden="true" />
+              <PhoneIcon className="h-5 w-5" aria-hidden="true" />
             </a>
-            {trainer.phone ? (
-              <a
-                href={`tel:${trainer.phone}`}
-                className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
-              >
-                <PhoneIcon className="h-5 w-5" aria-hidden="true" />
-              </a>
-            ) : null}
-          </div>
+          ) : null}
+        </div>
 
+        {session.user.role !== "trainer" ? (
           <div className="-ml-px flex w-0 flex-1">
             <RequestTrainingButton
               trainerId={trainer.id}
               disabled={hasRecentlyRequested}
             />
           </div>
-        </div>
+        ) : null}
       </div>
     </li>
   );
