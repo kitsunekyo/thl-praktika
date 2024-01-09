@@ -86,10 +86,7 @@ export function Navigation({
               <BugIcon className="mr-2 h-4 w-4 shrink-0" />
               Problem oder Feedback senden
             </SidebarLink>
-            <SidebarLink
-              href="mailto:hi@mostviertel.tech?subject=Feedback"
-              onClick={onNavigate}
-            >
+            <SidebarLink href="/changelog" onClick={onNavigate}>
               <ListRestartIcon className="mr-2 h-4 w-4 shrink-0" />
               Änderungsverlauf
             </SidebarLink>
