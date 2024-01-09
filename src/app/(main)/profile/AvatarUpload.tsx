@@ -14,7 +14,7 @@ export function AvatarUpload() {
       appearance={{
         button: ({ isUploading }) =>
           buttonVariants({
-            variant: isUploading ? "secondary" : "default",
+            variant: "secondary",
             size: "sm",
           }),
         container: "flex w-max items-start",
@@ -27,7 +27,7 @@ export function AvatarUpload() {
           ) : (
             "Profilbild wählen"
           ),
-        allowedContent: "Bilddatei (.jpg, .png, .gif, <2MB)",
+        allowedContent: ".jpg, oder .png. maximal 2MB",
       }}
       endpoint="imageUploader"
       onClientUploadComplete={async (res) => {

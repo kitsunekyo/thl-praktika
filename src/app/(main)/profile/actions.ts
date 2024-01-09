@@ -3,6 +3,7 @@
 import { User } from "@prisma/client";
 import { hash } from "bcrypt";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 import { getServerSession } from "@/lib/getServerSession";
 import { prisma } from "@/lib/prisma";
@@ -85,4 +86,19 @@ export async function changePassword(password: string) {
       password: await hash(password, 12),
     },
   });
+}
+
+export async function deleteAccount() {
+  const session = await getServerSession();
+  if (!session) {
+    return { error: "not authenticated" };
+  }
+
+  await prisma.user.delete({
+    where: {
+      id: session.user.id,
+    },
+  });
+
+  redirect("/login");
 }
