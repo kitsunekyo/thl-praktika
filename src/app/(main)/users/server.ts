@@ -4,6 +4,9 @@ import { prisma } from "@/lib/prisma";
 
 export async function getUserProfiles() {
   return await prisma.user.findMany({
+    where: {
+      role: "user",
+    },
     select: {
       id: true,
       name: true,
