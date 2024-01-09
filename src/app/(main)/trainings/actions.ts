@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
+import { formatTrainingDate } from "@/lib/date";
 import { getServerSession } from "@/lib/getServerSession";
 import { sendRegistrationCancelledMail } from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
@@ -82,7 +83,10 @@ export async function unregister(id: string) {
     to: registration.training.author.email,
     trainerName: registration.training.author.name || "",
     user: currentUser.name || currentUser.email,
-    date: registration.training.start.toLocaleString(),
+    date: formatTrainingDate(
+      registration.training.start,
+      registration.training.end,
+    ),
   });
 
   revalidatePath("/");
