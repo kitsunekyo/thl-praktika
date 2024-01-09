@@ -3,7 +3,6 @@
 import { SendIcon } from "lucide-react";
 import { useTransition } from "react";
 
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
 import { createTrainingRequest } from "./requests/actions";
@@ -49,16 +48,20 @@ export function RequestTrainingButton({
 
   if (disabled) {
     return (
-      <Button size="sm" disabled={disabled}>
-        Praktikum angefragt
-      </Button>
+      <div className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-400">
+        Offene Anfrage
+      </div>
     );
   }
 
   return (
-    <Button size="sm" disabled={loading} onClick={handleSend}>
-      <SendIcon className="mr-2 h-4 w-4" />
+    <button
+      className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+      disabled={loading}
+      onClick={handleSend}
+    >
+      <SendIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
       Praktikum anfragen
-    </Button>
+    </button>
   );
 }

@@ -18,7 +18,7 @@ export default async function Profile({
       <div className="mb-6 space-y-4">
         <ProfileImage src={profile.image} />
         <div>
-          <h1>{profile.name}</h1>
+          <h1 className="font-medium">{profile.name}</h1>
           <div className="text-sm text-gray-500">{role}</div>
         </div>
         <div className="mt-6 border-t border-gray-100">

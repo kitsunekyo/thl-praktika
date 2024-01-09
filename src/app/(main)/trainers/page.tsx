@@ -1,9 +1,9 @@
 import { differenceInDays, formatDistance } from "date-fns";
+import { MailIcon, PhoneIcon } from "lucide-react";
 import Link from "next/link";
 
 import { PageTitle } from "@/components/PageTitle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
   Table,
@@ -63,6 +63,8 @@ export default async function Page() {
   );
 }
 
+const REQUEST_COOLDOWN_IN_DAYS = 7;
+
 async function TrainerList({
   trainers,
   requests,
@@ -80,76 +82,130 @@ async function TrainerList({
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {trainers.map((trainer) => {
-        const address = formatAddress({
-          address: trainer.address,
-          city: trainer.city,
-          zipCode: trainer.zipCode,
-        });
-        const googleMapsUrl = `https://www.google.com/maps/place/${address.replaceAll(
-          " ",
-          "+",
-        )}`;
-        const requestCooldownInDays = 7;
-        const hasRecentlyRequested = Boolean(
-          requests
-            .filter((r) => r.trainerId === trainer.id)
-            .find(
-              (r) =>
-                differenceInDays(new Date(), new Date(r.createdAt)) <
-                requestCooldownInDays,
-            ),
-        );
-
-        return (
-          <Card key={trainer.id} className="flex flex-col gap-4 p-4">
-            <div className="flex grow gap-4">
-              <Avatar className="shrink-0" size="lg">
-                <AvatarImage src={trainer.image || "/img/avatar.jpg"} />
-                <AvatarFallback>
-                  {getInitials({
-                    name: trainer.name,
-                    email: trainer.email,
-                  })}
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex flex-1 flex-col justify-between text-sm">
-                <dl className="text-muted-foreground">
-                  {trainer.name && (
-                    <dd className="font-medium text-black">{trainer.name}</dd>
-                  )}
-                  <dd>{trainer.email}</dd>
-                  {trainer.phone && <dd>{trainer.phone}</dd>}
-                  {!!address && (
-                    <Link
-                      href={googleMapsUrl}
-                      target="_blank"
-                      className="underline hover:no-underline"
-                    >
-                      {address}
-                    </Link>
-                  )}
-                  <dd className="mt-2 text-xs">
-                    {trainer.lastLogin
-                      ? `zuletzt angemeldet vor ${formatDistance(
-                          trainer.lastLogin,
-                          new Date(),
-                        )}`
-                      : "hat sich noch nicht angemeldet"}
-                  </dd>
-                </dl>
-              </div>
-            </div>
-            {role !== "trainer" && (
-              <RequestTrainingButton
-                trainerId={trainer.id}
-                disabled={hasRecentlyRequested}
-              />
-            )}
-          </Card>
-        );
-      })}
+      {trainers.map((trainer) => (
+        <TrainerCard
+          key={trainer.id}
+          trainer={trainer}
+          hasRecentlyRequested={Boolean(
+            requests
+              .filter((r) => r.trainerId === trainer.id)
+              .find(
+                (r) =>
+                  differenceInDays(new Date(), new Date(r.createdAt)) <
+                  REQUEST_COOLDOWN_IN_DAYS,
+              ),
+          )}
+        />
+      ))}
     </div>
+  );
+}
+
+function LastLogin({ date }: { date: Date | null }) {
+  return (
+    <span>
+      {date
+        ? `zuletzt angemeldet vor ${formatDistance(date, new Date())}`
+        : "hat sich noch nicht angemeldet"}
+    </span>
+  );
+}
+
+function TrainerCard({
+  trainer,
+  hasRecentlyRequested,
+}: {
+  trainer: {
+    id: string;
+    address: string | null;
+    city: string | null;
+    zipCode: string | null;
+    email: string;
+    phone: string | null;
+    name: string | null;
+    image: string | null;
+    lastLogin: Date | null;
+  };
+  hasRecentlyRequested?: boolean;
+}) {
+  const address = formatAddress({
+    address: trainer.address,
+    city: trainer.city,
+    zipCode: trainer.zipCode,
+  });
+  const googleMapsUrl = `https://www.google.com/maps/place/${address.replaceAll(
+    " ",
+    "+",
+  )}`;
+  return (
+    <li
+      key={trainer.id}
+      className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
+    >
+      <div className="flex flex-1 flex-col p-8">
+        <Link href={`/profile/${trainer.id}`}>
+          <Avatar className="mx-auto shrink-0" size="xl">
+            <AvatarImage src={trainer.image || "/img/avatar.jpg"} />
+            <AvatarFallback>
+              {getInitials({
+                name: trainer.name,
+                email: trainer.email,
+              })}
+            </AvatarFallback>
+          </Avatar>
+          <h3 className="mt-4 text-sm font-medium text-gray-900">
+            {trainer.name}
+          </h3>
+        </Link>
+        <dl className="mt-1 flex flex-grow flex-col justify-between">
+          <dt className="sr-only">Zuletzt Online</dt>
+          <dd className="my-2">
+            <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+              <LastLogin date={trainer.lastLogin} />
+            </span>
+          </dd>
+          <dt className="sr-only">Adresse</dt>
+          <dd className="text-sm text-gray-500">
+            <a href={googleMapsUrl}>{formatAddress(trainer)}</a>
+          </dd>
+          <dt className="sr-only">Email</dt>
+          <dd className="text-sm text-gray-500">{trainer.email}</dd>
+          {trainer.phone ? (
+            <>
+              <dt className="sr-only">Telefon</dt>
+              <dd className="text-sm text-gray-500">{trainer.phone}</dd>
+            </>
+          ) : null}
+        </dl>
+      </div>
+      <div>
+        <div className="-mt-px flex divide-x divide-gray-200">
+          <div className="flex w-0 flex-1 gap-2">
+            <a
+              href={`mailto:${trainer.email}`}
+              className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+            >
+              <MailIcon className="h-5 w-5" aria-hidden="true" />
+            </a>
+            {trainer.phone ? (
+              <a
+                href={`tel:${trainer.phone}`}
+                className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+              >
+                <PhoneIcon className="h-5 w-5" aria-hidden="true" />
+              </a>
+            ) : null}
+          </div>
+
+          <div className="-ml-px flex w-0 flex-1">
+            <RequestTrainingButton
+              trainerId={trainer.id}
+              disabled={hasRecentlyRequested}
+            />
+          </div>
+        </div>
+      </div>
+    </li>
   );
 }
 
