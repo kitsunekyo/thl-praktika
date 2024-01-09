@@ -199,7 +199,7 @@ export function TrainingForm({
               <FormLabel>Beschreibung</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Welpengruppe, Kleinhunde. Abstand halten."
+                  placeholder="Welpengruppe, Kleinhunde. Abstand halten! Zusätzliche Wegbeschreibung."
                   {...field}
                 />
               </FormControl>
