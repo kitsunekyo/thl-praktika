@@ -128,8 +128,8 @@ function SidebarLink({
 
 function Title({ children }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
+    <div className="px-4 text-xs font-medium leading-6 text-muted-foreground">
       {children}
-    </h2>
+    </div>
   );
 }
