@@ -26,6 +26,9 @@ export function Navigation({
   role?: string;
   onNavigate?: () => void;
 }) {
+  const canRegister = role === "user" || role === "trainer";
+  const canCreateTrainings = role === "trainer" || role === "admin";
+
   return (
     <aside className={cn("relative pb-12", className)}>
       <div className="sticky top-0 space-y-4 py-6">
@@ -35,13 +38,13 @@ export function Navigation({
               <LayoutGridIcon className="mr-2 h-4 w-4 shrink-0" />
               Praktika
             </SidebarLink>
-            {role === "user" && (
+            {canRegister && (
               <SidebarLink href="/trainings" onClick={onNavigate}>
                 <CalendarCheck2Icon className="mr-2 h-4 w-4 shrink-0" />
                 Meine Praktika
               </SidebarLink>
             )}
-            {role !== "user" && (
+            {canCreateTrainings && (
               <SidebarLink href="/trainer" exact onClick={onNavigate}>
                 <GraduationCapIcon className="mr-2 h-4 w-4 shrink-0" />
                 Meine Praktika

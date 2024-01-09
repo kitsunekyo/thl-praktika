@@ -48,7 +48,7 @@ export default withAuth(
     if (firstPathSegment === "admin" && role !== "admin") {
       return NextResponse.redirect(new URL("/", req.url));
     }
-    if (firstPathSegment === "trainer" && role !== "trainer") {
+    if (firstPathSegment === "trainer" && role === "user") {
       return NextResponse.redirect(new URL("/", req.url));
     }
 
