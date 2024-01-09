@@ -1,7 +1,6 @@
+import { InviteUserForm } from "@/components/InviteUserForm";
 import { PageTitle } from "@/components/PageTitle";
 import { Separator } from "@/components/ui/separator";
-
-import { InviteUserForm } from "./InviteUserForm";
 
 export default function CreateUserPage() {
   return (

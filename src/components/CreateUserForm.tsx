@@ -6,6 +6,7 @@ import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { createUser } from "@/app/(main)/admin/users/actions";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -24,8 +25,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-
-import { createUser } from "../actions";
 
 export const userSchema = z.object({
   email: z.string().email(),
@@ -52,7 +51,7 @@ export function CreateUserForm() {
   return (
     <Form {...form}>
       <form
-        className="max-w-[300px] space-y-6"
+        className="max-w-lg space-y-6"
         onSubmit={form.handleSubmit((data: z.infer<typeof userSchema>) => {
           startTransition(async () => {
             const res = await createUser(
@@ -104,9 +103,9 @@ export function CreateUserForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="user">user</SelectItem>
-                  <SelectItem value="trainer">trainer</SelectItem>
-                  <SelectItem value="admin">admin</SelectItem>
+                  <SelectItem value="user">User</SelectItem>
+                  <SelectItem value="trainer">Trainer</SelectItem>
+                  <SelectItem value="admin">Admin</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />

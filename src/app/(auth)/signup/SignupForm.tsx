@@ -70,7 +70,7 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
                 toast({
                   title: "Registrierung fehlgeschlagen",
                   description:
-                    "Hast du eine Einladung mit dieser Email Adresse erhalten? Bitte versuche es erneut.",
+                    "Hast du dich mit der bei THL hinterlegten E-Mail registriert? Wenn du eine andere E-Mail-Adresse verwenden möchtest, kontaktiere mich bitte unter hi@mostviertel.tech.",
                   variant: "destructive",
                 });
                 return;

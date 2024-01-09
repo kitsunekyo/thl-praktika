@@ -6,10 +6,12 @@ import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { inviteUser } from "@/app/(main)/admin/invitations/actions";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -25,12 +27,13 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 
-import { inviteUser } from "../actions";
+import { Switch } from "./ui/switch";
 
 export const userSchema = z.object({
   email: z.string().email(),
   name: z.string().optional(),
   role: z.union([z.literal("user"), z.literal("trainer"), z.literal("admin")]),
+  sendEmail: z.boolean(),
 });
 
 export function InviteUserForm() {
@@ -41,6 +44,7 @@ export function InviteUserForm() {
       email: "",
       name: "",
       role: "user",
+      sendEmail: false,
     },
   });
   const [pending, startTransition] = useTransition();
@@ -48,10 +52,15 @@ export function InviteUserForm() {
   return (
     <Form {...form}>
       <form
-        className="max-w-[300px] space-y-6"
+        className="max-w-lg space-y-6"
         onSubmit={form.handleSubmit((data: z.infer<typeof userSchema>) => {
           startTransition(async () => {
-            const res = await inviteUser(data.email, data.name, data.role);
+            const res = await inviteUser(
+              data.email,
+              data.name,
+              data.role,
+              data.sendEmail,
+            );
             if (res?.error) {
               toast({
                 title: "Fehler beim Einladen",
@@ -95,9 +104,9 @@ export function InviteUserForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="user">user</SelectItem>
-                  <SelectItem value="trainer">trainer</SelectItem>
-                  <SelectItem value="admin">admin</SelectItem>
+                  <SelectItem value="user">User</SelectItem>
+                  <SelectItem value="trainer">Trainer</SelectItem>
+                  <SelectItem value="admin">Admin</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -119,6 +128,26 @@ export function InviteUserForm() {
                 />
               </FormControl>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="sendEmail"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+              <div className="space-y-0.5">
+                <FormLabel>Einladungs Email</FormLabel>
+                <FormDescription>
+                  Sende eine Einladungs-Email an den Benutzer
+                </FormDescription>
+              </div>
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
             </FormItem>
           )}
         />

@@ -9,6 +9,7 @@ export async function inviteUser(
   email: string,
   name = "",
   role: "user" | "trainer" | "admin" = "user",
+  sendEmail: boolean = false,
 ) {
   const invitation = await prisma.invitation.findFirst({
     where: {
@@ -48,6 +49,9 @@ export async function inviteUser(
     };
   }
   revalidatePath("/admin/invitations");
+  if (!sendEmail) {
+    return;
+  }
   sendInvitationMail({ to: email, name, role, id: inv.id });
 }
 
