@@ -17,6 +17,7 @@ export async function getUserProfiles() {
       city: true,
       zipCode: true,
       lastLogin: true,
+      image: true,
     },
   });
 }
