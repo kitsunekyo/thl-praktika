@@ -40,7 +40,7 @@ export function MobileNav({
           <SheetHeader className="my-8 text-left">
             <Logo onNavigate={close} />
           </SheetHeader>
-          <div className="-ml-6 -mr-6">
+          <div className="-ml-6 -mr-6 overflow-y-auto">
             <Navigation
               role={role}
               onNavigate={() => setMobileMenuOpen(false)}
