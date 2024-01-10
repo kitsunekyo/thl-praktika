@@ -117,13 +117,7 @@ function TrainingLocation({
     <div className="flex items-start gap-2 leading-none">
       <MapPinIcon className="h-4 w-4 text-muted-foreground" />
       <div className="space-y-1">
-        <Link
-          href={googleMapsUrl}
-          target="_blank"
-          className="underline hover:no-underline"
-        >
-          {location}
-        </Link>
+        {location}
         {!!traveltime && (
           <p className="text-xs">
             {formatDuration(secondsToDuration(traveltime), {
