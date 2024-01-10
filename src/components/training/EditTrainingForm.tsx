@@ -209,7 +209,7 @@ export function EditTrainingForm({
             <FormItem>
               <FormLabel>Maximale Anzahl an Praktikanten (1-6)*</FormLabel>
               <FormControl>
-                <Input type="number" min={1} max={6} disabled {...field} />
+                <Input type="number" {...field} min={1} max={6} disabled />
               </FormControl>
               <FormMessage />
               <FormDescription>
