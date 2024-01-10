@@ -55,8 +55,8 @@ export async function sendTrainingRegistrationNotificationMail({
     TemplateAlias: "training-registration-notification",
     MessageStream: "outbound",
     TemplateModel: {
-      product_url: process.env.NEXTAUTH_URL,
       trainer_name: trainerName,
+      product_url: process.env.NEXTAUTH_URL,
     },
   };
   if (process.env.NODE_ENV === "production") {
@@ -143,9 +143,9 @@ export async function sendTrainingCancelledMail({
     TemplateAlias: "training-cancelled",
     MessageStream: "outbound",
     TemplateModel: {
-      product_url: process.env.NEXTAUTH_URL,
       trainer,
       date,
+      product_url: process.env.NEXTAUTH_URL,
       action_url: process.env.NEXTAUTH_URL,
     },
   };
@@ -199,12 +199,10 @@ export async function sendRegistrationCancelledMail({
 
 export async function sendTrainingUpdatedMail({
   to,
-  userName,
   trainerName,
   training,
 }: {
   to: string;
-  userName: string;
   trainerName: string;
   training: Pick<
     Training,
@@ -217,7 +215,6 @@ export async function sendTrainingUpdatedMail({
     TemplateAlias: "training-updated",
     MessageStream: "outbound",
     TemplateModel: {
-      user_name: userName,
       trainer_name: trainerName,
       date: formatTrainingDate(training.start, training.end),
       description: training.description || "",

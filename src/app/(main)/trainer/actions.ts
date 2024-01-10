@@ -178,7 +178,6 @@ export async function updateTraining(
   registeredUsers.forEach((user) => {
     sendTrainingUpdatedMail({
       to: user.email,
-      userName: user.name || "",
       trainerName: session.user.name || "Ein:e Trainer:in",
       training: data,
     });
