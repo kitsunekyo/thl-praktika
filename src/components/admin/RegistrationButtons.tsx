@@ -1,9 +1,9 @@
 "use client";
 
+import { deleteRegistration } from "@/app/(main)/admin/registrations/actions";
 import { Button } from "@/components/ui/button";
 
-import { deleteRegistration } from "./actions";
-export function ActionButtons({ id }: { id: string }) {
+export function RegistrationButtons({ id }: { id: string }) {
   return (
     <div className="flex items-center justify-end gap-2">
       <Button

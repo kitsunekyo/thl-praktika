@@ -1,13 +1,13 @@
 "use client";
 
 import { TrashIcon } from "lucide-react";
+import { User } from "next-auth";
 import { useTransition } from "react";
 
+import { deleteUser } from "@/app/(main)/admin/users/actions";
 import { Button } from "@/components/ui/button";
 
-import { deleteTrainingRequest } from "./requests/actions";
-
-export function DeleteButton({ requestId }: { requestId: string }) {
+export function UserButtons({ user }: { user: User }) {
   const [pending, startTransition] = useTransition();
 
   return (
@@ -18,7 +18,7 @@ export function DeleteButton({ requestId }: { requestId: string }) {
         disabled={pending}
         onClick={() => {
           startTransition(() => {
-            deleteTrainingRequest(requestId);
+            deleteUser(user.id);
           });
         }}
       >

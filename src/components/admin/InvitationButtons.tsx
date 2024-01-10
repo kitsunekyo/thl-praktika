@@ -4,10 +4,12 @@ import { Invitation } from "@prisma/client";
 import { MailQuestionIcon, TrashIcon } from "lucide-react";
 import { useTransition } from "react";
 
+import {
+  deleteInvitation,
+  resendInvitation,
+} from "@/app/(main)/admin/invitations/actions";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-
-import { deleteInvitation, resendInvitation } from "./actions";
 
 export function InvitationButtons({ invitation }: { invitation: Invitation }) {
   const [pending, startTransition] = useTransition();

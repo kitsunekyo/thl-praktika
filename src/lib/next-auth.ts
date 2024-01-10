@@ -7,7 +7,7 @@ import Google from "next-auth/providers/google";
 import { signOut } from "next-auth/react";
 
 import { prisma } from "./prisma";
-import { Role } from "../../next-auth";
+import type { Role } from "../../next-auth";
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),

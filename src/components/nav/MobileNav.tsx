@@ -6,7 +6,7 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 
-import { Navigation } from "@/app/(main)/Navigation";
+import { Navigation } from "@/components/Navigation";
 import { getInitials } from "@/lib/utils";
 
 import { Logo } from "../Logo";

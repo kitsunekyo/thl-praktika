@@ -1,3 +1,4 @@
+import { RegistrationButtons } from "@/components/admin/RegistrationButtons";
 import { TrainingDate } from "@/components/training/TrainingDate";
 import {
   Table,
@@ -8,8 +9,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { prisma } from "@/lib/prisma";
-
-import { ActionButtons } from "./ActionButtons";
 
 async function getRegistrations() {
   return await prisma.registration.findMany({
@@ -62,7 +61,7 @@ export default async function RegistrationsPage() {
                 registration.training.author.email}
             </TableCell>
             <TableCell className="text-right">
-              <ActionButtons id={registration.id} />
+              <RegistrationButtons id={registration.id} />
             </TableCell>
           </TableRow>
         ))}

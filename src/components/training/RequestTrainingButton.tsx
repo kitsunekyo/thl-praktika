@@ -3,9 +3,8 @@
 import { SendIcon } from "lucide-react";
 import { useTransition } from "react";
 
+import { createTrainingRequest } from "@/app/(main)/trainers/requests/actions";
 import { useToast } from "@/components/ui/use-toast";
-
-import { createTrainingRequest } from "./requests/actions";
 
 export function RequestTrainingButton({
   trainerId,

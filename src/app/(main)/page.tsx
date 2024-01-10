@@ -3,6 +3,7 @@ import { endOfDay, startOfDay } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 
+import { CreateTrainingButton } from "@/components/training/CreateTrainingButton";
 import {
   RegisterButton,
   UnregisterButton,
@@ -17,7 +18,6 @@ import {
   computeTraveltime,
 } from "@/lib/training";
 
-import { CreateTrainingButton } from "./CreateTrainingButton";
 import { getProfile } from "./profile/actions";
 import { getTrainings } from "./trainings/actions";
 
