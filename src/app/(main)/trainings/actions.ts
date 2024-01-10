@@ -16,17 +16,40 @@ export async function register(id: string) {
     };
   }
 
-  const isRegisteredAlready =
-    (await prisma.registration.findFirst({
-      where: {
-        userId: currentUser.id,
-        id: id,
-      },
-    })) !== null;
+  const training = await prisma.training.findFirst({
+    where: {
+      id: id,
+    },
+    include: {
+      registrations: true,
+    },
+  });
+
+  if (!training) {
+    revalidatePath("/trainings");
+    return {
+      error: "training not found",
+    };
+  }
+
+  const isRegisteredAlready = training.registrations
+    .map((r) => r.userId)
+    .includes(currentUser.id);
 
   if (isRegisteredAlready) {
+    revalidatePath("/trainings");
     return {
       error: "already registered",
+    };
+  }
+
+  const isMaximumCapacity =
+    training.registrations.length >= training.maxInterns;
+
+  if (isMaximumCapacity) {
+    revalidatePath("/trainings");
+    return {
+      error: "maximum capacity reached",
     };
   }
 
@@ -36,7 +59,7 @@ export async function register(id: string) {
       userId: currentUser.id,
     },
   });
-  revalidatePath("/");
+  revalidatePath("/trainings");
 }
 
 export async function unregister(id: string) {
