@@ -78,7 +78,7 @@ export async function deleteTraining(id: string) {
   revalidatePath("/trainers");
 }
 
-const trainingSchema = z.object({
+const createTrainingSchema = z.object({
   description: z.string(),
   start: z.date(),
   end: z.date(),
@@ -88,16 +88,16 @@ const trainingSchema = z.object({
   zipCode: z.string(),
 });
 
-type CreateTraining = z.infer<typeof trainingSchema>;
-
-export async function createTraining(payload: CreateTraining) {
+export async function createTraining(
+  payload: z.infer<typeof createTrainingSchema>,
+) {
   const session = await getServerSession();
   if (!session?.user) {
     return {
       error: "not authorized",
     };
   }
-  const training = trainingSchema.parse(payload);
+  const training = createTrainingSchema.parse(payload);
 
   await prisma.training.create({
     data: {
@@ -133,9 +133,18 @@ export async function createTraining(payload: CreateTraining) {
   revalidatePath("/trainers/requests");
 }
 
+const updateTrainingSchema = z.object({
+  description: z.string(),
+  start: z.date(),
+  end: z.date(),
+  address: z.string(),
+  city: z.string(),
+  zipCode: z.string(),
+});
+
 export async function updateTraining(
   id: string,
-  payload: Omit<z.infer<typeof trainingSchema>, "maxInterns">,
+  payload: z.infer<typeof updateTrainingSchema>,
 ) {
   const session = await getServerSession();
   if (!session?.user) {
@@ -143,7 +152,7 @@ export async function updateTraining(
       error: "not authorized",
     };
   }
-  const data = trainingSchema.parse(payload);
+  const data = updateTrainingSchema.parse(payload);
 
   await prisma.training.update({
     where: {
