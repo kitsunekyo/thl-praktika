@@ -1,4 +1,5 @@
 import { Training } from "@prisma/client";
+import { captureException } from "@sentry/nextjs";
 import { ServerClient } from "postmark";
 
 import { formatTrainingDate } from "./date";
@@ -31,8 +32,12 @@ export async function sendInvitationMail({
     },
   };
   if (process.env.NODE_ENV === "production") {
-    await client.sendEmailWithTemplate(payload);
-    return;
+    try {
+      await client.sendEmailWithTemplate(payload);
+      return;
+    } catch (e) {
+      captureException(e);
+    }
   }
   console.log("mock: mail sent", payload);
 }
@@ -55,8 +60,12 @@ export async function sendTrainingRegistrationNotificationMail({
     },
   };
   if (process.env.NODE_ENV === "production") {
-    await client.sendEmailWithTemplate(payload);
-    return;
+    try {
+      await client.sendEmailWithTemplate(payload);
+      return;
+    } catch (e) {
+      captureException(e);
+    }
   }
   console.log("mock: mail sent", payload);
 }
@@ -79,8 +88,12 @@ export async function sendTrainingRequestReceivedMail({
     },
   };
   if (process.env.NODE_ENV === "production") {
-    await client.sendEmailWithTemplate(payload);
-    return;
+    try {
+      await client.sendEmailWithTemplate(payload);
+      return;
+    } catch (e) {
+      captureException(e);
+    }
   }
   console.log("mock: mail sent", payload);
 }
@@ -105,8 +118,12 @@ export async function sendForgotPasswordMail({
     },
   };
   if (process.env.NODE_ENV === "production") {
-    await client.sendEmailWithTemplate(payload);
-    return;
+    try {
+      await client.sendEmailWithTemplate(payload);
+      return;
+    } catch (e) {
+      captureException(e);
+    }
   }
   console.log("mock: mail sent", payload);
 }
@@ -133,8 +150,12 @@ export async function sendTrainingCancelledMail({
     },
   };
   if (process.env.NODE_ENV === "production") {
-    await client.sendEmailWithTemplate(payload);
-    return;
+    try {
+      await client.sendEmailWithTemplate(payload);
+      return;
+    } catch (e) {
+      captureException(e);
+    }
   }
 
   console.log("mock: mail sent", payload);
@@ -165,8 +186,12 @@ export async function sendRegistrationCancelledMail({
     },
   };
   if (process.env.NODE_ENV === "production") {
-    await client.sendEmailWithTemplate(payload);
-    return;
+    try {
+      await client.sendEmailWithTemplate(payload);
+      return;
+    } catch (e) {
+      captureException(e);
+    }
   }
 
   console.log("mock: mail sent", payload);
@@ -202,8 +227,12 @@ export async function sendTrainingUpdatedMail({
     },
   };
   if (process.env.NODE_ENV === "production") {
-    await client.sendEmailWithTemplate(payload);
-    return;
+    try {
+      await client.sendEmailWithTemplate(payload);
+      return;
+    } catch (e) {
+      captureException(e);
+    }
   }
 
   console.log("mock: mail sent", payload);
