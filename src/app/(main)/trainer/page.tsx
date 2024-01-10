@@ -2,6 +2,7 @@ import { Registration, Training, User } from "@prisma/client";
 import { formatDistance } from "date-fns";
 
 import { PageTitle } from "@/components/PageTitle";
+import { CreateTrainingButton } from "@/components/training/CreateTrainingButton";
 import { TrainingActions } from "@/components/training/TrainingActions";
 import { TrainingCard } from "@/components/training/TrainingCard";
 import { Separator } from "@/components/ui/separator";
@@ -15,7 +16,6 @@ import {
 } from "@/components/ui/table";
 
 import { getMyTrainings } from "./actions";
-import { CreateTrainingButton } from "../CreateTrainingButton";
 import { getProfile } from "../profile/actions";
 import { getTrainingRequests } from "../trainers/requests/actions";
 

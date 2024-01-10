@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 
-import { changePassword } from "./actions";
+import { changePassword } from "../app/(main)/profile/actions";
 
 export const loginSchema = z.object({
   password: z

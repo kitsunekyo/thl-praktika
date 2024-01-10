@@ -1,11 +1,6 @@
 "use client";
 import { Registration, Training, User } from "@prisma/client";
-import {
-  ChevronsDownUpIcon,
-  ChevronsUpDownIcon,
-  MailIcon,
-  MapIcon,
-} from "lucide-react";
+import { ChevronsDownUpIcon, ChevronsUpDownIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 

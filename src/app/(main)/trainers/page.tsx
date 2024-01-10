@@ -3,6 +3,7 @@ import { MailIcon, PhoneIcon } from "lucide-react";
 import Link from "next/link";
 
 import { PageTitle } from "@/components/PageTitle";
+import { RequestTrainingButton } from "@/components/training/RequestTrainingButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -19,7 +20,6 @@ import { getInitials } from "@/lib/utils";
 
 import { getTrainers } from "./actions";
 import { getTrainingRequests } from "./requests/actions";
-import { RequestTrainingButton } from "./RequestTrainingButton";
 
 export default async function Page() {
   const session = await getServerSession();

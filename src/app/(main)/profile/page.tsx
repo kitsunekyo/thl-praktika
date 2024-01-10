@@ -1,12 +1,11 @@
 import Image from "next/image";
 
+import { AvatarUpload } from "@/components/AvatarUpload";
+import { ChangePasswordForm } from "@/components/ChangePasswordForm";
 import { DeleteAccountButton } from "@/components/DeleteAccountButton";
-import { Button } from "@/components/ui/button";
+import { ProfileForm } from "@/components/ProfileForm";
 
 import { getProfile } from "./actions";
-import { AvatarUpload } from "./AvatarUpload";
-import { ChangePasswordForm } from "./ChangePasswordForm";
-import { ProfileForm } from "./ProfileForm";
 
 export default async function Profile() {
   const user = await getProfile();

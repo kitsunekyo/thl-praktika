@@ -4,7 +4,7 @@ import { MapPinIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-import { CollapsibleRegistrations } from "@/app/(main)/CollapsibleRegistrations";
+import { CollapsibleRegistrations } from "@/components/training/CollapsibleRegistrations";
 import { secondsToDuration } from "@/lib/date";
 import { formatAddress } from "@/lib/user";
 import { getInitials } from "@/lib/utils";

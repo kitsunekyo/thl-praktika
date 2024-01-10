@@ -1,6 +1,7 @@
 import { formatDistance } from "date-fns";
 import Link from "next/link";
 
+import { UserButtons } from "@/components/admin/UserButtons";
 import { PageTitle } from "@/components/PageTitle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,7 +16,6 @@ import {
 } from "@/components/ui/table";
 
 import { getUsers } from "./actions";
-import { UserButtons } from "./UserButtons";
 
 export default async function UserPage() {
   return (

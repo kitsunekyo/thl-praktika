@@ -6,7 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { UploadButton } from "@/components/uploadthing";
 
-import { updateProfilePicture } from "./actions";
+import { updateProfilePicture } from "../app/(main)/profile/actions";
 
 export function AvatarUpload() {
   return (
