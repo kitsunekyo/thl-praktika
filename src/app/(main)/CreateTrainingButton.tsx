@@ -4,7 +4,7 @@ import { User } from "@prisma/client";
 import { CalendarPlusIcon } from "lucide-react";
 import { useState } from "react";
 
-import { TrainingForm } from "@/components/training/TrainingForm";
+import { CreateTrainingForm } from "@/components/training/CreateTrainingForm";
 import {
   Dialog,
   DialogContent,
@@ -33,7 +33,7 @@ export function CreateTrainingButton({
           <DialogHeader>
             <DialogTitle className="mb-4">Praktikum erstellen</DialogTitle>
           </DialogHeader>
-          <TrainingForm
+          <CreateTrainingForm
             onSubmit={() => setIsDialogOpen(false)}
             profile={profile}
           />

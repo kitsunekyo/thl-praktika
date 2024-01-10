@@ -65,7 +65,7 @@ export const formSchema = z
     },
   );
 
-export function TrainingForm({
+export function CreateTrainingForm({
   profile,
   onSubmit,
 }: {
