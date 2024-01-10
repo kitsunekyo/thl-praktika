@@ -102,8 +102,7 @@ export async function unregister(id: string) {
     },
   });
 
-  console.log("DEBUG - unregister");
-  console.log({
+  console.warn({
     date: {
       start: registration.training.start,
       end: registration.training.end,

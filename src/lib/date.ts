@@ -6,25 +6,38 @@ import {
   sub,
 } from "date-fns";
 import { deAT } from "date-fns/locale";
-import { format } from "date-fns-tz";
+import { formatInTimeZone } from "date-fns-tz";
 
 setDefaultOptions({
   locale: deAT,
 });
 
 export function formatTrainingDate(startDate: Date, endDate: Date) {
-  const date = format(new Date(startDate), "do MMM yy", {
-    timeZone: "Europe/Vienna",
-    locale: deAT,
-  });
-  const startTime = format(new Date(startDate), "HH:mm", {
-    timeZone: "Europe/Vienna",
-    locale: deAT,
-  });
-  const endTime = format(new Date(endDate), "HH:mm", {
-    timeZone: "Europe/Vienna",
-    locale: deAT,
-  });
+  console.warn("timezone", Intl.DateTimeFormat().resolvedOptions().timeZone);
+  const date = formatInTimeZone(
+    new Date(startDate),
+    "Europe/Vienna",
+    "do MMM yy",
+    {
+      locale: deAT,
+    },
+  );
+  const startTime = formatInTimeZone(
+    new Date(startDate),
+    "Europe/Vienna",
+    "HH:mm",
+    {
+      locale: deAT,
+    },
+  );
+  const endTime = formatInTimeZone(
+    new Date(endDate),
+    "Europe/Vienna",
+    "HH:mm",
+    {
+      locale: deAT,
+    },
+  );
 
   return `${date} von ${startTime} bis ${endTime}`;
 }
