@@ -3,8 +3,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@prisma/client";
-import { add, format, set, setDefaultOptions } from "date-fns";
-import { deAT } from "date-fns/locale";
+import { add, set } from "date-fns";
 import { CalendarIcon, InfoIcon } from "lucide-react";
 import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -29,12 +28,8 @@ import {
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { getFixedDate } from "@/lib/date";
+import { formatAT, getFixedDate } from "@/lib/date";
 import { cn } from "@/lib/utils";
-
-setDefaultOptions({
-  locale: deAT,
-});
 
 export const formSchema = z
   .object({
@@ -138,7 +133,7 @@ export function CreateTrainingForm({
                         )}
                       >
                         {field.value ? (
-                          format(field.value, "PPP")
+                          formatAT(field.value, "PPP")
                         ) : (
                           <span>Datum wählen</span>
                         )}

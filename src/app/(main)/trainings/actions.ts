@@ -102,17 +102,6 @@ export async function unregister(id: string) {
     },
   });
 
-  console.warn({
-    date: {
-      start: registration.training.start,
-      end: registration.training.end,
-    },
-    formatted: formatTrainingDate(
-      registration.training.start,
-      registration.training.end,
-    ),
-  });
-
   sendRegistrationCancelledMail({
     to: registration.training.author.email,
     trainerName: registration.training.author.name || "",

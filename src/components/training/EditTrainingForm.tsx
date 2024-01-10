@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Training } from "@prisma/client";
-import { format, set } from "date-fns";
+import { set } from "date-fns";
 import { CalendarIcon, InfoIcon } from "lucide-react";
 import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { getFixedDate } from "@/lib/date";
+import { formatAT, getFixedDate } from "@/lib/date";
 import { cn } from "@/lib/utils";
 
 export const formSchema = z
@@ -76,8 +76,8 @@ export function EditTrainingForm({
       description: training.description || "",
       maxInterns: training.maxInterns,
       date: getFixedDate(training.start),
-      startTime: format(training.start, "HH:mm"),
-      endTime: format(training.end, "HH:mm"),
+      startTime: formatAT(training.start, "HH:mm"),
+      endTime: formatAT(training.end, "HH:mm"),
       city: training.city || "",
       zipCode: training.zipCode || "",
       address: training.address || "",
@@ -133,7 +133,7 @@ export function EditTrainingForm({
                         )}
                       >
                         {field.value ? (
-                          format(field.value, "PPP")
+                          formatAT(field.value, "PPP")
                         ) : (
                           <span>Datum wählen</span>
                         )}
