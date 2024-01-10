@@ -12,32 +12,16 @@ setDefaultOptions({
   locale: deAT,
 });
 
+export function formatAT(date: Date, format: string) {
+  return formatInTimeZone(date, "Europe/Vienna", format, {
+    locale: deAT,
+  });
+}
+
 export function formatTrainingDate(startDate: Date, endDate: Date) {
-  console.warn("timezone", Intl.DateTimeFormat().resolvedOptions().timeZone);
-  const date = formatInTimeZone(
-    new Date(startDate),
-    "Europe/Vienna",
-    "do MMM yy",
-    {
-      locale: deAT,
-    },
-  );
-  const startTime = formatInTimeZone(
-    new Date(startDate),
-    "Europe/Vienna",
-    "HH:mm",
-    {
-      locale: deAT,
-    },
-  );
-  const endTime = formatInTimeZone(
-    new Date(endDate),
-    "Europe/Vienna",
-    "HH:mm",
-    {
-      locale: deAT,
-    },
-  );
+  const date = formatAT(new Date(startDate), "do MMM yy");
+  const startTime = formatAT(new Date(startDate), "HH:mm");
+  const endTime = formatAT(new Date(endDate), "HH:mm");
 
   return `${date} von ${startTime} bis ${endTime}`;
 }

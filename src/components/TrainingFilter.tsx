@@ -1,6 +1,6 @@
 "use client";
 
-import { endOfDay, format, startOfDay } from "date-fns";
+import { endOfDay, startOfDay } from "date-fns";
 import {
   CalendarIcon,
   ChevronsDownUpIcon,
@@ -16,6 +16,7 @@ import { useState, useTransition } from "react";
 import { DateRange } from "react-day-picker";
 
 import { Badge } from "@/components/ui/badge";
+import { formatAT } from "@/lib/date";
 import { cn } from "@/lib/utils";
 
 import { Alert } from "./ui/alert";
@@ -162,11 +163,11 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
                     {date?.from ? (
                       date.to ? (
                         <>
-                          {format(date.from, "dd. LLL yy")} -{" "}
-                          {format(date.to, "dd. LLL yy")}
+                          {formatAT(date.from, "dd. LLL yy")} -{" "}
+                          {formatAT(date.to, "dd. LLL yy")}
                         </>
                       ) : (
-                        format(date.from, "dd. LLL yy")
+                        formatAT(date.from, "dd. LLL yy")
                       )
                     ) : (
                       <span>Wähle ein Datum</span>
@@ -202,11 +203,11 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
                     if (v?.from) {
                       params.set(
                         "from",
-                        format(startOfDay(v.from), "yyyy-MM-dd"),
+                        formatAT(startOfDay(v.from), "yyyy-MM-dd"),
                       );
                     }
                     if (v?.to) {
-                      params.set("to", format(endOfDay(v.to), "yyyy-MM-dd"));
+                      params.set("to", formatAT(endOfDay(v.to), "yyyy-MM-dd"));
                     }
                     startTransition(() => {
                       replace(`${pathname}?${params.toString()}`);
