@@ -1,8 +1,10 @@
-import { Training } from "@prisma/client";
+import { Training, User } from "@prisma/client";
 import { captureException } from "@sentry/nextjs";
 import { ServerClient } from "postmark";
 
 import { formatTrainingDate } from "./date";
+import { preferencesSchema } from "./preferences";
+import { prisma } from "./prisma";
 import { formatAddress } from "./user";
 
 const client = new ServerClient(process.env.POSTMARK_API_TOKEN || "");
@@ -153,6 +155,12 @@ async function sendMail(
   templateAlias: string,
   templateModel?: any,
 ) {
+  const isDisabled = await checkIsSendingDisabled(to, templateAlias);
+
+  if (isDisabled) {
+    return;
+  }
+
   const payload = {
     From: "hi@mostviertel.tech",
     To: to,
@@ -169,4 +177,83 @@ async function sendMail(
     }
   }
   console.log("mock: mail sent", payload);
+}
+
+// TODO: this fucking ugly. use a map
+async function checkIsSendingDisabled(to: string, templateAlias: string) {
+  const recipientUser = await prisma.user.findFirst({
+    where: {
+      email: to,
+    },
+    select: {
+      id: true,
+      email: true,
+      preferences: true,
+    },
+  });
+
+  if (!recipientUser) {
+    return true;
+  }
+
+  const validatedPreferences = preferencesSchema.safeParse(
+    recipientUser.preferences,
+  );
+
+  if (!validatedPreferences.success) {
+    return false;
+  }
+
+  const emailPreferences = validatedPreferences.data.email;
+
+  // TODO: fix type error for index signature and use map
+
+  if (
+    !emailPreferences.trainingCancelled &&
+    templateAlias === "training-cancelled"
+  ) {
+    console.log("user does not want to receive trainingCancelled email");
+    return true;
+  }
+  if (
+    !emailPreferences.trainingCreatedAfterRegistration &&
+    templateAlias === "training-registration-notification"
+  ) {
+    console.log(
+      "user does not want to receive trainingCreatedAfterRegistration email",
+    );
+    return true;
+  }
+  if (
+    !emailPreferences.trainingRegistration &&
+    templateAlias === "training-registration"
+  ) {
+    console.log("user does not want to receive trainingRegistration email");
+    return true;
+  }
+  if (
+    !emailPreferences.trainingRegistrationCancelled &&
+    templateAlias === "registration-cancelled"
+  ) {
+    console.log(
+      "user does not want to receive trainingRegistrationCancelled email",
+    );
+    return true;
+  }
+  if (
+    !emailPreferences.trainingRequest &&
+    templateAlias === "training-request-received"
+  ) {
+    console.log("user does not want to receive trainingRequest email");
+    return true;
+  }
+  if (
+    !emailPreferences.trainingUpdated &&
+    templateAlias === "training-updated"
+  ) {
+    console.log("user does not want to receive trainingUpdated email");
+    return true;
+  }
+
+  return false;
 }
