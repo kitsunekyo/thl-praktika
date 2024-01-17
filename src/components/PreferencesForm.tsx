@@ -70,7 +70,7 @@ export function PreferencesForm({
                   render={({ field }) => (
                     <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                       <div className="space-y-0.5">
-                        <FormLabel>Anmeldungen</FormLabel>
+                        <FormLabel>Praktika Anmeldungen</FormLabel>
                         <FormDescription>
                           Ein(e) Praktikant:in hat sich für dein Praktikum
                           angemeldet.
@@ -91,7 +91,7 @@ export function PreferencesForm({
                   render={({ field }) => (
                     <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                       <div className="space-y-0.5">
-                        <FormLabel>Abmeldung</FormLabel>
+                        <FormLabel>Praktika Abmeldungen</FormLabel>
                         <FormDescription>
                           Ein(e) Praktikant:in hat sich von deinem Praktikum
                           abgemeldet.
@@ -112,7 +112,7 @@ export function PreferencesForm({
                   render={({ field }) => (
                     <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                       <div className="space-y-0.5">
-                        <FormLabel>Anfrage</FormLabel>
+                        <FormLabel>Praktika Anfragen</FormLabel>
                         <FormDescription>
                           Ein(e) Praktikant:in möchte ein Praktikum bei dir
                           machen.
