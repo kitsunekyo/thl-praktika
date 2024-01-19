@@ -26,7 +26,7 @@ export function Navigation({
   role?: string;
   onNavigate?: () => void;
 }) {
-  const canRegister = role === "user" || role === "trainer";
+  const canRegister = role === "user" || role === "admin";
   const canCreateTrainings = role === "trainer" || role === "admin";
 
   return (
