@@ -141,7 +141,7 @@ export async function sendTrainingRegistrationMail({
   userName: string;
   date: string;
 }) {
-  await sendMail(to, "training-cancelled", {
+  await sendMail(to, "training-registration", {
     name: trainerName,
     user: userName,
     date,
