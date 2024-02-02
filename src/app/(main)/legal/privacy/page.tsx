@@ -4,11 +4,10 @@ export default function Page() {
   return (
     <div className="py-6">
       <div className="mb-4">
-        <PageTitle>Privacy Policy</PageTitle>
+        <PageTitle>Datenschutzerklärung</PageTitle>
       </div>
       <article className="prose">
-        <h2>Datenschutzerklärung</h2>
-        <p>Zuletzt aktualisiert am 22. September 2023</p>
+        <p>Zuletzt aktualisiert am 2. Februar 2024</p>
         <p>
           Diese Datenschutzerklärung für thl-praktika.vercel.app (Alexander
           Spieslechner) (&quot;wir,&quot; &quot;uns,&quot; oder
@@ -50,9 +49,7 @@ export default function Page() {
           Wenn Sie unsere Dienste nutzen, verarbeiten wir möglicherweise
           personenbezogene Informationen, je nachdem, wie Sie mit uns und den
           Diensten interagieren, die von Ihnen getroffenen Entscheidungen und
-          die von Ihnen genutzten Produkte und Funktionen. Erfahren Sie mehr
-          über die von Ihnen an uns weitergegebenen personenbezogenen
-          Informationen.
+          die von Ihnen genutzten Produkte und Funktionen.
         </p>
 
         <h3>Verarbeiten wir sensible personenbezogene Informationen?</h3>
@@ -68,8 +65,7 @@ export default function Page() {
           Sicherheit und Betrugsprävention und um die Gesetze einzuhalten. Wir
           können Ihre Informationen auch für andere Zwecke verarbeiten, wenn Sie
           Ihre Zustimmung geben. Wir verarbeiten Ihre Informationen nur, wenn
-          wir einen gültigen rechtlichen Grund haben, dies zu tun. Erfahren Sie
-          mehr darüber, wie wir Ihre Informationen verarbeiten.
+          wir einen gültigen rechtlichen Grund haben, dies zu tun.
         </p>
 
         <h3>
@@ -78,8 +74,7 @@ export default function Page() {
         </h3>
         <p>
           Wir können Informationen in bestimmten Situationen und mit bestimmten
-          Dritten teilen. Erfahren Sie mehr darüber, wann und mit wem wir Ihre
-          personenbezogenen Informationen teilen.
+          Dritten teilen.
         </p>
 
         <h3>Wie schützen wir Ihre Informationen?</h3>
@@ -91,16 +86,14 @@ export default function Page() {
           sein. Daher können wir nicht versprechen oder garantieren, dass
           Hacker, Cyberkriminelle oder andere unbefugte Dritte unsere Sicherheit
           besiegen und Ihre Informationen unbefugt sammeln, zugreifen, stehlen
-          oder ändern können. Erfahren Sie mehr darüber, wie wir Ihre
-          Informationen schützen.
+          oder ändern können.
         </p>
 
         <h3>Welche Rechte haben Sie?</h3>
         <p>
           Je nach Ihrem geografischen Standort können die geltenden
           Datenschutzgesetze bedeuten, dass Sie bestimmte Rechte bezüglich Ihrer
-          personenbezogenen Informationen haben. Erfahren Sie mehr über Ihre
-          Datenschutzrechte.
+          personenbezogenen Informationen haben.
         </p>
 
         <h3>Wie üben Sie Ihre Rechte aus?</h3>
@@ -147,7 +140,7 @@ export default function Page() {
         <h2>1. WELCHE INFORMATIONEN ERFASSEN WIR?</h2>
         <p>Personenbezogene Informationen, die Sie uns zur Verfügung stellen</p>
         <p>
-          <strong>In Kürze:</strong> Wir erfassen personenbezogene
+          <strong>Zusammenfassung:</strong> Wir erfassen personenbezogene
           Informationen, die Sie uns zur Verfügung stellen.
         </p>
         <p>
@@ -199,13 +192,13 @@ export default function Page() {
 
         <h2>2. WIE VERARBEITEN WIR IHRE INFORMATIONEN?</h2>
         <p>
-          <strong>In Kürze:</strong> Wir verarbeiten Ihre Informationen, um
-          unsere Dienste bereitzustellen, zu verbessern und zu verwalten, um mit
-          Ihnen zu kommunizieren, zur Sicherheit und Betrugsprävention und um
-          die Gesetze einzuhalten. Wir können Ihre Informationen auch für andere
-          Zwecke verarbeiten, wenn Sie Ihre Zustimmung geben. Wir verarbeiten
-          Ihre Informationen nur, wenn wir einen gültigen rechtlichen Grund
-          haben, dies zu tun.
+          <strong>Zusammenfassung:</strong> Wir verarbeiten Ihre Informationen,
+          um unsere Dienste bereitzustellen, zu verbessern und zu verwalten, um
+          mit Ihnen zu kommunizieren, zur Sicherheit und Betrugsprävention und
+          um die Gesetze einzuhalten. Wir können Ihre Informationen auch für
+          andere Zwecke verarbeiten, wenn Sie Ihre Zustimmung geben. Wir
+          verarbeiten Ihre Informationen nur, wenn wir einen gültigen
+          rechtlichen Grund haben, dies zu tun.
         </p>
         <p>
           Wir verarbeiten Ihre personenbezogenen Informationen aus verschiedenen
@@ -249,13 +242,14 @@ export default function Page() {
           VERARBEITUNG IHRER PERSONENBEZOGENEN INFORMATIONEN?
         </h2>
         <p>
-          <strong>In Kürze:</strong> Wir verarbeiten Ihre personenbezogenen
-          Informationen nur, wenn wir glauben, dass dies notwendig ist und wir
-          einen gültigen rechtlichen Grund (d.h. eine rechtliche Grundlage)
-          gemäß geltendem Recht haben, wie Ihre Zustimmung, um Gesetze
-          einzuhalten, Ihnen Dienstleistungen bereitzustellen oder unsere
-          vertraglichen Verpflichtungen einzugehen oder zu erfüllen, Ihre Rechte
-          zu schützen oder unsere berechtigten Geschäftsinteressen zu erfüllen.
+          <strong>Zusammenfassung:</strong> Wir verarbeiten Ihre
+          personenbezogenen Informationen nur, wenn wir glauben, dass dies
+          notwendig ist und wir einen gültigen rechtlichen Grund (d.h. eine
+          rechtliche Grundlage) gemäß geltendem Recht haben, wie Ihre
+          Zustimmung, um Gesetze einzuhalten, Ihnen Dienstleistungen
+          bereitzustellen oder unsere vertraglichen Verpflichtungen einzugehen
+          oder zu erfüllen, Ihre Rechte zu schützen oder unsere berechtigten
+          Geschäftsinteressen zu erfüllen.
         </p>
         <p>
           Die Datenschutz-Grundverordnung (DSGVO) und die UK-DSGVO verlangen von
@@ -301,8 +295,8 @@ export default function Page() {
           PERSONENBEZOGENEN INFORMATIONEN?
         </h2>
         <p>
-          <strong>In Kürze:</strong> Wir können Informationen in speziellen
-          Situationen und/oder mit den folgenden Dritten teilen.
+          <strong>Zusammenfassung:</strong> Wir können Informationen in
+          speziellen Situationen und/oder mit den folgenden Dritten teilen.
         </p>
         <p>
           Wir müssen Ihre personenbezogenen Informationen in den folgenden
@@ -335,7 +329,7 @@ export default function Page() {
 
         <h2>5. VERWENDEN WIR COOKIES UND ANDERE TRACKING-TECHNOLOGIEN?</h2>
         <p>
-          <strong>In Kürze:</strong> Wir können Cookies und ähnliche
+          <strong>Zusammenfassung:</strong> Wir können Cookies und ähnliche
           Tracking-Technologien verwenden, um Ihre Informationen zu sammeln und
           zu speichern.
         </p>
@@ -349,8 +343,8 @@ export default function Page() {
 
         <h2>6. WIE GEHEN WIR MIT IHREN SOZIALEN ANMELDUNGEN UM?</h2>
         <p>
-          <strong>In Kürze:</strong> Wenn Sie sich dazu entscheiden, sich bei
-          unseren Diensten mit einem Social-Media-Konto anzumelden oder
+          <strong>Zusammenfassung:</strong> Wenn Sie sich dazu entscheiden, sich
+          bei unseren Diensten mit einem Social-Media-Konto anzumelden oder
           einzuloggen, können wir auf bestimmte Informationen über Sie
           zugreifen.
         </p>
@@ -379,8 +373,8 @@ export default function Page() {
 
         <h2>7. WIE LANGE BEWAHREN WIR IHRE INFORMATIONEN AUF?</h2>
         <p>
-          <strong>In Kürze:</strong> Wir bewahren Ihre Informationen so lange
-          auf, wie dies zur Erfüllung der in dieser Datenschutzerklärung
+          <strong>Zusammenfassung:</strong> Wir bewahren Ihre Informationen so
+          lange auf, wie dies zur Erfüllung der in dieser Datenschutzerklärung
           dargelegten Zwecke erforderlich ist, sofern dies nicht gesetzlich
           vorgeschrieben ist.
         </p>
@@ -406,7 +400,7 @@ export default function Page() {
 
         <h2>8. WIE SCHÜTZEN WIR IHRE INFORMATIONEN?</h2>
         <p>
-          <strong>In Kürze:</strong> Wir möchten Ihre personenbezogenen
+          <strong>Zusammenfassung:</strong> Wir möchten Ihre personenbezogenen
           Informationen durch ein System organisatorischer und technischer
           Sicherheitsmaßnahmen schützen.
         </p>
@@ -430,8 +424,8 @@ export default function Page() {
 
         <h2>9. ERFASSEN WIR INFORMATIONEN VON MINDERJÄHRIGEN?</h2>
         <p>
-          <strong>In Kürze:</strong> Wir erfassen nicht wissentlich Daten von
-          Kindern unter 18 Jahren oder vermarkten nicht an sie.
+          <strong>Zusammenfassung:</strong> Wir erfassen nicht wissentlich Daten
+          von Kindern unter 18 Jahren oder vermarkten nicht an sie.
         </p>
         <p>
           Wir sammeln nicht wissentlich Daten von Kindern unter 18 Jahren oder
@@ -449,11 +443,11 @@ export default function Page() {
 
         <h2>10. WAS SIND IHRE DATENSCHUTZRECHTE?</h2>
         <p>
-          <strong>In Kürze:</strong> In einigen Regionen, wie der Europäischen
-          Wirtschaftsraum (EWR), dem Vereinigten Königreich (VK) und der
-          Schweiz, haben Sie Rechte, die Ihnen einen größeren Zugang zu und
-          Kontrolle über Ihre personenbezogenen Informationen ermöglichen. Sie
-          können jederzeit Ihr Konto überprüfen, ändern oder beenden.
+          <strong>Zusammenfassung:</strong> In einigen Regionen, wie der
+          Europäischen Wirtschaftsraum (EWR), dem Vereinigten Königreich (VK)
+          und der Schweiz, haben Sie Rechte, die Ihnen einen größeren Zugang zu
+          und Kontrolle über Ihre personenbezogenen Informationen ermöglichen.
+          Sie können jederzeit Ihr Konto überprüfen, ändern oder beenden.
         </p>
         <p>
           In einigen Regionen (wie dem EWR, dem VK und der Schweiz) haben Sie
@@ -550,7 +544,7 @@ export default function Page() {
 
         <h2>12. MACHEN WIR AKTUALISIERUNGEN IN DIESER ERKLÄRUNG?</h2>
         <p>
-          <strong>In Kürze:</strong> Ja, wir werden diese Erklärung
+          <strong>Zusammenfassung:</strong> Ja, wir werden diese Erklärung
           aktualisieren, wenn dies erforderlich ist, um die relevanten Gesetze
           einzuhalten.
         </p>
