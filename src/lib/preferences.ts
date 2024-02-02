@@ -1,16 +1,5 @@
 import { z } from "zod";
 
-const defaultPreferences = {
-  email: {
-    trainingRequest: true,
-    trainingRegistration: true,
-    trainingRegistrationCancelled: true,
-    trainingCreatedAfterRegistration: true,
-    trainingCancelled: true,
-    trainingUpdated: true,
-  },
-};
-
 export const preferencesSchema = z
   .object({
     email: z
@@ -24,5 +13,4 @@ export const preferencesSchema = z
       })
       .default({}),
   })
-  .nullable()
-  .transform((data) => data || defaultPreferences);
+  .default({});
