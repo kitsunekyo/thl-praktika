@@ -75,14 +75,17 @@ export async function sendTrainingCancelledMail({
   to,
   trainer,
   date,
+  reason,
 }: {
   to: string;
   trainer: string;
   date: string;
+  reason: string;
 }) {
   await sendMail(to, "training-cancelled", {
     trainer,
     date,
+    reason,
     product_url: process.env.NEXTAUTH_URL,
     action_url: process.env.NEXTAUTH_URL,
   });
