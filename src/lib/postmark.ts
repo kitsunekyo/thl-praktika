@@ -197,7 +197,7 @@ async function checkIsSendingDisabled(to: string, templateAlias: string) {
   }
 
   const emailPreferences = preferencesSchema.parse(
-    recipientUser.preferences,
+    recipientUser.preferences || {},
   ).email;
 
   // TODO: fix type error for index signature and use map
