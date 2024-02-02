@@ -7,6 +7,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { extractRouterConfig } from "uploadthing/server";
 
+import PostHogPageView from "@/components/PostHogPageView";
 import { Toaster } from "@/components/ui/toaster";
 
 import { ourFileRouter } from "./api/uploadthing/core";
@@ -37,10 +38,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="de">
       <body className={inter.className}>
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <Providers>
+          <PostHogPageView />
           {children}
           <Toaster />
         </Providers>

@@ -29,6 +29,11 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/legal/cookies" className="hover:underline">
+                    Cookies
+                  </Link>
+                </li>
+                <li>
                   <Link href="/legal/imprint" className="hover:underline">
                     Impressum
                   </Link>
