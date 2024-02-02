@@ -11,7 +11,7 @@ import { getProfile } from "./actions";
 
 export default async function Profile() {
   const user = await getProfile();
-  const preferences = preferencesSchema.parse(user.preferences);
+  const preferences = preferencesSchema.parse(user.preferences || {}); // value can be DB null, or "null" as json value, so we need to supply a default value
 
   return (
     <div className="divide-y divide-white/5">

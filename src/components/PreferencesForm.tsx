@@ -160,8 +160,8 @@ export function PreferencesForm({
                       <div className="space-y-0.5">
                         <FormLabel>Praktikum abgesagt</FormLabel>
                         <FormDescription>
-                          Ein(e) Trainer:in hat ein Praktikum abgesagt, bei dem
-                          du angemeldet bist.
+                          Ein Praktikum bei dem du angemeldet warst wurde
+                          abgesagt.
                         </FormDescription>
                       </div>
                       <FormControl>
@@ -181,8 +181,8 @@ export function PreferencesForm({
                       <div className="space-y-0.5">
                         <FormLabel>Praktikum geändert</FormLabel>
                         <FormDescription>
-                          Ein(e) Trainer:in hat ein Praktikum geändert, bei dem
-                          du angemeldet bist.
+                          Ein Praktikum bei dem du angemeldet bist wurde
+                          geändert.
                         </FormDescription>
                       </div>
                       <FormControl>
