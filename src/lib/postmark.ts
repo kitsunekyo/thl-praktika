@@ -193,18 +193,12 @@ async function checkIsSendingDisabled(to: string, templateAlias: string) {
   });
 
   if (!recipientUser) {
-    return true;
+    throw new Error(`User ${to} not found`);
   }
 
-  const validatedPreferences = preferencesSchema.safeParse(
+  const emailPreferences = preferencesSchema.parse(
     recipientUser.preferences,
-  );
-
-  if (!validatedPreferences.success) {
-    return false;
-  }
-
-  const emailPreferences = validatedPreferences.data.email;
+  ).email;
 
   // TODO: fix type error for index signature and use map
 

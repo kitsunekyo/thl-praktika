@@ -11,12 +11,7 @@ import { getProfile } from "./actions";
 
 export default async function Profile() {
   const user = await getProfile();
-
-  if (!user) {
-    return null;
-  }
-
-  const preferences = preferencesSchema.parse(user.preferences || {});
+  const preferences = preferencesSchema.parse(user.preferences);
 
   return (
     <div className="divide-y divide-white/5">
