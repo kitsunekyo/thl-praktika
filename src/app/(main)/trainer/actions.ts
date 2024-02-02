@@ -128,8 +128,8 @@ export async function createTraining(
       error: "not authorized",
     };
   }
+  
   const trainingData = createTrainingSchema.parse(payload);
-
   const training = await prisma.training.create({
     data: {
       ...trainingData,
