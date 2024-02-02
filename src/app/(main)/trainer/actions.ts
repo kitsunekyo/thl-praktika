@@ -66,12 +66,43 @@ export async function deleteTraining(id: string) {
     },
   });
 
+  revalidatePath("/trainers");
+}
+
+export async function cancelTraining(id: string, reason: string) {
+  const training = await prisma.training.findFirst({
+    where: {
+      id,
+    },
+    include: {
+      author: true,
+      registrations: {
+        include: {
+          user: true,
+        },
+      },
+    },
+  });
+
+  if (!training) {
+    return {
+      error: "training not found",
+    };
+  }
+
+  await prisma.training.delete({
+    where: {
+      id,
+    },
+  });
+
   const registeredUsers = training.registrations.map((r) => r.user.email);
   registeredUsers.forEach((email) => {
     sendTrainingCancelledMail({
       to: email,
       trainer: training.author.name || "Ein:e Trainer:in",
       date: formatTrainingDate(training.start, training.end),
+      reason,
     });
   });
 

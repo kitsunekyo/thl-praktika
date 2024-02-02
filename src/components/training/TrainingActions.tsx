@@ -1,10 +1,13 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Training } from "@prisma/client";
-import { BanIcon, CalendarPlusIcon, PenIcon } from "lucide-react";
+import { BanIcon, PenIcon } from "lucide-react";
 import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { deleteTraining } from "@/app/(main)/trainer/actions";
+import { cancelTraining, deleteTraining } from "@/app/(main)/trainer/actions";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,15 +20,24 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-
-import { EditTrainingForm } from "./EditTrainingForm";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+
+import { EditTrainingForm } from "./EditTrainingForm";
 
 export function TrainingActions({
   training,
@@ -59,35 +71,7 @@ export function TrainingActions({
         </DialogContent>
       </Dialog>
       {hasRegistrations ? (
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button variant="destructive" size="sm" disabled={loading}>
-              <BanIcon className="mr-2 h-4 w-4" /> Absagen
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Bist du sicher?</AlertDialogTitle>
-              <AlertDialogDescription>
-                Alle Praktikanten, die sich für das Praktikum angemeldet haben
-                werden per E-Mail benachrichtigt, dass das Praktikum abgesagt
-                wurde.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Abbrechen</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() => {
-                  startTransition(() => {
-                    deleteTraining(id);
-                  });
-                }}
-              >
-                Absagen
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <ConfirmCancelDialog trainingId={id} />
       ) : (
         <Button
           variant="outline"
@@ -103,5 +87,79 @@ export function TrainingActions({
         </Button>
       )}
     </div>
+  );
+}
+
+const cancelFormSchema = z.object({
+  reason: z.string().min(1, { message: "Bitte gib einen Grund an." }),
+});
+
+function ConfirmCancelDialog({ trainingId }: { trainingId: string }) {
+  const [loading, startTransition] = useTransition();
+
+  const form = useForm<z.infer<typeof cancelFormSchema>>({
+    resolver: zodResolver(cancelFormSchema),
+    defaultValues: {
+      reason: "",
+    },
+    reValidateMode: "onChange",
+  });
+
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="destructive" size="sm" disabled={loading}>
+          <BanIcon className="mr-2 h-4 w-4" /> Absagen
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(
+              (data: z.infer<typeof cancelFormSchema>) => {
+                startTransition(() => {
+                  cancelTraining(trainingId, data.reason);
+                });
+              },
+            )}
+          >
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Möchtest du das Praktikum wirklich absagen?
+              </AlertDialogTitle>
+            </AlertDialogHeader>
+            <div className="my-4 space-y-2">
+              <AlertDialogDescription>
+                Alle Praktikanten, die sich für das Praktikum angemeldet haben
+                werden per E-Mail benachrichtigt, dass das Praktikum abgesagt
+                wurde.
+              </AlertDialogDescription>
+              <FormField
+                control={form.control}
+                name="reason"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Grund für die Absage*</FormLabel>
+                    <FormControl>
+                      <Textarea required {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <AlertDialogFooter>
+              <AlertDialogCancel type="button">Abbrechen</AlertDialogCancel>
+              <AlertDialogAction
+                type="submit"
+                disabled={!form.formState.isDirty || !form.formState.isValid}
+              >
+                Absagen
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </form>
+        </Form>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
