@@ -54,6 +54,7 @@ model User {
   zipCode       String?
   phone         String?
   lastLogin     DateTime?
+  preferences   Json?
 
   accounts         Account[]
   sessions         Session[]

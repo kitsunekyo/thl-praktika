@@ -117,12 +117,7 @@ export function ChangePasswordForm() {
             </FormItem>
           )}
         />
-        <Button
-          type="submit"
-          className="w-full"
-          variant="outline"
-          disabled={loading}
-        >
+        <Button type="submit" disabled={loading}>
           Passwort ändern
         </Button>
       </form>

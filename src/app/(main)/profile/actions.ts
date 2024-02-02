@@ -4,18 +4,20 @@ import { User } from "@prisma/client";
 import { hash } from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { z } from "zod";
 
 import { getServerSession } from "@/lib/getServerSession";
+import { preferencesSchema } from "@/lib/preferences";
 import { prisma } from "@/lib/prisma";
 
 export async function getProfile() {
   const session = await getServerSession();
 
   if (!session?.user) {
-    return;
+    throw new Error("not authorized");
   }
 
-  return prisma.user.findFirst({
+  return prisma.user.findFirstOrThrow({
     where: {
       id: session.user.id,
     },
@@ -30,6 +32,7 @@ export async function getProfile() {
       city: true,
       zipCode: true,
       phone: true,
+      preferences: true,
     },
   });
 }
@@ -54,7 +57,9 @@ export async function updateProfilePicture(imageUrl: string) {
 }
 
 export async function updateProfile(
-  user: Partial<Omit<User, "password" | "emailVerified" | "email" | "id">>,
+  user: Partial<
+    Omit<User, "password" | "emailVerified" | "email" | "id" | "preferences">
+  >,
 ) {
   const session = await getServerSession();
 
@@ -67,6 +72,31 @@ export async function updateProfile(
       id: session.user.id,
     },
     data: user,
+  });
+
+  revalidatePath("/profile");
+}
+
+export async function updatePreferences(preferences: User["preferences"]) {
+  const session = await getServerSession();
+
+  if (!session?.user) {
+    return { error: "not authorized" };
+  }
+
+  const validatedPreferences = preferencesSchema.parse(preferences);
+
+  if (!validatedPreferences) {
+    return { error: "invalid preferences" };
+  }
+
+  await prisma.user.update({
+    where: {
+      id: session.user.id,
+    },
+    data: {
+      preferences: validatedPreferences,
+    },
   });
 
   revalidatePath("/profile");

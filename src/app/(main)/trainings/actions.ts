@@ -4,7 +4,10 @@ import { revalidatePath } from "next/cache";
 
 import { formatTrainingDate } from "@/lib/date";
 import { getServerSession } from "@/lib/getServerSession";
-import { sendRegistrationCancelledMail } from "@/lib/postmark";
+import {
+  sendRegistrationCancelledMail,
+  sendTrainingRegistrationMail,
+} from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
 
 export async function register(id: string) {
@@ -22,6 +25,13 @@ export async function register(id: string) {
     },
     include: {
       registrations: true,
+      author: {
+        select: {
+          id: true,
+          email: true,
+          name: true,
+        },
+      },
     },
   });
 
@@ -59,6 +69,14 @@ export async function register(id: string) {
       userId: currentUser.id,
     },
   });
+
+  sendTrainingRegistrationMail({
+    to: training.author.email,
+    trainerName: training.author.name || "",
+    date: formatTrainingDate(training.start, training.end),
+    userName: currentUser.name || currentUser.email,
+  });
+
   revalidatePath("/trainings");
 }
 
