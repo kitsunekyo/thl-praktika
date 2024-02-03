@@ -84,10 +84,20 @@ export async function TrainingCard({
         {training.description && <dd>{training.description}</dd>}
         {!!address && (
           <dd>
-            <TrainingLocation
-              location={address}
-              traveltime={training.traveltime}
-            />
+            <div className="flex items-start gap-2 leading-none">
+              <MapPinIcon className="h-4 w-4 text-muted-foreground" />
+              <div className="space-y-1">
+                {address}
+                {!!training.traveltime && (
+                  <p className="text-xs">
+                    {formatDuration(secondsToDuration(training.traveltime), {
+                      format: ["hours", "minutes"],
+                    })}{" "}
+                    entfernt
+                  </p>
+                )}
+              </div>
+            </div>
           </dd>
         )}
         <dd>
@@ -97,36 +107,6 @@ export async function TrainingCard({
       {!!actions && (
         <footer className="flex items-center gap-4 px-4 pb-4">{actions}</footer>
       )}
-    </div>
-  );
-}
-
-function TrainingLocation({
-  location,
-  traveltime,
-}: {
-  location: string;
-  traveltime?: number;
-}) {
-  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${location.replaceAll(
-    " ",
-    "+",
-  )}`;
-
-  return (
-    <div className="flex items-start gap-2 leading-none">
-      <MapPinIcon className="h-4 w-4 text-muted-foreground" />
-      <div className="space-y-1">
-        {location}
-        {!!traveltime && (
-          <p className="text-xs">
-            {formatDuration(secondsToDuration(traveltime), {
-              format: ["hours", "minutes"],
-            })}{" "}
-            entfernt
-          </p>
-        )}
-      </div>
     </div>
   );
 }
