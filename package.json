@@ -75,7 +75,7 @@
     "posthog-js": "^1.104.4",
     "posthog-node": "^3.6.1",
     "postmark": "^4.0.2",
-    "prettier": "^3.0.3",
+    "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.4",
     "react": "18.2.0",
     "react-day-picker": "^8.8.2",
