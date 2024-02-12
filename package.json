@@ -51,7 +51,7 @@
     "@types/mdx": "^2.0.10",
     "@types/node": "20.10.3",
     "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.7",
+    "@types/react-dom": "18.2.19",
     "@uploadthing/react": "^5.7.0",
     "autoprefixer": "10.4.15",
     "bcrypt": "^5.1.1",
