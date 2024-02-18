@@ -196,7 +196,7 @@ async function checkIsSendingDisabled(to: string, templateAlias: string) {
   });
 
   if (!recipientUser) {
-    throw new Error(`User ${to} not found`);
+    return false;
   }
 
   const emailPreferences = preferencesSchema.parse(
