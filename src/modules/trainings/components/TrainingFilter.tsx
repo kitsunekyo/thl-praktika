@@ -130,7 +130,7 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <div className="flex h-9 items-center text-sm">
         Filter
-        <CollapsibleTrigger asChild>
+        <CollapsibleTrigger asChild className="md:hidden">
           {isOpen ? (
             <Button variant="ghost" size="sm" className="ml-auto w-9 p-0">
               <ChevronsDownUpIcon className="h-4 w-4" />

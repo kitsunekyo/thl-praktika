@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/table";
 import { getServerSession } from "@/modules/auth/getServerSession";
 import { getTrainers, getTrainingRequests } from "@/modules/trainers/queries";
-import { RequestTrainingButton } from "@/modules/trainings/components/RequestTrainingButton";
+import { RequestTraining } from "@/modules/trainings/components/RequestTraining";
 import { formatAddress } from "@/modules/users/address";
 import { getInitials } from "@/modules/users/name";
 
@@ -190,7 +190,7 @@ async function TrainerCard({
 
         {session.user.role !== "trainer" ? (
           <div className="-ml-px flex w-0 flex-1">
-            <RequestTrainingButton
+            <RequestTraining
               trainerId={trainer.id}
               disabled={hasRecentlyRequested}
             />

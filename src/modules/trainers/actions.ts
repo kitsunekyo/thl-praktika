@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { formatTrainingDate } from "@/lib/date";
+import { AuthenticationError } from "@/lib/errors";
 import {
   sendTrainingCancelledMail,
   sendTrainingRegistrationNotificationMail,
@@ -12,33 +13,6 @@ import {
 } from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/getServerSession";
-
-export async function getMyTrainings() {
-  const session = await getServerSession();
-  if (!session) {
-    return [];
-  }
-
-  return prisma.training.findMany({
-    where: {
-      authorId: session.user.id,
-      start: {
-        gte: new Date(),
-      },
-    },
-    include: {
-      author: true,
-      registrations: {
-        include: {
-          user: true,
-        },
-      },
-    },
-    orderBy: {
-      start: "asc",
-    },
-  });
-}
 
 export async function deleteTraining(id: string) {
   const training = await prisma.training.findFirst({
@@ -131,7 +105,7 @@ export async function createTraining(
   }
 
   const trainingData = createTrainingSchema.parse(payload);
-  const training = await prisma.training.create({
+  await prisma.training.create({
     data: {
       ...trainingData,
       authorId: session?.user.id,
@@ -180,9 +154,7 @@ export async function updateTraining(
 ) {
   const session = await getServerSession();
   if (!session?.user) {
-    return {
-      error: "not authorized",
-    };
+    throw new AuthenticationError();
   }
   const data = updateTrainingSchema.parse(payload);
 

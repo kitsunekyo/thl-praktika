@@ -26,7 +26,7 @@ export const authOptions: AuthOptions = {
         },
         password: { label: "Passwort", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
@@ -123,7 +123,7 @@ export const authOptions: AuthOptions = {
       });
       return true;
     },
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token }) => {
       const u = await prisma.user.findUnique({
         where: {
           id: token.sub,

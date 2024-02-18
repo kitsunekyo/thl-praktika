@@ -11,10 +11,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getMyTrainings } from "@/modules/trainers/actions";
-import { getTrainingRequests } from "@/modules/trainers/queries";
-import { CreateTrainingButton } from "@/modules/trainings/components/CreateTrainingButton";
-import { TrainingActions } from "@/modules/trainings/components/TrainingActions";
+import {
+  getMyTrainings,
+  getTrainingRequests,
+} from "@/modules/trainers/queries";
+import { CancelTraining } from "@/modules/trainings/components/CancelTraining";
+import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
+import { EditTraining } from "@/modules/trainings/components/EditTraining";
 import { TrainingCard } from "@/modules/trainings/components/TrainingCard";
 import { getProfile } from "@/modules/users/queries";
 
@@ -37,7 +40,7 @@ export default async function Page() {
         Meine Praktika
       </PageTitle>
       <Separator className="my-4" />
-      <CreateTrainingButton profile={profile} />
+      <CreateTraining profile={profile} />
       <Trainings />
     </div>
   );
@@ -135,11 +138,13 @@ function TrainingList({
             <TrainingCard
               training={t}
               actions={
-                <TrainingActions
-                  id={t.id}
-                  training={t}
-                  hasRegistrations={hasRegistrations}
-                />
+                <>
+                  <EditTraining training={t} />
+                  <CancelTraining
+                    trainingId={t.id}
+                    hasRegistrations={hasRegistrations}
+                  />
+                </>
               }
             />
           </li>

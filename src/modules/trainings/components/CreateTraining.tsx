@@ -14,7 +14,7 @@ import {
 
 import { CreateTrainingForm } from "./CreateTrainingForm";
 
-export function CreateTrainingButton({
+export function CreateTraining({
   profile,
 }: {
   profile: Pick<User, "id" | "city" | "address" | "zipCode">;

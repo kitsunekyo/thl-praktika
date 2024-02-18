@@ -1,9 +1,6 @@
 "use client";
 
-import { BanIcon } from "lucide-react";
 import { useTransition } from "react";
-
-import { deleteAccount } from "@/modules/users/actions";
 
 import {
   AlertDialog,
@@ -15,10 +12,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../../../components/ui/alert-dialog";
-import { Button } from "../../../components/ui/button";
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { deleteAccount } from "@/modules/users/actions";
 
-export function DeleteAccountButton() {
+export function DeleteAccount() {
   const [loading, startTransition] = useTransition();
 
   return (

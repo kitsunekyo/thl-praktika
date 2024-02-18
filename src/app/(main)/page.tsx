@@ -4,14 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { getServerSession } from "@/modules/auth/getServerSession";
-import { CreateTrainingButton } from "@/modules/trainings/components/CreateTrainingButton";
-import {
-  Register,
-  Unregister,
-} from "@/modules/trainings/components/register-buttons";
-import { TrainingActions } from "@/modules/trainings/components/TrainingActions";
+import { CancelTraining } from "@/modules/trainings/components/CancelTraining";
+import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
+import { EditTraining } from "@/modules/trainings/components/EditTraining";
+import { Register } from "@/modules/trainings/components/Register";
 import { TrainingCard } from "@/modules/trainings/components/TrainingCard";
 import { TrainingFilter } from "@/modules/trainings/components/TrainingFilter";
+import { Unregister } from "@/modules/trainings/components/Unregister";
 import {
   computeDuration,
   computeIsRegistered,
@@ -72,7 +71,7 @@ export default async function Home({
       <main className="mb-6 md:w-full md:max-w-[600px] md:py-6">
         {isTrainer && (
           <div className="mb-8 ">
-            <CreateTrainingButton profile={profile} />
+            <CreateTraining profile={profile} />
           </div>
         )}
         <p className="mb-4 text-sm text-muted-foreground">
@@ -94,11 +93,13 @@ export default async function Home({
                       training={t}
                       actions={
                         isOwner && (
-                          <TrainingActions
-                            training={t}
-                            id={t.id}
-                            hasRegistrations={hasRegistrations}
-                          />
+                          <>
+                            <EditTraining training={t} />
+                            <CancelTraining
+                              trainingId={t.id}
+                              hasRegistrations={hasRegistrations}
+                            />
+                          </>
                         )
                       }
                     />

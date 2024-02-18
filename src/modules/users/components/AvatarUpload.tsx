@@ -11,7 +11,7 @@ export function AvatarUpload() {
   return (
     <UploadButton
       appearance={{
-        button: ({ isUploading }) =>
+        button: () =>
           buttonVariants({
             variant: "secondary",
             size: "sm",

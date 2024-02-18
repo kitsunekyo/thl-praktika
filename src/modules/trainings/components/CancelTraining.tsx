@@ -1,9 +1,7 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Training } from "@prisma/client";
-import { BanIcon, PenIcon } from "lucide-react";
-import { useState, useTransition } from "react";
+import { BanIcon } from "lucide-react";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -20,13 +18,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
   Form,
   FormControl,
   FormField,
@@ -37,64 +28,16 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cancelTraining, deleteTraining } from "@/modules/trainers/actions";
 
-import { EditTrainingForm } from "./EditTrainingForm";
-
-export function TrainingActions({
-  training,
-  id,
-  hasRegistrations = false,
-}: {
-  id: string;
-  training: Training;
-  hasRegistrations?: boolean;
-}) {
-  const [loading, startTransition] = useTransition();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  return (
-    <div className="flex w-full items-center gap-2">
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogTrigger asChild>
-          <Button size="sm" variant="outline">
-            <PenIcon className="mr-2 h-4 w-4" />
-            Bearbeiten
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="md:max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="mb-4">Praktikum bearbeiten</DialogTitle>
-          </DialogHeader>
-          <EditTrainingForm
-            training={training}
-            onSubmit={() => setIsDialogOpen(false)}
-          />
-        </DialogContent>
-      </Dialog>
-      {hasRegistrations ? (
-        <ConfirmCancelDialog trainingId={id} />
-      ) : (
-        <Button
-          variant="outline"
-          size="sm"
-          disabled={loading}
-          onClick={() => {
-            startTransition(() => {
-              deleteTraining(id);
-            });
-          }}
-        >
-          <BanIcon className="mr-2 h-4 w-4" /> Absagen
-        </Button>
-      )}
-    </div>
-  );
-}
-
 const cancelFormSchema = z.object({
   reason: z.string().min(1, { message: "Bitte gib einen Grund an." }),
 });
-
-function ConfirmCancelDialog({ trainingId }: { trainingId: string }) {
+export function CancelTraining({
+  trainingId,
+  hasRegistrations,
+}: {
+  trainingId: string;
+  hasRegistrations: boolean;
+}) {
   const [loading, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof cancelFormSchema>>({
@@ -105,6 +48,29 @@ function ConfirmCancelDialog({ trainingId }: { trainingId: string }) {
     reValidateMode: "onChange",
   });
 
+  const handleSubmit = (data: z.infer<typeof cancelFormSchema>) => {
+    startTransition(() => {
+      cancelTraining(trainingId, data.reason);
+    });
+  };
+
+  if (hasRegistrations) {
+    return (
+      <Button
+        variant="outline"
+        size="sm"
+        disabled={loading}
+        onClick={() => {
+          startTransition(() => {
+            deleteTraining(trainingId);
+          });
+        }}
+      >
+        <BanIcon className="mr-2 h-4 w-4" /> Absagen
+      </Button>
+    );
+  }
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -114,15 +80,7 @@ function ConfirmCancelDialog({ trainingId }: { trainingId: string }) {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(
-              (data: z.infer<typeof cancelFormSchema>) => {
-                startTransition(() => {
-                  cancelTraining(trainingId, data.reason);
-                });
-              },
-            )}
-          >
+          <form onSubmit={form.handleSubmit(handleSubmit)}>
             <AlertDialogHeader>
               <AlertDialogTitle>
                 Möchtest du das Praktikum wirklich absagen?

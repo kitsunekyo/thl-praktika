@@ -3,8 +3,8 @@ import Link from "next/link";
 
 import { PageTitle } from "@/components/PageTitle";
 import { Separator } from "@/components/ui/separator";
-import { Unregister } from "@/modules/trainings/components/register-buttons";
 import { TrainingCard } from "@/modules/trainings/components/TrainingCard";
+import { Unregister } from "@/modules/trainings/components/Unregister";
 import {
   computeDuration,
   computeTraveltime,

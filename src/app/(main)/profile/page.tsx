@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { ChangePasswordForm } from "@/modules/auth/components/ChangePasswordForm";
 import { AvatarUpload } from "@/modules/users/components/AvatarUpload";
-import { DeleteAccountButton } from "@/modules/users/components/DeleteAccountButton";
+import { DeleteAccount } from "@/modules/users/components/DeleteAccount";
 import { PreferencesForm } from "@/modules/users/components/PreferencesForm";
 import { ProfileForm } from "@/modules/users/components/ProfileForm";
 import { preferencesSchema } from "@/modules/users/preferences";
@@ -81,7 +81,7 @@ export default async function Profile() {
         </div>
 
         <div className="flex items-start md:col-span-2">
-          <DeleteAccountButton />
+          <DeleteAccount />
         </div>
       </div>
     </div>

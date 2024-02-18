@@ -30,7 +30,7 @@ import { formatAT, getFixedDate } from "@/lib/date";
 import { cn } from "@/lib/utils";
 import { createTraining } from "@/modules/trainers/actions";
 
-export const formSchema = z
+const formSchema = z
   .object({
     description: z.string(),
     date: z.date(),

@@ -1,6 +1,11 @@
 "use client";
 import { Registration, Training, User } from "@prisma/client";
-import { ChevronsDownUpIcon, ChevronsUpDownIcon } from "lucide-react";
+import {
+  ChevronsDownUpIcon,
+  ChevronsUpDownIcon,
+  UserCheckIcon,
+  UserIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -11,8 +16,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-
-import { TrainingRegistrations } from "./TrainingRegistrations";
+import { range } from "@/lib/utils";
 
 export function CollapsibleRegistrations({
   training,
@@ -38,7 +42,7 @@ export function CollapsibleRegistrations({
   if (!training.registrations.length) {
     return (
       <div className="flex h-9 items-center px-3">
-        <TrainingRegistrations
+        <Registrations
           count={training.registrations.length}
           max={training.maxInterns}
         />
@@ -49,7 +53,7 @@ export function CollapsibleRegistrations({
   return (
     <Collapsible className="space-y-2" open={open} onOpenChange={setOpen}>
       <div className="flex h-9 w-full items-center px-3">
-        <TrainingRegistrations
+        <Registrations
           count={training.registrations.length}
           max={training.maxInterns}
         />
@@ -77,5 +81,26 @@ export function CollapsibleRegistrations({
         ))}
       </CollapsibleContent>
     </Collapsible>
+  );
+}
+export function Registrations({ count, max }: { count: number; max: number }) {
+  const freeSpots = max - count;
+
+  return (
+    <div className="flex items-center">
+      {range(count).map((i) => (
+        <UserCheckIcon key={i} className="h-5 w-5" />
+      ))}
+      {range(freeSpots).map((i) => (
+        <UserIcon key={i} className="h-5 w-5 text-gray-400" />
+      ))}
+      {freeSpots > 0 ? (
+        <span className="ml-2 text-xs">
+          {count}/{max} Anmeldungen
+        </span>
+      ) : (
+        <span className="ml-2 text-xs">voll</span>
+      )}
+    </div>
   );
 }

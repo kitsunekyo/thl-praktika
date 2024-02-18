@@ -6,7 +6,7 @@ import { useTransition } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { createTrainingRequest } from "@/modules/trainers/actions";
 
-export function RequestTrainingButton({
+export function RequestTraining({
   trainerId,
   disabled,
 }: {

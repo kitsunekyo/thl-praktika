@@ -1,5 +1,3 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Training } from "@prisma/client";
 import { set } from "date-fns";
@@ -31,7 +29,7 @@ import { formatAT, getFixedDate } from "@/lib/date";
 import { cn } from "@/lib/utils";
 import { updateTraining } from "@/modules/trainers/actions";
 
-export const formSchema = z
+const formSchema = z
   .object({
     description: z.string(),
     date: z.date(),
@@ -65,7 +63,7 @@ export function EditTrainingForm({
   onSubmit,
 }: {
   training: Training;
-  onSubmit?: () => void;
+  onSubmit: () => void;
 }) {
   const [loading, startTransition] = useTransition();
   const { toast } = useToast();
@@ -86,28 +84,27 @@ export function EditTrainingForm({
 
   async function handleSubmit(data: z.infer<typeof formSchema>) {
     startTransition(async () => {
-      const start = set(data.date, {
-        hours: parseInt(data.startTime.split(":")[0]),
-        minutes: parseInt(data.startTime.split(":")[1]),
-      });
-      const end = set(data.date, {
-        hours: parseInt(data.endTime.split(":")[0]),
-        minutes: parseInt(data.endTime.split(":")[1]),
-      });
-      const res = await updateTraining(training.id, { ...data, start, end });
-
-      if (res?.error) {
-        toast({
-          title: "Oops",
-          description: `Das Praktikum konnte nicht geändert werden. Versuch es nochmal.`,
-          variant: "destructive",
+      try {
+        const start = set(data.date, {
+          hours: parseInt(data.startTime.split(":")[0]),
+          minutes: parseInt(data.startTime.split(":")[1]),
         });
-      } else {
+        const end = set(data.date, {
+          hours: parseInt(data.endTime.split(":")[0]),
+          minutes: parseInt(data.endTime.split(":")[1]),
+        });
+        await updateTraining(training.id, { ...data, start, end });
         toast({
           title: "Praktikum wurde geändert",
         });
         form.reset();
         onSubmit?.();
+      } catch {
+        toast({
+          title: "Oops",
+          description: `Das Praktikum konnte nicht geändert werden. Versuch es nochmal.`,
+          variant: "destructive",
+        });
       }
     });
   }
