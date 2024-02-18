@@ -1,8 +1,7 @@
 import Image from "next/image";
 
-import { formatAddress } from "@/lib/user";
-
-import { getProfileById } from "./server";
+import { formatAddress } from "@/modules/users/address";
+import { getProfileById } from "@/modules/users/queries";
 
 export default async function Profile({
   params: { id },

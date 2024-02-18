@@ -3,23 +3,22 @@ import { endOfDay, startOfDay } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 
-import { CreateTrainingButton } from "@/components/training/CreateTrainingButton";
+import { getServerSession } from "@/modules/auth/getServerSession";
+import { CreateTrainingButton } from "@/modules/trainings/components/CreateTrainingButton";
 import {
-  RegisterButton,
-  UnregisterButton,
-} from "@/components/training/register-buttons";
-import { TrainingActions } from "@/components/training/TrainingActions";
-import { TrainingCard } from "@/components/training/TrainingCard";
-import { TrainingFilter } from "@/components/TrainingFilter";
-import { getServerSession } from "@/lib/getServerSession";
+  Register,
+  Unregister,
+} from "@/modules/trainings/components/register-buttons";
+import { TrainingActions } from "@/modules/trainings/components/TrainingActions";
+import { TrainingCard } from "@/modules/trainings/components/TrainingCard";
+import { TrainingFilter } from "@/modules/trainings/components/TrainingFilter";
 import {
   computeDuration,
   computeIsRegistered,
   computeTraveltime,
-} from "@/lib/training";
-
-import { getProfile } from "./profile/actions";
-import { getTrainings } from "./trainings/actions";
+} from "@/modules/trainings/compute-data";
+import { getTrainings } from "@/modules/trainings/queries";
+import { getProfile } from "@/modules/users/queries";
 
 export default async function Home({
   searchParams,
@@ -113,9 +112,9 @@ export default async function Home({
                     training={t}
                     actions={
                       t.isRegistered ? (
-                        <UnregisterButton trainingId={t.id} />
+                        <Unregister trainingId={t.id} />
                       ) : (
-                        canRegister && <RegisterButton trainingId={t.id} />
+                        canRegister && <Register trainingId={t.id} />
                       )
                     }
                   />

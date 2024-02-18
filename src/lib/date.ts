@@ -1,5 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import {
+  Duration,
   intervalToDuration,
   setDefaultOptions,
   startOfDay,

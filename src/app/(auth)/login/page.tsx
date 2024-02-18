@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-import { LoginForm } from "./LoginForm";
+import { LoginForm } from "@/modules/auth/components/LoginForm";
 
 export default async function Login({
   searchParams,

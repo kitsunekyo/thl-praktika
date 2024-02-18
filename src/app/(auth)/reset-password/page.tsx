@@ -1,9 +1,8 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-
-import { getIsTokenValid } from "./actions";
-import { ResetPasswordForm } from "./ResetPasswordForm";
+import { validatePasswordResetToken } from "@/modules/auth/actions";
+import { ResetPasswordForm } from "@/modules/auth/components/ResetPasswordForm";
 
 export default async function ResetPassword({
   searchParams,
@@ -13,7 +12,7 @@ export default async function ResetPassword({
   if (!searchParams.t || !searchParams.v) {
     return <TokenInvalid />;
   }
-  const isTokenValid = await getIsTokenValid(searchParams.t);
+  const isTokenValid = await validatePasswordResetToken(searchParams.t);
   if (!isTokenValid) {
     return <TokenInvalid />;
   }

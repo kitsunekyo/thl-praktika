@@ -1,11 +1,11 @@
-import { Training, User } from "@prisma/client";
+import { Training } from "@prisma/client";
 import { captureException } from "@sentry/nextjs";
 import { ServerClient } from "postmark";
 
 import { formatTrainingDate } from "./date";
-import { preferencesSchema } from "./preferences";
 import { prisma } from "./prisma";
-import { formatAddress } from "./user";
+import { formatAddress } from "../modules/users/address";
+import { preferencesSchema } from "../modules/users/preferences";
 
 const client = new ServerClient(process.env.POSTMARK_API_TOKEN || "");
 

@@ -3,7 +3,6 @@ import { MailIcon, PhoneIcon } from "lucide-react";
 import Link from "next/link";
 
 import { PageTitle } from "@/components/PageTitle";
-import { RequestTrainingButton } from "@/components/training/RequestTrainingButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -14,12 +13,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getServerSession } from "@/lib/getServerSession";
-import { formatAddress } from "@/lib/user";
-import { getInitials } from "@/lib/utils";
-
-import { getTrainers } from "./actions";
-import { getTrainingRequests } from "./requests/actions";
+import { getServerSession } from "@/modules/auth/getServerSession";
+import { getTrainers, getTrainingRequests } from "@/modules/trainers/queries";
+import { RequestTrainingButton } from "@/modules/trainings/components/RequestTrainingButton";
+import { formatAddress } from "@/modules/users/address";
+import { getInitials } from "@/modules/users/name";
 
 export default async function Page() {
   const session = await getServerSession();

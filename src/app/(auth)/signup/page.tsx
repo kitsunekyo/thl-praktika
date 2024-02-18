@@ -1,9 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-import { validateInvitation } from "./actions";
-import { SignupForm } from "./SignupForm";
+import { SignupForm } from "@/modules/auth/components/SignupForm";
 
 export default async function Signup({
   searchParams,

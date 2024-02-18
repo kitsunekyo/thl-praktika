@@ -1,7 +1,6 @@
 import { formatDistance } from "date-fns";
 import Link from "next/link";
 
-import { InvitationButtons } from "@/components/admin/InvitationButtons";
 import { PageTitle } from "@/components/PageTitle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,8 +13,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { getInvitations } from "./actions";
+import { InvitationButtons } from "@/modules/users/components/InvitationButtons";
+import { getInvitations } from "@/modules/users/queries";
 
 export default async function UserPage() {
   return (

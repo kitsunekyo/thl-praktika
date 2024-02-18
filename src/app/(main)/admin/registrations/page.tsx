@@ -1,5 +1,3 @@
-import { RegistrationButtons } from "@/components/admin/RegistrationButtons";
-import { TrainingDate } from "@/components/training/TrainingDate";
 import {
   Table,
   TableBody,
@@ -9,6 +7,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { prisma } from "@/lib/prisma";
+import { TrainingDate } from "@/modules/trainings/components/TrainingDate";
+import { RegistrationButtons } from "@/modules/users/components/RegistrationButtons";
 
 async function getRegistrations() {
   return await prisma.registration.findMany({

@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { getInitials } from "@/lib/utils";
+import { getInitials } from "@/modules/users/name";
 
 export const USER_NAV_LINKS = [
   {

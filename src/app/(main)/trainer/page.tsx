@@ -2,9 +2,6 @@ import { Registration, Training, User } from "@prisma/client";
 import { formatDistance } from "date-fns";
 
 import { PageTitle } from "@/components/PageTitle";
-import { CreateTrainingButton } from "@/components/training/CreateTrainingButton";
-import { TrainingActions } from "@/components/training/TrainingActions";
-import { TrainingCard } from "@/components/training/TrainingCard";
 import { Separator } from "@/components/ui/separator";
 import {
   Table,
@@ -14,10 +11,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { getMyTrainings } from "./actions";
-import { getProfile } from "../profile/actions";
-import { getTrainingRequests } from "../trainers/requests/actions";
+import { getMyTrainings } from "@/modules/trainers/actions";
+import { getTrainingRequests } from "@/modules/trainers/queries";
+import { CreateTrainingButton } from "@/modules/trainings/components/CreateTrainingButton";
+import { TrainingActions } from "@/modules/trainings/components/TrainingActions";
+import { TrainingCard } from "@/modules/trainings/components/TrainingCard";
+import { getProfile } from "@/modules/users/queries";
 
 export default async function Page() {
   const profile = await getProfile();

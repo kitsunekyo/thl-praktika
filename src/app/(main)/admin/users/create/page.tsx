@@ -1,6 +1,6 @@
-import { CreateUserForm } from "@/components/CreateUserForm";
 import { PageTitle } from "@/components/PageTitle";
 import { Separator } from "@/components/ui/separator";
+import { CreateUserForm } from "@/modules/users/components/CreateUserForm";
 
 export default function CreateUserPage() {
   return (

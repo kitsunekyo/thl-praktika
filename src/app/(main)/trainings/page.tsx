@@ -1,12 +1,15 @@
 import { Registration, Training, User } from "@prisma/client";
 import Link from "next/link";
 
-import { getMyTrainings } from "@/app/(main)/trainings/actions";
 import { PageTitle } from "@/components/PageTitle";
-import { UnregisterButton } from "@/components/training/register-buttons";
-import { TrainingCard } from "@/components/training/TrainingCard";
 import { Separator } from "@/components/ui/separator";
-import { computeDuration, computeTraveltime } from "@/lib/training";
+import { Unregister } from "@/modules/trainings/components/register-buttons";
+import { TrainingCard } from "@/modules/trainings/components/TrainingCard";
+import {
+  computeDuration,
+  computeTraveltime,
+} from "@/modules/trainings/compute-data";
+import { getMyTrainings } from "@/modules/trainings/queries";
 
 export default async function Trainings() {
   const trainings = await addMetadata(await getMyTrainings());
@@ -60,9 +63,7 @@ function TrainingList({
           <li key={t.id}>
             <TrainingCard
               training={t}
-              actions={
-                t.end > new Date() && <UnregisterButton trainingId={t.id} />
-              }
+              actions={t.end > new Date() && <Unregister trainingId={t.id} />}
             />
           </li>
         );

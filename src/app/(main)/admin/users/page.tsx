@@ -1,7 +1,6 @@
 import { formatDistance } from "date-fns";
 import Link from "next/link";
 
-import { UserButtons } from "@/components/admin/UserButtons";
 import { PageTitle } from "@/components/PageTitle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,8 +13,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { getUsers } from "./actions";
+import { getUsers } from "@/modules/users/actions";
+import { DeleteUser } from "@/modules/users/components/DeleteUser";
 
 export default async function UserPage() {
   return (
@@ -92,7 +91,7 @@ async function UserList() {
               </p>
             </TableCell>
             <TableCell className="text-right">
-              <UserButtons user={user} />
+              <DeleteUser user={user} />
             </TableCell>
           </TableRow>
         ))}

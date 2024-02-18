@@ -8,10 +8,10 @@ import { Inter } from "next/font/google";
 import { extractRouterConfig } from "uploadthing/server";
 
 import PostHogPageView from "@/components/PostHogPageView";
+import { Providers } from "@/components/Providers";
 import { Toaster } from "@/components/ui/toaster";
 
 import { ourFileRouter } from "./api/uploadthing/core";
-import { Providers } from "./Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -1,8 +1,7 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Navigation } from "@/components/Navigation";
-
-import { getProfile } from "./profile/actions";
+import { getProfile } from "@/modules/users/queries";
 
 export const dynamic = "force-dynamic";
 

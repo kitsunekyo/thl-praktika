@@ -1,6 +1,6 @@
 import { type FileRouter, createUploadthing } from "uploadthing/next";
 
-import { getServerSession } from "@/lib/getServerSession";
+import { getServerSession } from "@/modules/auth/getServerSession";
 
 const f = createUploadthing();
 

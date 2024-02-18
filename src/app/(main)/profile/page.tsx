@@ -1,13 +1,12 @@
 import Image from "next/image";
 
-import { AvatarUpload } from "@/components/AvatarUpload";
-import { ChangePasswordForm } from "@/components/ChangePasswordForm";
-import { DeleteAccountButton } from "@/components/DeleteAccountButton";
-import { PreferencesForm } from "@/components/PreferencesForm";
-import { ProfileForm } from "@/components/ProfileForm";
-import { preferencesSchema } from "@/lib/preferences";
-
-import { getProfile } from "./actions";
+import { ChangePasswordForm } from "@/modules/auth/components/ChangePasswordForm";
+import { AvatarUpload } from "@/modules/users/components/AvatarUpload";
+import { DeleteAccountButton } from "@/modules/users/components/DeleteAccountButton";
+import { PreferencesForm } from "@/modules/users/components/PreferencesForm";
+import { ProfileForm } from "@/modules/users/components/ProfileForm";
+import { preferencesSchema } from "@/modules/users/preferences";
+import { getProfile } from "@/modules/users/queries";
 
 export default async function Profile() {
   const user = await getProfile();

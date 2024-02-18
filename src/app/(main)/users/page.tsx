@@ -4,11 +4,10 @@ import Link from "next/link";
 import { PageTitle } from "@/components/PageTitle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { getServerSession } from "@/lib/getServerSession";
-import { formatAddress } from "@/lib/user";
-import { getInitials } from "@/lib/utils";
-
-import { getUserProfiles } from "./server";
+import { getServerSession } from "@/modules/auth/getServerSession";
+import { formatAddress } from "@/modules/users/address";
+import { getInitials } from "@/modules/users/name";
+import { getUserProfiles } from "@/modules/users/queries";
 
 export default async function Page() {
   const session = await getServerSession();

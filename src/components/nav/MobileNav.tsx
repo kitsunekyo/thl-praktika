@@ -7,7 +7,7 @@ import { signOut } from "next-auth/react";
 import { useState } from "react";
 
 import { Navigation } from "@/components/Navigation";
-import { getInitials } from "@/lib/utils";
+import { getInitials } from "@/modules/users/name";
 
 import { Logo } from "../Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
