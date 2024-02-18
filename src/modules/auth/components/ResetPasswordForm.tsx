@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { resetPassword } from "@/modules/auth/actions";
 
-export const loginSchema = z.object({
+const formSchema = z.object({
   password: z
     .string()
     .min(6, { message: "Passwort muss mindestens 6 Zeichen lang sein." }),
@@ -39,8 +39,8 @@ export function ResetPasswordForm({
   const [showPassword, setShowPassword] = useState(false);
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       password: "",
     },
@@ -60,28 +60,25 @@ export function ResetPasswordForm({
     );
   }
 
+  async function handleSubmit({ password }: z.infer<typeof formSchema>) {
+    startTransition(async () => {
+      try {
+        await resetPassword(tokenId, tokenValue, password);
+        setIsSubmitted(true);
+      } catch {
+        toast({
+          title: "Fehler",
+          description:
+            "Dein Passwort konnte nicht geändert werden. Versuch es später nochmal.",
+          variant: "destructive",
+        });
+      }
+    });
+  }
+
   return (
     <Form {...form}>
-      <form
-        className="space-y-6"
-        onSubmit={form.handleSubmit(
-          async ({ password }: z.infer<typeof loginSchema>) => {
-            startTransition(async () => {
-              const res = await resetPassword(tokenId, tokenValue, password);
-              if (res?.error) {
-                toast({
-                  title: "Fehler",
-                  description:
-                    "Dein Passwort konnte nicht geändert werden. Versuch es später nochmal.",
-                  variant: "destructive",
-                });
-                return;
-              }
-              setIsSubmitted(true);
-            });
-          },
-        )}
-      >
+      <form className="space-y-6" onSubmit={form.handleSubmit(handleSubmit)}>
         <FormField
           control={form.control}
           name="password"

@@ -3,6 +3,7 @@
 import { compare, hash } from "bcrypt";
 import { nanoid } from "nanoid";
 
+import { AuthorizationError, InputError, NotFoundError } from "@/lib/errors";
 import { sendForgotPasswordMail } from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
 
@@ -14,8 +15,7 @@ export async function forgotPassword(email: string) {
   });
 
   if (!user) {
-    console.error("User not found");
-    return;
+    throw new NotFoundError();
   }
 
   const secret = nanoid(32);
@@ -36,7 +36,7 @@ export async function forgotPassword(email: string) {
       tokenValue: secret,
     });
   } catch (e) {
-    console.error(e);
+    throw new Error("Error sending email");
   }
 }
 export async function resetPassword(
@@ -48,7 +48,7 @@ export async function resetPassword(
 
   if (!isTokenValid) {
     console.error("invalid password reset token");
-    return { error: "token invalid" };
+    throw new InputError();
   }
 
   const tokenItem = await prisma.passwordResetToken.findFirst({
@@ -59,13 +59,13 @@ export async function resetPassword(
 
   if (!tokenItem) {
     console.error("password reset token not found");
-    return { error: "token invalid" };
+    throw new NotFoundError();
   }
 
   const isSecretCorrect = await compare(tokenValue, tokenItem.secret);
   if (!isSecretCorrect) {
     console.error("password reset token secret incorrect");
-    return { error: "token invalid" };
+    throw new InputError();
   }
 
   await prisma.user.update({
@@ -100,10 +100,7 @@ export async function signup({
   });
 
   if (!invitation) {
-    console.error(`no invitation found for ${email}`);
-    return {
-      error: "No invitation found",
-    };
+    throw new AuthorizationError();
   }
 
   const hashedPassword = await hash(password, 12);
@@ -122,23 +119,6 @@ export async function signup({
       id: invitation.id,
     },
   });
-}
-
-export async function validateInvitation(id: string) {
-  const invitation = await prisma.invitation.findFirst({
-    where: {
-      id,
-      createdAt: {
-        gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days
-      },
-    },
-  });
-
-  if (!invitation) {
-    return false;
-  }
-
-  return true;
 }
 
 export async function validatePasswordResetToken(id: string) {

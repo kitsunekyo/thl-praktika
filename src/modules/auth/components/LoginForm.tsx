@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { captureMessage } from "@sentry/nextjs";
 import { AlertCircle } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -21,7 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 
-export const loginSchema = z.object({
+const formSchema = z.object({
   email: z.string().email({ message: "Ungültige Email" }),
   password: z.string().min(1, { message: "Passwort darf nicht leer sein" }),
 });
@@ -32,13 +33,23 @@ export function LoginForm({ email }: { email?: string }) {
   const search = useSearchParams();
   const error = search.get("error");
 
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       email: email || "",
       password: "",
     },
   });
+
+  async function handleSubmit({ email, password }: z.infer<typeof formSchema>) {
+    startTransition(() => {
+      try {
+        signIn("credentials", { email, password });
+      } catch {
+        captureMessage("Failed to sign in with credentials");
+      }
+    });
+  }
 
   return (
     <Form {...form}>
@@ -49,16 +60,7 @@ export function LoginForm({ email }: { email?: string }) {
           <AlertDescription>Email oder Passwort sind falsch.</AlertDescription>
         </Alert>
       )}
-      <form
-        className="space-y-6"
-        onSubmit={form.handleSubmit(
-          async ({ email, password }: z.infer<typeof loginSchema>) => {
-            startTransition(() => {
-              signIn("credentials", { email, password });
-            });
-          },
-        )}
-      >
+      <form className="space-y-6" onSubmit={form.handleSubmit(handleSubmit)}>
         <FormField
           control={form.control}
           name="email"

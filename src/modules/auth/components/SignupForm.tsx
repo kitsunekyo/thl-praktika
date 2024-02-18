@@ -24,7 +24,7 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
 import { signup } from "@/modules/auth/actions";
 
-export const loginSchema = z.object({
+const formSchema = z.object({
   email: z.string().email({ message: "Ungültige Email" }),
   password: z
     .string()
@@ -35,19 +35,42 @@ export const loginSchema = z.object({
 export function SignupForm({ name, email }: { name?: string; email?: string }) {
   const [loading, startTransition] = useTransition();
   const [showPassword, setShowPassword] = useState(false);
-
+  const { toast } = useToast();
   const search = useSearchParams();
   const error = search.get("error");
 
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       email,
       name,
       password: "",
     },
   });
-  const { toast } = useToast();
+
+  const handleSubmit = async ({
+    email,
+    password,
+    name,
+  }: z.infer<typeof formSchema>) => {
+    startTransition(async () => {
+      try {
+        signup({ email, password, name });
+        toast({
+          title: "Registrierung erfolgreich",
+          description: "Du kannst dich nun anmelden.",
+        });
+        redirect("/login?email=" + email);
+      } catch {
+        toast({
+          title: "Registrierung fehlgeschlagen",
+          description:
+            "Hast du dich mit der bei THL hinterlegten E-Mail registriert? Wenn du eine andere E-Mail-Adresse verwenden möchtest, kontaktiere mich bitte unter hi@mostviertel.tech.",
+          variant: "destructive",
+        });
+      }
+    });
+  };
 
   return (
     <Form {...form}>
@@ -58,33 +81,7 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
           <AlertDescription>Email oder Passwort sind falsch.</AlertDescription>
         </Alert>
       )}
-      <form
-        className="space-y-6"
-        onSubmit={form.handleSubmit(
-          async ({ email, password, name }: z.infer<typeof loginSchema>) => {
-            startTransition(async () => {
-              const res = await signup({ email, password, name });
-
-              if (res?.error) {
-                toast({
-                  title: "Registrierung fehlgeschlagen",
-                  description:
-                    "Hast du dich mit der bei THL hinterlegten E-Mail registriert? Wenn du eine andere E-Mail-Adresse verwenden möchtest, kontaktiere mich bitte unter hi@mostviertel.tech.",
-                  variant: "destructive",
-                });
-                return;
-              }
-
-              toast({
-                title: "Registrierung erfolgreich",
-                description: "Du kannst dich nun anmelden.",
-              });
-
-              redirect("/login?email=" + email);
-            });
-          },
-        )}
-      >
+      <form className="space-y-6" onSubmit={form.handleSubmit(handleSubmit)}>
         <FormField
           control={form.control}
           name="email"

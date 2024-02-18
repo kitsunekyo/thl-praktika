@@ -5,6 +5,7 @@ import { hash } from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import { AuthenticationError } from "@/lib/errors";
 import { sendInvitationMail } from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/getServerSession";
@@ -197,10 +198,10 @@ export async function updatePreferences(preferences: User["preferences"]) {
 export async function changePassword(password: string) {
   const session = await getServerSession();
   if (!session) {
-    return { error: "not authenticated" };
+    throw new AuthenticationError();
   }
 
-  await prisma.user.update({
+  return prisma.user.update({
     where: {
       id: session.user.id,
     },
