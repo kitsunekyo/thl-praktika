@@ -54,9 +54,21 @@ export async function TrainingCard({
 
   return (
     <div className="rounded-xl bg-white text-sm shadow-lg">
-      <header className="flex items-start px-4 pt-4">
+      <header className="flex items-center px-4 pt-4">
         <Link href={`/profile/${training.author.id}`}>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-3">
+            <div className="rounded-lg bg-white font-semibold">
+              <div className="text-xs uppercase leading-none text-muted-foreground">
+                {training.start.toLocaleString("de-AT", {
+                  month: "short",
+                })}
+              </div>
+              <div className="text-xl leading-none">
+                {training.start.toLocaleString("de-AT", {
+                  day: "numeric",
+                })}
+              </div>
+            </div>
             <Avatar className="shrink-0">
               <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
               <AvatarFallback>
