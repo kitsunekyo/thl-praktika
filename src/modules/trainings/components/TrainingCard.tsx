@@ -9,7 +9,7 @@ import { secondsToDuration } from "@/lib/date";
 import { formatAddress } from "@/modules/users/address";
 import { getInitials } from "@/modules/users/name";
 
-import { CollapsibleRegistrations } from "./CollapsibleRegistrations";
+import { RegisteredUsers } from "./RegisteredUsers";
 import { TrainingDate } from "./TrainingDate";
 
 type TrainingWithMetadata = Training & {
@@ -101,7 +101,7 @@ export async function TrainingCard({
           </dd>
         )}
         <dd>
-          <CollapsibleRegistrations training={training} />
+          <RegisteredUsers training={training} />
         </dd>
       </dl>
       {!!actions && (
