@@ -53,7 +53,7 @@ export async function TrainingCard({
   );
 
   return (
-    <div className="rounded-xl bg-white text-sm shadow-lg">
+    <div className="overflow-hidden rounded-xl bg-white text-sm shadow-lg">
       <header className="flex items-center px-4 pt-4">
         <Link href={`/profile/${training.author.id}`}>
           <div className="flex items-center gap-3">
@@ -107,7 +107,7 @@ export async function TrainingCard({
         </dd>
       </dl>
       {!!actions && (
-        <footer className="flex items-center justify-end gap-4 px-4 pb-4">
+        <footer className="flex items-center justify-end gap-4 bg-gray-50 px-4 py-2">
           {actions}
         </footer>
       )}
