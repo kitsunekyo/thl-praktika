@@ -41,7 +41,7 @@ export function Navigation({
             {canRegister && (
               <SidebarLink href="/trainings" onClick={onNavigate}>
                 <CalendarCheck2Icon className="mr-2 h-4 w-4 shrink-0" />
-                Meine Praktika
+                Meine Anmeldungen
               </SidebarLink>
             )}
             {canCreateTrainings && (
