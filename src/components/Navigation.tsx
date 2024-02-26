@@ -87,7 +87,7 @@ export function Navigation({
               onClick={onNavigate}
             >
               <BugIcon className="mr-2 h-4 w-4 shrink-0" />
-              Problem oder Feedback senden
+              Hilfe
             </SidebarLink>
             <SidebarLink href="/changelog" onClick={onNavigate}>
               <ListRestartIcon className="mr-2 h-4 w-4 shrink-0" />
