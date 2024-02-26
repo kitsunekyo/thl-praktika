@@ -11,6 +11,9 @@ const publicPaths = [
   "/twitter-image.jpg",
   "/robots.txt",
   "/api/uploadthing",
+  "/manifest.json",
+  "/sw.js",
+  "/workbox-*.js",
 ];
 
 const authPaths = [
