@@ -1,17 +1,20 @@
 import nextMDX from "@next/mdx";
 import { withSentryConfig } from "@sentry/nextjs";
 import { mdxAnnotations } from "mdx-annotations";
+import nextPWA from "next-pwa";
 
-const mdxOptions = {
+const withPWA = nextPWA({
+  dest: "public",
+});
+
+const withMDX = nextMDX({
   extension: /\.mdx?$/,
   options: {
     remarkPlugins: [mdxAnnotations.recma],
     rehypePlugins: [],
     recmaPlugins: [],
   },
-};
-
-const withMDX = nextMDX(mdxOptions);
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -30,7 +33,7 @@ const nextConfig = {
 };
 
 export default withSentryConfig(
-  withMDX(nextConfig),
+  withPWA(withMDX(nextConfig)),
   {
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options
