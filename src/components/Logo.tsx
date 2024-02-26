@@ -1,4 +1,5 @@
 import { PawPrintIcon } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
@@ -10,6 +11,8 @@ export function Logo({
   light?: boolean;
   onNavigate?: () => void;
 }) {
+  const source = light ? "/img/outlines-negative.svg" : "/img/outlines-red.svg";
+
   return (
     <div
       className={cn(
@@ -19,7 +22,13 @@ export function Logo({
     >
       <Link href="/" onClick={onNavigate}>
         <div className="flex items-center space-x-2">
-          <PawPrintIcon className="h-6 w-6 text-thl" />
+          <Image
+            src={source}
+            alt=""
+            height={40}
+            width={40}
+            className="text-thl"
+          />
           <span>Praktika</span>
         </div>
       </Link>
