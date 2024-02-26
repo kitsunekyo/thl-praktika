@@ -128,7 +128,7 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className="flex items-center py-2 text-sm">
+      <div className="flex items-center px-4 py-2 text-sm">
         <h3 className="font-medium">Filter</h3>
         <CollapsibleTrigger asChild className="md:hidden">
           {isOpen ? (
