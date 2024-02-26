@@ -83,7 +83,7 @@ export function Navigation({
           <Title>Hilfe</Title>
           <div className="space-y-1">
             <SidebarLink
-              href="mailto:hi@mostviertel.tech?subject=Problem"
+              href="mailto:hi@mostviertel.tech?subject=thl-praktika"
               onClick={onNavigate}
             >
               <BugIcon className="mr-2 h-4 w-4 shrink-0" />
