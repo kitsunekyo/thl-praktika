@@ -136,13 +136,15 @@ function TrainingList({
             <TrainingCard
               training={t}
               actions={
-                <>
-                  <EditTraining training={t} />
-                  <CancelTraining
-                    trainingId={t.id}
-                    hasRegistrations={hasRegistrations}
-                  />
-                </>
+                t.end > new Date() ? (
+                  <>
+                    <EditTraining training={t} />
+                    <CancelTraining
+                      trainingId={t.id}
+                      hasRegistrations={hasRegistrations}
+                    />
+                  </>
+                ) : null
               }
             />
           </li>

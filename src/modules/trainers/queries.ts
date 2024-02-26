@@ -59,9 +59,6 @@ export async function getMyTrainings() {
   return prisma.training.findMany({
     where: {
       authorId: session.user.id,
-      start: {
-        gte: new Date(),
-      },
     },
     include: {
       author: true,
@@ -72,7 +69,7 @@ export async function getMyTrainings() {
       },
     },
     orderBy: {
-      start: "asc",
+      start: "desc",
     },
   });
 }
