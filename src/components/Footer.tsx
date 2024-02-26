@@ -51,8 +51,8 @@ export function Footer() {
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-xs text-gray-400 sm:text-center">
             © 2023{" "}
-            <a href="https://flowbite.com/" className="hover:underline">
-              Alexander Spieslechner
+            <a href="https://mostviertel.tech/" className="hover:underline">
+              Alexander Spieslechner - mostviertel.tech
             </a>
           </span>
         </div>
