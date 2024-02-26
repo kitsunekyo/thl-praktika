@@ -1,6 +1,6 @@
 import { Registration, Training, User } from "@prisma/client";
 import { formatDuration, intervalToDuration } from "date-fns";
-import { MapPinIcon } from "lucide-react";
+import { ExternalLinkIcon, MapPinIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -84,20 +84,10 @@ export async function TrainingCard({
         {training.description && <dd>{training.description}</dd>}
         {!!address && (
           <dd>
-            <div className="flex items-start gap-2 leading-none">
-              <MapPinIcon className="h-4 w-4 text-muted-foreground" />
-              <div className="space-y-1">
-                {address}
-                {!!training.traveltime && (
-                  <p className="text-xs">
-                    {formatDuration(secondsToDuration(training.traveltime), {
-                      format: ["hours", "minutes"],
-                    })}{" "}
-                    entfernt
-                  </p>
-                )}
-              </div>
-            </div>
+            <TrainingLocation
+              address={address}
+              traveltime={training.traveltime}
+            />
           </dd>
         )}
         <dd>
@@ -107,6 +97,50 @@ export async function TrainingCard({
       {!!actions && (
         <footer className="flex items-center gap-4 px-4 pb-4">{actions}</footer>
       )}
+    </div>
+  );
+}
+
+function TrainingLocation({
+  address,
+  traveltime,
+}: {
+  address: string;
+  traveltime?: number;
+}) {
+  let parts = address.split(/(https:\/\/maps.app.goo.gl\/\w*)/gi);
+  const addressContent = parts.filter(Boolean).map((p, i) => {
+    if (p.match(/(https:\/\/maps.app.goo.gl\/\w*)/gi)) {
+      return (
+        <a
+          key={p + i}
+          href={p}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 underline"
+        >
+          Google maps
+          <ExternalLinkIcon className="h-4 w-4" />
+        </a>
+      );
+    }
+    return p;
+  });
+
+  return (
+    <div className="flex items-start gap-2 leading-none">
+      <MapPinIcon className="h-4 w-4 text-muted-foreground" />
+      <div className="space-y-1">
+        {addressContent}
+        {!!traveltime && (
+          <p className="text-xs">
+            {formatDuration(secondsToDuration(traveltime), {
+              format: ["hours", "minutes"],
+            })}{" "}
+            entfernt
+          </p>
+        )}
+      </div>
     </div>
   );
 }
