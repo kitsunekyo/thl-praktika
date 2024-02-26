@@ -53,7 +53,7 @@ export async function TrainingCard({
   );
 
   return (
-    <div className="rounded-xl border bg-white text-sm">
+    <div className="rounded-xl bg-white text-sm shadow-lg">
       <header className="flex items-start px-4 pt-4">
         <Link href={`/profile/${training.author.id}`}>
           <div className="flex gap-2">

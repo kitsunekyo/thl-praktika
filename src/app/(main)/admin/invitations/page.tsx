@@ -25,7 +25,6 @@ export default async function UserPage() {
           <Button size="sm">Benutzer einladen</Button>
         </Link>
       </div>
-      <Separator className="my-4" />
       <InvitationList />
     </section>
   );

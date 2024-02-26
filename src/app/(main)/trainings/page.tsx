@@ -19,7 +19,6 @@ export default async function Trainings() {
       <PageTitle content="Deine Anmeldungen für Praktika.">
         Anmeldungen
       </PageTitle>
-      <Separator className="my-4" />
       {trainings.length > 0 ? (
         <TrainingList trainings={trainings} />
       ) : (

@@ -25,7 +25,6 @@ export default async function UserPage() {
           <Button size="sm">Benutzer erstellen</Button>
         </Link>
       </div>
-      <Separator className="my-4" />
       <UserList />
     </section>
   );

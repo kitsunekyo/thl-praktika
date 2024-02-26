@@ -33,13 +33,11 @@ export default async function Page() {
       <PageTitle content="Hier findest du Praktika Anfragen die dir Student:innen geschickt haben. Wenn du ein neues Praktikum erstellst, werden alle in dieser Liste benachrichtigt.">
         Meine Anfragen
       </PageTitle>
-      <Separator className="my-4" />
       <ReceivedTrainingRequests requests={requests} />
       <div className="my-16" />
       <PageTitle content="Hier findest du deine erstellten Praktika. Du kannst sehen wer angemeldet ist, kannst Praktika bearbeiten oder absagen.">
         Meine Praktika
       </PageTitle>
-      <Separator className="my-4" />
       <CreateTraining profile={profile} />
       <Trainings />
     </div>
@@ -53,7 +51,7 @@ async function ReceivedTrainingRequests({
 }) {
   if (!requests?.length) {
     return (
-      <p className="text-sm text-gray-400">
+      <p className="text-sm text-muted-foreground">
         Du hast keine unbeantworteten Praktika Anfragen.
       </p>
     );

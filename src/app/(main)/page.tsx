@@ -64,19 +64,26 @@ export default async function Home({
   return (
     <section className="gap-8 md:flex md:py-6">
       <aside className="relative shrink-0 basis-80">
-        <div className="sticky top-0 py-4 md:py-6">
+        <div className="sticky top-0">
           <TrainingFilter hasAddress={userHasAddress} />
         </div>
       </aside>
       <main className="mb-6 md:w-full md:max-w-[600px] md:py-6">
-        {isTrainer && (
-          <div className="mb-8 ">
-            <CreateTraining profile={profile} />
+        <div className="mb-4 divide-y rounded-xl bg-white shadow-lg">
+          <div className="p-4">
+            <h2 className="text-lg font-medium">Bevorstehende Praktika</h2>
           </div>
-        )}
-        <p className="mb-4 text-sm text-muted-foreground">
-          {trainingsCountLabel}
-        </p>
+          <div className="flex items-center px-4 py-2">
+            <p className="text-sm text-muted-foreground">
+              {trainingsCountLabel}
+            </p>
+            {isTrainer && (
+              <div className="ml-auto">
+                <CreateTraining profile={profile} />
+              </div>
+            )}
+          </div>
+        </div>
         {trainings.length === 0 && <NoTrainings />}
         {filteredTrainings.length > 0 && (
           <ul className="space-y-4">

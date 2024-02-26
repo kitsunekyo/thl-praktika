@@ -40,7 +40,6 @@ export default async function Page() {
       >
         Trainer:innen
       </PageTitle>
-      <Separator className="my-4" />
       <TrainerList trainers={trainers} requests={myRequests} />
       <div className="my-8" />
       {session.user.role === "user" && (
@@ -132,7 +131,7 @@ async function TrainerCard({
   return (
     <li
       key={trainer.id}
-      className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
+      className="col-span-1 flex flex-col divide-y rounded-xl bg-white text-center shadow-lg"
     >
       <div className="flex flex-1 flex-col p-8">
         <Link href={`/profile/${trainer.id}`}>
@@ -170,26 +169,26 @@ async function TrainerCard({
           ) : null}
         </dl>
       </div>
-      <div className="-mt-px flex divide-x divide-gray-200">
-        <div className="flex w-0 flex-1 gap-2">
+      <div className="flex divide-x">
+        <div className="flex gap-2 px-4">
           <a
             href={`mailto:${trainer.email}`}
-            className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+            className="relative inline-flex items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm"
           >
-            <MailIcon className="h-5 w-5" aria-hidden="true" />
+            <MailIcon className="h-4 w-4" aria-hidden="true" />
           </a>
           {trainer.phone ? (
             <a
               href={`tel:${trainer.phone}`}
-              className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+              className="relative inline-flex items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm"
             >
-              <PhoneIcon className="h-5 w-5" aria-hidden="true" />
+              <PhoneIcon className="h-4 w-4" aria-hidden="true" />
             </a>
           ) : null}
         </div>
 
         {session.user.role !== "trainer" ? (
-          <div className="-ml-px flex w-0 flex-1">
+          <div className="flex grow px-4">
             <RequestTraining
               trainerId={trainer.id}
               disabled={hasRecentlyRequested}

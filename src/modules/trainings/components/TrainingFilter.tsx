@@ -128,8 +128,8 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className="flex h-9 items-center text-sm">
-        Filter
+      <div className="flex items-center py-2 text-sm">
+        <h3 className="font-medium">Filter</h3>
         <CollapsibleTrigger asChild className="md:hidden">
           {isOpen ? (
             <Button variant="ghost" size="sm" className="ml-auto w-9 p-0">
@@ -145,7 +145,10 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
         </CollapsibleTrigger>
       </div>
       <CollapsibleContent>
-        <section className="space-y-6 pb-6 pt-4 text-sm" aria-label="filter">
+        <section
+          className="mb-4 space-y-6 rounded-xl bg-white p-4 text-sm shadow-lg"
+          aria-label="filter"
+        >
           <div>
             <div className="mb-2 flex items-center">
               <CalendarIcon className="mr-2 h-4 w-5" />

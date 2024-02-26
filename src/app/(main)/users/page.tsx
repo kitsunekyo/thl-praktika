@@ -29,7 +29,6 @@ export default async function Page() {
       >
         Praktikanten
       </PageTitle>
-      <Separator className="my-4" />
       <UserList users={users} />
     </div>
   );

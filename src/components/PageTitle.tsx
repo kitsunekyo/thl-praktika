@@ -8,9 +8,9 @@ export function PageTitle({
   content?: ReactNode;
 }) {
   return (
-    <div className="flex items-center justify-between">
+    <div className="mb-4 flex items-center justify-between">
       <div className="space-y-1">
-        <h2 className="text-2xl font-semibold tracking-tight">{children}</h2>
+        <h2 className="text-lg font-semibold tracking-tight">{children}</h2>
         {content && <p className="text-sm text-muted-foreground">{content}</p>}
       </div>
     </div>

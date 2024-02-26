@@ -47,7 +47,7 @@ export function RequestTraining({
 
   if (disabled) {
     return (
-      <div className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-400">
+      <div className="relative inline-flex items-center justify-center gap-x-3 rounded-br-lg border border-transparent text-sm font-semibold text-gray-400">
         Offene Anfrage
       </div>
     );
@@ -55,11 +55,11 @@ export function RequestTraining({
 
   return (
     <button
-      className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+      className="relative inline-flex items-center justify-center gap-x-3 rounded-br-lg border border-transparent text-sm"
       disabled={loading}
       onClick={handleSend}
     >
-      <SendIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
+      <SendIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
       Praktikum anfragen
     </button>
   );

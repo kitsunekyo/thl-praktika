@@ -68,7 +68,7 @@ export function PreferencesForm({
                   control={form.control}
                   name="email.trainingRegistration"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg bg-white p-3 shadow">
                       <div className="space-y-0.5">
                         <FormLabel>Praktika Anmeldungen</FormLabel>
                         <FormDescription>
@@ -89,7 +89,7 @@ export function PreferencesForm({
                   control={form.control}
                   name="email.trainingRegistrationCancelled"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg bg-white p-3 shadow">
                       <div className="space-y-0.5">
                         <FormLabel>Praktika Abmeldungen</FormLabel>
                         <FormDescription>
@@ -110,7 +110,7 @@ export function PreferencesForm({
                   control={form.control}
                   name="email.trainingRequest"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg bg-white p-3 shadow">
                       <div className="space-y-0.5">
                         <FormLabel>Praktika Anfragen</FormLabel>
                         <FormDescription>
@@ -135,7 +135,7 @@ export function PreferencesForm({
                   control={form.control}
                   name="email.trainingCreatedAfterRegistration"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg bg-white p-3 shadow">
                       <div className="space-y-0.5">
                         <FormLabel>Praktikum erstellt</FormLabel>
                         <FormDescription>
@@ -156,7 +156,7 @@ export function PreferencesForm({
                   control={form.control}
                   name="email.trainingCancelled"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg bg-white p-3 shadow">
                       <div className="space-y-0.5">
                         <FormLabel>Praktikum abgesagt</FormLabel>
                         <FormDescription>
@@ -177,7 +177,7 @@ export function PreferencesForm({
                   control={form.control}
                   name="email.trainingUpdated"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg bg-white p-3 shadow">
                       <div className="space-y-0.5">
                         <FormLabel>Praktikum geändert</FormLabel>
                         <FormDescription>

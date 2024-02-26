@@ -13,7 +13,7 @@ export default async function Profile() {
   const preferences = preferencesSchema.parse(user.preferences || {}); // value can be DB null, or "null" as json value, so we need to supply a default value
 
   return (
-    <div className="divide-y divide-white/5">
+    <div className="divide-y">
       <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
         <div>
           <h2 className="text-base font-semibold leading-7">
