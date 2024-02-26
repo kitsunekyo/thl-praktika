@@ -8,12 +8,14 @@ export default function Page() {
       </div>
       <article className="prose">
         <p>
-          Die App kostet mich aktuell keinen Cent. Sobald wir mit den
-          versendeten Emails über 100 pro Monat kommen, kostet{" "}
-          <strong>mich</strong> der Email Service etwa $15 pro Monat.{" "}
+          <strong>Für dich bleibt die App für immer gratis.</strong>
         </p>
         <p>
-          <strong>Für dich bleibt die App für immer gratis.</strong>
+          Die App kostet mich aktuell eta 15€ pro Monat für den Email Service{" "}
+          <a href="https://postmark.com/" rel="nofollow noopener noreferrer">
+            Postmark
+          </a>
+          .
         </p>
         <p>
           Wenn du mich und meine Arbeitszeit trotzdem unterstützen möchtest
