@@ -37,7 +37,9 @@ export default async function Page() {
       <PageTitle content="Hier findest du deine erstellten Praktika. Du kannst sehen wer angemeldet ist, kannst Praktika bearbeiten oder absagen.">
         Meine Praktika
       </PageTitle>
-      <CreateTraining profile={profile} />
+      <div className="mb-2">
+        <CreateTraining profile={profile} />
+      </div>
       <Trainings />
     </div>
   );
@@ -102,7 +104,32 @@ async function Trainings() {
 
   return (
     <div className="max-w-2xl">
+      <Stats trainings={trainings} />
       <TrainingList trainings={trainings} role={role} />
+    </div>
+  );
+}
+
+function Stats({
+  trainings,
+}: {
+  trainings: {
+    end: Date;
+  }[];
+}) {
+  const trainingCount = trainings.length;
+
+  if (trainingCount === 0) {
+    return null;
+  }
+
+  return (
+    <div className="text-sm text-muted-foreground">
+      <p>
+        Du hast bisher{" "}
+        <span className="font-bold">{trainingCount} Praktika</span> eingetragen.
+        Danke! ✨
+      </p>
     </div>
   );
 }

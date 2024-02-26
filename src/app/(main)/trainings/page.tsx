@@ -25,6 +25,7 @@ export default async function Trainings() {
       <PageTitle content="Deine Anmeldungen für Praktika.">
         Anmeldungen
       </PageTitle>
+      <Stats trainings={trainings} />
       {trainings.length > 0 ? (
         <TrainingList trainings={trainings} role={role} />
       ) : (
@@ -48,5 +49,39 @@ async function addMetadata<
     trainings.map(async (training) => {
       return await computeTraveltime(await computeDuration(training));
     }),
+  );
+}
+
+function Stats({
+  trainings,
+}: {
+  trainings: {
+    end: Date;
+    duration: number;
+  }[];
+}) {
+  const previousTrainings = trainings.filter((t) => t.end > new Date());
+  const trainingCount = previousTrainings.length;
+  const totalHours = previousTrainings.reduce(
+    (total, training) => total + training.duration / (1000 * 60 * 60),
+    0,
+  );
+
+  if (trainingCount === 0 || totalHours === 0) {
+    return null;
+  }
+
+  return (
+    <div className="text-sm text-muted-foreground">
+      <p>
+        Du hast dich bisher für{" "}
+        <span className="font-bold">{trainingCount} Praktika</span> angemeldet.
+      </p>
+      <p>
+        Du hast{" "}
+        <span className="font-bold">{totalHours} Praktikumsstunden</span> über
+        die App abgeschlossen. ✨
+      </p>
+    </div>
   );
 }
