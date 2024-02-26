@@ -1,4 +1,4 @@
-import { MailIcon, PhoneIcon } from "lucide-react";
+import { ExternalLinkIcon, MailIcon, PhoneIcon } from "lucide-react";
 import Link from "next/link";
 
 import { PageTitle } from "@/components/PageTitle";
@@ -59,25 +59,7 @@ function UserList({
           key={user.email}
           className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
         >
-          <div className="flex w-full items-center justify-between space-x-6 p-6">
-            <div className="flex-1 truncate">
-              <div className="flex items-center space-x-3">
-                <h3 className="truncate text-sm font-medium text-gray-900">
-                  {user.name}
-                </h3>
-              </div>
-              <p className="mt-1 truncate text-sm text-gray-500">
-                {user.email}
-              </p>
-              <p className="mt-1 truncate text-sm text-gray-500">
-                {user.phone ? user.phone : "-"}
-              </p>
-              <p className="mt-1 truncate text-sm text-gray-500">
-                {[user.address, user.city, user.city].some(Boolean)
-                  ? formatAddress(user)
-                  : "-"}
-              </p>
-            </div>
+          <div className="flex w-full items-start justify-between space-x-6 p-6">
             <Link href={`/profile/${user.id}`}>
               <Avatar className="mx-auto shrink-0" size="lg">
                 <AvatarImage src={user.image || "/img/avatar.jpg"} />
@@ -89,35 +71,39 @@ function UserList({
                 </AvatarFallback>
               </Avatar>
             </Link>
-          </div>
-          <div>
-            <div className="-mt-px flex divide-x divide-gray-200">
-              <div className="flex w-0 flex-1">
+            <div className="flex-1">
+              <div className="flex items-center space-x-3">
+                <h3 className="truncate text-sm font-medium text-gray-900">
+                  {user.name}
+                </h3>
+              </div>
+              <p className="mt-1 truncate text-sm text-gray-500">
                 <a
                   href={`mailto:${user.email}`}
-                  className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                  className="inline-flex items-center underline"
                 >
-                  <MailIcon
-                    className="h-5 w-5 text-gray-400"
-                    aria-hidden="true"
-                  />
-                  E-Mail
+                  {user.email}
+                  <ExternalLinkIcon className="ml-1 h-4 w-4" />
                 </a>
-              </div>
-              {user.phone ? (
-                <div className="-ml-px flex w-0 flex-1">
+              </p>
+              <p className="mt-1 truncate text-sm text-gray-500">
+                {user.phone ? (
                   <a
                     href={`tel:${user.phone}`}
-                    className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                    className="inline-flex items-center underline"
                   >
-                    <PhoneIcon
-                      className="h-5 w-5 text-gray-400"
-                      aria-hidden="true"
-                    />
-                    Anrufen
+                    {user.phone}
+                    <ExternalLinkIcon className="ml-1 h-4 w-4" />
                   </a>
-                </div>
-              ) : null}
+                ) : (
+                  "-"
+                )}
+              </p>
+              <p className="mt-1 truncate text-sm text-gray-500">
+                {[user.address, user.city, user.city].some(Boolean)
+                  ? formatAddress(user)
+                  : "-"}
+              </p>
             </div>
           </div>
         </li>

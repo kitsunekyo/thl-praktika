@@ -1,5 +1,5 @@
 import { differenceInDays, formatDistance } from "date-fns";
-import { MailIcon, PhoneIcon } from "lucide-react";
+import { ExternalLinkIcon, MailIcon, PhoneIcon } from "lucide-react";
 import Link from "next/link";
 
 import { PageTitle } from "@/components/PageTitle";
@@ -44,7 +44,7 @@ export default async function Page() {
       <div className="my-8" />
       {session.user.role === "user" && (
         <>
-          <h2 className="mb-4 font-medium">Gesendete Anfragen</h2>
+          <h2 className="mb-4 text-lg font-semibold">Gesendete Anfragen</h2>
           <SentTrainingRequests requests={myRequests} />
         </>
       )}
@@ -68,7 +68,7 @@ async function TrainerList({
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {trainers.map((trainer) => (
         <TrainerCard
           key={trainer.id}
@@ -84,17 +84,7 @@ async function TrainerList({
           )}
         />
       ))}
-    </div>
-  );
-}
-
-function LastLogin({ date }: { date: Date | null }) {
-  return (
-    <span>
-      {date
-        ? `zuletzt online vor ${formatDistance(date, new Date())}`
-        : "noch nicht online"}
-    </span>
+    </ul>
   );
 }
 
@@ -128,14 +118,15 @@ async function TrainerCard({
     " ",
     "+",
   )}`;
+
   return (
     <li
-      key={trainer.id}
-      className="col-span-1 flex flex-col divide-y rounded-xl bg-white text-center shadow-lg"
+      key={trainer.email}
+      className="overflow-hidden rounded-lg bg-white shadow"
     >
-      <div className="flex flex-1 flex-col p-8">
+      <div className="flex w-full items-start justify-between space-x-6 p-6">
         <Link href={`/profile/${trainer.id}`}>
-          <Avatar className="mx-auto shrink-0" size="xl">
+          <Avatar className="mx-auto shrink-0" size="lg">
             <AvatarImage src={trainer.image || "/img/avatar.jpg"} />
             <AvatarFallback>
               {getInitials({
@@ -144,58 +135,50 @@ async function TrainerCard({
               })}
             </AvatarFallback>
           </Avatar>
-          <h3 className="mt-2 text-sm font-medium text-gray-900">
-            {trainer.name}
-          </h3>
         </Link>
-        <dl className="mt-1 flex flex-grow flex-col justify-between">
-          <dt className="sr-only">Zuletzt Online</dt>
-          <dd className="my-2">
-            <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-              <LastLogin date={trainer.lastLogin} />
-            </span>
-          </dd>
-          <dt className="sr-only">Adresse</dt>
-          <dd className="text-sm text-gray-500">
-            <a href={googleMapsUrl}>{formatAddress(trainer)}</a>
-          </dd>
-          <dt className="sr-only">Email</dt>
-          <dd className="text-sm text-gray-500">{trainer.email}</dd>
-          {trainer.phone ? (
-            <>
-              <dt className="sr-only">Telefon</dt>
-              <dd className="text-sm text-gray-500">{trainer.phone}</dd>
-            </>
-          ) : null}
-        </dl>
-      </div>
-      <div className="flex divide-x">
-        <div className="flex gap-2 px-4">
-          <a
-            href={`mailto:${trainer.email}`}
-            className="relative inline-flex items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm"
-          >
-            <MailIcon className="h-4 w-4" aria-hidden="true" />
-          </a>
-          {trainer.phone ? (
-            <a
-              href={`tel:${trainer.phone}`}
-              className="relative inline-flex items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm"
-            >
-              <PhoneIcon className="h-4 w-4" aria-hidden="true" />
-            </a>
-          ) : null}
-        </div>
-
-        {session.user.role !== "trainer" ? (
-          <div className="flex grow px-4">
-            <RequestTraining
-              trainerId={trainer.id}
-              disabled={hasRecentlyRequested}
-            />
+        <div className="flex-1">
+          <div className="flex items-center space-x-3">
+            <h3 className="truncate text-sm font-medium text-gray-900">
+              {trainer.name}
+            </h3>
           </div>
-        ) : null}
+          <p className="mt-1 truncate text-sm text-gray-500">
+            <a
+              href={`mailto:${trainer.email}`}
+              className="inline-flex items-center underline"
+            >
+              {trainer.email}
+              <ExternalLinkIcon className="ml-1 h-4 w-4" />
+            </a>
+          </p>
+          <p className="mt-1 truncate text-sm text-gray-500">
+            {trainer.phone ? (
+              <a
+                href={`tel:${trainer.phone}`}
+                className="inline-flex items-center underline"
+              >
+                {trainer.phone}
+                <ExternalLinkIcon className="ml-1 h-4 w-4" />
+              </a>
+            ) : (
+              "-"
+            )}
+          </p>
+          <p className="mt-1 truncate text-sm text-gray-500">
+            {[trainer.address, trainer.city, trainer.city].some(Boolean)
+              ? formatAddress(trainer)
+              : "-"}
+          </p>
+        </div>
       </div>
+      {session.user.role !== "trainer" ? (
+        <footer className="flex items-center justify-end gap-4 bg-gray-50 px-4 py-2">
+          <RequestTraining
+            trainerId={trainer.id}
+            disabled={hasRecentlyRequested}
+          />
+        </footer>
+      ) : null}
     </li>
   );
 }
@@ -216,37 +199,39 @@ async function SentTrainingRequests({
   // TODO: delete disabled to prevent email spam until i have an idea how to solve this
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Trainer:in</TableHead>
-          <TableHead></TableHead>
-          <TableHead className="text-right">gesendet</TableHead>
-          {/* <TableHead className="w-[50px] text-right"></TableHead> */}
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {requests.map((request) => (
-          <TableRow key={request.id}>
-            <TableCell>
-              <div className="max-w-[80px] truncate md:max-w-xs">
-                {request.trainer.name}
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="max-w-[80px] truncate md:max-w-xs">
-                {request.trainer.email}
-              </div>
-            </TableCell>
-            <TableCell className="text-right">
-              vor {formatDistance(request.createdAt, new Date())}
-            </TableCell>
-            {/* <TableCell className="text-right">
+    <div className="overflow-hidden rounded-lg bg-white shadow">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Trainer:in</TableHead>
+            <TableHead></TableHead>
+            <TableHead className="text-right">gesendet</TableHead>
+            {/* <TableHead className="w-[50px] text-right"></TableHead> */}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {requests.map((request) => (
+            <TableRow key={request.id}>
+              <TableCell>
+                <div className="max-w-[80px] truncate md:max-w-xs">
+                  {request.trainer.name}
+                </div>
+              </TableCell>
+              <TableCell>
+                <div className="max-w-[80px] truncate md:max-w-xs">
+                  {request.trainer.email}
+                </div>
+              </TableCell>
+              <TableCell className="text-right">
+                vor {formatDistance(request.createdAt, new Date())}
+              </TableCell>
+              {/* <TableCell className="text-right">
               <DeleteButton requestId={request.id} />
             </TableCell> */}
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }
