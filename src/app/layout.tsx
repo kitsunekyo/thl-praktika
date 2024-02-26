@@ -5,8 +5,10 @@ import { setDefaultOptions } from "date-fns";
 import { deAT } from "date-fns/locale";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { Suspense } from "react";
 import { extractRouterConfig } from "uploadthing/server";
 
+import { Loading } from "@/components/Loading";
 import PostHogPageView from "@/components/PostHogPageView";
 import { Providers } from "@/components/Providers";
 import { Toaster } from "@/components/ui/toaster";
@@ -40,12 +42,14 @@ export default async function RootLayout({
   return (
     <html lang="de">
       <body className={inter.className}>
-        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-        <Providers>
-          <PostHogPageView />
-          {children}
-          <Toaster />
-        </Providers>
+        <Suspense fallback={<Loading />}>
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+          <Providers>
+            <PostHogPageView />
+            {children}
+            <Toaster />
+          </Providers>
+        </Suspense>
       </body>
     </html>
   );
