@@ -1,3 +1,5 @@
+"use client";
+
 import { Registration, Training, User } from "@prisma/client";
 import { formatDuration, intervalToDuration } from "date-fns";
 import { ExternalLinkIcon, MapPinIcon } from "lucide-react";
@@ -33,7 +35,7 @@ type TrainingWithMetadata = Training & {
   traveltime?: number;
 };
 
-export async function TrainingCard({
+export function TrainingCard({
   training,
   actions,
 }: {

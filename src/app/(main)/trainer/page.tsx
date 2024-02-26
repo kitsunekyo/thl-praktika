@@ -11,14 +11,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getServerSession } from "@/modules/auth/getServerSession";
 import {
   getMyTrainings,
   getTrainingRequests,
 } from "@/modules/trainers/queries";
-import { CancelTraining } from "@/modules/trainings/components/CancelTraining";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
-import { EditTraining } from "@/modules/trainings/components/EditTraining";
-import { TrainingCard } from "@/modules/trainings/components/TrainingCard";
+import { TrainingList } from "@/modules/trainings/components/TrainingList";
 import { getProfile } from "@/modules/users/queries";
 
 export default async function Page() {
@@ -93,63 +92,17 @@ async function ReceivedTrainingRequests({
 
 async function Trainings() {
   const trainings = await getMyTrainings();
+  const session = await getServerSession();
+
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+
+  const role = session?.user.role;
 
   return (
-    <div className="py-6">
-      {trainings.length > 0 ? (
-        <TrainingList trainings={trainings} />
-      ) : (
-        <p className="text-sm text-gray-400">
-          Du hast keine verfügbaren Praktika.
-        </p>
-      )}
+    <div className="max-w-2xl">
+      <TrainingList trainings={trainings} role={role} />
     </div>
-  );
-}
-
-function TrainingList({
-  trainings,
-}: {
-  trainings: (Training & {
-    author: Omit<User, "password">;
-    registrations: (Registration & {
-      user: Pick<
-        User,
-        | "id"
-        | "image"
-        | "name"
-        | "phone"
-        | "email"
-        | "address"
-        | "city"
-        | "zipCode"
-      >;
-    })[];
-  })[];
-}) {
-  return (
-    <ul className="max-w-2xl space-y-4">
-      {trainings.map((t) => {
-        const hasRegistrations = Boolean(t.registrations.length);
-        return (
-          <li key={t.id}>
-            <TrainingCard
-              training={t}
-              actions={
-                t.end > new Date() ? (
-                  <>
-                    <EditTraining training={t} />
-                    <CancelTraining
-                      trainingId={t.id}
-                      hasRegistrations={hasRegistrations}
-                    />
-                  </>
-                ) : null
-              }
-            />
-          </li>
-        );
-      })}
-    </ul>
   );
 }

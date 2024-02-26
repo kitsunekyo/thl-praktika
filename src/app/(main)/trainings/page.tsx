@@ -1,10 +1,9 @@
-import { Registration, Training, User } from "@prisma/client";
+import { Training, User } from "@prisma/client";
 import Link from "next/link";
 
 import { PageTitle } from "@/components/PageTitle";
-import { Separator } from "@/components/ui/separator";
-import { TrainingCard } from "@/modules/trainings/components/TrainingCard";
-import { Unregister } from "@/modules/trainings/components/Unregister";
+import { getServerSession } from "@/modules/auth/getServerSession";
+import { TrainingList } from "@/modules/trainings/components/TrainingList";
 import {
   computeDuration,
   computeTraveltime,
@@ -13,6 +12,13 @@ import { getMyTrainings } from "@/modules/trainings/queries";
 
 export default async function Trainings() {
   const trainings = await addMetadata(await getMyTrainings());
+  const session = await getServerSession();
+
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+
+  const role = session.user.role;
 
   return (
     <div className="py-6">
@@ -20,7 +26,7 @@ export default async function Trainings() {
         Anmeldungen
       </PageTitle>
       {trainings.length > 0 ? (
-        <TrainingList trainings={trainings} />
+        <TrainingList trainings={trainings} role={role} />
       ) : (
         <p className="text-sm text-muted-foreground">
           Du hast dich noch für keine Praktika angemeldet.
@@ -32,42 +38,6 @@ export default async function Trainings() {
         </p>
       )}
     </div>
-  );
-}
-
-function TrainingList({
-  trainings,
-}: {
-  trainings: (Training & {
-    author: Omit<User, "password">;
-    registrations: (Registration & {
-      user: Pick<
-        User,
-        | "id"
-        | "image"
-        | "name"
-        | "phone"
-        | "email"
-        | "address"
-        | "city"
-        | "zipCode"
-      >;
-    })[];
-  })[];
-}) {
-  return (
-    <ul className="max-w-2xl space-y-4">
-      {trainings.map((t) => {
-        return (
-          <li key={t.id}>
-            <TrainingCard
-              training={t}
-              actions={t.end > new Date() && <Unregister trainingId={t.id} />}
-            />
-          </li>
-        );
-      })}
-    </ul>
   );
 }
 
