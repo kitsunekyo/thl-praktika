@@ -91,7 +91,7 @@ export function Navigation({
             </SidebarLink>
             <SidebarLink href="/changelog" onClick={onNavigate}>
               <ListRestartIcon className="mr-2 h-4 w-4 shrink-0" />
-              Änderungsverlauf
+              Änderungen
             </SidebarLink>
           </div>
         </div>
