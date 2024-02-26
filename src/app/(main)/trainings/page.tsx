@@ -21,11 +21,13 @@ export default async function Trainings() {
   const role = session.user.role;
 
   return (
-    <div className="py-6">
+    <div className="mx-auto max-w-2xl py-6">
       <PageTitle content="Deine Anmeldungen für Praktika.">
         Anmeldungen
       </PageTitle>
-      <Stats trainings={trainings} />
+      <div className="my-2">
+        <Stats trainings={trainings} />
+      </div>
       {trainings.length > 0 ? (
         <TrainingList trainings={trainings} role={role} />
       ) : (
@@ -67,20 +69,17 @@ function Stats({
     0,
   );
 
-  if (trainingCount === 0 || totalHours === 0) {
+  if (trainingCount < 5 || totalHours < 5) {
     return null;
   }
 
   return (
-    <div className="text-sm text-muted-foreground">
+    <div className="inline-block max-w-2xl rounded-lg bg-white p-4 text-sm shadow-lg">
       <p>
-        Du hast dich bisher für{" "}
-        <span className="font-bold">{trainingCount} Praktika</span> angemeldet.
-      </p>
-      <p>
-        Du hast{" "}
-        <span className="font-bold">{totalHours} Praktikumsstunden</span> über
-        die App abgeschlossen. ✨
+        ✨ Du hast dich bisher für{" "}
+        <span className="font-bold">{trainingCount} Praktika</span> angemeldet
+        und <span className="font-bold">{totalHours} Stunden</span> über die App
+        abgeschlossen.
       </p>
     </div>
   );

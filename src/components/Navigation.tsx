@@ -50,6 +50,12 @@ export function Navigation({
                 Meine Praktika
               </SidebarLink>
             )}
+            {canCreateTrainings && (
+              <SidebarLink href="/trainer-requests" exact onClick={onNavigate}>
+                <span className="mr-2 h-4 w-4 shrink-0" />
+                Praktika Anfragen
+              </SidebarLink>
+            )}
             <SidebarLink href="/profile" onClick={onNavigate} exact>
               <UserCircleIcon className="mr-2 h-4 w-4 shrink-0" />
               Mein Profil
