@@ -1,6 +1,6 @@
 "use client";
 
-import { Registration, Training, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import { UserCheckIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -10,20 +10,11 @@ import { range } from "@/lib/utils";
 export function RegisteredUsers({
   training,
 }: {
-  training: Training & {
-    registrations: (Registration & {
-      user: Pick<
-        User,
-        | "id"
-        | "image"
-        | "name"
-        | "phone"
-        | "email"
-        | "address"
-        | "city"
-        | "zipCode"
-      >;
-    })[];
+  training: { maxInterns: number } & {
+    registrations: {
+      id: string;
+      user: Pick<User, "id" | "image" | "name">;
+    }[];
   };
 }) {
   return (

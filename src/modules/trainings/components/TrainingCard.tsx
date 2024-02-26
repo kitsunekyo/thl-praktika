@@ -16,22 +16,9 @@ import { TrainingDate } from "./TrainingDate";
 
 type TrainingWithMetadata = Training & {
   registrations: (Registration & {
-    user: Pick<
-      User,
-      | "id"
-      | "image"
-      | "name"
-      | "phone"
-      | "email"
-      | "address"
-      | "city"
-      | "zipCode"
-    >;
+    user: Pick<User, "id" | "image" | "name">;
   })[];
-  author: Pick<
-    User,
-    "address" | "city" | "zipCode" | "id" | "email" | "image" | "name"
-  >;
+  author: Pick<User, "id" | "email" | "image" | "name">;
   traveltime?: number;
 };
 
