@@ -117,9 +117,7 @@ function SidebarLink({
       {...props}
       className={cn(
         buttonVariants({ variant: "ghost" }),
-        isActive
-          ? "bg-muted hover:bg-muted"
-          : "hover:bg-transparent hover:underline",
+        isActive ? "bg-gray-100 hover:bg-gray-100" : "hover:bg-gray-50",
         "w-full justify-start whitespace-nowrap",
       )}
       href={href}
