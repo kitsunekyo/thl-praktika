@@ -54,7 +54,7 @@ export function CancelTraining({
     });
   };
 
-  if (hasRegistrations) {
+  if (!hasRegistrations) {
     return (
       <Button
         variant="outline"
