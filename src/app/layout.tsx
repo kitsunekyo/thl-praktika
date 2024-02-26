@@ -26,6 +26,23 @@ export const metadata: Metadata = {
   description:
     "Vereinfachte Pratika Planung für Trainer:innen und Stundent:innen.",
   metadataBase: new URL(process.env.NEXTAUTH_URL || "http://localhost:3000"),
+  applicationName: "THL Praktika",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "THL Praktika",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    locale: "de_AT",
+  },
+  twitter: {
+    card: "summary",
+  },
 };
 
 export const viewport: Viewport = {
@@ -35,6 +52,7 @@ export const viewport: Viewport = {
   minimumScale: 1,
   userScalable: false,
   viewportFit: "cover",
+  themeColor: "#ffffff",
 };
 
 export default async function RootLayout({
