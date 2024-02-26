@@ -54,6 +54,11 @@ export function Navigation({
               <UserCircleIcon className="mr-2 h-4 w-4 shrink-0" />
               Mein Profil
             </SidebarLink>
+          </div>
+        </div>
+        <div className="px-3">
+          <Title>Personen</Title>
+          <div className="space-y-1">
             <SidebarLink href="/trainers" onClick={onNavigate}>
               <ContactIcon className="mr-2 h-4 w-4 shrink-0" />
               Trainer:innen
