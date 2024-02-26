@@ -65,7 +65,7 @@ export async function TrainingCard({
               </div>
               <div className="text-xl leading-none">
                 {training.start.toLocaleString("de-AT", {
-                  day: "numeric",
+                  day: "2-digit",
                 })}
               </div>
             </div>
