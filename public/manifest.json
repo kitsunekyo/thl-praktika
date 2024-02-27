@@ -472,8 +472,8 @@
       "label": "Praktika Mobile"
     },
     {
-      "src": "/pwa/screenshot-desktop2.jpg",
-      "sizes": "1920x1080",
+      "src": "/pwa/screenshot-desktop2.png",
+      "sizes": "1920x1440",
       "type": "image/jpg",
       "form_factor": "wide",
       "label": "Praktika Desktop"
