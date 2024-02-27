@@ -1,5 +1,7 @@
 # THL Praktika App
 
+![screenshot mobile](public/pwa/screenshot-mobile1.jpg)
+
 Internship management application. Trainers can enter trainings, to allow Users to register as intern.
 
 ### Contribution
