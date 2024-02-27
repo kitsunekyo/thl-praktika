@@ -13,7 +13,10 @@ const publicPaths = [
   "/api/uploadthing",
   "/manifest.json",
   "/sw.js",
-  "/workbox-*.js",
+  "/workbox-*",
+  "/windows11",
+  "/android",
+  "/ios",
 ];
 
 const authPaths = [
