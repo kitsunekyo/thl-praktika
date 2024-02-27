@@ -1,5 +1,6 @@
 import { formatDistance } from "date-fns";
 
+import { Breadcrumb, Breadcrumbs } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import {
   Table,
@@ -21,17 +22,22 @@ export default async function Page() {
   const requests = await getTrainingRequests({ trainerId: profile.id });
 
   return (
-    <div className="mx-auto max-w-2xl py-6">
-      <PageTitle content="Hier findest du Praktika Anfragen die dir Student:innen geschickt haben. Wenn du ein neues Praktikum erstellst, werden alle in dieser Liste benachrichtigt.">
-        Praktika Anfragen
-      </PageTitle>
-      <div className="my-4 flex items-center justify-end">
-        <CreateTraining profile={profile} />
+    <>
+      <Breadcrumbs>
+        <Breadcrumb href="/trainer-requests">Praktika Anfragen</Breadcrumb>
+      </Breadcrumbs>
+      <div className="mx-auto max-w-2xl py-6">
+        <PageTitle content="Hier findest du Praktika Anfragen die dir Student:innen geschickt haben. Wenn du ein neues Praktikum erstellst, werden alle in dieser Liste benachrichtigt.">
+          Praktika Anfragen
+        </PageTitle>
+        <div className="my-4 flex items-center justify-end">
+          <CreateTraining profile={profile} />
+        </div>
+        <div className="overflow-x-hidden">
+          <ReceivedTrainingRequests requests={requests} />
+        </div>
       </div>
-      <div className="overflow-x-hidden">
-        <ReceivedTrainingRequests requests={requests} />
-      </div>
-    </div>
+    </>
   );
 }
 

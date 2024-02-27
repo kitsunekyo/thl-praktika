@@ -4,6 +4,7 @@ import {
   BugIcon,
   CalendarCheck2Icon,
   ContactIcon,
+  ExternalLinkIcon,
   GraduationCapIcon,
   LayoutGridIcon,
   ListRestartIcon,
@@ -99,6 +100,7 @@ export function Navigation({
             >
               <BugIcon className="mr-2 h-4 w-4 shrink-0" />
               Hilfe
+              <ExternalLinkIcon className="ml-2 h-4 w-4 shrink-0" />
             </SidebarLink>
             <SidebarLink href="/changelog" onClick={onNavigate}>
               <ListRestartIcon className="mr-2 h-4 w-4 shrink-0" />

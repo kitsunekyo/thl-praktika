@@ -1,10 +1,10 @@
 import { differenceInDays, formatDistance } from "date-fns";
-import { ExternalLinkIcon, MailIcon, PhoneIcon } from "lucide-react";
+import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 
+import { Breadcrumb, Breadcrumbs } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
 import {
   Table,
   TableBody,
@@ -29,26 +29,31 @@ export default async function Page() {
   const myRequests = await getTrainingRequests({ userId: session.user.id });
 
   return (
-    <div className="py-6">
-      <PageTitle
-        content={
+    <>
+      <Breadcrumbs>
+        <Breadcrumb href="/trainers">Trainer:innen</Breadcrumb>
+      </Breadcrumbs>
+      <div className="py-6">
+        <PageTitle
+          content={
+            <>
+              Sende Praktika Anfragen an Trainer:innen. Sie erhalten eine
+              Benachrichtigung mit der Bitte Praktika einzutragen.
+            </>
+          }
+        >
+          Trainer:innen
+        </PageTitle>
+        <TrainerList trainers={trainers} requests={myRequests} />
+        <div className="my-8" />
+        {session.user.role === "user" && (
           <>
-            Sende Praktika Anfragen an Trainer:innen. Sie erhalten eine
-            Benachrichtigung mit der Bitte Praktika einzutragen.
+            <h2 className="mb-4 text-lg font-semibold">Gesendete Anfragen</h2>
+            <SentTrainingRequests requests={myRequests} />
           </>
-        }
-      >
-        Trainer:innen
-      </PageTitle>
-      <TrainerList trainers={trainers} requests={myRequests} />
-      <div className="my-8" />
-      {session.user.role === "user" && (
-        <>
-          <h2 className="mb-4 text-lg font-semibold">Gesendete Anfragen</h2>
-          <SentTrainingRequests requests={myRequests} />
-        </>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
 
@@ -68,7 +73,7 @@ async function TrainerList({
   }
 
   return (
-    <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
       {trainers.map((trainer) => (
         <TrainerCard
           key={trainer.id}
@@ -124,7 +129,7 @@ async function TrainerCard({
       key={trainer.email}
       className="overflow-hidden rounded-lg bg-white shadow"
     >
-      <div className="flex w-full items-start justify-between space-x-6 p-6">
+      <div className="flex min-h-[140px] w-full items-start gap-6 p-6">
         <Link href={`/profile/${trainer.id}`}>
           <Avatar className="mx-auto shrink-0" size="lg">
             <AvatarImage src={trainer.image || "/img/avatar.jpg"} />
@@ -136,38 +141,36 @@ async function TrainerCard({
             </AvatarFallback>
           </Avatar>
         </Link>
-        <div className="flex-1">
-          <div className="flex items-center space-x-3">
-            <h3 className="truncate text-sm font-medium text-gray-900">
+        <div className="min-w-0">
+          <div className="flex items-center gap-3">
+            <h3 className="min-w-0 truncate text-sm font-medium text-gray-900">
               {trainer.name}
             </h3>
           </div>
-          <p className="mt-1 truncate text-sm text-gray-500">
+          <p className="mt-1 text-sm text-gray-500">
             <a
               href={`mailto:${trainer.email}`}
-              className="inline-flex items-center underline"
+              className="flex min-w-0 items-center underline"
             >
               {trainer.email}
-              <ExternalLinkIcon className="ml-1 h-4 w-4" />
+              <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
             </a>
           </p>
           <p className="mt-1 truncate text-sm text-gray-500">
             {trainer.phone ? (
               <a
                 href={`tel:${trainer.phone}`}
-                className="inline-flex items-center underline"
+                className="flex min-w-0 items-center underline"
               >
                 {trainer.phone}
-                <ExternalLinkIcon className="ml-1 h-4 w-4" />
+                <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
               </a>
-            ) : (
-              "-"
-            )}
+            ) : null}
           </p>
           <p className="mt-1 truncate text-sm text-gray-500">
             {[trainer.address, trainer.city, trainer.city].some(Boolean)
               ? formatAddress(trainer)
-              : "-"}
+              : null}
           </p>
         </div>
       </div>
