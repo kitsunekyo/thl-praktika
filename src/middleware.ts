@@ -12,11 +12,9 @@ const publicPaths = [
   "/robots.txt",
   "/api/uploadthing",
   "/manifest.json",
+  "/pwa",
   "/sw.js",
-  "/workbox-*",
-  "/windows11",
-  "/android",
-  "/ios",
+  "/workbox-",
 ];
 
 const authPaths = [
