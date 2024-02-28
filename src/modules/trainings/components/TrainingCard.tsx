@@ -12,7 +12,7 @@ import { formatAddress } from "@/modules/users/address";
 import { getInitials } from "@/modules/users/name";
 
 import { RegisteredUsers } from "./RegisteredUsers";
-import { TrainingDate } from "./TrainingDate";
+import { TrainingTime } from "./TrainingTime";
 
 type TrainingWithMetadata = Training & {
   registrations: (Registration & {
@@ -72,14 +72,12 @@ export function TrainingCard({
                 {training.author.name || training.author.email}
               </dd>
               <dd className="text-xs text-muted-foreground">
-                <TrainingDate start={training.start} end={training.end} />
+                <TrainingTime start={training.start} end={training.end} />
               </dd>
             </dl>
           </div>
         </Link>
-        <div className="ml-auto hidden text-xs text-muted-foreground md:block">
-          {duration}
-        </div>
+        <div className="ml-auto text-xs text-muted-foreground">{duration}</div>
       </header>
       <dl className="space-y-4 p-4">
         {training.description && <dd>{training.description}</dd>}

@@ -27,6 +27,13 @@ export function formatTrainingDate(startDate: Date, endDate: Date) {
   return `${date} von ${startTime} bis ${endTime}`;
 }
 
+export function formatTrainingTime(startDate: Date, endDate: Date) {
+  const startTime = formatAT(new Date(startDate), "HH:mm");
+  const endTime = formatAT(new Date(endDate), "HH:mm");
+
+  return `${startTime} bis ${endTime}`;
+}
+
 export const getFixedDate = (date: Date) => {
   const timeZoneOffset = new Date().getTimezoneOffset();
   return sub(startOfDay(date), { minutes: timeZoneOffset });
