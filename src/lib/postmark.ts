@@ -206,13 +206,6 @@ async function checkIsSendingDisabled(to: string, templateAlias: string) {
   // TODO: fix type error for index signature and use map
 
   if (
-    !emailPreferences.trainingCancelled &&
-    templateAlias === "training-cancelled"
-  ) {
-    console.log("user does not want to receive trainingCancelled email");
-    return true;
-  }
-  if (
     !emailPreferences.trainingCreatedAfterRegistration &&
     templateAlias === "training-registration-notification"
   ) {
@@ -235,20 +228,6 @@ async function checkIsSendingDisabled(to: string, templateAlias: string) {
     console.log(
       "user does not want to receive trainingRegistrationCancelled email",
     );
-    return true;
-  }
-  if (
-    !emailPreferences.trainingRequest &&
-    templateAlias === "training-request-received"
-  ) {
-    console.log("user does not want to receive trainingRequest email");
-    return true;
-  }
-  if (
-    !emailPreferences.trainingUpdated &&
-    templateAlias === "training-updated"
-  ) {
-    console.log("user does not want to receive trainingUpdated email");
     return true;
   }
 

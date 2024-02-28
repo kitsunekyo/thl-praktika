@@ -107,9 +107,8 @@ export function PreferencesForm({
                   )}
                 />
                 <FormField
-                  control={form.control}
                   name="email.trainingRequest"
-                  render={({ field }) => (
+                  render={() => (
                     <FormItem className="flex flex-row items-center justify-between rounded-lg bg-white p-3 shadow">
                       <div className="space-y-0.5">
                         <FormLabel>Praktika Anfragen</FormLabel>
@@ -119,10 +118,7 @@ export function PreferencesForm({
                         </FormDescription>
                       </div>
                       <FormControl>
-                        <Switch
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
+                        <Switch checked={true} disabled />
                       </FormControl>
                     </FormItem>
                   )}
@@ -153,9 +149,8 @@ export function PreferencesForm({
                   )}
                 />
                 <FormField
-                  control={form.control}
                   name="email.trainingCancelled"
-                  render={({ field }) => (
+                  render={() => (
                     <FormItem className="flex flex-row items-center justify-between rounded-lg bg-white p-3 shadow">
                       <div className="space-y-0.5">
                         <FormLabel>Praktikum abgesagt</FormLabel>
@@ -165,18 +160,14 @@ export function PreferencesForm({
                         </FormDescription>
                       </div>
                       <FormControl>
-                        <Switch
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
+                        <Switch checked={true} disabled />
                       </FormControl>
                     </FormItem>
                   )}
                 />
                 <FormField
-                  control={form.control}
                   name="email.trainingUpdated"
-                  render={({ field }) => (
+                  render={() => (
                     <FormItem className="flex flex-row items-center justify-between rounded-lg bg-white p-3 shadow">
                       <div className="space-y-0.5">
                         <FormLabel>Praktikum geändert</FormLabel>
@@ -186,10 +177,7 @@ export function PreferencesForm({
                         </FormDescription>
                       </div>
                       <FormControl>
-                        <Switch
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
+                        <Switch checked={true} disabled />
                       </FormControl>
                     </FormItem>
                   )}
