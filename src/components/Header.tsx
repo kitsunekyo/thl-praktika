@@ -12,7 +12,7 @@ export function Header({
   user?: Pick<User, "name" | "image" | "role" | "id" | "email">;
 }) {
   return (
-    <header className="flex min-h-[62px] flex-wrap items-center px-4 py-2">
+    <header className="sticky top-0 z-30 flex min-h-[62px] flex-wrap items-center bg-white px-4 py-2 shadow md:static md:top-auto md:shadow-none">
       <div className="mr-12">
         <Logo />
       </div>
