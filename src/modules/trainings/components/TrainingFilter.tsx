@@ -300,7 +300,7 @@ function FilterOption({
   return (
     <Badge
       variant={selected ? "default" : "secondary"}
-      className={cn({ "cursor-pointer": !selected })}
+      className={cn("select-none", { "cursor-pointer": !selected })}
       onClick={onClick}
     >
       {children}
