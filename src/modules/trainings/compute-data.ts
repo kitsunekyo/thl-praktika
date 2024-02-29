@@ -1,11 +1,10 @@
-import { Registration, Training } from "@prisma/client";
+import { Training } from "@prisma/client";
 
 import { SafeUser } from "@/lib/prisma";
 import { getTraveltime } from "@/modules/users/address";
 
 import { getProfile } from "../users/queries";
 
-type WithRegistrations<T> = T & { registrations: Registration[] };
 type WithAuthor<T> = T & {
   author: SafeUser;
 };
@@ -17,19 +16,6 @@ export function computeDuration<T extends Training>(training: T) {
   return {
     ...training,
     duration: training.end.getTime() - training.start.getTime(),
-  };
-}
-
-export async function computeIsRegistered<
-  T extends WithRegistrations<Training>,
->(training: T) {
-  const user = await getProfile();
-
-  return {
-    ...training,
-    isRegistered: user
-      ? training.registrations.some((r) => r.userId === user.id)
-      : false,
   };
 }
 

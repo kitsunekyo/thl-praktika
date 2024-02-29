@@ -5,11 +5,10 @@ import Link from "next/link";
 
 import { SafeUser } from "@/lib/prisma";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
+import { TrainingCard } from "@/modules/trainings/components/TrainingCard";
 import { TrainingFilter } from "@/modules/trainings/components/TrainingFilter";
-import { TrainingItem } from "@/modules/trainings/components/TrainingItem";
 import {
   computeDuration,
-  computeIsRegistered,
   computeTraveltime,
 } from "@/modules/trainings/compute-data";
 import { getTrainings } from "@/modules/trainings/queries";
@@ -62,7 +61,7 @@ export default async function Home({
           <ul className="space-y-4">
             {filteredTrainings.map((t) => (
               <li key={t.id}>
-                <TrainingItem t={t} role={profile.role} userId={profile.id} />
+                <TrainingCard training={t} user={profile} />
               </li>
             ))}
           </ul>
@@ -161,7 +160,7 @@ async function filterTrainings({
   });
 }
 
-type TrainingsWithMetadata = Awaited<ReturnType<typeof addMetadata>>;
+export type TrainingsWithMetadata = Awaited<ReturnType<typeof addMetadata>>;
 async function addMetadata<
   T extends Training & {
     author: SafeUser;
@@ -171,10 +170,9 @@ async function addMetadata<
   },
 >(trainings: T[]) {
   return Promise.all(
-    trainings.map(async (training) => {
-      return await computeTraveltime(
-        await computeIsRegistered(await computeDuration(training)),
-      );
-    }),
+    trainings.map(
+      async (training) =>
+        await computeTraveltime(await computeDuration(training)),
+    ),
   );
 }

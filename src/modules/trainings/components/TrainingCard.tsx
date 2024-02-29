@@ -8,11 +8,16 @@ import React from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { secondsToDuration } from "@/lib/date";
+import { SafeUser } from "@/lib/prisma";
 import { formatAddress } from "@/modules/users/address";
 import { getInitials } from "@/modules/users/name";
 
+import { CancelTraining } from "./CancelTraining";
+import { EditTraining } from "./EditTraining";
+import { Register } from "./Register";
 import { RegisteredUsers } from "./RegisteredUsers";
 import { TrainingTime } from "./TrainingTime";
+import { Unregister } from "./Unregister";
 
 type TrainingWithMetadata = Training & {
   registrations: (Registration & {
@@ -24,11 +29,17 @@ type TrainingWithMetadata = Training & {
 
 export function TrainingCard({
   training,
-  actions,
+  user,
 }: {
   training: TrainingWithMetadata;
-  actions?: React.ReactNode;
+  user: Pick<SafeUser, "id" | "role">;
 }) {
+  const hasFreeSpots = training.maxInterns - training.registrations.length > 0;
+  const isOwner = training.authorId === user.id;
+  const isRegistered = training.registrations.some((r) => r.userId === user.id);
+  const isPast = training.end < new Date();
+  const canRegister = !isOwner && hasFreeSpots && !isRegistered;
+
   const address = formatAddress({
     address: training.address,
     city: training.city,
@@ -40,6 +51,25 @@ export function TrainingCard({
       format: ["hours", "minutes"],
     },
   );
+
+  let actions = null;
+  if (user.role === "trainer" && isOwner && !isPast) {
+    actions = (
+      <>
+        <EditTraining training={training} />
+        <CancelTraining
+          trainingId={training.id}
+          hasRegistrations={Boolean(training.registrations.length)}
+        />
+      </>
+    );
+  }
+  if (user.role === "user" && isRegistered) {
+    actions = <Unregister trainingId={training.id} />;
+  }
+  if (user.role === "user" && canRegister) {
+    actions = <Register trainingId={training.id} />;
+  }
 
   return (
     <div className="overflow-hidden rounded-xl bg-white text-sm shadow-lg">

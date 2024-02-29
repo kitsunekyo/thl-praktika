@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SafeUser } from "@/lib/prisma";
 
-import { TrainingItem } from "./TrainingItem";
+import { TrainingCard } from "./TrainingCard";
 
 export type Trainings = (Training & {
   author: SafeUser;
@@ -17,10 +17,10 @@ export type Trainings = (Training & {
 
 export function TrainingList({
   trainings,
-  role,
+  user,
 }: {
   trainings: Trainings;
-  role: string;
+  user: Pick<SafeUser, "id" | "role">;
 }) {
   const [isShowAll, setIsShowAll] = useState(true);
   let filteredTrainings = trainings;
@@ -48,7 +48,7 @@ export function TrainingList({
           <ul className="max-w-2xl space-y-4">
             {filteredTrainings.map((t) => (
               <li key={t.id}>
-                <TrainingItem t={t} role={role} />
+                <TrainingCard training={t} user={user} />
               </li>
             ))}
           </ul>

@@ -35,7 +35,7 @@ export default async function Trainings() {
           <Stats trainings={trainings} />
         </div>
         {trainings.length > 0 ? (
-          <TrainingList trainings={trainings} role={role} />
+          <TrainingList trainings={trainings} user={session.user} />
         ) : (
           <p className="text-sm text-muted-foreground">
             Du hast dich noch für keine Praktika angemeldet.
