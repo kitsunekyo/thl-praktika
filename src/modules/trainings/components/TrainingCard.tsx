@@ -107,7 +107,9 @@ export function TrainingCard({
             </dl>
           </div>
         </Link>
-        <div className="ml-auto text-xs text-muted-foreground">{duration}</div>
+        <div className="ml-auto text-right text-xs text-muted-foreground">
+          {duration}
+        </div>
       </header>
       <dl className="space-y-4 p-4">
         {training.description && <dd>{training.description}</dd>}
