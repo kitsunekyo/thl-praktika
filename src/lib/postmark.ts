@@ -26,7 +26,7 @@ export async function sendInvitationMail({
     product_url: process.env.NEXTAUTH_URL,
     name,
     invite_sender_name: "Alex",
-    action_url: `${process.env.NEXTAUTH_URL}/signup?email=${to}&name=${name}&id=${id}`,
+    action_url: `${process.env.NEXTAUTH_URL}/signup?email=${to}&name=${encodeURIComponent(name)}&id=${id}`,
   });
 }
 
