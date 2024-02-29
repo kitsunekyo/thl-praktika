@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "@prisma/client";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { SafeUser } from "@/lib/prisma";
 import { updateProfile } from "@/modules/users/actions";
 
 const phoneRegex = new RegExp(
@@ -34,11 +34,7 @@ export const profileSchema = z.object({
   zipCode: z.string().optional(),
 });
 
-export function ProfileForm({
-  user,
-}: {
-  user: Pick<User, "name" | "phone" | "address" | "city" | "zipCode" | "email">;
-}) {
+export function ProfileForm({ user }: { user: SafeUser }) {
   const [loading, startTransition] = useTransition();
   const { toast } = useToast();
   const form = useForm<z.infer<typeof profileSchema>>({

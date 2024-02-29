@@ -1,16 +1,13 @@
-import { User } from "@prisma/client";
 import Link from "next/link";
+
+import { SafeUser } from "@/lib/prisma";
 
 import { Logo } from "./Logo";
 import { MobileNav } from "./nav/MobileNav";
 import { UserMenu } from "./nav/UserMenu";
 import { Button } from "./ui/button";
 
-export function Header({
-  user,
-}: {
-  user?: Pick<User, "name" | "image" | "role" | "id" | "email">;
-}) {
+export function Header({ user }: { user?: SafeUser }) {
   return (
     <header className="sticky top-0 z-30 flex min-h-[62px] flex-wrap items-center bg-white px-4 py-2 shadow md:static md:top-auto md:shadow-none">
       <div className="mr-12">

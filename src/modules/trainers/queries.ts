@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 
 import { AuthenticationError } from "@/lib/errors";
-import { prisma } from "@/lib/prisma";
+import { prisma, selectUserSafe } from "@/lib/prisma";
 
 import { getServerSession } from "../auth/getServerSession";
 
@@ -30,22 +30,10 @@ export async function getTrainingRequests(
     where,
     include: {
       user: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          image: true,
-          phone: true,
-        },
+        select: selectUserSafe,
       },
       trainer: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          image: true,
-          phone: true,
-        },
+        select: selectUserSafe,
       },
     },
   });
@@ -61,10 +49,14 @@ export async function getMyTrainings() {
       authorId: session.user.id,
     },
     include: {
-      author: true,
+      author: {
+        select: selectUserSafe,
+      },
       registrations: {
         include: {
-          user: true,
+          user: {
+            select: selectUserSafe,
+          },
         },
       },
     },

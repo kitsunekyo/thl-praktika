@@ -1,6 +1,9 @@
-import { prisma } from "@/lib/prisma";
+import { prisma, selectUserSafe } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/getServerSession";
 
+/**
+ * returns the trainings the current user is registered for
+ */
 export async function getMyTrainings() {
   const session = await getServerSession();
   const currentUser = session?.user;
@@ -17,10 +20,14 @@ export async function getMyTrainings() {
       },
     },
     include: {
-      author: true,
+      author: {
+        select: selectUserSafe,
+      },
       registrations: {
         include: {
-          user: true,
+          user: {
+            select: selectUserSafe,
+          },
         },
       },
     },
@@ -30,13 +37,20 @@ export async function getMyTrainings() {
   });
 }
 
+/**
+ * returns available trainings
+ */
 export async function getTrainings() {
   const trainings = await prisma.training.findMany({
     include: {
-      author: true,
+      author: {
+        select: selectUserSafe,
+      },
       registrations: {
         include: {
-          user: true,
+          user: {
+            select: selectUserSafe,
+          },
         },
       },
     },

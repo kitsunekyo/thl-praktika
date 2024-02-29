@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient, User } from "@prisma/client";
 
 export const prisma = new PrismaClient();
 
@@ -23,3 +23,17 @@ export function prismaExclude<T extends Entity, K extends Keys<T>>(
   }
   return result;
 }
+
+export type SafeUser = Pick<User, keyof typeof selectUserSafe>;
+
+export const selectUserSafe = {
+  id: true,
+  role: true,
+  name: true,
+  email: true,
+  image: true,
+  phone: true,
+  zipCode: true,
+  address: true,
+  city: true,
+};

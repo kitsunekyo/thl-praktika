@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "@prisma/client";
 import { add, set } from "date-fns";
 import { CalendarIcon, InfoIcon } from "lucide-react";
 import React, { useTransition } from "react";
@@ -29,6 +28,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { formatAT, getFixedDate } from "@/lib/date";
 import { cn } from "@/lib/utils";
 import { createTraining } from "@/modules/trainers/actions";
+import { Address } from "@/modules/users/address";
 
 const formSchema = z
   .object({
@@ -63,7 +63,7 @@ export function CreateTrainingForm({
   profile,
   onSubmit,
 }: {
-  profile: Pick<User, "address" | "city" | "zipCode">;
+  profile: Address;
   onSubmit?: () => void;
 }) {
   const [loading, startTransition] = useTransition();

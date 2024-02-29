@@ -1,6 +1,5 @@
 "use client";
 
-import { User } from "@prisma/client";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -11,14 +10,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Address } from "@/modules/users/address";
 
 import { CreateTrainingForm } from "./CreateTrainingForm";
 
-export function CreateTraining({
-  profile,
-}: {
-  profile: Pick<User, "id" | "city" | "address" | "zipCode">;
-}) {
+export function CreateTraining({ profile }: { profile: Address }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (

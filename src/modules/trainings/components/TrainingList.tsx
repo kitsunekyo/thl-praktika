@@ -1,29 +1,17 @@
 "use client";
 
-import { Registration, Training, User } from "@prisma/client";
+import { Registration, Training } from "@prisma/client";
 import { useState } from "react";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SafeUser } from "@/lib/prisma";
 
-import { CancelTraining } from "./CancelTraining";
-import { EditTraining } from "./EditTraining";
-import { TrainingCard } from "./TrainingCard";
-import { Unregister } from "./Unregister";
+import { TrainingItem } from "./TrainingItem";
 
-type Trainings = (Training & {
-  author: Omit<User, "password">;
+export type Trainings = (Training & {
+  author: SafeUser;
   registrations: (Registration & {
-    user: Pick<
-      User,
-      | "id"
-      | "image"
-      | "name"
-      | "phone"
-      | "email"
-      | "address"
-      | "city"
-      | "zipCode"
-    >;
+    user: SafeUser;
   })[];
 })[];
 
@@ -70,24 +58,4 @@ export function TrainingList({
       </div>
     </>
   );
-}
-
-function TrainingItem({ t, role }: { t: Trainings[0]; role: string }) {
-  let actions = null;
-  if (role === "trainer" && t.end > new Date()) {
-    actions = (
-      <>
-        <EditTraining training={t} />
-        <CancelTraining
-          trainingId={t.id}
-          hasRegistrations={Boolean(t.registrations.length)}
-        />
-      </>
-    );
-  }
-  if (role === "user" && t.end > new Date()) {
-    actions = <Unregister trainingId={t.id} />;
-  }
-
-  return <TrainingCard training={t} actions={actions} />;
 }

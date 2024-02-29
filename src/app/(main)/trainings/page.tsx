@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { Breadcrumb, Breadcrumbs } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
+import { SafeUser } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/getServerSession";
 import { TrainingList } from "@/modules/trainings/components/TrainingList";
 import {
@@ -51,7 +52,9 @@ export default async function Trainings() {
 }
 
 async function addMetadata<
-  T extends Training & { author: Omit<User, "password"> },
+  T extends Training & {
+    author: SafeUser;
+  },
 >(trainings: T[]) {
   return Promise.all(
     trainings.map(async (training) => {

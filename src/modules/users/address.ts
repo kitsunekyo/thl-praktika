@@ -1,8 +1,8 @@
 import { User } from "@prisma/client";
 
-import { getDirections } from "../../lib/mapquest";
+import { getDirections } from "@/lib/mapquest";
 
-type Address = Pick<User, "address" | "city" | "zipCode">;
+export type Address = Pick<User, "address" | "city" | "zipCode">;
 
 export function formatAddress({ address, city, zipCode }: Address) {
   return [address, [zipCode, city].filter(Boolean).join(" ")]

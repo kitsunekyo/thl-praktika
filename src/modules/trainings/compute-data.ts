@@ -1,11 +1,14 @@
-import { Registration, Training, User } from "@prisma/client";
+import { Registration, Training } from "@prisma/client";
 
+import { SafeUser } from "@/lib/prisma";
 import { getTraveltime } from "@/modules/users/address";
 
 import { getProfile } from "../users/queries";
 
 type WithRegistrations<T> = T & { registrations: Registration[] };
-type WithAuthor<T> = T & { author: Omit<User, "password"> };
+type WithAuthor<T> = T & {
+  author: SafeUser;
+};
 
 /**
  * @param duration in milliseconds

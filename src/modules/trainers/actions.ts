@@ -11,7 +11,7 @@ import {
   sendTrainingRequestReceivedMail,
   sendTrainingUpdatedMail,
 } from "@/lib/postmark";
-import { prisma } from "@/lib/prisma";
+import { prisma, selectUserSafe } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/getServerSession";
 
 export async function deleteTraining(id: string) {
@@ -20,10 +20,14 @@ export async function deleteTraining(id: string) {
       id,
     },
     include: {
-      author: true,
+      author: {
+        select: selectUserSafe,
+      },
       registrations: {
         include: {
-          user: true,
+          user: {
+            select: selectUserSafe,
+          },
         },
       },
     },
@@ -50,10 +54,14 @@ export async function cancelTraining(id: string, reason: string) {
       id,
     },
     include: {
-      author: true,
+      author: {
+        select: selectUserSafe,
+      },
       registrations: {
         include: {
-          user: true,
+          user: {
+            select: selectUserSafe,
+          },
         },
       },
     },
@@ -118,7 +126,9 @@ export async function createTraining(
     },
     select: {
       id: true,
-      user: true,
+      user: {
+        select: selectUserSafe,
+      },
     },
   });
 
@@ -170,7 +180,9 @@ export async function updateTraining(
       trainingId: id,
     },
     select: {
-      user: true,
+      user: {
+        select: selectUserSafe,
+      },
     },
   });
 
