@@ -62,7 +62,7 @@ export default async function Home({
           <ul className="space-y-4">
             {filteredTrainings.map((t) => (
               <li key={t.id}>
-                <TrainingItem t={t} role={profile.role} />
+                <TrainingItem t={t} role={profile.role} userId={profile.id} />
               </li>
             ))}
           </ul>
