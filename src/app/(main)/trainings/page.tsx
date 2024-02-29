@@ -20,8 +20,6 @@ export default async function Trainings() {
     throw new Error("Unauthorized");
   }
 
-  const role = session.user.role;
-
   return (
     <>
       <Breadcrumbs>

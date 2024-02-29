@@ -11,7 +11,6 @@ export default async function Page() {
     throw new Error("Unauthorized");
   }
   const trainings = await getMyTrainings();
-  const role = profile.role;
 
   return (
     <>
@@ -29,7 +28,7 @@ export default async function Page() {
           <CreateTraining profile={profile} />
         </div>
         <div className="max-w-2xl">
-          <TrainingList trainings={trainings} role={role} />
+          <TrainingList trainings={trainings} user={profile} />
         </div>
       </div>
     </>
