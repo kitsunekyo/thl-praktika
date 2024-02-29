@@ -11,8 +11,8 @@ import {
   XIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { useOptimistic, useState, useTransition } from "react";
 import { DateRange } from "react-day-picker";
 
 import { Alert } from "@/components/ui/alert";
@@ -38,9 +38,9 @@ const filterOptions = [
     icon: UserIcon,
     label: "Freie Plätze",
     options: [
-      { key: "1", label: "1+" },
-      { key: "2", label: "2+" },
-      { key: "3", label: "3+" },
+      { key: 1, label: "1+" },
+      { key: 2, label: "2+" },
+      { key: 3, label: "3+" },
     ],
   },
   {
@@ -48,8 +48,8 @@ const filterOptions = [
     icon: ClockIcon,
     label: "Trainingsdauer",
     options: [
-      { key: "2", label: "ab 2h" },
-      { key: "4", label: "ab 4h" },
+      { key: 2, label: "ab 2h" },
+      { key: 4, label: "ab 4h" },
     ],
   },
   {
@@ -57,40 +57,47 @@ const filterOptions = [
     icon: MapIcon,
     label: "Fahrtzeit",
     options: [
-      { key: "30", label: "bis 30min" },
-      { key: "60", label: "bis 1h" },
-      { key: "120", label: "bis 2h" },
+      { key: 30, label: "bis 30min" },
+      { key: 60, label: "bis 1h" },
+      { key: 120, label: "bis 2h" },
     ],
   },
 ] as const;
 
-export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
-  const { replace } = useRouter();
+type Filter = {
+  free: number;
+  duration: number;
+  traveltime: number;
+  from?: Date;
+  to?: Date;
+};
+
+export function TrainingFilter({
+  hasAddress,
+  value,
+}: {
+  hasAddress: boolean;
+  value: Filter;
+}) {
+  const router = useRouter();
   const [pending, startTransition] = useTransition();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
+  const [optimisticFilter, setOptimisticFilter] = useOptimistic<Filter>(value);
   const [isOpen, setIsOpen] = useState(true);
-
   const [date, setDate] = useState<DateRange | undefined>(() => {
-    const fromParam = searchParams.get("from");
-    const toParam = searchParams.get("to");
-
-    if (!fromParam) {
+    if (!optimisticFilter.from) {
       return;
     }
 
     let from;
-    const fromDate = new Date(fromParam);
-    if (isNaN(fromDate.getTime())) {
+    if (isNaN(optimisticFilter.from.getTime())) {
       return;
     }
-    from = fromDate;
+    from = optimisticFilter.from;
 
     let to;
-    if (toParam) {
-      const toDate = new Date(toParam);
-      if (!isNaN(toDate.getTime())) {
-        to = toDate;
+    if (optimisticFilter.to) {
+      if (!isNaN(optimisticFilter.to.getTime())) {
+        to = optimisticFilter.to;
       }
     }
 
@@ -100,19 +107,20 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
     };
   });
 
-  function updateFilter(key: string, value: string | null) {
-    if (pending) return;
-    if (searchParams.get(key) === value) return;
-
+  function updateFilter(key: string, value: number | null) {
     const params = new URLSearchParams(window.location.search);
     if (value === null) {
       params.delete(key);
     } else {
-      params.set(key, value);
+      params.set(key, value.toString());
     }
 
     startTransition(() => {
-      replace(`${pathname}?${params.toString()}`);
+      setOptimisticFilter((prev) => ({
+        ...prev,
+        [key]: value,
+      }));
+      router.push(`?${params.toString()}`);
     });
   }
 
@@ -122,7 +130,12 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
     params.delete("from");
     params.delete("to");
     startTransition(() => {
-      replace(`${pathname}?${params.toString()}`);
+      setOptimisticFilter((prev) => ({
+        ...prev,
+        from: undefined,
+        to: undefined,
+      }));
+      router.push(`?${params.toString()}`);
     });
   }
 
@@ -199,7 +212,6 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
                   defaultMonth={date?.from}
                   selected={date}
                   onSelect={(v) => {
-                    if (pending) return;
                     setDate(v);
                     const params = new URLSearchParams(window.location.search);
                     if (!v?.from) {
@@ -216,7 +228,12 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
                       params.set("to", formatAT(endOfDay(v.to), "yyyy-MM-dd"));
                     }
                     startTransition(() => {
-                      replace(`${pathname}?${params.toString()}`);
+                      setOptimisticFilter((prev) => ({
+                        ...prev,
+                        from: v?.from,
+                        to: v?.to,
+                      }));
+                      router.push(`?${params.toString()}`);
                     });
                   }}
                   numberOfMonths={2}
@@ -245,8 +262,7 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
                 <ul className="flex flex-wrap items-center gap-1">
                   <li>
                     <FilterOption
-                      selected={!searchParams.get(filter.key)}
-                      pending={pending}
+                      selected={!optimisticFilter[filter.key]}
                       onClick={() => updateFilter(filter.key, null)}
                     >
                       alle
@@ -255,8 +271,7 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
                   {filter.options.map((option) => (
                     <li key={option.key}>
                       <FilterOption
-                        selected={searchParams.get(filter.key) === option.key}
-                        pending={pending}
+                        selected={optimisticFilter[filter.key] === option.key}
                         onClick={() => updateFilter(filter.key, option.key)}
                       >
                         {option.label}
@@ -275,12 +290,10 @@ export function TrainingFilter({ hasAddress }: { hasAddress: boolean }) {
 
 function FilterOption({
   selected,
-  pending,
   onClick,
   children,
 }: {
   selected: boolean;
-  pending: boolean;
   onClick: () => void;
   children: React.ReactNode;
 }) {
@@ -289,7 +302,6 @@ function FilterOption({
       variant={selected ? "default" : "secondary"}
       className={cn({ "cursor-pointer": !selected })}
       onClick={onClick}
-      aria-disabled={pending}
     >
       {children}
     </Badge>

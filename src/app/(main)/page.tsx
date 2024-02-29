@@ -32,22 +32,24 @@ export default async function Home({
     return null;
   }
 
+  const filterValue = {
+    traveltime: Number(searchParams.traveltime),
+    duration: Number(searchParams.duration),
+    free: Number(searchParams.free),
+    from:
+      typeof searchParams.from === "string"
+        ? startOfDay(new Date(searchParams.from))
+        : undefined,
+    to:
+      typeof searchParams.to === "string"
+        ? endOfDay(new Date(searchParams.to))
+        : undefined,
+  };
+
   const trainings = await getTrainings();
   const filteredTrainings = await filter({
     trainings: await addMetadata(trainings),
-    filter: {
-      traveltime: Number(searchParams.traveltime),
-      duration: Number(searchParams.duration),
-      free: Number(searchParams.free),
-      from:
-        typeof searchParams.from === "string"
-          ? startOfDay(new Date(searchParams.from))
-          : undefined,
-      to:
-        typeof searchParams.to === "string"
-          ? endOfDay(new Date(searchParams.to))
-          : undefined,
-    },
+    filter: filterValue,
   });
 
   let trainingsCountLabel: string;
@@ -65,7 +67,7 @@ export default async function Home({
     <section className="gap-8 md:flex md:py-6">
       <aside className="relative shrink-0 basis-80">
         <div className="sticky top-0">
-          <TrainingFilter hasAddress={userHasAddress} />
+          <TrainingFilter hasAddress={userHasAddress} value={filterValue} />
         </div>
       </aside>
       <main className="mb-6 md:w-full md:max-w-[600px] md:py-6">
