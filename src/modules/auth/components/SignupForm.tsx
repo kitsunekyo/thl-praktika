@@ -1,8 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertCircle, EyeIcon, EyeOffIcon } from "lucide-react";
-import { redirect, useSearchParams } from "next/navigation";
+import { AlertCircle, EyeIcon, EyeOffIcon, Loader2Icon } from "lucide-react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -34,6 +35,7 @@ const formSchema = z.object({
 
 export function SignupForm({ name, email }: { name?: string; email?: string }) {
   const [loading, startTransition] = useTransition();
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { toast } = useToast();
   const search = useSearchParams();
@@ -55,12 +57,12 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
   }: z.infer<typeof formSchema>) => {
     startTransition(async () => {
       try {
-        signup({ email, password, name });
-        toast({
-          title: "Registrierung erfolgreich",
-          description: "Du kannst dich nun anmelden.",
+        await signup({ email, password, name });
+        setIsLoggingIn(true);
+        signIn("credentials", {
+          email,
+          password,
         });
-        redirect("/login?email=" + email);
       } catch {
         toast({
           title: "Registrierung fehlgeschlagen",
@@ -71,6 +73,17 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
       }
     });
   };
+
+  if (isLoggingIn) {
+    return (
+      <>
+        <Loader2Icon className="mx-auto mb-4 h-6 w-6 animate-spin" />
+        <p className="text-center">
+          Erfolgreich registriert! Du wirst gleich angemeldet{" "}
+        </p>
+      </>
+    );
+  }
 
   return (
     <Form {...form}>
@@ -163,6 +176,20 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
         </div>
         <GoogleSignupButton />
       </form>
+      <p className="my-6 text-center text-xs text-muted-foreground">
+        Du musst die bei THL hinterlegte E-Mail Adresse, oder die aus deiner
+        Einladung verwenden, um dich registrieren zu können. Wenn du eine andere
+        E-Mail Adresse verwenden möchtest, kontaktiere mich bitte unter{" "}
+        <a href="mailto:hi@mostviertel.tech">hi@mostviertel.tech</a>.
+      </p>
+      <div className="mt-6 text-center text-sm">
+        <span className="mr-1 text-muted-foreground">
+          Du hast bereits einen Account?
+        </span>
+        <Link href="/login" className="underline hover:no-underline">
+          Anmelden
+        </Link>
+      </div>
     </Form>
   );
 }

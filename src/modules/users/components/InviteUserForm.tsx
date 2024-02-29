@@ -24,10 +24,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/components/ui/use-toast";
 import { inviteUser } from "@/modules/users/actions";
-
-import { Switch } from "../../../components/ui/switch";
 
 export const userSchema = z.object({
   email: z.string().email(),
