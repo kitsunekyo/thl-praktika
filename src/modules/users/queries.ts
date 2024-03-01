@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma, selectUserSafe } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/getServerSession";
 
 export async function getUserProfiles() {
@@ -6,18 +6,7 @@ export async function getUserProfiles() {
     where: {
       role: "user",
     },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      phone: true,
-      role: true,
-      address: true,
-      city: true,
-      zipCode: true,
-      lastLogin: true,
-      image: true,
-    },
+    select: selectUserSafe,
   });
 }
 export async function getInvitations() {
@@ -28,18 +17,7 @@ export async function getProfileById(id: string) {
     where: {
       id,
     },
-    select: {
-      id: true,
-      email: true,
-      name: true,
-      emailVerified: true,
-      image: true,
-      role: true,
-      address: true,
-      city: true,
-      zipCode: true,
-      phone: true,
-    },
+    select: selectUserSafe,
   });
 
   return profile;
@@ -55,18 +33,19 @@ export async function getProfile() {
     where: {
       id: session.user.id,
     },
-    select: {
-      id: true,
-      email: true,
-      name: true,
-      emailVerified: true,
-      image: true,
-      role: true,
-      address: true,
-      city: true,
-      zipCode: true,
-      phone: true,
-      preferences: true,
-    },
+    select: selectUserSafe,
+  });
+}
+export async function getUsers() {
+  return await prisma.user.findMany({
+    select: selectUserSafe,
+    orderBy: [
+      {
+        name: "asc",
+      },
+      {
+        email: "asc",
+      },
+    ],
   });
 }

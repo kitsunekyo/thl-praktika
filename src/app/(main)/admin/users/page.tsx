@@ -13,8 +13,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getUsers } from "@/modules/users/actions";
 import { DeleteUser } from "@/modules/users/components/DeleteUser";
+import { getUsers } from "@/modules/users/queries";
 
 export default async function UserPage() {
   return (

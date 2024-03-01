@@ -11,12 +11,6 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/getServerSession";
 import { preferencesSchema } from "@/modules/users/preferences";
 
-export async function getUsers() {
-  return await prisma.user.findMany({
-    select: { id: true, name: true, email: true, role: true, lastLogin: true },
-  });
-}
-
 export async function deleteUser(id: string) {
   await prisma.user.delete({ where: { id } });
   revalidatePath("/admin/users");

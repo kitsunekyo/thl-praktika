@@ -2,8 +2,7 @@ import { Prisma } from "@prisma/client";
 
 import { AuthenticationError } from "@/lib/errors";
 import { prisma, selectUserSafe } from "@/lib/prisma";
-
-import { getServerSession } from "../auth/getServerSession";
+import { getServerSession } from "@/modules/auth/getServerSession";
 
 export async function getTrainers() {
   return await prisma.user.findMany({
@@ -20,6 +19,14 @@ export async function getTrainers() {
       phone: true,
       lastLogin: true,
     },
+    orderBy: [
+      {
+        name: "asc",
+      },
+      {
+        email: "asc",
+      },
+    ],
   });
 }
 

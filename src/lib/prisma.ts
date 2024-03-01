@@ -36,4 +36,5 @@ export const selectUserSafe = {
   zipCode: true,
   address: true,
   city: true,
+  preferences: true,
 };
