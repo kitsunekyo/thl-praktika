@@ -8,8 +8,11 @@ export default function PostHogPageView() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const posthog = usePostHog();
-  // Track pageviews
+
   useEffect(() => {
+    if (process.env.NODE_ENV !== "production") {
+      return;
+    }
     if (pathname && posthog) {
       let url = window.origin + pathname;
       if (searchParams.toString()) {

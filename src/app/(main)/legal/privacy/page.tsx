@@ -66,7 +66,14 @@ export default function Page() {
 
           <h3>Verarbeiten wir sensible personenbezogene Informationen?</h3>
           <p>
-            Wir verarbeiten keine sensiblen personenbezogenen Informationen.
+            Wir verarbeiten keine{" "}
+            <a
+              href="https://commission.europa.eu/law/law-topic/data-protection/reform/rules-business-and-organisations/legal-grounds-processing-data/sensitive-data/what-personal-data-considered-sensitive_de#:~:text=genetische%20Daten%2C%20biometrische%20Daten%2C%20die,zur%20sexuellen%20Orientierung%20einer%20Person."
+              rel="noopener noreferrer"
+            >
+              sensiblen personenbezogenen Informationen.
+            </a>
+            .
           </p>
 
           <h3>Erhalten wir Informationen von Dritten?</h3>
@@ -190,8 +197,13 @@ export default function Page() {
             <li>Adressen von Praktika</li>
           </ul>
           <p>
-            <strong>Sensible Informationen:</strong> Wir verarbeiten keine
-            sensiblen Informationen.
+            <strong>Sensible Informationen:</strong> Wir verarbeiten keine{" "}
+            <a
+              href="https://commission.europa.eu/law/law-topic/data-protection/reform/rules-business-and-organisations/legal-grounds-processing-data/sensitive-data/what-personal-data-considered-sensitive_de#:~:text=genetische%20Daten%2C%20biometrische%20Daten%2C%20die,zur%20sexuellen%20Orientierung%20einer%20Person."
+              rel="noopener noreferrer"
+            >
+              sensiblen Informationen.
+            </a>
           </p>
           <p>
             <strong>Soziale Medien Login-Daten:</strong> Wir können Ihnen die
@@ -360,7 +372,8 @@ export default function Page() {
             Web-Beacons und Pixels) verwenden, um auf Informationen zuzugreifen
             oder Informationen zu speichern. Konkrete Informationen darüber, wie
             wir solche Technologien verwenden und wie Sie bestimmte Cookies
-            ablehnen können, sind in unserer Cookie-Richtlinie dargelegt.
+            ablehnen können, sind in unserer Cookie-Richtlinie dargelegt. Diese
+            Daten werden nicht an Dritte weitergegeben.
           </p>
 
           <h2>6. WIE GEHEN WIR MIT IHREN SOZIALEN ANMELDUNGEN UM?</h2>

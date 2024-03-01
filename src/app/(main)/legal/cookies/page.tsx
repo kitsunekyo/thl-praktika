@@ -38,9 +38,9 @@ export default function Page() {
               Benutzerverhalten auf unserer Website zu analysieren und unser
               Angebot zu verbessern. Posthog setzt Cookies ein, um anonyme
               Informationen über Ihre Interaktionen mit unserer Anwendung zu
-              sammeln. Diese Cookies enthalten keine personenbezogenen Daten und
-              dienen ausschließlich der Analyse und Verbesserung unserer
-              Dienste.
+              sammeln. Diese Cookies enthalten keine sensiblen personenbezogenen
+              Daten und dienen ausschließlich der Analyse und Verbesserung
+              unserer Dienste.
             </li>
           </ol>
           <p>
