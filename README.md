@@ -10,8 +10,12 @@ Eine Web App und PWA um Praktika Koordination zu vereinfachen. Gebaut für die A
 
 <img src="public/pwa/screenshot-mobile1.jpg" width="400">
 
-### Contribution
+## Contribution
 
 - create a `.env.local` file, for local development.
 - run `pnpm dev` for local development.
 - check out `package.json` for available scripts.
+
+## Changelog
+
+[https://thl-praktika.vercel.app/changelog](https://thl-praktika.vercel.app/changelog)
