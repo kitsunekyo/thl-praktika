@@ -7,6 +7,7 @@ import {
   ChevronsUpDownIcon,
   ClockIcon,
   MapIcon,
+  SearchIcon,
   UserIcon,
   XIcon,
 } from "lucide-react";
@@ -24,6 +25,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
@@ -70,6 +72,7 @@ type Filter = {
   traveltime: number;
   from?: Date;
   to?: Date;
+  search: string;
 };
 
 export function TrainingFilter({
@@ -162,6 +165,32 @@ export function TrainingFilter({
           className="mb-4 space-y-6 rounded-xl bg-white p-4 text-sm shadow-lg"
           aria-label="filter"
         >
+          <div className="relative">
+            <SearchIcon className="absolute left-2 top-3 h-4 w-4 text-muted-foreground" />
+            <Input
+              id="search"
+              type="search"
+              placeholder="Suche"
+              className="pl-8"
+              value={optimisticFilter.search || ""}
+              onChange={(e) => {
+                const search = e.target.value;
+                const params = new URLSearchParams(window.location.search);
+                if (search) {
+                  params.set("search", search);
+                } else {
+                  params.delete("search");
+                }
+                startTransition(() => {
+                  setOptimisticFilter((prev) => ({
+                    ...prev,
+                    search,
+                  }));
+                  router.push(`?${params.toString()}`);
+                });
+              }}
+            />
+          </div>
           <div>
             <div className="mb-2 flex items-center">
               <CalendarIcon className="mr-2 h-4 w-5" />
@@ -170,30 +199,32 @@ export function TrainingFilter({
             <Popover>
               <div className="flex items-center gap-2">
                 <PopoverTrigger asChild>
-                  <Button
-                    id="date"
-                    variant={"outline"}
-                    className={cn(
-                      "group w-full items-center justify-start text-left text-xs font-normal",
-                      !date && "text-muted-foreground",
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date?.from ? (
-                      date.to ? (
-                        <>
-                          {formatAT(date.from, "dd. LLL yy")} -{" "}
-                          {formatAT(date.to, "dd. LLL yy")}
-                        </>
+                  <div className="relative w-full">
+                    <CalendarIcon className="absolute left-2 top-3 h-4 w-4 text-muted-foreground" />
+                    <Button
+                      id="date"
+                      variant="outline"
+                      className={cn(
+                        "group w-full justify-start px-3 py-2 pl-8 text-left font-normal",
+                        !date && "text-muted-foreground",
+                      )}
+                    >
+                      {date?.from ? (
+                        date.to ? (
+                          <>
+                            {formatAT(date.from, "dd. LLL yy")} -{" "}
+                            {formatAT(date.to, "dd. LLL yy")}
+                          </>
+                        ) : (
+                          formatAT(date.from, "dd. LLL yy")
+                        )
                       ) : (
-                        formatAT(date.from, "dd. LLL yy")
-                      )
-                    ) : (
-                      <span>Wähle ein Datum</span>
-                    )}
+                        <span>Wähle einen Zeitraum</span>
+                      )}
+                    </Button>
                     {date?.from || date?.to ? (
                       <button
-                        className="ml-auto block translate-x-4 p-3"
+                        className="absolute right-0 p-3"
                         onClick={(e) => {
                           e.stopPropagation();
                           clearDate();
@@ -202,7 +233,7 @@ export function TrainingFilter({
                         <XIcon className="h-4 w-4" />
                       </button>
                     ) : null}
-                  </Button>
+                  </div>
                 </PopoverTrigger>
               </div>
               <PopoverContent className="w-auto p-0" align="start">
