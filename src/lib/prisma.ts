@@ -37,4 +37,5 @@ export const selectUserSafe = {
   address: true,
   city: true,
   preferences: true,
+  lastLogin: true,
 };
