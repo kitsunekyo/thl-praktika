@@ -16,20 +16,18 @@ import { Button } from "@/components/ui/button";
 export default function LandingPage() {
   return (
     <>
-      <header className="border-b">
-        <div className="container flex min-h-[60px] flex-wrap items-center py-2">
-          <div className="mr-12">
-            <Logo />
-          </div>
-          <div className="ml-auto hidden md:block">
-            <LoginButton />
-          </div>
+      <header className="sticky top-0 z-30 flex min-h-[62px] flex-wrap items-center bg-white px-4 py-2 shadow md:relative md:top-auto">
+        <div className="mr-12">
+          <Logo />
+        </div>
+        <div className="ml-auto">
+          <LoginButton />
         </div>
       </header>
       <main className="space-y-40 pb-40">
         <Hero />
         <TrainerFeatures />
-        <UserFeatures />
+        {/* <UserFeatures /> */}
         <CallToAction />
       </main>
       <Footer />
@@ -199,20 +197,22 @@ function TrainerFeatures() {
       <div className="my-32 grid items-center gap-16 md:grid-cols-6">
         <div className="md:col-span-2">
           <h3 className="mb-6 text-2xl font-semibold leading-snug md:text-3xl">
-            Behalte die Übersicht über Praktika Anfragen
+            Lehn dich zurück und warte auf Praktika Anfragen
           </h3>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            Du siehst alle unbeantworteten Anfragen auf einen Blick. Sobald du
-            ein Praktikum erstellst, werden alle, die eine Anfrage geschickt
-            haben per E-Mail benachrichtigt.
+            Student:innen können bei Trainer:innen mit nur einem Klick eine
+            Praktikumsanfrage schicken. Du erhälst ganz automatisch ein E-Mail.
+            Wenn du ein Praktikum erstellst werden alle, die dir eine Anfrage
+            geschickt haben per E-Mail benachrichtigt.
           </p>
         </div>
-        <div className="relative aspect-video w-full max-w-4xl md:col-span-4">
+        <div className="relative flex justify-center md:col-span-4">
           <Image
-            src="/img/requests.png"
+            src="/img/screenshots/trainers.png"
             alt="Praktika Anfragen"
             className="overflow-hidden rounded-2xl object-cover ring-1 ring-slate-900/10"
-            fill
+            width="300"
+            height="419"
             priority
             sizes="(max-width: 768px) 100vw, 1282px"
           />
@@ -230,12 +230,66 @@ function TrainerFeatures() {
             teilnehmen können.
           </p>
         </div>
-        <div className="relative aspect-video w-full max-w-4xl md:col-span-4">
+        <div className="relative flex justify-center md:col-span-4">
           <Image
-            src="/img/create-training.png"
+            src="/img/screenshots/create-training.png"
             alt="Praktikum erstellen Dialog"
             className="overflow-hidden rounded-2xl object-cover ring-1 ring-slate-900/10"
-            fill
+            width="300"
+            height="649"
+            sizes="(max-width: 768px) 100vw, 1282px"
+          />
+        </div>
+      </div>
+
+      <div className="my-32 grid items-center gap-16 md:grid-cols-6">
+        <div className="md:col-span-2">
+          <h3 className="mb-6 text-2xl font-semibold leading-snug md:text-3xl">
+            Erfahre von Anmeldungen bequem per E-Mail
+          </h3>
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            Du bekommst automatisch eine E-Mail, wenn sich jemand für dein
+            Praktikum anmeldet und auch wenn sich jemand wieder abmeldet. Damit
+            musst du nicht immer die App öffnen, um zu wissen ob du mit
+            Unterstützung rechnen kannst.
+          </p>
+        </div>
+        <div className="relative flex justify-center md:col-span-4">
+          <Image
+            src="/img/screenshots/trainer preferences.png"
+            alt="Praktika Anfragen"
+            className="overflow-hidden rounded-2xl object-cover ring-1 ring-slate-900/10"
+            width="300"
+            height="327"
+            sizes="(max-width: 768px) 100vw, 1282px"
+          />
+        </div>
+      </div>
+
+      <div className="my-32 grid items-center gap-16 md:grid-cols-6">
+        <div className="md:order-last md:col-span-2">
+          <h3 className="mb-6 text-2xl font-semibold leading-snug md:text-3xl">
+            Hab deine Praktika im Blick
+          </h3>
+          <ul className="list-disc space-y-2 pl-6 text-lg leading-relaxed text-muted-foreground">
+            <li>Wer hat sich wofür angemeldet?</li>
+            <li>
+              Bei Änderungen oder Absagen werden alle angemeldeten
+              Stundent:innen per E-Mail benachrichtigt.
+            </li>
+            <li>
+              Klicke auf einen Benutzer um im Profil Kontaktdaten und mehr zu
+              sehen.
+            </li>
+          </ul>
+        </div>
+        <div className="relative flex justify-center md:col-span-4">
+          <Image
+            src="/img/screenshots/trainer home.png"
+            alt="Praktika Anfragen"
+            className="overflow-hidden rounded-2xl object-cover ring-1 ring-slate-900/10"
+            width="300"
+            height="503"
             priority
             sizes="(max-width: 768px) 100vw, 1282px"
           />
