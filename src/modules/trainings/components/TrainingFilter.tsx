@@ -1,6 +1,7 @@
 "use client";
 
 import { endOfDay, startOfDay } from "date-fns";
+import debounce from "lodash/debounce";
 import {
   CalendarIcon,
   ChevronsDownUpIcon,
@@ -14,7 +15,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useOptimistic, useState, useTransition } from "react";
+import {
+  useCallback,
+  useMemo,
+  useOptimistic,
+  useState,
+  useTransition,
+} from "react";
 import { DateRange } from "react-day-picker";
 
 import { Alert } from "@/components/ui/alert";
@@ -145,21 +152,32 @@ export function TrainingFilter({
   }
 
   function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const search = e.target.value;
-    const params = new URLSearchParams(window.location.search);
-    if (search) {
-      params.set("search", search);
-    } else {
-      params.delete("search");
-    }
-    startTransition(() => {
-      setOptimisticFilter((prev) => ({
-        ...prev,
-        search,
-      }));
-      router.push(`?${params.toString()}`);
-    });
+    debouncedSearch(e.target.value);
   }
+
+  const updateSearch = useCallback(
+    (value: string) => {
+      const params = new URLSearchParams(window.location.search);
+      if (value) {
+        params.set("search", value);
+      } else {
+        params.delete("search");
+      }
+      startTransition(() => {
+        setOptimisticFilter((prev) => ({
+          ...prev,
+          search: value,
+        }));
+        router.push(`?${params.toString()}`);
+      });
+    },
+    [router, setOptimisticFilter],
+  );
+
+  const debouncedSearch = useMemo(
+    () => debounce(updateSearch, 300),
+    [updateSearch],
+  );
 
   function handleSelectDate(range: DateRange | undefined) {
     setDate(range);
@@ -231,7 +249,7 @@ export function TrainingFilter({
                 type="search"
                 placeholder="Trainer, Adresse oder Beschreibung"
                 className="pl-8"
-                value={optimisticFilter.search || ""}
+                defaultValue={optimisticFilter.search}
                 onChange={handleSearchChange}
               />
             </div>
