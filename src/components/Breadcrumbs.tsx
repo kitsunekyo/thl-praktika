@@ -66,7 +66,7 @@ function BreadcrumbLink({
     <a
       {...rest}
       href={href}
-      className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700"
+      className="flex items-center text-sm font-medium text-gray-500 underline hover:text-gray-700"
     >
       {children}
     </a>
