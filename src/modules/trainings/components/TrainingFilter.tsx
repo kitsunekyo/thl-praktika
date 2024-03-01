@@ -6,6 +6,7 @@ import {
   ChevronsDownUpIcon,
   ChevronsUpDownIcon,
   ClockIcon,
+  FilterXIcon,
   MapIcon,
   SearchIcon,
   UserIcon,
@@ -183,6 +184,21 @@ export function TrainingFilter({
     });
   }
 
+  function handleResetFilters() {
+    const params = new URLSearchParams();
+    startTransition(() => {
+      setOptimisticFilter({
+        free: 0,
+        duration: 0,
+        traveltime: 0,
+        from: undefined,
+        to: undefined,
+        search: "",
+      });
+      router.push(`?${params.toString()}`);
+    });
+  }
+
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <div className="flex items-center px-4 py-2 text-sm">
@@ -213,7 +229,7 @@ export function TrainingFilter({
               <Input
                 id="search"
                 type="search"
-                placeholder="Trainer, Beschreibung oder Adresse"
+                placeholder="Trainer, Adresse oder Beschreibung"
                 className="pl-8"
                 value={optimisticFilter.search || ""}
                 onChange={handleSearchChange}
@@ -318,6 +334,19 @@ export function TrainingFilter({
               )}
             </div>
           ))}
+          {Object.values(optimisticFilter).some(Boolean) && (
+            <div>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="w-full"
+                onClick={handleResetFilters}
+              >
+                <FilterXIcon className="mr-2 h-4 w-4" />
+                Filter zurücksetzen
+              </Button>
+            </div>
+          )}
         </section>
       </CollapsibleContent>
     </Collapsible>
