@@ -4,7 +4,6 @@ import Link from "next/link";
 import { PageTitle } from "@/components/PageTitle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   Table,
   TableBody,
