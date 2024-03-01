@@ -26,6 +26,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
@@ -66,7 +67,7 @@ const filterOptions = [
   },
 ] as const;
 
-type Filter = {
+export type Filter = {
   free: number;
   duration: number;
   traveltime: number;
@@ -142,6 +143,46 @@ export function TrainingFilter({
     });
   }
 
+  function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const search = e.target.value;
+    const params = new URLSearchParams(window.location.search);
+    if (search) {
+      params.set("search", search);
+    } else {
+      params.delete("search");
+    }
+    startTransition(() => {
+      setOptimisticFilter((prev) => ({
+        ...prev,
+        search,
+      }));
+      router.push(`?${params.toString()}`);
+    });
+  }
+
+  function handleSelectDate(range: DateRange | undefined) {
+    setDate(range);
+    const params = new URLSearchParams(window.location.search);
+    if (!range?.from) {
+      params.delete("from");
+      params.delete("to");
+    }
+    if (range?.from) {
+      params.set("from", formatAT(startOfDay(range.from), "yyyy-MM-dd"));
+    }
+    if (range?.to) {
+      params.set("to", formatAT(endOfDay(range.to), "yyyy-MM-dd"));
+    }
+    startTransition(() => {
+      setOptimisticFilter((prev) => ({
+        ...prev,
+        from: range?.from,
+        to: range?.to,
+      }));
+      router.push(`?${params.toString()}`);
+    });
+  }
+
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <div className="flex items-center px-4 py-2 text-sm">
@@ -165,31 +206,19 @@ export function TrainingFilter({
           className="mb-4 space-y-6 rounded-xl bg-white p-4 text-sm shadow-lg"
           aria-label="filter"
         >
-          <div className="relative">
-            <SearchIcon className="absolute left-2 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              id="search"
-              type="search"
-              placeholder="Suche"
-              className="pl-8"
-              value={optimisticFilter.search || ""}
-              onChange={(e) => {
-                const search = e.target.value;
-                const params = new URLSearchParams(window.location.search);
-                if (search) {
-                  params.set("search", search);
-                } else {
-                  params.delete("search");
-                }
-                startTransition(() => {
-                  setOptimisticFilter((prev) => ({
-                    ...prev,
-                    search,
-                  }));
-                  router.push(`?${params.toString()}`);
-                });
-              }}
-            />
+          <div className="space-y-2">
+            <Label htmlFor="search">Suche</Label>
+            <div className="relative">
+              <SearchIcon className="absolute left-2 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="search"
+                type="search"
+                placeholder="Trainer, Beschreibung oder Adresse"
+                className="pl-8"
+                value={optimisticFilter.search || ""}
+                onChange={handleSearchChange}
+              />
+            </div>
           </div>
           <div>
             <div className="mb-2 flex items-center">
@@ -242,31 +271,7 @@ export function TrainingFilter({
                   mode="range"
                   defaultMonth={date?.from}
                   selected={date}
-                  onSelect={(v) => {
-                    setDate(v);
-                    const params = new URLSearchParams(window.location.search);
-                    if (!v?.from) {
-                      params.delete("from");
-                      params.delete("to");
-                    }
-                    if (v?.from) {
-                      params.set(
-                        "from",
-                        formatAT(startOfDay(v.from), "yyyy-MM-dd"),
-                      );
-                    }
-                    if (v?.to) {
-                      params.set("to", formatAT(endOfDay(v.to), "yyyy-MM-dd"));
-                    }
-                    startTransition(() => {
-                      setOptimisticFilter((prev) => ({
-                        ...prev,
-                        from: v?.from,
-                        to: v?.to,
-                      }));
-                      router.push(`?${params.toString()}`);
-                    });
-                  }}
+                  onSelect={handleSelectDate}
                   numberOfMonths={2}
                 />
               </PopoverContent>

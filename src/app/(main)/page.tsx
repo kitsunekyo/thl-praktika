@@ -6,7 +6,10 @@ import Link from "next/link";
 import { SafeUser } from "@/lib/prisma";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
 import { TrainingCard } from "@/modules/trainings/components/TrainingCard";
-import { TrainingFilter } from "@/modules/trainings/components/TrainingFilter";
+import {
+  Filter,
+  TrainingFilter,
+} from "@/modules/trainings/components/TrainingFilter";
 import {
   computeDuration,
   computeTraveltime,
@@ -122,6 +125,7 @@ function getFilter(
       typeof searchParams.to === "string"
         ? endOfDay(new Date(searchParams.to))
         : undefined,
+    search: typeof searchParams.search === "string" ? searchParams.search : "",
   };
 }
 
@@ -130,13 +134,7 @@ async function filterTrainings({
   filter,
 }: {
   trainings: TrainingsWithMetadata;
-  filter: {
-    traveltime: number;
-    duration: number /* in hours */;
-    free: number;
-    from?: Date;
-    to?: Date;
-  };
+  filter: Filter;
 }) {
   const { traveltime, duration, free } = filter;
 
@@ -154,6 +152,14 @@ async function filterTrainings({
       return false;
     }
     if (filter.to && t.end >= filter.to) {
+      return false;
+    }
+    if (filter.search) {
+      const haystack =
+        `${t.author.name} ${t.author.email} ${t.description} ${t.address} ${t.city} ${t.zipCode}`.toLowerCase();
+      if (haystack.includes(filter.search.toLowerCase())) {
+        return true;
+      }
       return false;
     }
     return true;
