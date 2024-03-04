@@ -26,15 +26,17 @@ export async function getProfile() {
   const session = await getServerSession();
 
   if (!session?.user) {
-    throw new Error("not authorized");
+    return null;
   }
 
-  return prisma.user.findFirstOrThrow({
+  const user = prisma.user.findFirst({
     where: {
       id: session.user.id,
     },
     select: selectUserSafe,
   });
+
+  return user;
 }
 export async function getUsers() {
   return await prisma.user.findMany({

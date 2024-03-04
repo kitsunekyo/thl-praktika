@@ -18,7 +18,7 @@ export function MobileNav({
   user,
   className,
 }: React.HTMLAttributes<HTMLDivElement> & {
-  user?: SafeUser;
+  user?: Pick<SafeUser, "name" | "email" | "image" | "role">;
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const role = user?.role;
