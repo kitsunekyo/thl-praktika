@@ -11,6 +11,9 @@ import { getProfile } from "@/modules/users/queries";
 
 export default async function Profile() {
   const user = await getProfile();
+  if (!user) {
+    throw new Error("Profile not found");
+  }
   const preferences = preferencesSchema.parse(user.preferences || {}); // value can be DB null, or "null" as json value, so we need to supply a default value
 
   return (

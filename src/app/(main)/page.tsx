@@ -24,6 +24,10 @@ export default async function Home({
 }) {
   const profile = await getProfile();
 
+  if (!profile) {
+    throw new Error("Profile not found");
+  }
+
   const filter = getFilter(searchParams);
   const trainings = await getTrainings();
   const filteredTrainings = await filterTrainings({
