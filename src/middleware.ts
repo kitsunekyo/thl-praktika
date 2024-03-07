@@ -1,59 +1,25 @@
 import { NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware";
 
-const publicPaths = [
-  "/legal",
-  "/about",
-  "/img",
-  "/opengraph-image.jpg",
-  "/favicon.ico",
-  "/apple-icon.ico",
-  "/twitter-image.jpg",
-  "/robots.txt",
-  "/api/uploadthing",
-  "/manifest.json",
-  "/pwa",
-  "/sw.js",
-  "/workbox-",
-];
-
-const authPaths = [
-  "/login",
-  "/signup",
-  "/auth-error",
-  "/forgot-password",
-  "/reset-password",
-];
+// paths that should only be accessible to unauthenticated users
+const UNAUTHENTICATED_MATCHER = new RegExp(
+  "/((login|signup|auth-error|forgot-password|reset-password).*)",
+);
 
 export default withAuth(
   function middleware(req) {
     const path = req.nextUrl.pathname;
-    if (publicPaths.some((p) => path.startsWith(p))) {
-      return NextResponse.next();
-    }
 
-    if (authPaths.some((p) => path.startsWith(p))) {
+    if (UNAUTHENTICATED_MATCHER.test(path)) {
       if (!!req.nextauth.token) {
         return NextResponse.redirect(new URL("/", req.url));
+      } else {
+        return NextResponse.next();
       }
-      return NextResponse.next();
     }
 
     if (!req.nextauth.token) {
       return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    const role = req.nextauth.token.role;
-
-    const firstPathSegment: string | undefined = path
-      .split("/")
-      .filter((p) => p !== "")?.[0];
-
-    if (firstPathSegment === "admin" && role !== "admin") {
-      return NextResponse.redirect(new URL("/", req.url));
-    }
-    if (firstPathSegment === "trainer" && role === "user") {
-      return NextResponse.redirect(new URL("/", req.url));
     }
 
     return NextResponse.next();
@@ -64,3 +30,8 @@ export default withAuth(
     },
   },
 );
+
+export const config = {
+  matcher:
+    "/((?!api|_next/static|_next/image|favicon.ico|pwa|img|robots.txt|apple-icon.ico|opengraph-image.jpg|twitter-image.jpg|manifest.json|sw.js|workbox-.*|about|legal).*)",
+};

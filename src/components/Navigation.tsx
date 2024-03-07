@@ -32,7 +32,7 @@ export function Navigation({
 
   return (
     <aside className={cn("relative pb-12", className)}>
-      <div className="sticky top-0 space-y-4 py-6">
+      <nav className="sticky top-0 space-y-4 py-6">
         <div className="px-3">
           <div className="space-y-1">
             <SidebarLink href="/" exact onClick={onNavigate}>
@@ -108,7 +108,7 @@ export function Navigation({
             </SidebarLink>
           </div>
         </div>
-      </div>
+      </nav>
     </aside>
   );
 }

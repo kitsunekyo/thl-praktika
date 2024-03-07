@@ -4,17 +4,11 @@ import Link from "next/link";
 import { Breadcrumb, Breadcrumbs } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getServerSession } from "@/modules/auth/getServerSession";
 import { formatAddress } from "@/modules/users/address";
 import { getInitials } from "@/modules/users/name";
 import { getUserProfiles } from "@/modules/users/queries";
 
 export default async function Page() {
-  const session = await getServerSession();
-  if (!session) {
-    throw new Error("Unauthorized");
-  }
-
   const users = await getUserProfiles();
 
   return (

@@ -1,4 +1,5 @@
 import { formatDistance } from "date-fns";
+import { notFound } from "next/navigation";
 
 import { Breadcrumb, Breadcrumbs } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
@@ -10,15 +11,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { auth } from "@/modules/auth/next-auth";
 import { getTrainingRequests } from "@/modules/trainers/queries";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
 import { getProfile } from "@/modules/users/queries";
 
 export default async function Page() {
-  const profile = await getProfile();
-  if (!profile) {
-    throw new Error("Unauthorized");
+  const session = await auth();
+  if (session?.user.role === "user") {
+    return notFound();
   }
+  const profile = await getProfile();
   const requests = await getTrainingRequests({ trainerId: profile.id });
 
   return (

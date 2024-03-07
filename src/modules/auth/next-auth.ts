@@ -1,7 +1,12 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import * as Sentry from "@sentry/nextjs";
 import { compare } from "bcrypt";
-import { AuthOptions, User } from "next-auth";
+import {
+  GetServerSidePropsContext,
+  NextApiRequest,
+  NextApiResponse,
+} from "next";
+import { AuthOptions, User, getServerSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import { signOut } from "next-auth/react";
@@ -154,3 +159,12 @@ export const authOptions: AuthOptions = {
     signOut: "/logout",
   },
 };
+
+export function auth(
+  ...args:
+    | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
+    | [NextApiRequest, NextApiResponse]
+    | []
+) {
+  return getServerSession(...args, authOptions);
+}

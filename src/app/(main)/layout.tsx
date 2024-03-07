@@ -16,13 +16,11 @@ export default async function Layout({
     <>
       <Header user={user ? user : undefined} />
       <div className="grid min-h-[calc(100vh-62px)] border-t bg-gray-50 lg:grid-cols-5">
-        {user ? (
-          <Navigation className="hidden bg-white lg:block" role={user?.role} />
-        ) : null}
+        <Navigation className="hidden bg-white lg:block" role={user.role} />
         <div className="col-span-3 flex flex-col lg:col-span-4 lg:border-l">
-          <div className="h-full min-h-0 grow px-4 md:pb-24 lg:px-8">
+          <main className="h-full min-h-0 grow px-4 md:pb-24 lg:px-8">
             {children}
-          </div>
+          </main>
           <Footer />
         </div>
       </div>

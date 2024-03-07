@@ -12,7 +12,8 @@ import {
   sendTrainingUpdatedMail,
 } from "@/lib/postmark";
 import { prisma, selectUserSafe } from "@/lib/prisma";
-import { getServerSession } from "@/modules/auth/getServerSession";
+
+import { auth } from "../auth/next-auth";
 
 export async function deleteTraining(id: string) {
   const training = await prisma.training.findFirst({
@@ -105,7 +106,7 @@ const createTrainingSchema = z.object({
 export async function createTraining(
   payload: z.infer<typeof createTrainingSchema>,
 ) {
-  const session = await getServerSession();
+  const session = await auth();
   if (!session?.user) {
     return {
       error: "not authorized",
@@ -162,7 +163,7 @@ export async function updateTraining(
   id: string,
   payload: z.infer<typeof updateTrainingSchema>,
 ) {
-  const session = await getServerSession();
+  const session = await auth();
   if (!session?.user) {
     throw new AuthenticationError();
   }
@@ -206,7 +207,7 @@ export async function createTrainingRequest({
 }: {
   trainerId: string;
 }) {
-  const session = await getServerSession();
+  const session = await auth();
   if (!session) {
     return {
       error: "not authorized",

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Breadcrumb, Breadcrumbs } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import { SafeUser } from "@/lib/prisma";
-import { getServerSession } from "@/modules/auth/getServerSession";
+import { auth } from "@/modules/auth/next-auth";
 import { TrainingList } from "@/modules/trainings/components/TrainingList";
 import {
   computeDuration,
@@ -14,7 +14,7 @@ import { getMyTrainings } from "@/modules/trainings/queries";
 
 export default async function Trainings() {
   const trainings = await addMetadata(await getMyTrainings());
-  const session = await getServerSession();
+  const session = await auth();
 
   if (!session) {
     throw new Error("Unauthorized");

@@ -1,15 +1,19 @@
+import { notFound } from "next/navigation";
+
 import { Breadcrumb, Breadcrumbs } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
+import { auth } from "@/modules/auth/next-auth";
 import { getMyTrainings } from "@/modules/trainers/queries";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
 import { TrainingList } from "@/modules/trainings/components/TrainingList";
 import { getProfile } from "@/modules/users/queries";
 
 export default async function Page() {
-  const profile = await getProfile();
-  if (!profile) {
-    throw new Error("Unauthorized");
+  const session = await auth();
+  if (session?.user.role === "user") {
+    return notFound();
   }
+  const profile = await getProfile();
   const trainings = await getMyTrainings();
 
   return (
