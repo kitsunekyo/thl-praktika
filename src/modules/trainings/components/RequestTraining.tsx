@@ -1,6 +1,6 @@
 "use client";
 
-import { SendIcon } from "lucide-react";
+import { ClockIcon, SendIcon } from "lucide-react";
 import { useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -48,9 +48,10 @@ export function RequestTraining({
 
   if (disabled) {
     return (
-      <Button size="sm" disabled variant="ghost">
-        Anfrage gesendet
-      </Button>
+      <div className="inline-flex items-center gap-2 rounded py-2 text-sm font-medium text-muted-foreground">
+        <ClockIcon className="h-4 w-4" />
+        Praktikumsanfrage offen
+      </div>
     );
   }
 

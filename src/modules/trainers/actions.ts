@@ -251,6 +251,7 @@ export async function createTrainingRequest({
     userName: session.user.name || session.user.email,
   });
 
+  revalidatePath(`/profile/${trainerId}`);
   revalidatePath("/trainers/requests");
 }
 

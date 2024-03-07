@@ -1,3 +1,4 @@
+import { differenceInDays } from "date-fns";
 import Image from "next/image";
 
 import {
@@ -5,17 +6,25 @@ import {
   BreadcrumbsItem,
   BreadcrumbsSeparator,
 } from "@/components/Breadcrumbs";
+import { auth } from "@/modules/auth/next-auth";
+import { getTrainingRequests } from "@/modules/trainers/queries";
+import { RequestTraining } from "@/modules/trainings/components/RequestTraining";
 import { formatAddress } from "@/modules/users/address";
 import { getProfileById } from "@/modules/users/queries";
+
+const REQUEST_COOLDOWN_IN_DAYS = 7;
 
 export default async function Profile({
   params: { id },
 }: {
   params: { id: string };
 }) {
+  const session = await auth();
+  if (!session?.user) {
+    throw new Error("Unauthorized");
+  }
   const profile = await getProfileById(id);
-
-  const role = profile.role === "trainer" ? "Trainer" : "Praktikant";
+  const roleLabel = profile.role === "trainer" ? "Trainer" : "Praktikant";
 
   return (
     <>
@@ -31,7 +40,7 @@ export default async function Profile({
           <ProfileImage src={profile.image} />
           <div>
             <h1 className="font-medium">{profile.name}</h1>
-            <div className="text-sm text-gray-500">{role}</div>
+            <div className="text-sm text-gray-500">{roleLabel}</div>
           </div>
           <div className="mt-6 border-t border-gray-100">
             <dl className="divide-y divide-gray-100">
@@ -78,6 +87,11 @@ export default async function Profile({
             </dl>
           </div>
         </div>
+        <RequestTrainingWrapper
+          userId={session.user.id}
+          trainerId={id}
+          role={profile.role}
+        />
       </div>
     </>
   );
@@ -95,5 +109,34 @@ function ProfileImage({ src }: { src: string | null }) {
         className="overflow-hidden rounded-full object-cover"
       />
     </div>
+  );
+}
+
+async function RequestTrainingWrapper({
+  userId,
+  trainerId,
+  role,
+}: {
+  userId: string;
+  trainerId: string;
+  role: string;
+}) {
+  if (role === "user") {
+    return null;
+  }
+
+  const requests = await getTrainingRequests({ trainerId, userId });
+  const hasRecentlyRequested = Boolean(
+    requests
+      .filter((r) => r.trainerId === trainerId)
+      .find(
+        (r) =>
+          differenceInDays(new Date(), new Date(r.createdAt)) <
+          REQUEST_COOLDOWN_IN_DAYS,
+      ),
+  );
+
+  return (
+    <RequestTraining trainerId={trainerId} disabled={hasRecentlyRequested} />
   );
 }
