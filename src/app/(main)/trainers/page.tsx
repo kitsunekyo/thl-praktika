@@ -150,9 +150,9 @@ async function TrainerCard({
           <p className="mt-1 text-sm text-gray-500">
             <a
               href={`mailto:${trainer.email}`}
-              className="flex min-w-0 items-center underline"
+              className="flex items-center underline"
             >
-              {trainer.email}
+              <span className="truncate">{trainer.email}</span>
               <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
             </a>
           </p>
