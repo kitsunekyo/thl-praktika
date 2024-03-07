@@ -35,7 +35,7 @@ export default async function Profile({
           </div>
           <div className="mt-6 border-t border-gray-100">
             <dl className="divide-y divide-gray-100">
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-4">
                 <dt className="text-sm font-medium leading-6 text-gray-900">
                   E-Mail
                 </dt>
@@ -43,7 +43,7 @@ export default async function Profile({
                   {profile.email}
                 </dd>
               </div>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-4">
                 <dt className="text-sm font-medium leading-6 text-gray-900">
                   Telefonnummer
                 </dt>
@@ -57,7 +57,7 @@ export default async function Profile({
                   )}
                 </dd>
               </div>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-4">
                 <dt className="text-sm font-medium leading-6 text-gray-900">
                   Adresse
                 </dt>
