@@ -53,7 +53,7 @@ export function Navigation({
               </SidebarLink>
             )}
             {canCreateTrainings && (
-              <SidebarLink href="/trainer-requests" exact onClick={onNavigate}>
+              <SidebarLink href="/trainer/requests" exact onClick={onNavigate}>
                 <ListIcon className="mr-2 h-4 w-4 shrink-0" />
                 Praktika Anfragen
               </SidebarLink>

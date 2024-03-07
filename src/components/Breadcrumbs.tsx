@@ -1,19 +1,20 @@
 "use client";
 
 import { HomeIcon } from "lucide-react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export function Breadcrumbs({ children }: { children: React.ReactNode }) {
   return (
-    <nav className="py-4" aria-label="Breadcrumb">
-      <ol role="list" className="flex items-center space-x-4">
+    <nav className="py-4" aria-label="Breadcrumbs">
+      <ul role="list" className="flex items-center space-x-4">
         <BreadcrumbLink href="/">
           <HomeIcon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
           <span className="sr-only">Home</span>
         </BreadcrumbLink>
         <BreadcrumbsSeparator />
         {children}
-      </ol>
+      </ul>
     </nav>
   );
 }
@@ -27,9 +28,7 @@ export function Breadcrumb({
 }) {
   return (
     <li>
-      <div className="flex items-center">
-        <BreadcrumbLink href={href}>{children}</BreadcrumbLink>
-      </div>
+      <BreadcrumbLink href={href}>{children}</BreadcrumbLink>
     </li>
   );
 }
@@ -51,7 +50,7 @@ function BreadcrumbLink({
   href,
   children,
   ...rest
-}: React.ComponentProps<"a">) {
+}: Omit<React.ComponentProps<typeof Link>, "href"> & { href?: string }) {
   const pathname = usePathname();
 
   if (!href || pathname === href) {
@@ -63,12 +62,12 @@ function BreadcrumbLink({
   }
 
   return (
-    <a
+    <Link
       {...rest}
       href={href}
       className="flex items-center text-sm font-medium text-gray-500 underline hover:text-gray-700"
     >
       {children}
-    </a>
+    </Link>
   );
 }

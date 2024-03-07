@@ -1,7 +1,11 @@
 import { formatDistance } from "date-fns";
 import { notFound } from "next/navigation";
 
-import { Breadcrumb, Breadcrumbs } from "@/components/Breadcrumbs";
+import {
+  Breadcrumb,
+  Breadcrumbs,
+  BreadcrumbsSeparator,
+} from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import {
   Table,
@@ -27,7 +31,9 @@ export default async function Page() {
   return (
     <>
       <Breadcrumbs>
-        <Breadcrumb href="/trainer-requests">Praktika Anfragen</Breadcrumb>
+        <Breadcrumb href="/trainer">Meine Praktika</Breadcrumb>
+        <BreadcrumbsSeparator />
+        <Breadcrumb href="/trainer/requests">Praktika Anfragen</Breadcrumb>
       </Breadcrumbs>
       <div className="mx-auto max-w-2xl py-6">
         <PageTitle content="Hier findest du Praktika Anfragen die dir Student:innen geschickt haben. Wenn du ein neues Praktikum erstellst, werden alle in dieser Liste benachrichtigt.">
