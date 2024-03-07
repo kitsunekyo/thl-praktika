@@ -204,8 +204,10 @@ export async function updateTraining(
 }
 export async function createTrainingRequest({
   trainerId,
+  message,
 }: {
   trainerId: string;
+  message?: string;
 }) {
   const session = await auth();
   if (!session) {
@@ -242,13 +244,15 @@ export async function createTrainingRequest({
   await prisma.trainingRequest.create({
     data: {
       userId: session.user.id,
-      trainerId: trainerId,
+      trainerId,
+      message,
     },
   });
 
   sendTrainingRequestReceivedMail({
     to: trainer.email,
     userName: session.user.name || session.user.email,
+    message,
   });
 
   revalidatePath(`/profile/${trainerId}`);

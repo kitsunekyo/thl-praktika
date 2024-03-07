@@ -125,6 +125,7 @@ model TrainingRequest {
   createdAt DateTime @default(now())
   userId    String
   trainerId String
+  message   String?
   user      User     @relation("user", fields: [userId], references: [id], onDelete: Cascade)
   trainer   User     @relation("trainer", fields: [trainerId], references: [id], onDelete: Cascade)
 

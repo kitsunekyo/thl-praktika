@@ -46,13 +46,16 @@ export async function sendTrainingRegistrationNotificationMail({
 export async function sendTrainingRequestReceivedMail({
   to,
   userName,
+  message,
 }: {
   to: string;
   userName: string;
+  message?: string;
 }) {
   await sendMail(to, "training-request-received", {
     product_url: process.env.NEXTAUTH_URL,
     user_name: userName,
+    message,
   });
 }
 
