@@ -31,6 +31,7 @@ import { cancelTraining, deleteTraining } from "@/modules/trainers/actions";
 const cancelFormSchema = z.object({
   reason: z.string().min(1, { message: "Bitte gib einen Grund an." }),
 });
+
 export function CancelTraining({
   trainingId,
   hasRegistrations,
