@@ -1,4 +1,5 @@
 import { differenceInDays } from "date-fns";
+import { ExternalLinkIcon } from "lucide-react";
 import Image from "next/image";
 
 import {
@@ -24,7 +25,7 @@ export default async function Profile({
     throw new Error("Unauthorized");
   }
   const profile = await getProfileById(id);
-  const roleLabel = profile.role === "trainer" ? "Trainer" : "Praktikant";
+  const roleLabel = profile.role === "trainer" ? "Trainer:in" : "Praktikant:in";
 
   return (
     <>
@@ -49,7 +50,13 @@ export default async function Profile({
                   E-Mail
                 </dt>
                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {profile.email}
+                  <a
+                    href={`mailto:${profile.email}`}
+                    className="flex items-center underline"
+                  >
+                    <span className="truncate">{profile.email}</span>
+                    <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
+                  </a>
                 </dd>
               </div>
               <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-4">
@@ -58,7 +65,13 @@ export default async function Profile({
                 </dt>
                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                   {profile.phone ? (
-                    profile.phone
+                    <a
+                      href={`mailto:${profile.phone}`}
+                      className="flex items-center underline"
+                    >
+                      <span className="truncate">{profile.phone}</span>
+                      <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
+                    </a>
                   ) : (
                     <span className="italic text-muted-foreground">
                       noch nicht ausgefüllt
