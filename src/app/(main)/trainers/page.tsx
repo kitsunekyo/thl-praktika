@@ -2,7 +2,7 @@ import { differenceInDays, formatDistance } from "date-fns";
 import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 
-import { Breadcrumb, Breadcrumbs } from "@/components/Breadcrumbs";
+import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -31,7 +31,7 @@ export default async function Page() {
   return (
     <>
       <Breadcrumbs>
-        <Breadcrumb href="/trainers">Trainer:innen</Breadcrumb>
+        <BreadcrumbsItem href="/trainers">Trainer:innen</BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
         <PageTitle

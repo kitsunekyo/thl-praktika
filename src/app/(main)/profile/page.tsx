@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { Breadcrumb, Breadcrumbs } from "@/components/Breadcrumbs";
+import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { ChangePasswordForm } from "@/modules/auth/components/ChangePasswordForm";
 import { AvatarUpload } from "@/modules/users/components/AvatarUpload";
 import { DeleteAccount } from "@/modules/users/components/DeleteAccount";
@@ -19,7 +19,7 @@ export default async function Profile() {
   return (
     <>
       <Breadcrumbs>
-        <Breadcrumb href="/profile">Profil</Breadcrumb>
+        <BreadcrumbsItem href="/profile">Profil</BreadcrumbsItem>
       </Breadcrumbs>
       <div className="divide-y">
         <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">

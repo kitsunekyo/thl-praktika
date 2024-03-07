@@ -1,7 +1,7 @@
 import { Training, User } from "@prisma/client";
 import Link from "next/link";
 
-import { Breadcrumb, Breadcrumbs } from "@/components/Breadcrumbs";
+import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import { SafeUser } from "@/lib/prisma";
 import { auth } from "@/modules/auth/next-auth";
@@ -23,7 +23,9 @@ export default async function Trainings() {
   return (
     <>
       <Breadcrumbs>
-        <Breadcrumb href="/trainings">Meine Praktika Anmeldungen</Breadcrumb>
+        <BreadcrumbsItem href="/trainings">
+          Meine Praktika Anmeldungen
+        </BreadcrumbsItem>
       </Breadcrumbs>
       <div className="mx-auto max-w-2xl py-6">
         <PageTitle content="Deine Anmeldungen für Praktika.">

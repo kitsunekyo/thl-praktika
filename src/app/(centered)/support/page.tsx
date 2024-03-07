@@ -1,11 +1,11 @@
-import { Breadcrumb, Breadcrumbs } from "@/components/Breadcrumbs";
+import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 
 export default function Page() {
   return (
     <>
       <Breadcrumbs>
-        <Breadcrumb href="/support">Unterstützen</Breadcrumb>
+        <BreadcrumbsItem href="/support">Unterstützen</BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
         <div className="mb-4">

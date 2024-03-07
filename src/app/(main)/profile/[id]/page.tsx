@@ -1,8 +1,8 @@
 import Image from "next/image";
 
 import {
-  Breadcrumb,
   Breadcrumbs,
+  BreadcrumbsItem,
   BreadcrumbsSeparator,
 } from "@/components/Breadcrumbs";
 import { formatAddress } from "@/modules/users/address";
@@ -20,11 +20,11 @@ export default async function Profile({
   return (
     <>
       <Breadcrumbs>
-        <Breadcrumb href="/profile">Profil</Breadcrumb>
+        <BreadcrumbsItem href="/profile">Profil</BreadcrumbsItem>
         <BreadcrumbsSeparator />
-        <Breadcrumb href={`/profile/${id}`}>
+        <BreadcrumbsItem href={`/profile/${id}`}>
           {profile.name || profile.email}
-        </Breadcrumb>
+        </BreadcrumbsItem>
       </Breadcrumbs>
       <div className="mx-auto max-w-[600px] py-6">
         <div className="mb-6 space-y-4">

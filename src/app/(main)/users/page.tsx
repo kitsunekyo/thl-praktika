@@ -1,7 +1,7 @@
 import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 
-import { Breadcrumb, Breadcrumbs } from "@/components/Breadcrumbs";
+import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatAddress } from "@/modules/users/address";
@@ -14,7 +14,7 @@ export default async function Page() {
   return (
     <>
       <Breadcrumbs>
-        <Breadcrumb href="/users">Praktikanten</Breadcrumb>
+        <BreadcrumbsItem href="/users">Praktikanten</BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
         <PageTitle

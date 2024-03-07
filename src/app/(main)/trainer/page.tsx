@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { Breadcrumb, Breadcrumbs } from "@/components/Breadcrumbs";
+import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import { auth } from "@/modules/auth/next-auth";
 import { getMyTrainings } from "@/modules/trainers/queries";
@@ -19,7 +19,7 @@ export default async function Page() {
   return (
     <>
       <Breadcrumbs>
-        <Breadcrumb href="/trainer">Meine Praktika</Breadcrumb>
+        <BreadcrumbsItem href="/trainer">Meine Praktika</BreadcrumbsItem>
       </Breadcrumbs>
       <div className="mx-auto max-w-2xl py-6">
         <PageTitle content="Hier findest du deine erstellten Praktika. Du kannst sehen wer angemeldet ist, kannst Praktika bearbeiten oder absagen.">

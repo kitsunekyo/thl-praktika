@@ -1,6 +1,6 @@
 import {
-  Breadcrumb,
   Breadcrumbs,
+  BreadcrumbsItem,
   BreadcrumbsSeparator,
 } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
@@ -9,9 +9,11 @@ export default function Page() {
   return (
     <>
       <Breadcrumbs>
-        <Breadcrumb>Legal</Breadcrumb>
+        <BreadcrumbsItem>Legal</BreadcrumbsItem>
         <BreadcrumbsSeparator />
-        <Breadcrumb href="/legal/privacy">Datenschutzerkärung</Breadcrumb>
+        <BreadcrumbsItem href="/legal/privacy">
+          Datenschutzerkärung
+        </BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
         <div className="mb-4">
