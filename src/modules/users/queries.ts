@@ -23,7 +23,7 @@ export async function getProfileById(id: string) {
   return profile;
 }
 
-export async function getProfile() {
+export async function getMyProfile() {
   const session = await auth();
 
   if (!session?.user) {

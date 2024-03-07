@@ -6,14 +6,14 @@ import { auth } from "@/modules/auth/next-auth";
 import { getMyTrainings } from "@/modules/trainers/queries";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
 import { TrainingList } from "@/modules/trainings/components/TrainingList";
-import { getProfile } from "@/modules/users/queries";
+import { getMyProfile } from "@/modules/users/queries";
 
 export default async function Page() {
   const session = await auth();
   if (session?.user.role === "user") {
     return notFound();
   }
-  const profile = await getProfile();
+  const profile = await getMyProfile();
   const trainings = await getMyTrainings();
 
   return (

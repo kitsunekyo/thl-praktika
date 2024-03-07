@@ -15,14 +15,14 @@ import {
   computeTraveltime,
 } from "@/modules/trainings/compute-data";
 import { getTrainings } from "@/modules/trainings/queries";
-import { getProfile } from "@/modules/users/queries";
+import { getMyProfile } from "@/modules/users/queries";
 
 export default async function Home({
   searchParams,
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  const profile = await getProfile();
+  const profile = await getMyProfile();
 
   if (!profile) {
     throw new Error("Profile not found");

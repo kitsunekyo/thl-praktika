@@ -14,14 +14,14 @@ import {
 import { auth } from "@/modules/auth/next-auth";
 import { getTrainingRequests } from "@/modules/trainers/queries";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
-import { getProfile } from "@/modules/users/queries";
+import { getMyProfile } from "@/modules/users/queries";
 
 export default async function Page() {
   const session = await auth();
   if (session?.user.role === "user") {
     return notFound();
   }
-  const profile = await getProfile();
+  const profile = await getMyProfile();
   const requests = await getTrainingRequests({ trainerId: profile.id });
 
   return (

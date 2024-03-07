@@ -1,7 +1,7 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Navigation } from "@/components/Navigation";
-import { getProfile } from "@/modules/users/queries";
+import { getMyProfile } from "@/modules/users/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +10,7 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getProfile();
+  const user = await getMyProfile();
 
   return (
     <>

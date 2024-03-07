@@ -7,10 +7,10 @@ import { DeleteAccount } from "@/modules/users/components/DeleteAccount";
 import { PreferencesForm } from "@/modules/users/components/PreferencesForm";
 import { ProfileForm } from "@/modules/users/components/ProfileForm";
 import { preferencesSchema } from "@/modules/users/preferences";
-import { getProfile } from "@/modules/users/queries";
+import { getMyProfile } from "@/modules/users/queries";
 
 export default async function Profile() {
-  const user = await getProfile();
+  const user = await getMyProfile();
   if (!user) {
     throw new Error("Profile not found");
   }

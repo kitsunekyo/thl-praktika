@@ -3,7 +3,7 @@ import { Training } from "@prisma/client";
 import { SafeUser } from "@/lib/prisma";
 import { getTraveltime } from "@/modules/users/address";
 
-import { getProfile } from "../users/queries";
+import { getMyProfile } from "../users/queries";
 
 type WithAuthor<T> = T & {
   author: SafeUser;
@@ -22,7 +22,7 @@ export function computeDuration<T extends Training>(training: T) {
 export async function computeTraveltime<T extends WithAuthor<Training>>(
   training: T,
 ) {
-  const user = await getProfile();
+  const user = await getMyProfile();
 
   const traveltime = user
     ? await getTraveltime(user, training.author)
