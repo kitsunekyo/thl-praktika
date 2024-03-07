@@ -7,6 +7,7 @@ import {
   ExternalLinkIcon,
   GraduationCapIcon,
   LayoutGridIcon,
+  ListIcon,
   ListRestartIcon,
   MailsIcon,
   UserCircleIcon,
@@ -53,7 +54,7 @@ export function Navigation({
             )}
             {canCreateTrainings && (
               <SidebarLink href="/trainer-requests" exact onClick={onNavigate}>
-                <span className="mr-2 h-4 w-4 shrink-0" />
+                <ListIcon className="mr-2 h-4 w-4 shrink-0" />
                 Praktika Anfragen
               </SidebarLink>
             )}
