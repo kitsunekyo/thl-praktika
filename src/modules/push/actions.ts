@@ -4,6 +4,7 @@ import {
   sendNotification as sendWebPushNotification,
   setVapidDetails,
 } from "web-push";
+import { z } from "zod";
 
 if (
   !process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY ||
@@ -21,10 +22,18 @@ setVapidDetails(
   process.env.WEB_PUSH_PRIVATE_KEY,
 );
 
+const subscriptionSchema = z.object({
+  endpoint: z.string(),
+  keys: z.object({
+    auth: z.string(),
+    p256dh: z.string(),
+  }),
+});
+
 export async function sendNotification(
-  subscription: any,
+  subscriptionJSON: PushSubscriptionJSON,
   payload: { title: string; message: string },
 ) {
-  console.log(subscription);
+  const subscription = subscriptionSchema.parse(subscriptionJSON);
   return sendWebPushNotification(subscription, JSON.stringify(payload));
 }

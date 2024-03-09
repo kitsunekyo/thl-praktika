@@ -41,7 +41,10 @@ self.addEventListener("activate", async () => {
 });
 
 async function subscribe() {
-  if (!process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY) {
+  if (
+    !process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY ||
+    Notification.permission !== "granted"
+  ) {
     return;
   }
   try {
