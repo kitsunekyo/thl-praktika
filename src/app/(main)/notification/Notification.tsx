@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { sendNotification } from "@/modules/push/actions";
 
 function useNotificationPermissions() {
   const [permission, setPermission] = useState<NotificationPermission | null>(
@@ -22,6 +23,9 @@ function useNotificationPermissions() {
     }
     const requestResult = await window.Notification.requestPermission();
     setPermission(requestResult);
+    window.navigator.serviceWorker.ready.then((reg) => {
+      reg.active?.postMessage("permission_granted");
+    });
   }
 
   return { value: permission, request: requestPermission };
@@ -40,14 +44,9 @@ export function NotificationTest() {
       return;
     }
 
-    await fetch("/api/notification", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        subscription,
-      }),
+    await sendNotification(subscription.toJSON(), {
+      title: "Test Notification",
+      message: "This is a test notification",
     });
   }
 
@@ -64,16 +63,3 @@ export function NotificationTest() {
     </>
   );
 }
-
-const base64ToUint8Array = (base64: string) => {
-  const padding = "=".repeat((4 - (base64.length % 4)) % 4);
-  const b64 = (base64 + padding).replace(/-/g, "+").replace(/_/g, "/");
-
-  const rawData = window.atob(b64);
-  const outputArray = new Uint8Array(rawData.length);
-
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-};

@@ -17,6 +17,13 @@ installSerwist({
   runtimeCaching: defaultCache,
 });
 
+self.addEventListener("message", async (event) => {
+  if (event.data === "permission_granted") {
+    console.log("sw:permission_granted");
+    await subscribe();
+  }
+});
+
 self.addEventListener("push", async (event) => {
   console.log("sw:push");
   if (!event.data) {
@@ -29,7 +36,11 @@ self.addEventListener("push", async (event) => {
 });
 
 self.addEventListener("activate", async () => {
-  console.log("sw:activate");
+  console.log("sw:activated");
+  await subscribe();
+});
+
+async function subscribe() {
   if (!process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY) {
     return;
   }
@@ -42,4 +53,4 @@ self.addEventListener("activate", async () => {
   } catch (err) {
     console.error("sw:error", err);
   }
-});
+}
