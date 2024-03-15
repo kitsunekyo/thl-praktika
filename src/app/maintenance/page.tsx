@@ -41,7 +41,7 @@ function Message() {
           src="https://giphy.com/embed/mCRJDo24UvJMA"
           width="480"
           height="348"
-          className="giphy-embed mx-auto mt-8"
+          className="giphy-embed mx-auto mt-8 max-w-full"
           allowFullScreen
         ></iframe>
       </div>

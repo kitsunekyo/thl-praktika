@@ -16,6 +16,13 @@ export default withAuth(
       return NextResponse.redirect(new URL("/maintenance", req.url));
     }
 
+    if (MAINTENANCE_MATCHER.test(req.url)) {
+      if (!isInMaintenance) {
+        return NextResponse.redirect(new URL("/", req.url));
+      }
+      return NextResponse.next();
+    }
+
     const path = req.nextUrl.pathname;
 
     if (UNAUTHENTICATED_MATCHER.test(path)) {

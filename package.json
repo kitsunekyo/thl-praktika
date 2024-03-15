@@ -12,6 +12,7 @@
     "db:push": "dotenv -c -- prisma db push",
     "db:seed": "dotenv -c -- node prisma/seed.mjs",
     "db:studio": "dotenv -c -- prisma studio",
+    "db": "dotenv -c -- prisma",
     "postinstall": "prisma generate",
     "prepare": "husky install"
   },
