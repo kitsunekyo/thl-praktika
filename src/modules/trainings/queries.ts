@@ -32,7 +32,7 @@ export async function getMyTrainings() {
       },
     },
     orderBy: {
-      start: "desc",
+      start: "asc",
     },
   });
 }

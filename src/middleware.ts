@@ -1,3 +1,4 @@
+import { get } from "@vercel/edge-config";
 import { NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware";
 
@@ -6,8 +7,22 @@ const UNAUTHENTICATED_MATCHER = new RegExp(
   "/((login|signup|auth-error|forgot-password|reset-password).*)",
 );
 
+const MAINTENANCE_MATCHER = new RegExp("/maintenance");
+
 export default withAuth(
-  function middleware(req) {
+  async function middleware(req) {
+    const isInMaintenance = await get("isInMaintenance");
+    if (isInMaintenance && !MAINTENANCE_MATCHER.test(req.url)) {
+      return NextResponse.redirect(new URL("/maintenance", req.url));
+    }
+
+    if (MAINTENANCE_MATCHER.test(req.url)) {
+      if (!isInMaintenance) {
+        return NextResponse.redirect(new URL("/", req.url));
+      }
+      return NextResponse.next();
+    }
+
     const path = req.nextUrl.pathname;
 
     if (UNAUTHENTICATED_MATCHER.test(path)) {
