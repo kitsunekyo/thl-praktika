@@ -13,7 +13,7 @@ export default function Page() {
         </div>
       </header>
       <main className="grow">
-        <section className="mx-auto max-w-4xl py-20">
+        <section className="mx-auto max-w-4xl px-4 py-20">
           <Message />
         </section>
       </main>
