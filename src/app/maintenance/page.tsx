@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { Footer } from "@/components/Footer";
 import { Logo } from "@/components/Logo";
+import { formatAT } from "@/lib/date";
 
 export default function Page() {
   return (
@@ -24,21 +25,25 @@ export default function Page() {
 function Message() {
   return (
     <article>
-      <Image
-        className="z-1 mx-auto"
-        src="/img/dog-clock.svg"
-        width={219}
-        height={206}
-        alt="Hund mit Uhr"
-      />
       <div className="mx-auto text-center lg:w-2/3">
-        <h1 className="text-5xl font-bold text-gray-900 md:text-6xl xl:text-7xl">
+        <h1 className="text-3xl font-bold text-gray-900 md:text-5xl">
           Wichtige Umbauten hinter den Kulissen
         </h1>
         <p className="mx-auto mt-8 max-w-[70ch] text-xl text-gray-700">
           Bitte um etwas Geduld. Wir arbeiten an der Seite und sind so schnell
           wie möglich wieder für dich da.
         </p>
+        <p className="mt-4 text-gray-500">
+          Letztes Update:{" "}
+          {formatAT(new Date("2024-03-15T10:00"), "do MMM HH:mm")}
+        </p>
+        <iframe
+          src="https://giphy.com/embed/mCRJDo24UvJMA"
+          width="480"
+          height="348"
+          className="giphy-embed mx-auto mt-8"
+          allowFullScreen
+        ></iframe>
       </div>
     </article>
   );
