@@ -34,8 +34,8 @@ function Message() {
           wie möglich wieder für dich da.
         </p>
         <p className="mt-4 text-gray-500">
-          Letztes Update:{" "}
-          {formatAT(new Date("2024-03-15T10:00"), "do MMM HH:mm")}
+          Zuletzt aktualisiert um{" "}
+          {formatAT(new Date("2024-03-15T10:00"), "HH:mm")}
         </p>
         <iframe
           src="https://giphy.com/embed/mCRJDo24UvJMA"
