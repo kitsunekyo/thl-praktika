@@ -1,7 +1,3 @@
-
-> prakta@0.0.0 db /home/aspieslechner/code/prakta
-> dotenv -c -- prisma "migrate" "diff" "--from-empty" "--to-schema-datamodel" "prisma/schema.prisma" "--script"
-
 -- CreateTable
 CREATE TABLE "Account" (
     "id" VARCHAR(191) NOT NULL,

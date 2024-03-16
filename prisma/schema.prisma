@@ -9,47 +9,47 @@ datasource db {
 }
 
 model Account {
-  id                String  @id(map: "idx_84075_PRIMARY") @default(cuid()) @db.VarChar(191)
-  userId            String  @db.VarChar(191)
-  type              String  @db.VarChar(191)
-  provider          String  @db.VarChar(191)
-  providerAccountId String  @db.VarChar(191)
+  id                String  @id() @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
   refresh_token     String?
   access_token      String?
   expires_at        Int?
-  token_type        String? @db.VarChar(191)
-  scope             String? @db.VarChar(191)
+  token_type        String?
+  scope             String?
   id_token          String?
-  session_state     String? @db.VarChar(191)
+  session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccountId], map: "idx_84075_Account_provider_providerAccountId_key")
-  @@index([userId], map: "idx_84075_Account_userId_idx")
+  @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
-  id           String   @id(map: "idx_84099_PRIMARY") @default(cuid()) @db.VarChar(191)
-  sessionToken String   @unique(map: "idx_84099_Session_sessionToken_key") @db.VarChar(191)
-  userId       String   @db.VarChar(191)
-  expires      DateTime @db.Timestamptz(6)
+  id           String   @id() @default(cuid())
+  sessionToken String   @unique()
+  userId       String
+  expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([userId], map: "idx_84099_Session_userId_idx")
+  @@index([userId])
 }
 
 model User {
-  id               String            @id(map: "idx_84116_PRIMARY") @default(cuid()) @db.VarChar(191)
-  name             String?           @db.VarChar(191)
-  email            String            @unique(map: "idx_84116_User_email_key") @db.VarChar(191)
-  emailVerified    DateTime?         @db.Timestamptz(6)
-  image            String?           @db.VarChar(191)
-  role             String            @default("user") @db.VarChar(191)
-  password         String?           @db.VarChar(191)
-  address          String?           @db.VarChar(191)
-  city             String?           @db.VarChar(191)
-  zipCode          String?           @db.VarChar(191)
-  phone            String?           @db.VarChar(191)
-  lastLogin        DateTime?         @db.Timestamptz(6)
+  id               String            @id() @default(cuid())
+  name             String?
+  email            String            @unique()
+  emailVerified    DateTime?
+  image            String?
+  role             String            @default("user")
+  password         String?
+  address          String?
+  city             String?
+  zipCode          String?
+  phone            String?
+  lastLogin        DateTime?
   preferences      Json?             @db.Json
   accounts         Account[]
   sessions         Session[]
@@ -60,72 +60,72 @@ model User {
 }
 
 model VerificationToken {
-  identifier String   @db.VarChar(191)
-  token      String   @unique(map: "idx_84122_VerificationToken_token_key") @db.VarChar(191)
-  expires    DateTime @db.Timestamptz(6)
+  identifier String
+  token      String   @unique()
+  expires    DateTime
 
-  @@unique([identifier, token], map: "idx_84122_VerificationToken_identifier_token_key")
+  @@unique([identifier, token])
 }
 
 model Invitation {
-  id        String   @id(map: "idx_84080_PRIMARY") @default(cuid()) @db.VarChar(191)
-  email     String   @db.VarChar(191)
-  name      String?  @db.VarChar(191)
-  createdAt DateTime @default(now()) @db.Timestamptz(6)
-  role      String   @default("user") @db.VarChar(191)
+  id        String   @id() @default(cuid())
+  email     String
+  name      String?
+  createdAt DateTime @default(now())
+  role      String   @default("user")
 }
 
 model Training {
-  id            String         @id(map: "idx_84104_PRIMARY") @default(cuid()) @db.VarChar(191)
-  createdAt     DateTime       @default(now()) @db.Timestamptz(6)
-  start         DateTime       @db.Timestamptz(6)
-  end           DateTime       @db.Timestamptz(6)
+  id            String         @id() @default(cuid())
+  createdAt     DateTime       @default(now())
+  start         DateTime
+  end           DateTime
   description   String?
   maxInterns    Int
-  authorId      String         @db.VarChar(191)
-  address       String?        @db.VarChar(191)
-  city          String?        @db.VarChar(191)
-  zipCode       String?        @db.VarChar(191)
+  authorId      String
+  address       String?
+  city          String?
+  zipCode       String?
   registrations Registration[]
   author        User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-  @@index([authorId], map: "idx_84104_Training_authorId_idx")
+  @@index([authorId])
 }
 
 model Registration {
-  id         String   @id(map: "idx_84093_PRIMARY") @default(cuid()) @db.VarChar(191)
-  createdAt  DateTime @default(now()) @db.Timestamptz(6)
-  trainingId String   @db.VarChar(191)
-  userId     String   @db.VarChar(191)
+  id         String   @id() @default(cuid())
+  createdAt  DateTime @default(now())
+  trainingId String
+  userId     String
   training   Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([trainingId, userId], map: "idx_84093_Registration_trainingId_userId_key")
-  @@index([trainingId], map: "idx_84093_Registration_trainingId_idx")
-  @@index([userId], map: "idx_84093_Registration_userId_idx")
+  @@unique([trainingId, userId])
+  @@index([trainingId])
+  @@index([userId])
 }
 
 model PasswordResetToken {
-  id        String   @id(map: "idx_84087_PRIMARY") @default(cuid()) @db.VarChar(191)
-  createdAt DateTime @default(now()) @db.Timestamptz(6)
-  email     String   @db.VarChar(191)
-  secret    String   @unique(map: "idx_84087_PasswordResetToken_secret_key") @db.VarChar(191)
-  expires   DateTime @db.Timestamptz(6)
+  id        String   @id() @default(cuid())
+  createdAt DateTime @default(now())
+  email     String
+  secret    String   @unique()
+  expires   DateTime
 
-  @@unique([secret, email], map: "idx_84087_PasswordResetToken_secret_email_key")
+  @@unique([secret, email])
 }
 
 model TrainingRequest {
-  id        String   @id(map: "idx_84110_PRIMARY") @default(cuid()) @db.VarChar(191)
-  createdAt DateTime @default(now()) @db.Timestamptz(6)
-  userId    String   @db.VarChar(191)
-  trainerId String   @db.VarChar(191)
-  message   String?  @db.VarChar(191)
+  id        String   @id() @default(cuid())
+  createdAt DateTime @default(now())
+  userId    String
+  trainerId String
+  message   String?
   user      User     @relation("user", fields: [userId], references: [id], onDelete: Cascade)
   trainer   User     @relation("trainer", fields: [trainerId], references: [id], onDelete: Cascade)
 
-  @@index([trainerId], map: "idx_84110_TrainingRequest_trainerId_idx")
-  @@index([userId], map: "idx_84110_TrainingRequest_userId_idx")
+  @@index([trainerId])
+  @@index([userId])
 }
 
 model PushSubscription {
