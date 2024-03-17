@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -17,15 +14,14 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([userId])
@@ -42,20 +38,19 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  image         String?
-  role          String    @default("user")
-  password      String?
-  address       String?
-  city          String?
-  zipCode       String?
-  phone         String?
-  lastLogin     DateTime?
-  preferences   Json?
-
+  id               String            @id @default(cuid())
+  name             String?
+  email            String            @unique
+  emailVerified    DateTime?
+  image            String?
+  role             String            @default("user")
+  password         String?
+  address          String?
+  city             String?
+  zipCode          String?
+  phone            String?
+  lastLogin        DateTime?
+  preferences      Json?             @db.Json
   accounts         Account[]
   sessions         Session[]
   trainings        Training[]
@@ -85,14 +80,14 @@ model Training {
   createdAt     DateTime       @default(now())
   start         DateTime
   end           DateTime
-  description   String?        @db.Text
+  description   String?
   maxInterns    Int
-  registrations Registration[]
   authorId      String
-  author        User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
   address       String?
   city          String?
   zipCode       String?
+  registrations Registration[]
+  author        User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   @@index([authorId])
 }
@@ -100,9 +95,9 @@ model Training {
 model Registration {
   id         String   @id @default(cuid())
   createdAt  DateTime @default(now())
-  training   Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
   trainingId String
   userId     String
+  training   Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([trainingId, userId])
@@ -129,6 +124,6 @@ model TrainingRequest {
   user      User     @relation("user", fields: [userId], references: [id], onDelete: Cascade)
   trainer   User     @relation("trainer", fields: [trainerId], references: [id], onDelete: Cascade)
 
-  @@index([userId])
   @@index([trainerId])
+  @@index([userId])
 }
