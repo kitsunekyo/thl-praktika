@@ -17,12 +17,12 @@ installSerwist({
   runtimeCaching: defaultCache,
 });
 
-self.addEventListener("message", async (event) => {
-  if (event.data === "permission_granted") {
-    console.log("sw:permission_granted");
-    await subscribe();
-  }
-});
+// self.addEventListener("message", async (event) => {
+//   if (event.data === "permission_granted") {
+//     console.log("sw:permission_granted");
+//     await subscribe();
+//   }
+// });
 
 self.addEventListener("push", async (event) => {
   console.log("sw:push");
@@ -35,12 +35,14 @@ self.addEventListener("push", async (event) => {
   });
 });
 
-self.addEventListener("activate", async () => {
+self.addEventListener("activate", async (e) => {
   console.log("sw:activated");
   await subscribe();
 });
 
 async function subscribe() {
+  return;
+
   if (
     !process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY ||
     Notification.permission !== "granted"
@@ -48,7 +50,7 @@ async function subscribe() {
     return;
   }
   try {
-    await self.registration.pushManager.subscribe({
+    const subscription = await self.registration.pushManager.subscribe({
       applicationServerKey: process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY,
       userVisibleOnly: true, // required in chrome, to prevent sending without the user knowing
     });

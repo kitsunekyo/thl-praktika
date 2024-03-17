@@ -57,6 +57,7 @@ model User {
   registrations    Registration[]
   sentRequests     TrainingRequest[] @relation("user")
   receivedRequests TrainingRequest[] @relation("trainer")
+  Subscription     Subscription[]
 }
 
 model VerificationToken {
@@ -125,5 +126,16 @@ model TrainingRequest {
   trainer   User     @relation("trainer", fields: [trainerId], references: [id], onDelete: Cascade)
 
   @@index([trainerId])
+  @@index([userId])
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  userId    String
+  endpoint  String   @unique
+  keys      Json
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId])
 }

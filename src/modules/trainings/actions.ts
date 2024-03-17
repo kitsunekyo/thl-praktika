@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 
 import { formatTrainingDate } from "@/lib/date";
 import {
@@ -9,6 +10,9 @@ import {
 } from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/modules/auth/next-auth";
+
+import { sendNotification } from "../push/actions";
+import { subscriptionSchema } from "../push/schema";
 
 export async function register(id: string) {
   const session = await auth();
@@ -67,6 +71,25 @@ export async function register(id: string) {
     trainerName: training.author.name || "",
     date: formatTrainingDate(training.start, training.end),
     userName: currentUser.name || currentUser.email,
+  });
+
+  const rawSubscriptions = await prisma.subscription.findMany();
+  const subscriptions = rawSubscriptions
+    .map((sub) => {
+      const res = subscriptionSchema.safeParse(sub);
+      if (res.success) {
+        return res.data;
+      }
+    })
+    .filter(
+      (sub): sub is z.infer<typeof subscriptionSchema> => sub !== undefined,
+    );
+
+  subscriptions.forEach(async (sub) => {
+    await sendNotification(sub, {
+      title: "Neue Anmeldung",
+      message: `${currentUser.name || currentUser.email} hat sich für ein Praktikum von ${training.author.name} angemeldet!`,
+    });
   });
 
   revalidatePath("/trainings");
