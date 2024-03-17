@@ -127,13 +127,3 @@ model TrainingRequest {
   @@index([trainerId])
   @@index([userId])
 }
-
-model PushSubscription {
-  id        String   @id
-  createdAt DateTime @default(now())
-  userId    String
-  endpoint  String
-  keys      Json
-
-  @@index([userId])
-}

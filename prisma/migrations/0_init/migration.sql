@@ -13,7 +13,7 @@ CREATE TABLE "Account" (
     "id_token" TEXT,
     "session_state" VARCHAR(191),
 
-    CONSTRAINT "idx_84075_PRIMARY" PRIMARY KEY ("id")
+    CONSTRAINT "idx_81920_PRIMARY" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -23,7 +23,7 @@ CREATE TABLE "Session" (
     "userId" VARCHAR(191) NOT NULL,
     "expires" TIMESTAMPTZ(6) NOT NULL,
 
-    CONSTRAINT "idx_84099_PRIMARY" PRIMARY KEY ("id")
+    CONSTRAINT "idx_81944_PRIMARY" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -42,7 +42,7 @@ CREATE TABLE "User" (
     "lastLogin" TIMESTAMPTZ(6),
     "preferences" JSON,
 
-    CONSTRAINT "idx_84116_PRIMARY" PRIMARY KEY ("id")
+    CONSTRAINT "idx_81961_PRIMARY" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -60,7 +60,7 @@ CREATE TABLE "Invitation" (
     "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "role" VARCHAR(191) NOT NULL DEFAULT 'user',
 
-    CONSTRAINT "idx_84080_PRIMARY" PRIMARY KEY ("id")
+    CONSTRAINT "idx_81925_PRIMARY" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -76,7 +76,7 @@ CREATE TABLE "Training" (
     "city" VARCHAR(191),
     "zipCode" VARCHAR(191),
 
-    CONSTRAINT "idx_84104_PRIMARY" PRIMARY KEY ("id")
+    CONSTRAINT "idx_81949_PRIMARY" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -86,7 +86,7 @@ CREATE TABLE "Registration" (
     "trainingId" VARCHAR(191) NOT NULL,
     "userId" VARCHAR(191) NOT NULL,
 
-    CONSTRAINT "idx_84093_PRIMARY" PRIMARY KEY ("id")
+    CONSTRAINT "idx_81938_PRIMARY" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -97,7 +97,7 @@ CREATE TABLE "PasswordResetToken" (
     "secret" VARCHAR(191) NOT NULL,
     "expires" TIMESTAMPTZ(6) NOT NULL,
 
-    CONSTRAINT "idx_84087_PRIMARY" PRIMARY KEY ("id")
+    CONSTRAINT "idx_81932_PRIMARY" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -108,65 +108,51 @@ CREATE TABLE "TrainingRequest" (
     "trainerId" VARCHAR(191) NOT NULL,
     "message" VARCHAR(191),
 
-    CONSTRAINT "idx_84110_PRIMARY" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "PushSubscription" (
-    "id" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "userId" TEXT NOT NULL,
-    "endpoint" TEXT NOT NULL,
-    "keys" JSONB NOT NULL,
-
-    CONSTRAINT "PushSubscription_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "idx_81955_PRIMARY" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE INDEX "idx_84075_Account_userId_idx" ON "Account"("userId");
+CREATE INDEX "idx_81920_Account_userId_idx" ON "Account"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "idx_84075_Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
+CREATE UNIQUE INDEX "idx_81920_Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "idx_84099_Session_sessionToken_key" ON "Session"("sessionToken");
+CREATE UNIQUE INDEX "idx_81944_Session_sessionToken_key" ON "Session"("sessionToken");
 
 -- CreateIndex
-CREATE INDEX "idx_84099_Session_userId_idx" ON "Session"("userId");
+CREATE INDEX "idx_81944_Session_userId_idx" ON "Session"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "idx_84116_User_email_key" ON "User"("email");
+CREATE UNIQUE INDEX "idx_81961_User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "idx_84122_VerificationToken_token_key" ON "VerificationToken"("token");
+CREATE UNIQUE INDEX "idx_81967_VerificationToken_token_key" ON "VerificationToken"("token");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "idx_84122_VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
+CREATE UNIQUE INDEX "idx_81967_VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
 
 -- CreateIndex
-CREATE INDEX "idx_84104_Training_authorId_idx" ON "Training"("authorId");
+CREATE INDEX "idx_81949_Training_authorId_idx" ON "Training"("authorId");
 
 -- CreateIndex
-CREATE INDEX "idx_84093_Registration_trainingId_idx" ON "Registration"("trainingId");
+CREATE INDEX "idx_81938_Registration_trainingId_idx" ON "Registration"("trainingId");
 
 -- CreateIndex
-CREATE INDEX "idx_84093_Registration_userId_idx" ON "Registration"("userId");
+CREATE INDEX "idx_81938_Registration_userId_idx" ON "Registration"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "idx_84093_Registration_trainingId_userId_key" ON "Registration"("trainingId", "userId");
+CREATE UNIQUE INDEX "idx_81938_Registration_trainingId_userId_key" ON "Registration"("trainingId", "userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "idx_84087_PasswordResetToken_secret_key" ON "PasswordResetToken"("secret");
+CREATE UNIQUE INDEX "idx_81932_PasswordResetToken_secret_key" ON "PasswordResetToken"("secret");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "idx_84087_PasswordResetToken_secret_email_key" ON "PasswordResetToken"("secret", "email");
+CREATE UNIQUE INDEX "idx_81932_PasswordResetToken_secret_email_key" ON "PasswordResetToken"("secret", "email");
 
 -- CreateIndex
-CREATE INDEX "idx_84110_TrainingRequest_trainerId_idx" ON "TrainingRequest"("trainerId");
+CREATE INDEX "idx_81955_TrainingRequest_trainerId_idx" ON "TrainingRequest"("trainerId");
 
 -- CreateIndex
-CREATE INDEX "idx_84110_TrainingRequest_userId_idx" ON "TrainingRequest"("userId");
-
--- CreateIndex
-CREATE INDEX "PushSubscription_userId_idx" ON "PushSubscription"("userId");
+CREATE INDEX "idx_81955_TrainingRequest_userId_idx" ON "TrainingRequest"("userId");
 
