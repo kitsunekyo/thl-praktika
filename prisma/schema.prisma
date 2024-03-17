@@ -9,7 +9,7 @@ datasource db {
 }
 
 model Account {
-  id                String  @id() @default(cuid())
+  id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
@@ -28,8 +28,8 @@ model Account {
 }
 
 model Session {
-  id           String   @id() @default(cuid())
-  sessionToken String   @unique()
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -38,9 +38,9 @@ model Session {
 }
 
 model User {
-  id               String            @id() @default(cuid())
+  id               String            @id @default(cuid())
   name             String?
-  email            String            @unique()
+  email            String            @unique
   emailVerified    DateTime?
   image            String?
   role             String            @default("user")
@@ -61,14 +61,14 @@ model User {
 
 model VerificationToken {
   identifier String
-  token      String   @unique()
+  token      String   @unique
   expires    DateTime
 
   @@unique([identifier, token])
 }
 
 model Invitation {
-  id        String   @id() @default(cuid())
+  id        String   @id @default(cuid())
   email     String
   name      String?
   createdAt DateTime @default(now())
@@ -76,7 +76,7 @@ model Invitation {
 }
 
 model Training {
-  id            String         @id() @default(cuid())
+  id            String         @id @default(cuid())
   createdAt     DateTime       @default(now())
   start         DateTime
   end           DateTime
@@ -93,7 +93,7 @@ model Training {
 }
 
 model Registration {
-  id         String   @id() @default(cuid())
+  id         String   @id @default(cuid())
   createdAt  DateTime @default(now())
   trainingId String
   userId     String
@@ -106,17 +106,17 @@ model Registration {
 }
 
 model PasswordResetToken {
-  id        String   @id() @default(cuid())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   email     String
-  secret    String   @unique()
+  secret    String   @unique
   expires   DateTime
 
   @@unique([secret, email])
 }
 
 model TrainingRequest {
-  id        String   @id() @default(cuid())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   userId    String
   trainerId String
