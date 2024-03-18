@@ -21,27 +21,46 @@ setDefaultOptions({
   locale: deAT,
 });
 
+const APP_TITLE = "THL Praktika";
+const APP_DEFAULT_TITLE = "THL Praktika";
+const APP_TITLE_TEMPLATE = "%s | THL Praktika";
+const APP_DESCRIPTION =
+  "Vereinfachte Pratika Planung für Trainer:innen und Stundent:innen.";
+
 export const metadata: Metadata = {
-  title: "THL Praktika",
-  description:
-    "Vereinfachte Pratika Planung für Trainer:innen und Stundent:innen.",
+  applicationName: APP_TITLE,
+  title: {
+    default: APP_DEFAULT_TITLE,
+    template: APP_TITLE_TEMPLATE,
+  },
+  description: APP_DESCRIPTION,
   metadataBase: new URL(process.env.NEXTAUTH_URL || "http://localhost:3000"),
-  applicationName: "THL Praktika",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "THL Praktika",
+    title: APP_DEFAULT_TITLE,
   },
   formatDetection: {
     telephone: false,
   },
   openGraph: {
     type: "website",
+    siteName: APP_TITLE,
     locale: "de_AT",
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
   },
   twitter: {
     card: "summary",
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
   },
 };
 

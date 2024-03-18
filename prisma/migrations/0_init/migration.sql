@@ -155,4 +155,3 @@ CREATE INDEX "TrainingRequest_trainerId_idx" ON "TrainingRequest"("trainerId");
 
 -- CreateIndex
 CREATE INDEX "TrainingRequest_userId_idx" ON "TrainingRequest"("userId");
-
