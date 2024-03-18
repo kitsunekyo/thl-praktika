@@ -22,7 +22,7 @@ export function TrainingList({
   trainings: Trainings;
   user: Pick<SafeUser, "id" | "role">;
 }) {
-  const [isShowAll, setIsShowAll] = useState(true);
+  const [isShowAll, setIsShowAll] = useState(false);
   let filteredTrainings = trainings;
   if (!isShowAll) {
     filteredTrainings = trainings.filter((t) => t.end > new Date());
@@ -33,11 +33,11 @@ export function TrainingList({
       <div className="flex max-w-2xl items-center">
         <Tabs value={isShowAll ? "all" : "new"} className="ml-auto">
           <TabsList>
-            <TabsTrigger value="all" onClick={() => setIsShowAll(true)}>
-              Alle
-            </TabsTrigger>
             <TabsTrigger value="new" onClick={() => setIsShowAll(false)}>
               Bevorstehende
+            </TabsTrigger>
+            <TabsTrigger value="all" onClick={() => setIsShowAll(true)}>
+              Alle
             </TabsTrigger>
           </TabsList>
         </Tabs>
