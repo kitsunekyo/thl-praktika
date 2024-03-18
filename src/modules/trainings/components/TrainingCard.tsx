@@ -40,6 +40,8 @@ export function TrainingCard({
   const isPast = training.end < new Date();
   const canRegister = !isOwner && hasFreeSpots && !isRegistered;
 
+  console.log({ isPast });
+
   const address = formatAddress({
     address: training.address,
     city: training.city,
@@ -64,10 +66,10 @@ export function TrainingCard({
       </>
     );
   }
-  if (user.role === "user" && isRegistered) {
+  if (user.role === "user" && isRegistered && !isPast) {
     actions = <Unregister trainingId={training.id} />;
   }
-  if (user.role === "user" && canRegister) {
+  if (user.role === "user" && canRegister && !isPast) {
     actions = <Register trainingId={training.id} />;
   }
 
