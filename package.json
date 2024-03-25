@@ -52,7 +52,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/lodash": "^4.14.202",
     "@types/mdx": "^2.0.11",
-    "@types/node": "20.11.28",
+    "@types/node": "20.11.30",
     "@types/react": "18.2.64",
     "@types/react-dom": "18.2.19",
     "@uploadthing/react": "^6.2.4",
