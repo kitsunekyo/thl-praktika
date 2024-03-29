@@ -112,7 +112,9 @@ export function TrainingCard({
         </div>
       </header>
       <dl className="space-y-4 p-4">
-        {training.description && <dd>{training.description}</dd>}
+        {training.description && (
+          <dd className="break-all">{training.description}</dd>
+        )}
         {!!address && (
           <dd>
             <TrainingLocation
@@ -163,7 +165,7 @@ function TrainingLocation({
   return (
     <div className="flex items-start gap-2 leading-none">
       <MapPinIcon className="h-4 w-4 text-muted-foreground" />
-      <div className="space-y-1">
+      <div className="space-y-1 break-all">
         {addressContent}
         {!!traveltime && (
           <p className="text-xs">
