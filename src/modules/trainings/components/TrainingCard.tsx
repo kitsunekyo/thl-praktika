@@ -40,8 +40,6 @@ export function TrainingCard({
   const isPast = training.end < new Date();
   const canRegister = !isOwner && hasFreeSpots && !isRegistered;
 
-  console.log({ isPast });
-
   const address = formatAddress({
     address: training.address,
     city: training.city,
