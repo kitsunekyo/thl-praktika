@@ -59,12 +59,12 @@ export function MobileNav({
                     <AvatarImage src={user.image || "/img/avatar.jpg"} />
                     <AvatarFallback>{getInitials(user)}</AvatarFallback>
                   </Avatar>
-                  <dl className="min-w-0 shrink text-xs">
+                  <div className="min-w-0 shrink text-xs">
                     {!!user.name && (
-                      <dd className="truncate font-medium">{user.name}</dd>
+                      <div className="truncate font-medium">{user.name}</div>
                     )}
-                    <dd className="truncate text-gray-400">{user.email}</dd>
-                  </dl>
+                    <div className="truncate text-gray-400">{user.email}</div>
+                  </div>
                 </Link>
                 <Button
                   onClick={() => signOut()}

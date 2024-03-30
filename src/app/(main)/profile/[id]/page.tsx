@@ -36,20 +36,18 @@ export default async function Profile({
           {profile.name || profile.email}
         </BreadcrumbsItem>
       </Breadcrumbs>
-      <div className="mx-auto max-w-[600px] py-6">
+      <article className="mx-auto max-w-[600px] py-6">
         <div className="mb-6 space-y-4">
           <ProfileImage src={profile.image} />
-          <div>
+          <header>
             <h1 className="font-medium">{profile.name}</h1>
             <div className="text-sm text-gray-500">{roleLabel}</div>
-          </div>
-          <div className="mt-6 border-t border-gray-100">
-            <dl className="divide-y divide-gray-100">
-              <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-4">
-                <dt className="text-sm font-medium leading-6 text-gray-900">
-                  E-Mail
-                </dt>
-                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+          </header>
+          <table className="mt-6 divide-y divide-gray-100">
+            <tbody>
+              <TableRow>
+                <TableHead>E-Mail</TableHead>
+                <TableData>
                   <a
                     href={`mailto:${profile.email}`}
                     className="flex items-center underline"
@@ -57,13 +55,11 @@ export default async function Profile({
                     <span className="truncate">{profile.email}</span>
                     <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
                   </a>
-                </dd>
-              </div>
-              <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-4">
-                <dt className="text-sm font-medium leading-6 text-gray-900">
-                  Telefonnummer
-                </dt>
-                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                </TableData>
+              </TableRow>
+              <TableRow>
+                <TableHead>Telefonnummer</TableHead>
+                <TableData>
                   {profile.phone ? (
                     <a
                       href={`mailto:${profile.phone}`}
@@ -77,13 +73,11 @@ export default async function Profile({
                       noch nicht ausgefüllt
                     </span>
                   )}
-                </dd>
-              </div>
-              <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-4">
-                <dt className="text-sm font-medium leading-6 text-gray-900">
-                  Adresse
-                </dt>
-                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                </TableData>
+              </TableRow>
+              <TableRow>
+                <TableHead>Adresse</TableHead>
+                <TableData>
                   {profile.address || profile.city || profile.zipCode ? (
                     formatAddress({
                       address: profile.address,
@@ -95,18 +89,38 @@ export default async function Profile({
                       noch nicht ausgefüllt
                     </span>
                   )}
-                </dd>
-              </div>
-            </dl>
-          </div>
+                </TableData>
+              </TableRow>
+            </tbody>
+          </table>
         </div>
         <RequestTrainingWrapper
           userId={session.user.id}
           trainerId={id}
           role={profile.role}
         />
-      </div>
+      </article>
     </>
+  );
+}
+
+function TableRow({ children }: { children: React.ReactNode }) {
+  return <tr className="py-6 sm:grid sm:grid-cols-3 sm:gap-4">{children}</tr>;
+}
+
+function TableHead({ children }: { children: React.ReactNode }) {
+  return (
+    <th className="text-left text-sm font-medium leading-6 text-gray-900">
+      {children}
+    </th>
+  );
+}
+
+function TableData({ children }: { children: React.ReactNode }) {
+  return (
+    <td className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+      {children}
+    </td>
   );
 }
 

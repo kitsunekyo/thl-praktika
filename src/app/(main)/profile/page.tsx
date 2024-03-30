@@ -21,8 +21,8 @@ export default async function Profile() {
       <Breadcrumbs>
         <BreadcrumbsItem href="/profile">Profil</BreadcrumbsItem>
       </Breadcrumbs>
-      <div className="divide-y">
-        <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+      <article className="divide-y">
+        <section className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
           <div>
             <h2 className="text-base font-semibold leading-7">
               Persönliche Informationen
@@ -48,9 +48,9 @@ export default async function Profile() {
             </div>
             <ProfileForm user={user} />
           </div>
-        </div>
+        </section>
 
-        <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+        <section className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
           <div>
             <h2 className="text-base font-semibold leading-7">Einstellungen</h2>
             <p className="mt-1 text-sm leading-6 text-gray-400">
@@ -61,9 +61,9 @@ export default async function Profile() {
           <div className="md:col-span-2">
             <PreferencesForm preferences={preferences} role={user.role} />
           </div>
-        </div>
+        </section>
 
-        <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+        <section className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
           <div>
             <h2 className="text-base font-semibold leading-7">
               Passwort ändern
@@ -76,9 +76,9 @@ export default async function Profile() {
           <div className="md:col-span-2">
             <ChangePasswordForm />
           </div>
-        </div>
+        </section>
 
-        <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+        <section className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
           <div>
             <h2 className="text-base font-semibold leading-7">Konto löschen</h2>
             <p className="mt-1 text-sm leading-6 text-gray-400">
@@ -92,8 +92,8 @@ export default async function Profile() {
           <div className="flex items-start md:col-span-2">
             <DeleteAccount />
           </div>
-        </div>
-      </div>
+        </section>
+      </article>
     </>
   );
 }

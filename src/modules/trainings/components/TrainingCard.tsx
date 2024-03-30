@@ -72,7 +72,7 @@ export function TrainingCard({
   }
 
   return (
-    <div className="overflow-hidden rounded-xl bg-white text-sm shadow-lg">
+    <article className="overflow-hidden rounded-xl bg-white text-sm shadow-lg">
       <header className="flex items-center px-4 pt-4">
         <Link href={`/profile/${training.author.id}`}>
           <div className="flex items-center gap-3">
@@ -97,42 +97,45 @@ export function TrainingCard({
                 })}
               </AvatarFallback>
             </Avatar>
-            <dl>
-              <dd className="font-medium">
+            <div>
+              <div className="font-medium">
                 {training.author.name || training.author.email}
-              </dd>
-              <dd className="text-xs text-muted-foreground">
+              </div>
+              <time
+                className="text-xs text-muted-foreground"
+                dateTime={training.start.toISOString()}
+              >
                 <TrainingTime start={training.start} end={training.end} />
-              </dd>
-            </dl>
+              </time>
+            </div>
           </div>
         </Link>
         <div className="ml-auto text-right text-xs text-muted-foreground">
           {duration}
         </div>
       </header>
-      <dl className="space-y-4 p-4">
+      <ul className="space-y-4 p-4">
         {training.description && (
-          <dd className="break-all">{training.description}</dd>
+          <li className="break-all">{training.description}</li>
         )}
         {!!address && (
-          <dd>
+          <li>
             <TrainingLocation
               address={address}
               traveltime={training.traveltime}
             />
-          </dd>
+          </li>
         )}
-        <dd>
+        <li>
           <RegisteredUsers training={training} />
-        </dd>
-      </dl>
+        </li>
+      </ul>
       {!!actions && (
         <footer className="flex items-center justify-end gap-4 bg-gray-50 px-4 py-2">
           {actions}
         </footer>
       )}
-    </div>
+    </article>
   );
 }
 

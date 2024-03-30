@@ -46,8 +46,8 @@ export default async function Home({
           <TrainingFilter hasAddress={userHasAddress} value={filter} />
         </div>
       </aside>
-      <main className="mb-6 md:w-full md:max-w-[600px] md:py-6">
-        <div className="mb-4 divide-y rounded-xl bg-white shadow-lg">
+      <div className="mb-6 md:w-full md:max-w-[600px] md:py-6">
+        <header className="mb-4 divide-y rounded-xl bg-white shadow-lg">
           <div className="p-4">
             <h2 className="text-lg font-medium">Bevorstehende Praktika</h2>
           </div>
@@ -62,7 +62,7 @@ export default async function Home({
               </div>
             )}
           </div>
-        </div>
+        </header>
         {trainings.length === 0 && <NoTrainings />}
         {filteredTrainings.length > 0 && (
           <ul className="space-y-4">
@@ -73,7 +73,7 @@ export default async function Home({
             ))}
           </ul>
         )}
-      </main>
+      </div>
     </section>
   );
 }
