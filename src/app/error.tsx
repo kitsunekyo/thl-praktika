@@ -2,6 +2,8 @@
 import * as Sentry from "@sentry/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -14,6 +16,12 @@ export default function Error({
   useEffect(() => {
     Sentry.captureException(error);
   }, [error]);
+
+  // instanceof AuthorizationError does not work here, probably because error is serialized for client
+  if (error.message === "Unauthorized") {
+    signOut();
+    redirect("/login");
+  }
 
   return (
     <div className="grid h-screen place-content-center bg-white px-4">
