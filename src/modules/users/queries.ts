@@ -1,5 +1,5 @@
 import { prisma, selectUserSafe } from "@/lib/prisma";
-import { auth } from "@/modules/auth/next-auth";
+import { getServerSession } from "@/modules/auth/next-auth";
 
 export async function getUserProfiles() {
   return await prisma.user.findMany({
@@ -24,7 +24,7 @@ export async function getProfileById(id: string) {
 }
 
 export async function getMyProfile() {
-  const session = await auth();
+  const session = await getServerSession();
 
   if (!session?.user) {
     throw new Error("Unauthorized");

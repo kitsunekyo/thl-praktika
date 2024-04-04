@@ -6,14 +6,15 @@ import {
   NextApiRequest,
   NextApiResponse,
 } from "next";
-import { AuthOptions, User, getServerSession } from "next-auth";
+import {
+  AuthOptions,
+  User,
+  getServerSession as nextAuth_getServerSession,
+} from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
-import { signOut } from "next-auth/react";
 
 import { prisma } from "@/lib/prisma";
-
-import type { Role } from "../../../next-auth";
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -56,7 +57,7 @@ export const authOptions: AuthOptions = {
         return {
           id: user.id,
           name: user.name,
-          role: user.role as Role,
+          role: user.role,
           email: user.email,
           image: user.image,
         } satisfies User;
@@ -68,24 +69,17 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account }) {
+    async signIn({ user }) {
       const existingUser = await prisma.user.findFirst({
         where: {
-          id: user.id,
+          email: user.email,
         },
       });
       if (existingUser) {
-        await prisma.user.update({
-          where: {
-            id: user.id,
-          },
-          data: {
-            lastLogin: new Date(),
-          },
-        });
         Sentry.setUser({ email: user.email, id: user.id });
         return true;
       }
+
       const invitation = await prisma.invitation.findFirst({
         where: {
           email: user.email,
@@ -94,55 +88,23 @@ export const authOptions: AuthOptions = {
       if (!invitation) {
         return false;
       }
-      if (!account) {
-        return false;
-      }
-      await prisma.account.create({
-        data: {
-          userId: user.id,
-          type: account.type,
-          provider: account.provider,
-          providerAccountId: account.providerAccountId,
-          refresh_token: account.refresh_token,
-          access_token: account.access_token,
-          expires_at: account.expires_at,
-          token_type: account.token_type,
-          scope: account.scope,
-          id_token: account.id_token,
-          session_state: account.session_state,
-        },
-      });
-      await prisma.user.create({
-        data: {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          image: user.image,
-          role: invitation.role,
-        },
-      });
+
       await prisma.invitation.delete({
         where: {
           id: invitation.id,
         },
       });
+
       return true;
     },
-    jwt: async ({ token }) => {
-      const u = await prisma.user.findUnique({
-        where: {
-          id: token.sub,
-        },
-      });
-
-      if (!u) {
-        signOut();
+    jwt: async ({ token, user }) => {
+      if (!user) {
         return token;
       }
 
-      token.id = u.id;
-      token.role = u.role;
-      token.name = u.name;
+      token.id = user.id;
+      token.role = user.role;
+      token.name = user.name;
 
       return token;
     },
@@ -150,6 +112,7 @@ export const authOptions: AuthOptions = {
       session.user.id = token.id;
       session.user.role = token.role || "user";
       session.user.name = token.name || "";
+
       return session;
     },
   },
@@ -160,11 +123,11 @@ export const authOptions: AuthOptions = {
   },
 };
 
-export function auth(
+export function getServerSession(
   ...args:
     | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
     | [NextApiRequest, NextApiResponse]
     | []
 ) {
-  return getServerSession(...args, authOptions);
+  return nextAuth_getServerSession(...args, authOptions);
 }

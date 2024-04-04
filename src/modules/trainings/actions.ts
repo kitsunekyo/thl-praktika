@@ -8,10 +8,10 @@ import {
   sendTrainingRegistrationMail,
 } from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/modules/auth/next-auth";
+import { getServerSession } from "@/modules/auth/next-auth";
 
 export async function register(id: string) {
-  const session = await auth();
+  const session = await getServerSession();
   const currentUser = session?.user;
   if (!currentUser) {
     throw new Error("not authorized");
@@ -73,7 +73,7 @@ export async function register(id: string) {
 }
 
 export async function unregister(id: string) {
-  const session = await auth();
+  const session = await getServerSession();
   const currentUser = session?.user;
   if (!currentUser) {
     throw new Error("not authorized");

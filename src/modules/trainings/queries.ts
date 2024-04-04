@@ -1,11 +1,11 @@
 import { prisma, selectUserSafe } from "@/lib/prisma";
-import { auth } from "@/modules/auth/next-auth";
+import { getServerSession } from "@/modules/auth/next-auth";
 
 /**
  * returns the trainings the current user is registered for
  */
 export async function getMyTrainings() {
-  const session = await auth();
+  const session = await getServerSession();
   const currentUser = session?.user;
   if (!currentUser) {
     throw new Error("not authorized");

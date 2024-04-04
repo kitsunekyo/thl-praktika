@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 
 import { AuthenticationError } from "@/lib/errors";
 import { prisma, selectUserSafe } from "@/lib/prisma";
-import { auth } from "@/modules/auth/next-auth";
+import { getServerSession } from "@/modules/auth/next-auth";
 
 export async function getTrainers() {
   return await prisma.user.findMany({
@@ -46,7 +46,7 @@ export async function getTrainingRequests(
   });
 }
 export async function getMyTrainings() {
-  const session = await auth();
+  const session = await getServerSession();
   if (!session) {
     throw new AuthenticationError();
   }

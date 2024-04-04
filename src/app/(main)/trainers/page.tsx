@@ -13,14 +13,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { auth } from "@/modules/auth/next-auth";
+import { getServerSession } from "@/modules/auth/next-auth";
 import { getTrainers, getTrainingRequests } from "@/modules/trainers/queries";
 import { RequestTraining } from "@/modules/trainings/components/RequestTraining";
 import { formatAddress } from "@/modules/users/address";
 import { getInitials } from "@/modules/users/name";
 
 export default async function Page() {
-  const session = await auth();
+  const session = await getServerSession();
   if (!session) {
     throw new Error("Unauthorized");
   }
@@ -110,7 +110,7 @@ async function TrainerCard({
   };
   hasRecentlyRequested?: boolean;
 }) {
-  const session = await auth();
+  const session = await getServerSession();
   if (!session) {
     throw new Error("Unauthorized");
   }

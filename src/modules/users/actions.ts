@@ -10,7 +10,7 @@ import { sendInvitationMail } from "@/lib/postmark";
 import { prisma } from "@/lib/prisma";
 import { preferencesSchema } from "@/modules/users/preferences";
 
-import { auth } from "../auth/next-auth";
+import { getServerSession } from "../auth/next-auth";
 
 export async function deleteUser(id: string) {
   await prisma.user.delete({ where: { id } });
@@ -126,7 +126,7 @@ export async function deleteInvitation(id: string) {
   revalidatePath("/admin/invitations");
 }
 export async function updateProfilePicture(imageUrl: string) {
-  const session = await auth();
+  const session = await getServerSession();
 
   if (!session?.user) {
     return { error: "not authorized" };
@@ -149,7 +149,7 @@ export async function updateProfile(
     Omit<User, "password" | "emailVerified" | "email" | "id" | "preferences">
   >,
 ) {
-  const session = await auth();
+  const session = await getServerSession();
 
   if (!session?.user) {
     return { error: "not authorized" };
@@ -166,7 +166,7 @@ export async function updateProfile(
 }
 
 export async function updatePreferences(preferences: User["preferences"]) {
-  const session = await auth();
+  const session = await getServerSession();
 
   if (!session?.user) {
     return { error: "not authorized" };
@@ -191,7 +191,7 @@ export async function updatePreferences(preferences: User["preferences"]) {
 }
 
 export async function changePassword(password: string) {
-  const session = await auth();
+  const session = await getServerSession();
   if (!session) {
     throw new AuthenticationError();
   }
@@ -207,7 +207,7 @@ export async function changePassword(password: string) {
 }
 
 export async function deleteAccount() {
-  const session = await auth();
+  const session = await getServerSession();
   if (!session) {
     return { error: "not authenticated" };
   }

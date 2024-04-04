@@ -7,7 +7,7 @@ import {
   BreadcrumbsItem,
   BreadcrumbsSeparator,
 } from "@/components/Breadcrumbs";
-import { auth } from "@/modules/auth/next-auth";
+import { getServerSession } from "@/modules/auth/next-auth";
 import { getTrainingRequests } from "@/modules/trainers/queries";
 import { RequestTraining } from "@/modules/trainings/components/RequestTraining";
 import { formatAddress } from "@/modules/users/address";
@@ -20,7 +20,7 @@ export default async function Profile({
 }: {
   params: { id: string };
 }) {
-  const session = await auth();
+  const session = await getServerSession();
   if (!session?.user) {
     throw new Error("Unauthorized");
   }

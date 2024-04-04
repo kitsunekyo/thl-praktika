@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
 
-import { auth } from "@/modules/auth/next-auth";
+import { getServerSession } from "@/modules/auth/next-auth";
 
 export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
+  const session = await getServerSession();
   if (session?.user.role !== "admin") {
     return notFound();
   }

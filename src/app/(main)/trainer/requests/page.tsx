@@ -15,13 +15,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { auth } from "@/modules/auth/next-auth";
+import { getServerSession } from "@/modules/auth/next-auth";
 import { getTrainingRequests } from "@/modules/trainers/queries";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
 import { getMyProfile } from "@/modules/users/queries";
 
 export default async function Page() {
-  const session = await auth();
+  const session = await getServerSession();
   if (session?.user.role === "user") {
     return notFound();
   }
