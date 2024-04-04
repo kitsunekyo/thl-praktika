@@ -1,11 +1,11 @@
 import nextMDX from "@next/mdx";
 import { withSentryConfig } from "@sentry/nextjs";
+import withSerwistInit from "@serwist/next";
 import { mdxAnnotations } from "mdx-annotations";
-import nextPWA from "next-pwa";
 
-const withPWA = nextPWA({
-  dest: "public",
-  disable: process.env.NODE_ENV === "development",
+const withPWA = withSerwistInit({
+  swSrc: "src/app/sw.ts",
+  swDest: "public/sw.js",
 });
 
 const withMDX = nextMDX({
