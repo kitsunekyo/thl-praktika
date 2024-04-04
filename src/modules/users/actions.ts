@@ -13,6 +13,10 @@ import { preferencesSchema } from "@/modules/users/preferences";
 import { getServerSession } from "../auth/next-auth";
 
 export async function deleteUser(id: string) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    return { error: "not authenticated" };
+  }
   await prisma.user.delete({ where: { id } });
   revalidatePath("/admin/users");
 }
@@ -23,6 +27,10 @@ export async function createUser(
   name?: string,
   role = "user",
 ) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    return { error: "not authenticated" };
+  }
   const hashedPassword = await hash(password, 12);
 
   const user = await prisma.user.create({
@@ -46,6 +54,10 @@ export async function inviteUser(
   role: "user" | "trainer" | "admin" = "user",
   sendEmail: boolean = false,
 ) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    return { error: "not authenticated" };
+  }
   const invitation = await prisma.invitation.findFirst({
     where: {
       email,
@@ -91,6 +103,10 @@ export async function inviteUser(
 }
 
 export async function resendInvitation(id: string) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    return { error: "not authenticated" };
+  }
   const invitation = await prisma.invitation.findFirst({
     where: {
       id,
@@ -122,14 +138,17 @@ export async function resendInvitation(id: string) {
 }
 
 export async function deleteInvitation(id: string) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    return { error: "not authenticated" };
+  }
   await prisma.invitation.delete({ where: { id } });
   revalidatePath("/admin/invitations");
 }
 export async function updateProfilePicture(imageUrl: string) {
   const session = await getServerSession();
-
   if (!session?.user) {
-    return { error: "not authorized" };
+    return { error: "not authenticated" };
   }
 
   await prisma.user.update({
@@ -150,9 +169,8 @@ export async function updateProfile(
   >,
 ) {
   const session = await getServerSession();
-
   if (!session?.user) {
-    return { error: "not authorized" };
+    return { error: "not authenticated" };
   }
 
   await prisma.user.update({
@@ -167,9 +185,8 @@ export async function updateProfile(
 
 export async function updatePreferences(preferences: User["preferences"]) {
   const session = await getServerSession();
-
   if (!session?.user) {
-    return { error: "not authorized" };
+    return { error: "not authenticated" };
   }
 
   const validatedPreferences = preferencesSchema.parse(preferences);
@@ -208,7 +225,7 @@ export async function changePassword(password: string) {
 
 export async function deleteAccount() {
   const session = await getServerSession();
-  if (!session) {
+  if (!session?.user) {
     return { error: "not authenticated" };
   }
 

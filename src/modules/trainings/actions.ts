@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { formatTrainingDate } from "@/lib/date";
+import { AuthorizationError } from "@/lib/errors";
 import {
   sendRegistrationCancelledMail,
   sendTrainingRegistrationMail,
@@ -14,7 +15,7 @@ export async function register(id: string) {
   const session = await getServerSession();
   const currentUser = session?.user;
   if (!currentUser) {
-    throw new Error("not authorized");
+    throw new AuthorizationError();
   }
 
   const training = await prisma.training.findFirst({
@@ -76,7 +77,7 @@ export async function unregister(id: string) {
   const session = await getServerSession();
   const currentUser = session?.user;
   if (!currentUser) {
-    throw new Error("not authorized");
+    throw new AuthorizationError();
   }
 
   const registration = await prisma.registration.findFirst({
@@ -121,6 +122,10 @@ export async function unregister(id: string) {
   revalidatePath("/");
 }
 export async function deleteRegistration(id: string) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    throw new AuthorizationError();
+  }
   await prisma.registration.delete({
     where: {
       id,

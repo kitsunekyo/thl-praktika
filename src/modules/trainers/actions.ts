@@ -16,6 +16,10 @@ import { prisma, selectUserSafe } from "@/lib/prisma";
 import { getServerSession } from "../auth/next-auth";
 
 export async function deleteTraining(id: string) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    return { error: "not authenticated" };
+  }
   const training = await prisma.training.findFirst({
     where: {
       id,
@@ -35,9 +39,7 @@ export async function deleteTraining(id: string) {
   });
 
   if (!training) {
-    return {
-      error: "training not found",
-    };
+    return { error: "training not found" };
   }
 
   await prisma.training.delete({
@@ -50,6 +52,10 @@ export async function deleteTraining(id: string) {
 }
 
 export async function cancelTraining(id: string, reason: string) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    return { error: "not authenticated" };
+  }
   const training = await prisma.training.findFirst({
     where: {
       id,
@@ -69,9 +75,7 @@ export async function cancelTraining(id: string, reason: string) {
   });
 
   if (!training) {
-    return {
-      error: "training not found",
-    };
+    return { error: "training not found" };
   }
 
   await prisma.training.delete({
@@ -108,9 +112,7 @@ export async function createTraining(
 ) {
   const session = await getServerSession();
   if (!session?.user) {
-    return {
-      error: "not authorized",
-    };
+    return { error: "not authenticated" };
   }
 
   const trainingData = createTrainingSchema.parse(payload);
@@ -210,10 +212,8 @@ export async function createTrainingRequest({
   message?: string;
 }) {
   const session = await getServerSession();
-  if (!session) {
-    return {
-      error: "not authorized",
-    };
+  if (!session?.user) {
+    return { error: "not authenticated" };
   }
 
   const existingRequest = await prisma.trainingRequest.findFirst({
@@ -260,6 +260,10 @@ export async function createTrainingRequest({
 }
 
 export async function deleteTrainingRequest(id: string) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    return { error: "not authenticated" };
+  }
   await prisma.trainingRequest.delete({
     where: {
       id,
