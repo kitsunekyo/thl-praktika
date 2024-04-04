@@ -14,6 +14,7 @@ import {
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 
+import { AuthorizationError } from "@/lib/errors";
 import { prisma } from "@/lib/prisma";
 
 export const authOptions: AuthOptions = {
@@ -123,11 +124,23 @@ export const authOptions: AuthOptions = {
   },
 };
 
-export function getServerSession(
+export async function getServerSession(
   ...args:
     | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
     | [NextApiRequest, NextApiResponse]
     | []
 ) {
-  return nextAuth_getServerSession(...args, authOptions);
+  const session = await nextAuth_getServerSession(...args, authOptions);
+  if (!session) {
+    throw new AuthorizationError();
+  }
+  const user = await prisma.user.findFirst({
+    where: {
+      id: session?.user.id,
+    },
+  });
+  if (!user) {
+    throw new AuthorizationError();
+  }
+  return session;
 }
