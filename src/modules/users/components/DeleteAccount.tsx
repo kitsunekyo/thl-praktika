@@ -1,5 +1,6 @@
 "use client";
 
+import { signOut } from "next-auth/react";
 import { useTransition } from "react";
 
 import {
@@ -38,8 +39,9 @@ export function DeleteAccount() {
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
-              startTransition(() => {
-                deleteAccount();
+              startTransition(async () => {
+                await deleteAccount();
+                signOut();
               });
             }}
           >
