@@ -45,6 +45,7 @@ const AvatarImage = React.forwardRef<
     sizes="100px"
     ref={ref}
     className={cn("aspect-square h-full w-full object-cover", className)}
+    alt=""
     {...props}
   />
 ));
