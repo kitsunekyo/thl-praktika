@@ -1,28 +1,17 @@
-import { Prisma, PrismaClient, User } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 
-export const prisma = new PrismaClient();
+// https://www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextjs-prisma-client-dev-practices
+const prismaClientSingleton = () => {
+  return new PrismaClient();
+};
 
-type A<T extends string> = T extends `${infer U}ScalarFieldEnum` ? U : never;
-type Entity = A<keyof typeof Prisma>;
-type Keys<T extends Entity> = Extract<
-  keyof (typeof Prisma)[keyof Pick<typeof Prisma, `${T}ScalarFieldEnum`>],
-  string
->;
-
-export function prismaExclude<T extends Entity, K extends Keys<T>>(
-  type: T,
-  omit: K[],
-) {
-  type Key = Exclude<Keys<T>, K>;
-  type TMap = Record<Key, true>;
-  const result: TMap = {} as TMap;
-  for (const key in Prisma[`${type}ScalarFieldEnum`]) {
-    if (!omit.includes(key as K)) {
-      result[key as Key] = true;
-    }
-  }
-  return result;
+declare global {
+  var prismaGlobal: undefined | ReturnType<typeof prismaClientSingleton>;
 }
+
+export const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
+
+if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = prisma;
 
 export type SafeUser = Pick<User, keyof typeof selectUserSafe>;
 
