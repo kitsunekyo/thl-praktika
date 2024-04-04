@@ -1,3 +1,4 @@
+import { AuthorizationError } from "@/lib/errors";
 import { prisma, selectUserSafe } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 
@@ -8,7 +9,7 @@ export async function getMyTrainings() {
   const session = await getServerSession();
   const currentUser = session?.user;
   if (!currentUser) {
-    throw new Error("not authorized");
+    throw new AuthorizationError();
   }
 
   return prisma.training.findMany({
@@ -41,6 +42,11 @@ export async function getMyTrainings() {
  * returns available trainings
  */
 export async function getTrainings() {
+  const session = await getServerSession();
+  if (!session) {
+    throw new AuthorizationError();
+  }
+
   const trainings = await prisma.training.findMany({
     include: {
       author: {

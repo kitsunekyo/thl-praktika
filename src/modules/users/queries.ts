@@ -1,7 +1,13 @@
+import { AuthorizationError } from "@/lib/errors";
 import { prisma, selectUserSafe } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 
 export async function getUserProfiles() {
+  const session = await getServerSession();
+  if (!session) {
+    throw new AuthorizationError();
+  }
+
   return await prisma.user.findMany({
     where: {
       role: "user",
@@ -10,9 +16,19 @@ export async function getUserProfiles() {
   });
 }
 export async function getInvitations() {
+  const session = await getServerSession();
+  if (!session) {
+    throw new AuthorizationError();
+  }
+
   return await prisma.invitation.findMany();
 }
 export async function getProfileById(id: string) {
+  const session = await getServerSession();
+  if (!session) {
+    throw new AuthorizationError();
+  }
+
   const profile = prisma.user.findFirstOrThrow({
     where: {
       id,
@@ -25,9 +41,8 @@ export async function getProfileById(id: string) {
 
 export async function getMyProfile() {
   const session = await getServerSession();
-
-  if (!session?.user) {
-    throw new Error("Unauthorized");
+  if (!session) {
+    throw new AuthorizationError();
   }
 
   const user = prisma.user.findFirstOrThrow({
@@ -40,6 +55,11 @@ export async function getMyProfile() {
   return user;
 }
 export async function getUsers() {
+  const session = await getServerSession();
+  if (!session) {
+    throw new AuthorizationError();
+  }
+
   return await prisma.user.findMany({
     select: selectUserSafe,
     orderBy: [

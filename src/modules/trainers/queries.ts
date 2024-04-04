@@ -1,10 +1,15 @@
 import { Prisma } from "@prisma/client";
 
-import { AuthenticationError } from "@/lib/errors";
+import { AuthenticationError, AuthorizationError } from "@/lib/errors";
 import { prisma, selectUserSafe } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 
 export async function getTrainers() {
+  const session = await getServerSession();
+  if (!session) {
+    throw new AuthorizationError();
+  }
+
   return await prisma.user.findMany({
     where: { role: "trainer" },
     select: {
@@ -33,6 +38,11 @@ export async function getTrainers() {
 export async function getTrainingRequests(
   where: Prisma.TrainingRequestWhereInput,
 ) {
+  const session = await getServerSession();
+  if (!session) {
+    throw new AuthorizationError();
+  }
+
   return await prisma.trainingRequest.findMany({
     where,
     include: {
@@ -48,7 +58,7 @@ export async function getTrainingRequests(
 export async function getMyTrainings() {
   const session = await getServerSession();
   if (!session) {
-    throw new AuthenticationError();
+    throw new AuthorizationError();
   }
 
   return prisma.training.findMany({
