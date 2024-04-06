@@ -1,7 +1,12 @@
+import bundleAnalyzer from "@next/bundle-analyzer";
 import nextMDX from "@next/mdx";
 import { withSentryConfig } from "@sentry/nextjs";
 import withSerwistInit from "@serwist/next";
 import { mdxAnnotations } from "mdx-annotations";
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+})
 
 const withPWA = withSerwistInit({
   swSrc: "src/app/sw.ts",
@@ -34,7 +39,7 @@ const nextConfig = {
 };
 
 export default withSentryConfig(
-  withPWA(withMDX(nextConfig)),
+  withBundleAnalyzer(withPWA(withMDX(nextConfig))),
   {
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options
