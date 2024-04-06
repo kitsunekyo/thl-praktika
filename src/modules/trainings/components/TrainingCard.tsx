@@ -76,15 +76,20 @@ export function TrainingCard({
       <header className="flex items-center px-4 pt-4">
         <Link href={`/profile/${training.author.id}`}>
           <div className="flex items-center gap-3">
-            <div className="rounded-lg bg-white font-semibold">
-              <div className="text-xs uppercase leading-none text-muted-foreground">
+            <div className="uppercase">
+              <div className="text-xs font-medium text-muted-foreground">
                 {training.start.toLocaleString("de-AT", {
-                  month: "short",
+                  weekday: "short",
                 })}
               </div>
-              <div className="text-xl leading-none">
+              <div className="text-lg font-medium leading-none">
                 {training.start.toLocaleString("de-AT", {
                   day: "2-digit",
+                })}
+              </div>
+              <div className="text-xs font-medium text-muted-foreground">
+                {training.start.toLocaleString("de-AT", {
+                  month: "short",
                 })}
               </div>
             </div>
