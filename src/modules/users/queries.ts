@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { AuthorizationError } from "@/lib/errors";
 import { prisma, selectUserSafe } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
@@ -29,12 +31,16 @@ export async function getProfileById(id: string) {
     throw new AuthorizationError();
   }
 
-  const profile = prisma.user.findFirstOrThrow({
+  const profile = await prisma.user.findFirst({
     where: {
       id,
     },
     select: selectUserSafe,
   });
+
+  if (!profile) {
+    return notFound();
+  }
 
   return profile;
 }
@@ -45,12 +51,16 @@ export async function getMyProfile() {
     throw new AuthorizationError();
   }
 
-  const user = prisma.user.findFirstOrThrow({
+  const user = await prisma.user.findFirst({
     where: {
       id: session.user.id,
     },
     select: selectUserSafe,
   });
+
+  if (!user) {
+    throw new AuthorizationError();
+  }
 
   return user;
 }

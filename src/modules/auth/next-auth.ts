@@ -130,17 +130,5 @@ export async function getServerSession(
     | [NextApiRequest, NextApiResponse]
     | []
 ) {
-  const session = await nextAuth_getServerSession(...args, authOptions);
-  if (!session) {
-    throw new AuthorizationError();
-  }
-  const user = await prisma.user.findFirst({
-    where: {
-      id: session?.user.id,
-    },
-  });
-  if (!user) {
-    throw new AuthorizationError();
-  }
-  return session;
+  return nextAuth_getServerSession(...args, authOptions);
 }
