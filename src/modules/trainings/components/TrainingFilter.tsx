@@ -17,6 +17,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   useCallback,
+  useEffect,
   useMemo,
   useOptimistic,
   useState,
@@ -84,6 +85,8 @@ export type Filter = {
   search: string;
 };
 
+const FILTER_LOCALSTORAGE_KEY = "filter-open";
+
 export function TrainingFilter({
   hasAddress,
   value,
@@ -95,6 +98,21 @@ export function TrainingFilter({
   const [pending, startTransition] = useTransition();
   const [optimisticFilter, setOptimisticFilter] = useOptimistic<Filter>(value);
   const [isOpen, setIsOpen] = useState(true);
+
+  function setFilterOpen(open: boolean) {
+    setIsOpen(open);
+    if (window) {
+      window.localStorage.setItem(FILTER_LOCALSTORAGE_KEY, open.toString());
+    }
+  }
+
+  useEffect(() => {
+    if (!window) {
+      return;
+    }
+    setIsOpen(window.localStorage.getItem(FILTER_LOCALSTORAGE_KEY) === "true");
+  }, []);
+
   const [date, setDate] = useState<DateRange | undefined>(() => {
     if (!optimisticFilter.from) {
       return;
@@ -218,10 +236,10 @@ export function TrainingFilter({
   }
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+    <Collapsible open={isOpen} onOpenChange={setFilterOpen}>
       <div className="flex items-center px-4 py-2 text-sm">
         <h3 className="font-medium">Filter</h3>
-        <CollapsibleTrigger asChild className="md:hidden">
+        <CollapsibleTrigger asChild>
           {isOpen ? (
             <Button variant="ghost" size="sm" className="ml-auto w-9 p-0">
               <ChevronsDownUpIcon className="h-4 w-4" />
