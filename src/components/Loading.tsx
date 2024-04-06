@@ -2,7 +2,7 @@ import { Skeleton } from "./ui/skeleton";
 
 export function Loading() {
   return (
-    <div className="space-y-6 py-6">
+    <div className="max-w-2xl space-y-6 py-6">
       <div className="space-y-3">
         <Skeleton className="h-[225px] rounded-xl" />
       </div>
