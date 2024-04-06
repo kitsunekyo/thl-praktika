@@ -167,7 +167,7 @@ function TrainingLocation({
 
   return (
     <div className="flex items-start gap-2 leading-none">
-      <MapPinIcon className="h-4 w-4 text-muted-foreground" />
+      <MapPinIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
       <div className="space-y-1 break-all">
         {addressContent}
         {!!traveltime && (
