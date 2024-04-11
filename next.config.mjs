@@ -11,6 +11,7 @@ const withBundleAnalyzer = bundleAnalyzer({
 const withPWA = withSerwistInit({
   swSrc: "src/app/sw.ts",
   swDest: "public/sw.js",
+  disable: process.env.NODE_ENV === "development",
 });
 
 const withMDX = nextMDX({
