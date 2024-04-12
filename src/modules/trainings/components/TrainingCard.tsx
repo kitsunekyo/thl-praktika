@@ -73,50 +73,44 @@ export function TrainingCard({
 
   return (
     <article className="overflow-hidden rounded-xl bg-white text-sm shadow-lg">
-      <header className="flex items-center px-4 pt-4">
-        <Link href={`/profile/${training.author.id}`}>
-          <div className="flex items-center gap-3">
-            <div className="uppercase">
-              <div className="text-xs font-medium text-muted-foreground">
-                {training.start.toLocaleString("de-AT", {
-                  weekday: "short",
-                })}
-              </div>
-              <div className="text-lg font-medium leading-none">
-                {training.start.toLocaleString("de-AT", {
-                  day: "2-digit",
-                })}
-              </div>
-              <div className="text-xs font-medium text-muted-foreground">
-                {training.start.toLocaleString("de-AT", {
-                  month: "short",
-                })}
-              </div>
-            </div>
-            <Avatar className="shrink-0">
-              <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
-              <AvatarFallback>
-                {getInitials({
-                  name: training.author.name,
-                  email: training.author.email,
-                })}
-              </AvatarFallback>
-            </Avatar>
-            <div>
-              <div className="font-medium">
-                {training.author.name || training.author.email}
-              </div>
-              <time
-                className="text-xs text-muted-foreground"
-                dateTime={training.start.toISOString()}
-              >
-                <TrainingTime start={training.start} end={training.end} />
-              </time>
-            </div>
+      <header className="px-4 pt-4">
+        <div className="-mx-4 mb-4 flex items-baseline gap-2 border-b border-gray-100 px-4 pb-2 text-sm">
+          <span>
+            {training.start.toLocaleString("de-AT", {
+              day: "2-digit",
+              weekday: "short",
+              month: "short",
+            })}
+          </span>
+          <time
+            dateTime={training.start.toISOString()}
+            className="text-xs text-muted-foreground"
+          >
+            <TrainingTime start={training.start} end={training.end} />
+          </time>
+          <div className="ml-auto text-xs text-muted-foreground">
+            {duration}
           </div>
-        </Link>
-        <div className="ml-auto text-right text-xs text-muted-foreground">
-          {duration}
+        </div>
+        <div className="flex items-center">
+          <Link href={`/profile/${training.author.id}`}>
+            <div className="flex items-center gap-3">
+              <Avatar className="shrink-0" size="sm">
+                <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
+                <AvatarFallback>
+                  {getInitials({
+                    name: training.author.name,
+                    email: training.author.email,
+                  })}
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <div className="font-medium">
+                  {training.author.name || training.author.email}
+                </div>
+              </div>
+            </div>
+          </Link>
         </div>
       </header>
       <ul className="space-y-4 p-4">
