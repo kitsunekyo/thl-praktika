@@ -17,7 +17,7 @@ export default async function Login({
       <LoginForm email={email} />
       <div className="mt-6 space-y-2 text-center text-sm">
         <div>
-          <Link href="/forgot-password" className="hover:underline">
+          <Link href="/forgot-password" className="underline">
             Passwort vergessen
           </Link>
         </div>
@@ -25,7 +25,7 @@ export default async function Login({
           <span className="mr-1 text-muted-foreground">
             Du hast noch kein Konto?
           </span>
-          <Link href="/signup" className="underline hover:no-underline">
+          <Link href="/signup" className="underline">
             Registrieren
           </Link>
         </div>
