@@ -37,7 +37,7 @@ export function MobileNav({
           </Button>
         </SheetTrigger>
         <SheetContent className="flex flex-col">
-          <SheetHeader className="my-8 text-left">
+          <SheetHeader className="text-left">
             <Logo onNavigate={close} />
           </SheetHeader>
           <div className="-ml-6 -mr-6 overflow-y-auto">
