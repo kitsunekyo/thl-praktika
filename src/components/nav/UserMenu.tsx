@@ -41,15 +41,18 @@ export function UserMenu({ user }: { user: Pick<User, "name" | "image"> }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-[180px]">
         {USER_NAV_LINKS.map(({ href, label }) => (
-          <DropdownMenuItem key={href}>
-            <Link href={href} className="w-full">
+          <DropdownMenuItem key={href} asChild>
+            <Link href={href} className="w-full cursor-pointer">
               {label}
             </Link>
           </DropdownMenuItem>
         ))}
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <button onClick={() => signOut()} className="flex items-center gap-2">
+        <DropdownMenuItem asChild>
+          <button
+            onClick={() => signOut()}
+            className="flex w-full cursor-pointer items-center gap-2"
+          >
             <LogOutIcon className="h-4 w-4" /> Abmelden
           </button>
         </DropdownMenuItem>
