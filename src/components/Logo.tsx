@@ -20,17 +20,19 @@ export function Logo({
         { "text-white": light },
       )}
     >
-      <Link href="/" onClick={onNavigate}>
-        <div className="flex items-center space-x-2">
-          <Image
-            src={source}
-            alt=""
-            height={40}
-            width={40}
-            className="text-thl"
-          />
-          <span>Praktika</span>
-        </div>
+      <Link
+        href="/"
+        onClick={onNavigate}
+        className="flex items-center space-x-2"
+      >
+        <Image
+          src={source}
+          alt=""
+          height={40}
+          width={40}
+          className="text-thl"
+        />
+        <span>Praktika</span>
       </Link>
     </div>
   );
