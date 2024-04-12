@@ -52,52 +52,56 @@ export function LoginForm({ email }: { email?: string }) {
   }
 
   return (
-    <Form {...form}>
-      {!!error && (
-        <Alert variant="destructive" className="mb-6">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Fehler</AlertTitle>
-          <AlertDescription>Email oder Passwort sind falsch.</AlertDescription>
-        </Alert>
-      )}
-      <form className="space-y-6" onSubmit={form.handleSubmit(handleSubmit)}>
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input type="email" required {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Passwort</FormLabel>
-              <FormControl>
-                <Input type="password" required {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" className="w-full" disabled={loading}>
-          Anmelden
-        </Button>
-        <div className="flex items-center gap-4">
-          <Separator className="shrink" />
-          <span className="text-sm">oder</span>
-          <Separator className="shrink" />
-        </div>
-        <GoogleSignInButton />
-      </form>
-    </Form>
+    <>
+      <Form {...form}>
+        {!!error && (
+          <Alert variant="destructive" className="mb-6">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Fehler</AlertTitle>
+            <AlertDescription>
+              Email oder Passwort sind falsch.
+            </AlertDescription>
+          </Alert>
+        )}
+        <form className="space-y-6" onSubmit={form.handleSubmit(handleSubmit)}>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input type="email" required {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Passwort</FormLabel>
+                <FormControl>
+                  <Input type="password" required {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" className="w-full" disabled={loading}>
+            Anmelden
+          </Button>
+        </form>
+      </Form>
+      <div className="my-8 flex items-center gap-4">
+        <Separator className="shrink" />
+        <span className="text-sm">oder</span>
+        <Separator className="shrink" />
+      </div>
+      <GoogleSignInButton />
+    </>
   );
 }
 
