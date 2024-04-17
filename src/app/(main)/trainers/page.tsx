@@ -129,13 +129,15 @@ async function TrainerCard({
             </AvatarFallback>
           </Avatar>
         </Link>
-        <div className="min-w-0">
+        <div className="min-w-0 space-y-1 text-sm">
           <div className="flex items-center gap-3">
-            <h3 className="min-w-0 truncate text-sm font-medium text-gray-900">
-              {trainer.name}
-            </h3>
+            <Link href={`/profile/${trainer.id}`}>
+              <h3 className="min-w-0 truncate font-medium text-gray-900">
+                {trainer.name}
+              </h3>
+            </Link>
           </div>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="text-gray-500">
             <a
               href={`mailto:${trainer.email}`}
               className="flex items-center underline"
@@ -144,7 +146,7 @@ async function TrainerCard({
               <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
             </a>
           </p>
-          <p className="mt-1 truncate text-sm text-gray-500">
+          <p className="truncate text-gray-500">
             {trainer.phone ? (
               <a
                 href={`tel:${trainer.phone}`}
@@ -156,9 +158,7 @@ async function TrainerCard({
             ) : null}
           </p>
           {trainer.address ? (
-            <p className="mt-1 truncate text-sm text-gray-500">
-              {trainer.address}
-            </p>
+            <p className="truncate text-gray-500">{trainer.address}</p>
           ) : null}
         </div>
       </div>
