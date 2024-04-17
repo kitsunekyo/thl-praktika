@@ -25,7 +25,7 @@ export async function computeTraveltime<T extends WithAuthor<Training>>(
   const user = await getMyProfile();
 
   const traveltime = user
-    ? await getTraveltime(user, training.author)
+    ? await getTraveltime(user.address, training.author.address)
     : undefined;
 
   return {

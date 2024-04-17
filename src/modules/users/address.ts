@@ -3,7 +3,10 @@ import { getDirections } from "@/lib/mapquest";
 /**
  * @returns traveltime in seconds
  */
-export async function getTraveltime(fromAddress: string, toAddress: string) {
+export async function getTraveltime(
+  fromAddress: string | null,
+  toAddress: string | null,
+) {
   if (fromAddress === toAddress) {
     return 0;
   }
