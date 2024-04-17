@@ -1,4 +1,15 @@
-export function getDirections(
+const MOCK_DIRECTION_RESPONSE: DirectionResponse = {
+  route: {
+    time: 4855, // 1h 20min
+  } as DirectionResponse["route"],
+  info: {
+    statuscode: 0,
+    copyright: {} as DirectionResponse["info"]["copyright"],
+    messages: [],
+  },
+};
+
+export async function getDirections(
   from: string,
   to: string,
 ): Promise<DirectionResponse> {
@@ -18,6 +29,11 @@ export function getDirections(
     if (!value) return;
     url.searchParams.append(key, value);
   });
+
+  if (process.env.NODE_ENV === "development") {
+    return Promise.resolve(MOCK_DIRECTION_RESPONSE);
+  }
+
   return fetch(url, {
     cache: "force-cache",
   }).then((res) => res.json());

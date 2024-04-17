@@ -7,22 +7,14 @@ export async function getTraveltime(
   fromAddress: string | null,
   toAddress: string | null,
 ) {
-  if (fromAddress === toAddress) {
+  if (fromAddress === toAddress || !fromAddress || !toAddress) {
     return 0;
-  }
-
-  if (!fromAddress || !toAddress) {
-    return;
-  }
-
-  if (process.env.NODE_ENV === "development") {
-    return 4855; // 1h 2min
   }
 
   const directions = await getDirections(fromAddress, toAddress);
 
   if (directions.info.statuscode !== 0) {
-    return;
+    return 0;
   }
 
   return directions.route.time;
