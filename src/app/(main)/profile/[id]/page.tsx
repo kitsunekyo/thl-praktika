@@ -7,9 +7,12 @@ import {
   BreadcrumbsItem,
   BreadcrumbsSeparator,
 } from "@/components/Breadcrumbs";
+import { SafeUser } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 import { getTrainingRequests } from "@/modules/trainers/queries";
 import { RequestTraining } from "@/modules/trainings/components/RequestTraining";
+import { TrainingList } from "@/modules/trainings/components/TrainingList";
+import { getTrainingsByAuthor } from "@/modules/trainings/queries";
 import { getProfileById } from "@/modules/users/queries";
 
 const REQUEST_COOLDOWN_IN_DAYS = 7;
@@ -39,7 +42,7 @@ export default async function Profile({
         <div className="mb-6 space-y-4">
           <ProfileImage src={profile.image} />
           <header>
-            <h1 className="font-medium">{profile.name}</h1>
+            <h1 className="text-xl font-medium">{profile.name}</h1>
             <div className="text-sm text-gray-500">{roleLabel}</div>
           </header>
           <table className="mt-6 divide-y divide-gray-100">
@@ -94,13 +97,16 @@ export default async function Profile({
           trainerId={id}
           role={profile.role}
         />
+        {profile.role === "trainer" && (
+          <TrainerSection trainerId={id} user={session.user} />
+        )}
       </article>
     </>
   );
 }
 
 function TableRow({ children }: { children: React.ReactNode }) {
-  return <tr className="py-6 sm:grid sm:grid-cols-3 sm:gap-4">{children}</tr>;
+  return <tr className="py-3 sm:grid sm:grid-cols-3 sm:gap-4">{children}</tr>;
 }
 
 function TableHead({ children }: { children: React.ReactNode }) {
@@ -160,5 +166,22 @@ async function RequestTrainingWrapper({
 
   return (
     <RequestTraining trainerId={trainerId} disabled={hasRecentlyRequested} />
+  );
+}
+
+async function TrainerSection({
+  trainerId,
+  user,
+}: {
+  trainerId: string;
+  user: Pick<SafeUser, "id" | "role">;
+}) {
+  const trainings = await getTrainingsByAuthor(trainerId);
+
+  return (
+    <section className="my-12">
+      <h2 className="font-medium">Praktika</h2>
+      <TrainingList trainings={trainings} user={user} />
+    </section>
   );
 }

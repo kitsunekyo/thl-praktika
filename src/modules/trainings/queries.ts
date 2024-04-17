@@ -72,3 +72,36 @@ export async function getTrainings() {
 
   return trainings;
 }
+
+export async function getTrainingsByAuthor(authorId: string) {
+  const session = await getServerSession();
+  if (!session) {
+    throw new AuthorizationError();
+  }
+
+  const trainings = await prisma.training.findMany({
+    include: {
+      author: {
+        select: selectUserSafe,
+      },
+      registrations: {
+        include: {
+          user: {
+            select: selectUserSafe,
+          },
+        },
+      },
+    },
+    where: {
+      start: {
+        gte: new Date(),
+      },
+      authorId,
+    },
+    orderBy: {
+      start: "asc",
+    },
+  });
+
+  return trainings;
+}
