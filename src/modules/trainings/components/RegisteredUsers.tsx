@@ -19,7 +19,7 @@ export function RegisteredUsers({
 }) {
   return (
     <div className="space-y-4">
-      <Registrations
+      <RegistrationCount
         count={training.registrations.length}
         max={training.maxInterns}
       />
@@ -43,7 +43,7 @@ export function RegisteredUsers({
     </div>
   );
 }
-export function Registrations({ count, max }: { count: number; max: number }) {
+function RegistrationCount({ count, max }: { count: number; max: number }) {
   const freeSpots = max - count;
 
   return (
