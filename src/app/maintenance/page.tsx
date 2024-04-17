@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import { Footer } from "@/components/Footer";
 import { Logo } from "@/components/Logo";
 import { formatAT } from "@/lib/date";
