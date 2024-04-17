@@ -22,9 +22,7 @@ export const selectUserSafe = {
   email: true,
   image: true,
   phone: true,
-  zipCode: true,
   address: true,
-  city: true,
   preferences: true,
   lastLogin: true,
 };
