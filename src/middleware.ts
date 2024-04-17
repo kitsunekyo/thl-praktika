@@ -11,7 +11,8 @@ const MAINTENANCE_MATCHER = new RegExp("/maintenance");
 
 export default withAuth(
   async function middleware(req) {
-    const isInMaintenance = await get("isInMaintenance");
+    const isInMaintenance =
+      process.env.NODE_ENV !== "development" && (await get("isInMaintenance"));
     if (isInMaintenance && !MAINTENANCE_MATCHER.test(req.url)) {
       return NextResponse.redirect(new URL("/maintenance", req.url));
     }
