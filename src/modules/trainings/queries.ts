@@ -38,10 +38,7 @@ export async function getMyTrainings() {
   });
 }
 
-/**
- * returns available trainings
- */
-export async function getTrainings() {
+export async function getAvailableTrainings() {
   const session = await getServerSession();
   if (!session) {
     throw new AuthorizationError();

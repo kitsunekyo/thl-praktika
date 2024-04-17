@@ -14,7 +14,7 @@ import {
   computeDuration,
   computeTraveltime,
 } from "@/modules/trainings/compute-data";
-import { getTrainings } from "@/modules/trainings/queries";
+import { getAvailableTrainings } from "@/modules/trainings/queries";
 import { getMyProfile } from "@/modules/users/queries";
 
 export default async function Home({
@@ -29,7 +29,7 @@ export default async function Home({
   }
 
   const filter = getFilter(searchParams);
-  const trainings = await getTrainings();
+  const trainings = await getAvailableTrainings();
   const filteredTrainings = await filterTrainings({
     trainings: await addMetadata(trainings),
     filter,
