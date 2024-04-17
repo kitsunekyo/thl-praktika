@@ -61,8 +61,8 @@ export function Registrations({ count, max }: { count: number; max: number }) {
         ))}
       </ul>
       {freeSpots > 0 ? (
-        <span className="ml-2 text-xs">
-          {count}/{max} Anmeldungen
+        <span className="ml-2 text-xs font-medium">
+          {count}/{max}
         </span>
       ) : (
         <span className="ml-2 text-xs">voll</span>
