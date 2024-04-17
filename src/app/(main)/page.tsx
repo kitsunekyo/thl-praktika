@@ -47,7 +47,7 @@ export default async function Home({
       <div className="mb-6 md:w-full md:max-w-[600px] md:py-6">
         <header className="mb-4 divide-y rounded-xl bg-white shadow-lg">
           <div className="p-4">
-            <h2 className="text-lg font-medium">Bevorstehende Praktika</h2>
+            <h2 className="font-medium">Bevorstehende Praktika</h2>
           </div>
           <div className="flex items-center px-4 py-2">
             <CountLabel

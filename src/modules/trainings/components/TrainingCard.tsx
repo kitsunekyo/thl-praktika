@@ -1,7 +1,7 @@
 "use client";
 
 import { Registration, Training, User } from "@prisma/client";
-import { formatDuration, intervalToDuration } from "date-fns";
+import { formatDuration } from "date-fns";
 import { ExternalLinkIcon, MapPinIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -39,12 +39,6 @@ export function TrainingCard({
   const isPast = training.end < new Date();
   const canRegister = !isOwner && hasFreeSpots && !isRegistered;
   const address = training.address;
-  const duration = formatDuration(
-    intervalToDuration({ start: training.start, end: training.end }),
-    {
-      format: ["hours", "minutes"],
-    },
-  );
 
   let actions = null;
   if (user.role === "trainer" && isOwner && !isPast) {
@@ -67,28 +61,23 @@ export function TrainingCard({
 
   return (
     <article className="overflow-hidden rounded-xl bg-white text-sm shadow-lg">
-      <header className="px-4 pt-4">
-        <div className="-mx-4 mb-4 flex items-baseline gap-2 border-b border-gray-100 px-4 pb-2 text-sm">
-          <span>
-            {training.start.toLocaleString("de-AT", {
-              day: "2-digit",
-              weekday: "short",
-              month: "short",
-            })}
-          </span>
-          <time
-            dateTime={training.start.toISOString()}
-            className="text-xs text-muted-foreground"
-          >
-            <TrainingTime start={training.start} end={training.end} />
-          </time>
-          <div className="ml-auto text-xs text-muted-foreground">
-            {duration}
-          </div>
-        </div>
-        <div className="flex items-center">
+      <header className="flex items-baseline gap-2 border-b border-gray-100 px-4 pb-2 pt-4 text-sm">
+        <time
+          dateTime={training.start.toLocaleDateString()}
+          className="font-medium"
+        >
+          {training.start.toLocaleString("de-AT", {
+            weekday: "short",
+            day: "2-digit",
+            month: "short",
+          })}
+        </time>
+        <TrainingTime start={training.start} end={training.end} />
+      </header>
+      <ul className="space-y-4 p-4">
+        <li>
           <Link href={`/profile/${training.author.id}`}>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <Avatar className="shrink-0" size="sm">
                 <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
                 <AvatarFallback>
@@ -98,19 +87,12 @@ export function TrainingCard({
                   })}
                 </AvatarFallback>
               </Avatar>
-              <div>
-                <div className="font-medium">
-                  {training.author.name || training.author.email}
-                </div>
+              <div className="font-medium">
+                {training.author.name || training.author.email}
               </div>
             </div>
           </Link>
-        </div>
-      </header>
-      <ul className="space-y-4 p-4">
-        {training.description && (
-          <li className="break-words">{training.description}</li>
-        )}
+        </li>
         {!!address && (
           <li>
             <TrainingLocation
@@ -118,6 +100,9 @@ export function TrainingCard({
               traveltime={training.traveltime}
             />
           </li>
+        )}
+        {training.description && (
+          <li className="break-words">{training.description}</li>
         )}
         <li>
           <RegisteredUsers training={training} />

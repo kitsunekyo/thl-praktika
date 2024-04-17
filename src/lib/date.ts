@@ -28,8 +28,8 @@ export function formatTrainingDate(startDate: Date, endDate: Date) {
 }
 
 export function formatTrainingTime(startDate: Date, endDate: Date) {
-  const startTime = formatAT(new Date(startDate), "HH:mm");
-  const endTime = formatAT(new Date(endDate), "HH:mm");
+  const startTime = formatAT(new Date(startDate), "H:mm");
+  const endTime = formatAT(new Date(endDate), "H:mm");
 
   return `${startTime} bis ${endTime}`;
 }
