@@ -10,11 +10,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Address } from "@/modules/users/address";
 
 import { CreateTrainingForm } from "./CreateTrainingForm";
 
-export function CreateTraining({ profile }: { profile: Address }) {
+export function CreateTraining({
+  profile,
+}: {
+  profile: { address: string | null };
+}) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (

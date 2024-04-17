@@ -39,8 +39,6 @@ function UserList({
     id: string;
     name: string | null;
     address: string | null;
-    city: string | null;
-    zipCode: string | null;
     phone: string | null;
     email: string;
     lastLogin: Date | null;

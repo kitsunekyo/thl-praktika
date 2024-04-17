@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-import { AuthenticationError, AuthorizationError } from "@/lib/errors";
+import { AuthorizationError } from "@/lib/errors";
 import { prisma, selectUserSafe } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 
@@ -19,8 +19,6 @@ export async function getTrainers() {
       image: true,
       role: true,
       address: true,
-      city: true,
-      zipCode: true,
       phone: true,
       lastLogin: true,
     },

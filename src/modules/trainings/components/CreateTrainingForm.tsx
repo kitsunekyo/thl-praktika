@@ -28,7 +28,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { formatAT, getFixedDate } from "@/lib/date";
 import { cn } from "@/lib/utils";
 import { createTraining } from "@/modules/trainers/actions";
-import { Address } from "@/modules/users/address";
 
 const formSchema = z
   .object({
@@ -61,7 +60,7 @@ export function CreateTrainingForm({
   profile,
   onSubmit,
 }: {
-  profile: Address;
+  profile: { address: string | null };
   onSubmit?: () => void;
 }) {
   const [loading, startTransition] = useTransition();

@@ -35,9 +35,7 @@ export default async function Home({
     filter,
   });
 
-  const userHasAddress = Boolean(
-    profile.address || profile.zipCode || profile.city,
-  );
+  const userHasAddress = Boolean(profile.address);
 
   return (
     <section className="gap-8 md:flex md:py-6">
@@ -160,7 +158,7 @@ async function filterTrainings({
     }
     if (filter.search) {
       const haystack =
-        `${t.author.name} ${t.author.email} ${t.description} ${t.address} ${t.city} ${t.zipCode}`.toLowerCase();
+        `${t.author.name} ${t.author.email} ${t.description} ${t.address}`.toLowerCase();
       if (haystack.includes(filter.search.toLowerCase())) {
         return true;
       }
