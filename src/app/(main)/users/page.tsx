@@ -69,9 +69,11 @@ function UserList({
             </Link>
             <div className="min-w-0">
               <div className="flex items-center gap-3">
-                <h3 className="min-w-0 truncate text-sm font-medium text-gray-900">
-                  {user.name}
-                </h3>
+                <Link href={`/profile/${user.id}`}>
+                  <h3 className="min-w-0 truncate text-sm font-medium text-gray-900">
+                    {user.name}
+                  </h3>
+                </Link>
               </div>
               <p className="mt-1 text-sm text-gray-500">
                 <a
