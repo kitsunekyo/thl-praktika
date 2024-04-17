@@ -46,8 +46,6 @@ model User {
   role             String            @default("user")
   password         String?
   address          String?
-  city             String?
-  zipCode          String?
   phone            String?
   lastLogin        DateTime?
   preferences      Json?             @db.Json
@@ -84,8 +82,6 @@ model Training {
   maxInterns    Int
   authorId      String
   address       String?
-  city          String?
-  zipCode       String?
   registrations Registration[]
   author        User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
 

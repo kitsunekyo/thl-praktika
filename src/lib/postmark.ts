@@ -4,7 +4,6 @@ import { ServerClient } from "postmark";
 
 import { formatTrainingDate } from "./date";
 import { prisma } from "./prisma";
-import { formatAddress } from "../modules/users/address";
 import { preferencesSchema } from "../modules/users/preferences";
 
 const client = new ServerClient(process.env.POSTMARK_API_TOKEN || "");
@@ -121,16 +120,13 @@ export async function sendTrainingUpdatedMail({
 }: {
   to: string;
   trainerName: string;
-  training: Pick<
-    Training,
-    "description" | "start" | "end" | "address" | "city" | "zipCode"
-  >;
+  training: Pick<Training, "description" | "start" | "end" | "address">;
 }) {
   await sendMail(to, "training-updated", {
     trainer_name: trainerName,
     date: formatTrainingDate(training.start, training.end),
     description: training.description || "",
-    address: formatAddress(training),
+    address: training.address,
     product_url: process.env.NEXTAUTH_URL,
     action_url: process.env.NEXTAUTH_URL,
   });

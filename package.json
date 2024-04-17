@@ -14,7 +14,8 @@
     "db:studio": "dotenv -c -- prisma studio",
     "prisma": "dotenv -c -- prisma",
     "postinstall": "prisma generate",
-    "prepare": "husky"
+    "prepare": "husky",
+    "data-migration": "dotenv -c -- node prisma/migrations/20240417100259_merge_address/data-migration.mjs"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [

@@ -36,8 +36,6 @@ const formSchema = z
     startTime: z.string(),
     endTime: z.string(),
     maxInterns: z.coerce.number(),
-    city: z.string(),
-    zipCode: z.string(),
     address: z.string(),
   })
   .refine(
@@ -76,8 +74,6 @@ export function EditTrainingForm({
       date: getFixedDate(training.start),
       startTime: formatAT(training.start, "HH:mm"),
       endTime: formatAT(training.end, "HH:mm"),
-      city: training.city || "",
-      zipCode: training.zipCode || "",
       address: training.address || "",
     },
   });
@@ -229,35 +225,6 @@ export function EditTrainingForm({
             </FormItem>
           )}
         />
-
-        <div className="space-y-6 md:flex md:gap-4 md:space-y-0">
-          <FormField
-            control={form.control}
-            name="zipCode"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Postleitzahl</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="city"
-            render={({ field }) => (
-              <FormItem className="flex-grow">
-                <FormLabel>Stadt</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
         <aside className="space-y-2 pt-8">
           <div className="flex gap-2">
             <InfoIcon className="h-4 w-4 shrink-0 opacity-50" />

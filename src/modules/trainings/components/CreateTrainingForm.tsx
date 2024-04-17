@@ -37,8 +37,6 @@ const formSchema = z
     startTime: z.string(),
     endTime: z.string(),
     maxInterns: z.coerce.number(),
-    city: z.string(),
-    zipCode: z.string(),
     address: z.string(),
   })
   .refine(
@@ -77,8 +75,6 @@ export function CreateTrainingForm({
       date: add(getFixedDate(new Date()), { days: 1 }),
       startTime: "09:00",
       endTime: "17:00",
-      city: profile.city || "",
-      zipCode: profile.zipCode || "",
       address: profile.address || "",
     },
   });
@@ -227,35 +223,6 @@ export function CreateTrainingForm({
             </FormItem>
           )}
         />
-
-        <div className="space-y-6 md:flex md:gap-4 md:space-y-0">
-          <FormField
-            control={form.control}
-            name="zipCode"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Postleitzahl</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="city"
-            render={({ field }) => (
-              <FormItem className="flex-grow">
-                <FormLabel>Stadt</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
         <aside className="space-y-2 pt-8">
           <div className="flex gap-2">
             <InfoIcon className="h-4 w-4 shrink-0 opacity-50" />

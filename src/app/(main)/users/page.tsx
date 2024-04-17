@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { formatAddress } from "@/modules/users/address";
 import { getInitials } from "@/modules/users/name";
 import { getUserProfiles } from "@/modules/users/queries";
 
@@ -96,11 +95,11 @@ function UserList({
                   </a>
                 ) : null}
               </p>
-              <p className="mt-1 truncate text-sm text-gray-500">
-                {[user.address, user.city, user.city].some(Boolean)
-                  ? formatAddress(user)
-                  : null}
-              </p>
+              {user.address ? (
+                <p className="mt-1 truncate text-sm text-gray-500">
+                  {user.address}
+                </p>
+              ) : null}
             </div>
           </div>
         </li>

@@ -16,7 +16,6 @@ import {
 import { getServerSession } from "@/modules/auth/next-auth";
 import { getTrainers, getTrainingRequests } from "@/modules/trainers/queries";
 import { RequestTraining } from "@/modules/trainings/components/RequestTraining";
-import { formatAddress } from "@/modules/users/address";
 import { getInitials } from "@/modules/users/name";
 
 export default async function Page() {
@@ -100,8 +99,6 @@ async function TrainerCard({
   trainer: {
     id: string;
     address: string | null;
-    city: string | null;
-    zipCode: string | null;
     email: string;
     phone: string | null;
     name: string | null;
@@ -114,15 +111,6 @@ async function TrainerCard({
   if (!session) {
     throw new Error("Unauthorized");
   }
-  const address = formatAddress({
-    address: trainer.address,
-    city: trainer.city,
-    zipCode: trainer.zipCode,
-  });
-  const googleMapsUrl = `https://www.google.com/maps/place/${address.replaceAll(
-    " ",
-    "+",
-  )}`;
 
   return (
     <li
@@ -167,11 +155,11 @@ async function TrainerCard({
               </a>
             ) : null}
           </p>
-          <p className="mt-1 truncate text-sm text-gray-500">
-            {[trainer.address, trainer.city, trainer.city].some(Boolean)
-              ? formatAddress(trainer)
-              : null}
-          </p>
+          {trainer.address ? (
+            <p className="mt-1 truncate text-sm text-gray-500">
+              {trainer.address}
+            </p>
+          ) : null}
         </div>
       </div>
       {session.user.role !== "trainer" ? (

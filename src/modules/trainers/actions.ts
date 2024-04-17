@@ -103,8 +103,6 @@ const createTrainingSchema = z.object({
   end: z.date(),
   maxInterns: z.number(),
   address: z.string(),
-  city: z.string(),
-  zipCode: z.string(),
 });
 
 export async function createTraining(
@@ -157,8 +155,6 @@ const updateTrainingSchema = z.object({
   start: z.date(),
   end: z.date(),
   address: z.string(),
-  city: z.string(),
-  zipCode: z.string(),
 });
 
 export async function updateTraining(

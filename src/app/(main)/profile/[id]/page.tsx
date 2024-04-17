@@ -10,7 +10,6 @@ import {
 import { getServerSession } from "@/modules/auth/next-auth";
 import { getTrainingRequests } from "@/modules/trainers/queries";
 import { RequestTraining } from "@/modules/trainings/components/RequestTraining";
-import { formatAddress } from "@/modules/users/address";
 import { getProfileById } from "@/modules/users/queries";
 
 const REQUEST_COOLDOWN_IN_DAYS = 7;
@@ -78,12 +77,8 @@ export default async function Profile({
               <TableRow>
                 <TableHead>Adresse</TableHead>
                 <TableData>
-                  {profile.address || profile.city || profile.zipCode ? (
-                    formatAddress({
-                      address: profile.address,
-                      city: profile.city,
-                      zipCode: profile.zipCode,
-                    })
+                  {profile.address ? (
+                    <span>{profile.address}</span>
                   ) : (
                     <span className="italic text-muted-foreground">
                       noch nicht ausgefüllt

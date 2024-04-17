@@ -30,8 +30,6 @@ export const profileSchema = z.object({
     z.string().regex(phoneRegex, "Ungültige Telefonnummer"),
   ]),
   address: z.string().optional(),
-  city: z.string().optional(),
-  zipCode: z.string().optional(),
 });
 
 export function ProfileForm({ user }: { user: SafeUser }) {
@@ -43,8 +41,6 @@ export function ProfileForm({ user }: { user: SafeUser }) {
       name: user.name || "",
       phone: user.phone || "",
       address: user.address || "",
-      city: user.city || "",
-      zipCode: user.zipCode || "",
     },
   });
 
@@ -120,35 +116,6 @@ export function ProfileForm({ user }: { user: SafeUser }) {
             </FormItem>
           )}
         />
-
-        <div className="space-y-6 md:flex md:gap-4 md:space-y-0">
-          <FormField
-            control={form.control}
-            name="zipCode"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Postleitzahl</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="city"
-            render={({ field }) => (
-              <FormItem className="flex-grow">
-                <FormLabel>Stadt</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
         <Button type="submit" disabled={loading || !form.formState.isDirty}>
           Speichern
         </Button>

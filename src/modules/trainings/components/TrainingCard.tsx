@@ -9,7 +9,6 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { secondsToDuration } from "@/lib/date";
 import { SafeUser } from "@/lib/prisma";
-import { formatAddress } from "@/modules/users/address";
 import { getInitials } from "@/modules/users/name";
 
 import { CancelTraining } from "./CancelTraining";
@@ -39,12 +38,7 @@ export function TrainingCard({
   const isRegistered = training.registrations.some((r) => r.userId === user.id);
   const isPast = training.end < new Date();
   const canRegister = !isOwner && hasFreeSpots && !isRegistered;
-
-  const address = formatAddress({
-    address: training.address,
-    city: training.city,
-    zipCode: training.zipCode,
-  });
+  const address = training.address;
   const duration = formatDuration(
     intervalToDuration({ start: training.start, end: training.end }),
     {
