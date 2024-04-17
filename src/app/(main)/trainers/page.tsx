@@ -146,8 +146,8 @@ async function TrainerCard({
               <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
             </a>
           </p>
-          <p className="truncate text-gray-500">
-            {trainer.phone ? (
+          {trainer.phone ? (
+            <p className="truncate text-gray-500">
               <a
                 href={`tel:${trainer.phone}`}
                 className="flex min-w-0 items-center underline"
@@ -155,8 +155,8 @@ async function TrainerCard({
                 {trainer.phone}
                 <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
               </a>
-            ) : null}
-          </p>
+            </p>
+          ) : null}
           {trainer.address ? (
             <p className="truncate text-gray-500">{trainer.address}</p>
           ) : null}

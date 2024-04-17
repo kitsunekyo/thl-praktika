@@ -84,8 +84,8 @@ function UserList({
                   <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
                 </a>
               </p>
-              <p className="mt-1 text-sm text-gray-500">
-                {user.phone ? (
+              {user.phone ? (
+                <p className="mt-1 text-sm text-gray-500">
                   <a
                     href={`tel:${user.phone}`}
                     className="flex items-center underline"
@@ -93,8 +93,8 @@ function UserList({
                     <span className="truncate">{user.phone}</span>
                     <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
                   </a>
-                ) : null}
-              </p>
+                </p>
+              ) : null}
               {user.address ? (
                 <p className="mt-1 truncate text-sm text-gray-500">
                   {user.address}
