@@ -12,6 +12,7 @@ import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -182,22 +183,6 @@ export function CreateTrainingForm({
         </div>
         <FormField
           control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Beschreibung</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Welpengruppe, Kleinhunde. Abstand halten! Zusätzliche Wegbeschreibung."
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="maxInterns"
           render={({ field }) => (
             <FormItem>
@@ -222,7 +207,24 @@ export function CreateTrainingForm({
             </FormItem>
           )}
         />
-        <aside className="space-y-2 pt-8">
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Beschreibung</FormLabel>
+              <FormControl>
+                <Textarea {...field} />
+              </FormControl>
+              <FormDescription>
+                Zusätzliche Wegbeschreibung, Info an die Praktikanten, oder Art
+                des Trainings (zB Welpengruppe).
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <aside className="space-y-2 pt-4">
           <div className="flex gap-2">
             <InfoIcon className="h-4 w-4 shrink-0 opacity-50" />
             <p className="text-xs text-muted-foreground">
