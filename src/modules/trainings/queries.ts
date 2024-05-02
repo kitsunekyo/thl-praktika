@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import { AuthorizationError } from "@/lib/errors";
 import { prisma, selectUserSafe } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
@@ -38,7 +40,7 @@ export async function getMyTrainings() {
   });
 }
 
-export async function getAvailableTrainings() {
+export const getAvailableTrainings = cache(async () => {
   const session = await getServerSession();
   if (!session) {
     throw new AuthorizationError();
@@ -68,7 +70,7 @@ export async function getAvailableTrainings() {
   });
 
   return trainings;
-}
+});
 
 export async function getTrainingsByAuthor(authorId: string) {
   const session = await getServerSession();
