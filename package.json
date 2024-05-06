@@ -99,7 +99,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "uploadthing": "^6.9.0",
-    "zod": "^3.22.4"
+    "zod": "^3.23.6"
   },
   "packageManager": "pnpm@9.0.0-beta.1+sha256.fba2e63d591308988fa66645c4f77d67aea9490c2a6c05f14b2b1154d207761e"
 }
