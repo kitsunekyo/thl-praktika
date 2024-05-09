@@ -1,5 +1,6 @@
 "use server";
 
+import { captureException } from "@sentry/nextjs";
 import { compare, hash } from "bcrypt";
 import { nanoid } from "nanoid";
 
@@ -22,22 +23,31 @@ export async function forgotPassword(email: string) {
   const hashedSecret = await hash(secret, 12);
   const expirationDate = new Date(Date.now() + 1000 * 60 * 60 * 24);
 
-  const token = await prisma.passwordResetToken.create({
-    data: {
-      email: user.email,
-      secret: hashedSecret,
-      expires: expirationDate,
-    },
-  });
-  try {
-    sendForgotPasswordMail({
-      to: user.email,
-      tokenId: token.id,
-      tokenValue: secret,
+  const token = await prisma.passwordResetToken
+    .create({
+      data: {
+        email: user.email,
+        secret: hashedSecret,
+        expires: expirationDate,
+      },
+    })
+    .catch((e) => {
+      captureException(e);
+      throw new Error("could not create password reset token");
     });
-  } catch (e) {
-    throw new Error("Error sending email");
+
+  if (!token) {
+    throw new Error("could not create password reset token");
   }
+
+  sendForgotPasswordMail({
+    to: user.email,
+    tokenId: token.id,
+    tokenValue: secret,
+  }).catch((e) => {
+    captureException(e);
+    throw new Error("could not send password reset email");
+  });
 }
 export async function resetPassword(
   tokenId: string,

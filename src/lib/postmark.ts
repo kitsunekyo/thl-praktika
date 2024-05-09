@@ -170,15 +170,16 @@ async function sendMail(
     MessageStream: "outbound",
     TemplateModel: templateModel,
   };
-  if (process.env.NODE_ENV === "production") {
-    try {
-      await client.sendEmailWithTemplate(payload);
-      return;
-    } catch (e) {
-      captureException(e);
-    }
+
+  if (process.env.NODE_ENV === "development") {
+    console.log("mock: mail sent", payload);
+    return;
   }
-  console.log("mock: mail sent", payload);
+
+  await client.sendEmailWithTemplate(payload).catch((e) => {
+    captureException(e);
+    throw new Error("could not send email");
+  });
 }
 
 // TODO: this fucking ugly. use a map
