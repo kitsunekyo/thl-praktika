@@ -29,9 +29,9 @@ export function TrainingList({
       : trainings.filter((t) => t.end < new Date());
 
   return (
-    <>
-      <div className="flex max-w-2xl items-center">
-        <Tabs value={filter} className="ml-auto">
+    <div className="max-w-4xl">
+      <div className="flex items-center">
+        <Tabs value={filter}>
           <TabsList>
             <TabsTrigger value="future" onClick={() => setFilter("future")}>
               Bevorstehende
@@ -45,7 +45,7 @@ export function TrainingList({
 
       <div className="py-6">
         {filteredTrainings.length > 0 ? (
-          <ul className="max-w-2xl space-y-4">
+          <ul className="space-y-4">
             {filteredTrainings.map((t) => (
               <li key={t.id}>
                 <TrainingCard training={t} user={user} />
@@ -56,6 +56,6 @@ export function TrainingList({
           <p className="text-sm text-muted-foreground">Keine Einträge.</p>
         )}
       </div>
-    </>
+    </div>
   );
 }

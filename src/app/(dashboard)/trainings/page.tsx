@@ -27,7 +27,7 @@ export default async function Trainings() {
           Meine Praktika Anmeldungen
         </BreadcrumbsItem>
       </Breadcrumbs>
-      <div className="mx-auto max-w-2xl py-6">
+      <div className="py-6">
         <PageTitle content="Deine Anmeldungen für Praktika.">
           Anmeldungen
         </PageTitle>

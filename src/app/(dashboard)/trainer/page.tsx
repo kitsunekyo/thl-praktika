@@ -24,17 +24,13 @@ export default async function Page() {
       <Breadcrumbs>
         <BreadcrumbsItem href="/trainer">Meine Praktika</BreadcrumbsItem>
       </Breadcrumbs>
-      <div className="mx-auto max-w-2xl py-6">
+      <div className="py-6">
         <PageTitle content="Hier findest du deine erstellten Praktika. Du kannst sehen wer angemeldet ist, kannst Praktika bearbeiten oder absagen.">
           Meine Praktika
         </PageTitle>
-        <div className="my-4">
+        <div className="space-y-4">
           <Stats trainings={trainings} />
-        </div>
-        <div className="my-4 flex items-center justify-end">
           <CreateTraining profile={profile} />
-        </div>
-        <div className="max-w-2xl">
           <TrainingList trainings={trainings} user={profile} />
         </div>
       </div>
