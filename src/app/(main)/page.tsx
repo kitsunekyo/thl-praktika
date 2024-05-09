@@ -3,6 +3,7 @@ import { endOfDay, startOfDay } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 
+import { AuthorizationError } from "@/lib/errors";
 import { SafeUser } from "@/lib/prisma";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
 import { TrainingCard } from "@/modules/trainings/components/TrainingCard";
@@ -25,7 +26,7 @@ export default async function Home({
   const profile = await getMyProfile();
 
   if (!profile) {
-    throw new Error("Profile not found");
+    throw new AuthorizationError();
   }
 
   const filter = getFilter(searchParams);

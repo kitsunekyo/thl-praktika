@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 import { AuthorizationError } from "@/lib/errors";
 import { prisma, selectUserSafe } from "@/lib/prisma";
@@ -17,6 +18,7 @@ export async function getUserProfiles() {
     select: selectUserSafe,
   });
 }
+
 export async function getInvitations() {
   const session = await getServerSession();
   if (!session) {
@@ -25,7 +27,8 @@ export async function getInvitations() {
 
   return await prisma.invitation.findMany();
 }
-export async function getProfileById(id: string) {
+
+export const getProfileById = cache(async (id: string) => {
   const session = await getServerSession();
   if (!session) {
     throw new AuthorizationError();
@@ -43,12 +46,12 @@ export async function getProfileById(id: string) {
   }
 
   return profile;
-}
+});
 
-export async function getMyProfile() {
+export const getMyProfile = cache(async () => {
   const session = await getServerSession();
   if (!session) {
-    throw new AuthorizationError();
+    return null;
   }
 
   const user = await prisma.user.findFirst({
@@ -58,12 +61,9 @@ export async function getMyProfile() {
     select: selectUserSafe,
   });
 
-  if (!user) {
-    throw new AuthorizationError();
-  }
-
   return user;
-}
+});
+
 export async function getUsers() {
   const session = await getServerSession();
   if (!session) {

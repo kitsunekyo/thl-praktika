@@ -3,33 +3,37 @@
 import { LogOutIcon, MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { useState } from "react";
 
-import { Navigation } from "@/components/Navigation";
 import { SafeUser } from "@/lib/prisma";
 import { getInitials } from "@/modules/users/name";
 
+import { useMenu } from "./menu-context";
 import { Logo } from "../Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../ui/sheet";
 
-export function MobileNav({
+export function MobileMenu({
   user,
   className,
+  children,
 }: React.HTMLAttributes<HTMLDivElement> & {
-  user?: Pick<SafeUser, "name" | "email" | "image" | "role">;
+  children?: React.ReactNode;
+  user: Pick<SafeUser, "name" | "email" | "image">;
 }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const role = user?.role;
+  const menu = useMenu();
+
+  if (!menu) {
+    throw new Error("MobileMenu must be wrapped with MenuProvider");
+  }
 
   function close() {
-    setMobileMenuOpen(false);
+    menu?.setIsOpen(false);
   }
 
   return (
     <div className={className}>
-      <Sheet open={mobileMenuOpen} onOpenChange={(v) => setMobileMenuOpen(v)}>
+      <Sheet open={menu.isOpen} onOpenChange={(v) => menu.setIsOpen(v)}>
         <SheetTrigger asChild>
           <Button type="button" variant="ghost" size="icon">
             <span className="sr-only">Navigation öffnen</span>
@@ -40,14 +44,8 @@ export function MobileNav({
           <SheetHeader className="text-left">
             <Logo onNavigate={close} />
           </SheetHeader>
-          <div className="-ml-6 -mr-6 overflow-y-auto">
-            <Navigation
-              role={role}
-              onNavigate={() => setMobileMenuOpen(false)}
-            />
-          </div>
-          <div className="mt-auto">
-            <hr className="py-2" />
+          <div className="-ml-6 -mr-6 overflow-y-auto">{children}</div>
+          <footer className="mt-auto border-t pt-4">
             {!!user && (
               <>
                 <Link
@@ -76,7 +74,7 @@ export function MobileNav({
                 </Button>
               </>
             )}
-          </div>
+          </footer>
         </SheetContent>
       </Sheet>
     </div>

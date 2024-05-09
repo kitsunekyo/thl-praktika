@@ -15,17 +15,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getServerSession } from "@/modules/auth/next-auth";
+import { AuthorizationError } from "@/lib/errors";
 import { getTrainingRequests } from "@/modules/trainers/queries";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
 import { getMyProfile } from "@/modules/users/queries";
 
 export default async function Page() {
-  const session = await getServerSession();
-  if (session?.user.role === "user") {
+  const profile = await getMyProfile();
+  if (!profile) {
+    throw new AuthorizationError();
+  }
+  if (profile.role === "user") {
     return notFound();
   }
-  const profile = await getMyProfile();
   const requests = await getTrainingRequests({ trainerId: profile.id });
 
   return (
