@@ -81,10 +81,10 @@ export default async function Home({
           </header>
           {trainings.length === 0 && <NoTrainings />}
           {filteredTrainings.length > 0 && (
-            <ul className="space-y-4">
+            <ul className="space-y-6">
               {Object.entries(groupedTrainings).map(([month, trainings]) => (
-                <div key={month} className="mb-6">
-                  <h2 className="font-semibold">{month}</h2>
+                <li key={month}>
+                  <p className="mb-2 px-4 font-semibold">{month}</p>
                   <ul className="space-y-4">
                     {trainings.map((t) => (
                       <li key={t.id}>
@@ -92,7 +92,7 @@ export default async function Home({
                       </li>
                     ))}
                   </ul>
-                </div>
+                </li>
               ))}
             </ul>
           )}

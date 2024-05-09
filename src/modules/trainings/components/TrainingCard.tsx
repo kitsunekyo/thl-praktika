@@ -61,58 +61,71 @@ export function TrainingCard({
 
   return (
     <article className="overflow-hidden rounded-xl bg-white text-sm shadow-lg">
-      <header className="flex items-baseline gap-2 border-b border-gray-100 px-4 pb-2 pt-4 text-sm">
-        <time
-          dateTime={training.start.toLocaleDateString()}
-          className="font-medium"
-        >
-          {training.start.toLocaleString("de-AT", {
-            weekday: "short",
-            day: "2-digit",
-            month: "short",
-          })}
-        </time>
-        <TrainingTime start={training.start} end={training.end} />
-      </header>
-      <ul className="space-y-4 p-4">
-        <li>
-          <Link href={`/profile/${training.author.id}`}>
-            <div className="flex items-center gap-2">
-              <Avatar className="shrink-0" size="sm">
-                <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
-                <AvatarFallback>
-                  {getInitials({
-                    name: training.author.name,
-                    email: training.author.email,
-                  })}
-                </AvatarFallback>
-              </Avatar>
-              <div className="font-medium">
-                {training.author.name || training.author.email}
-              </div>
-            </div>
+      <div className="flex">
+        <div className="flex flex-col items-center gap-4 bg-gray-50 px-4 py-6">
+          <Avatar className="shrink-0" size="sm">
+            <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
+            <AvatarFallback>
+              {getInitials({
+                name: training.author.name,
+                email: training.author.email,
+              })}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col items-center gap-1">
+            <time
+              dateTime={training.start.toISOString()}
+              className="font-medium leading-none"
+            >
+              {training.start.toLocaleString("de-AT", {
+                weekday: "short",
+              })}
+            </time>
+            <time
+              dateTime={training.start.toISOString()}
+              className="text-xl font-bold leading-none"
+            >
+              {training.start.toLocaleString("de-AT", {
+                day: "2-digit",
+              })}
+            </time>
+          </div>
+        </div>
+        <div className="grow px-4 py-6">
+          <Link
+            href={`/profile/${training.author.id}`}
+            className="flex items-center gap-2 font-medium"
+          >
+            <h4 className="mb-3 font-semibold">
+              {training.author.name || training.author.email}
+            </h4>
           </Link>
-        </li>
-        {!!address && (
-          <li>
-            <TrainingLocation
-              address={address}
-              traveltime={training.traveltime}
-            />
-          </li>
-        )}
-        {training.description && (
-          <li className="break-words">{training.description}</li>
-        )}
-        <li>
-          <RegisteredUsers training={training} />
-        </li>
-      </ul>
-      {!!actions && (
-        <footer className="flex items-center justify-end gap-4 bg-gray-50 px-4 py-2">
-          {actions}
-        </footer>
-      )}
+          <ul className="space-y-2">
+            <li>
+              <TrainingTime start={training.start} end={training.end} />
+            </li>
+            {!!address && (
+              <li>
+                <TrainingLocation
+                  address={address}
+                  traveltime={training.traveltime}
+                />
+              </li>
+            )}
+            {training.description && (
+              <li className="break-words">{training.description}</li>
+            )}
+            <li>
+              <RegisteredUsers training={training} />
+            </li>
+          </ul>
+          {!!actions && (
+            <footer className="flex items-center justify-end gap-2">
+              {actions}
+            </footer>
+          )}
+        </div>
+      </div>
     </article>
   );
 }
@@ -144,12 +157,12 @@ function TrainingLocation({
   });
 
   return (
-    <div className="flex items-start gap-2 leading-tight">
+    <div className="flex items-start gap-2 font-medium leading-tight">
       <MapPinIcon className="h-4 w-4 shrink-0" />
       <div className="space-y-1 break-words">
         {addressContent}
         {!!traveltime && (
-          <p className="text-xs">
+          <p className="text-xs font-normal">
             {formatDuration(secondsToDuration(traveltime), {
               format: ["hours", "minutes"],
             })}{" "}

@@ -31,7 +31,7 @@ export function formatTrainingTime(startDate: Date, endDate: Date) {
   const startTime = formatAT(new Date(startDate), "H:mm");
   const endTime = formatAT(new Date(endDate), "H:mm");
 
-  return `${startTime} bis ${endTime}`;
+  return `${startTime} - ${endTime}`;
 }
 
 export const getFixedDate = (date: Date) => {
