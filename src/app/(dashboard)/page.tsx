@@ -3,6 +3,7 @@ import { endOfDay, startOfDay } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 
+import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { AuthorizationError } from "@/lib/errors";
 import { SafeUser } from "@/lib/prisma";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
@@ -39,41 +40,46 @@ export default async function Home({
   const userHasAddress = Boolean(profile.address);
 
   return (
-    <section className="gap-8 md:flex md:py-6">
-      <aside className="relative shrink-0 basis-80">
-        <div className="sticky top-0">
-          <TrainingFilter hasAddress={userHasAddress} value={filter} />
+    <>
+      <Breadcrumbs>
+        <BreadcrumbsItem>Praktika Übersicht</BreadcrumbsItem>
+      </Breadcrumbs>
+      <section className="gap-8 md:flex md:pb-6">
+        <aside className="relative shrink-0 basis-80">
+          <div className="sticky top-0">
+            <TrainingFilter hasAddress={userHasAddress} value={filter} />
+          </div>
+        </aside>
+        <div className="mb-6 md:w-full md:max-w-[600px] md:py-6">
+          <header className="mb-4 divide-y rounded-xl bg-white shadow-lg">
+            <div className="p-4">
+              <h2 className="font-medium">Bevorstehende Praktika</h2>
+            </div>
+            <div className="flex items-center px-4 py-2">
+              <CountLabel
+                count={filteredTrainings.length}
+                total={trainings.length}
+              />
+              {profile.role !== "user" && (
+                <div className="ml-auto">
+                  <CreateTraining profile={profile} />
+                </div>
+              )}
+            </div>
+          </header>
+          {trainings.length === 0 && <NoTrainings />}
+          {filteredTrainings.length > 0 && (
+            <ul className="space-y-4">
+              {filteredTrainings.map((t) => (
+                <li key={t.id}>
+                  <TrainingCard training={t} user={profile} />
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-      </aside>
-      <div className="mb-6 md:w-full md:max-w-[600px] md:py-6">
-        <header className="mb-4 divide-y rounded-xl bg-white shadow-lg">
-          <div className="p-4">
-            <h2 className="font-medium">Bevorstehende Praktika</h2>
-          </div>
-          <div className="flex items-center px-4 py-2">
-            <CountLabel
-              count={filteredTrainings.length}
-              total={trainings.length}
-            />
-            {profile.role !== "user" && (
-              <div className="ml-auto">
-                <CreateTraining profile={profile} />
-              </div>
-            )}
-          </div>
-        </header>
-        {trainings.length === 0 && <NoTrainings />}
-        {filteredTrainings.length > 0 && (
-          <ul className="space-y-4">
-            {filteredTrainings.map((t) => (
-              <li key={t.id}>
-                <TrainingCard training={t} user={profile} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 
