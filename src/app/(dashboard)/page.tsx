@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
+import { formatAT } from "@/lib/date";
 import { AuthorizationError } from "@/lib/errors";
 import { SafeUser } from "@/lib/prisma";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
@@ -36,6 +37,17 @@ export default async function Home({
     trainings: await addMetadata(trainings),
     filter,
   });
+  const groupedTrainings = filteredTrainings.reduce(
+    (acc, t) => {
+      const month = formatAT(t.start, "MMMM");
+      if (!acc[month]) {
+        acc[month] = [];
+      }
+      acc[month].push(t);
+      return acc;
+    },
+    {} as Record<string, Awaited<ReturnType<typeof filterTrainings>>>,
+  );
 
   const userHasAddress = Boolean(profile.address);
 
@@ -70,10 +82,17 @@ export default async function Home({
           {trainings.length === 0 && <NoTrainings />}
           {filteredTrainings.length > 0 && (
             <ul className="space-y-4">
-              {filteredTrainings.map((t) => (
-                <li key={t.id}>
-                  <TrainingCard training={t} user={profile} />
-                </li>
+              {Object.entries(groupedTrainings).map(([month, trainings]) => (
+                <div key={month} className="mb-6">
+                  <h2 className="font-semibold">{month}</h2>
+                  <ul className="space-y-4">
+                    {trainings.map((t) => (
+                      <li key={t.id}>
+                        <TrainingCard training={t} user={profile} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
             </ul>
           )}
