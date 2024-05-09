@@ -20,9 +20,6 @@ export default function LandingPage() {
         <div className="mr-12">
           <Logo />
         </div>
-        <div className="ml-auto">
-          <LoginButton />
-        </div>
       </header>
       <main className="space-y-40 pb-40">
         <Hero />
@@ -32,14 +29,6 @@ export default function LandingPage() {
       </main>
       <Footer />
     </>
-  );
-}
-
-function LoginButton() {
-  return (
-    <Button size="sm" variant="link">
-      <Link href="/login">Anmelden</Link>
-    </Button>
   );
 }
 

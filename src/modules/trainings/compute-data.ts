@@ -1,5 +1,6 @@
 import { Training } from "@prisma/client";
 
+import { AuthorizationError } from "@/lib/errors";
 import { SafeUser } from "@/lib/prisma";
 import { getTraveltime } from "@/modules/users/address";
 
@@ -23,6 +24,9 @@ export async function computeTraveltime<T extends WithAuthor<Training>>(
   training: T,
 ) {
   const user = await getMyProfile();
+  if (!user) {
+    throw new AuthorizationError();
+  }
   const traveltime = await getTraveltime(user.address, training.address);
 
   return {

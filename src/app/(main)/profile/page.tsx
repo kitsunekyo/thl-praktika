@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
+import { AuthorizationError } from "@/lib/errors";
 import { ChangePasswordForm } from "@/modules/auth/components/ChangePasswordForm";
 import { AvatarUpload } from "@/modules/users/components/AvatarUpload";
 import { DeleteAccount } from "@/modules/users/components/DeleteAccount";
@@ -12,7 +13,7 @@ import { getMyProfile } from "@/modules/users/queries";
 export default async function Profile() {
   const user = await getMyProfile();
   if (!user) {
-    throw new Error("Profile not found");
+    throw new AuthorizationError();
   }
   const preferences = preferencesSchema.parse(user.preferences || {}); // value can be DB null, or "null" as json value, so we need to supply a default value
 

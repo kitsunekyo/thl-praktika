@@ -51,7 +51,7 @@ export const getProfileById = cache(async (id: string) => {
 export const getMyProfile = cache(async () => {
   const session = await getServerSession();
   if (!session) {
-    throw new AuthorizationError();
+    return null;
   }
 
   const user = await prisma.user.findFirst({
@@ -60,10 +60,6 @@ export const getMyProfile = cache(async () => {
     },
     select: selectUserSafe,
   });
-
-  if (!user) {
-    throw new AuthorizationError();
-  }
 
   return user;
 });

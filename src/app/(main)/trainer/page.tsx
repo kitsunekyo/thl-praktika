@@ -2,18 +2,21 @@ import { notFound } from "next/navigation";
 
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
-import { getServerSession } from "@/modules/auth/next-auth";
+import { AuthorizationError } from "@/lib/errors";
 import { getMyTrainings } from "@/modules/trainers/queries";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
 import { TrainingList } from "@/modules/trainings/components/TrainingList";
 import { getMyProfile } from "@/modules/users/queries";
 
 export default async function Page() {
-  const session = await getServerSession();
-  if (session?.user.role === "user") {
+  const profile = await getMyProfile();
+  if (!profile) {
+    throw new AuthorizationError();
+  }
+  if (profile.role === "user") {
     return notFound();
   }
-  const profile = await getMyProfile();
+
   const trainings = await getMyTrainings();
 
   return (
