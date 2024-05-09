@@ -22,22 +22,22 @@ export function TrainingList({
   trainings: Trainings;
   user: Pick<SafeUser, "id" | "role">;
 }) {
-  const [isShowAll, setIsShowAll] = useState(false);
-  let filteredTrainings = trainings;
-  if (!isShowAll) {
-    filteredTrainings = trainings.filter((t) => t.end > new Date());
-  }
+  const [filter, setFilter] = useState<"future" | "past">("future");
+  const filteredTrainings =
+    filter === "future"
+      ? trainings.filter((t) => t.end >= new Date())
+      : trainings.filter((t) => t.end < new Date());
 
   return (
     <>
       <div className="flex max-w-2xl items-center">
-        <Tabs value={isShowAll ? "all" : "new"} className="ml-auto">
+        <Tabs value={filter} className="ml-auto">
           <TabsList>
-            <TabsTrigger value="new" onClick={() => setIsShowAll(false)}>
+            <TabsTrigger value="future" onClick={() => setFilter("future")}>
               Bevorstehende
             </TabsTrigger>
-            <TabsTrigger value="all" onClick={() => setIsShowAll(true)}>
-              Alle
+            <TabsTrigger value="past" onClick={() => setFilter("past")}>
+              Vergangene
             </TabsTrigger>
           </TabsList>
         </Tabs>
