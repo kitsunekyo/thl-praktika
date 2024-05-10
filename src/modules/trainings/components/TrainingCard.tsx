@@ -62,7 +62,7 @@ export function TrainingCard({
   return (
     <article className="overflow-hidden rounded-xl bg-white text-sm shadow-lg">
       <div className="flex">
-        <div className="flex flex-col items-center gap-4 bg-gray-50 px-4 py-6">
+        <div className="flex flex-col items-center gap-2 border-r border-gray-100 px-3 py-4">
           <Avatar className="shrink-0" size="sm">
             <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
             <AvatarFallback>
@@ -83,7 +83,7 @@ export function TrainingCard({
             </time>
             <time
               dateTime={training.start.toISOString()}
-              className="text-xl font-bold leading-none"
+              className="text-lg font-bold leading-none"
             >
               {training.start.toLocaleString("de-AT", {
                 day: "2-digit",
@@ -100,7 +100,7 @@ export function TrainingCard({
               {training.author.name || training.author.email}
             </h4>
           </Link>
-          <ul className="space-y-2">
+          <ul className="mb-4 space-y-2">
             <li>
               <TrainingTime start={training.start} end={training.end} />
             </li>
@@ -115,10 +115,8 @@ export function TrainingCard({
             {training.description && (
               <li className="break-words">{training.description}</li>
             )}
-            <li>
-              <RegisteredUsers training={training} />
-            </li>
           </ul>
+          <RegisteredUsers training={training} />
           {!!actions && (
             <footer className="mt-2 flex items-center justify-end gap-2">
               {actions}

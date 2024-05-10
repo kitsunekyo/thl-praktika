@@ -1,11 +1,9 @@
 "use client";
 
 import { User } from "@prisma/client";
-import { UserCheckIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { range } from "@/lib/utils";
 
 export function RegisteredUsers({
   training,
@@ -18,24 +16,53 @@ export function RegisteredUsers({
   };
 }) {
   return (
-    <div className="space-y-4">
+    <div className="mt-4 space-y-2">
       <div className="flex items-center gap-2">
-        <ul className="flex -space-x-2">
-          {training.registrations.map(({ user, id }) => (
-            <li key={id}>
-              <Link href={`/profile/${user.id}`} title={user.name || user.id}>
-                <Avatar className="border-4 border-white">
-                  <AvatarImage src={user.image || "/img/avatar.jpg"} />
-                </Avatar>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {!training.registrations.length ? (
+          <p className="text-xs text-muted-foreground">
+            Noch keine Anmeldungen
+          </p>
+        ) : (
+          <ul className="flex -space-x-1">
+            {training.registrations.map(({ user, id }) => (
+              <li key={id} className="rounded-full ring-2 ring-white">
+                <Link
+                  href={`/profile/${user.id}`}
+                  title={user.name || user.id}
+                  className="block leading-[0]"
+                >
+                  <Avatar size="xs">
+                    <AvatarImage src={user.image || "/img/avatar.jpg"} />
+                  </Avatar>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
         <RegistrationCount
           count={training.registrations.length}
           max={training.maxInterns}
         />
       </div>
+      <p className="text-xs text-muted-foreground">
+        {training.registrations
+          .map(({ user }) => (
+            <Link
+              key={user.id}
+              href={`/profile/${user.id}`}
+              className="underline"
+            >
+              {user.name}
+            </Link>
+          ))
+          .map((element, index, array) => (
+            <>
+              {element}
+              {index < array.length - 2 ? ", " : ""}
+              {index === array.length - 2 ? " und " : ""}
+            </>
+          ))}
+      </p>
     </div>
   );
 }
