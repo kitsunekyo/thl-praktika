@@ -1,6 +1,7 @@
 import {
   BugIcon,
   CalendarCheck2Icon,
+  CloudDownloadIcon,
   ContactIcon,
   ExternalLinkIcon,
   GraduationCapIcon,
@@ -50,10 +51,13 @@ export async function Sidebar({ className }: { className?: string }) {
         <div className="mt-auto px-3">
           <Title>Hilfe</Title>
           <div className="space-y-1">
-            <SidebarLink href="mailto:hi@mostviertel.tech?subject=thl-praktika">
+            <SidebarLink href="/help/install">
+              <CloudDownloadIcon className="mr-2 h-4 w-4 shrink-0" />
+              App installieren
+            </SidebarLink>
+            <SidebarLink href="/help/contact">
               <BugIcon className="mr-2 h-4 w-4 shrink-0" />
-              Hilfe
-              <ExternalLinkIcon className="ml-2 h-4 w-4 shrink-0" />
+              Fehler melden
             </SidebarLink>
             <SidebarLink href="/changelog">
               <ListRestartIcon className="mr-2 h-4 w-4 shrink-0" />
