@@ -19,54 +19,36 @@ export function RegisteredUsers({
 }) {
   return (
     <div className="space-y-4">
-      <RegistrationCount
-        count={training.registrations.length}
-        max={training.maxInterns}
-      />
-      {!training.registrations.length ? null : (
-        <ul className="flex flex-wrap items-center gap-2 text-xs">
+      <div className="flex items-center gap-2">
+        <ul className="flex -space-x-2">
           {training.registrations.map(({ user, id }) => (
-            <li key={id} className="inline-block rounded-lg bg-gray-100">
-              <Link
-                href={`/profile/${user.id}`}
-                className="flex items-center gap-2 px-2 py-1"
-              >
-                <Avatar size="xs">
+            <li key={id}>
+              <Link href={`/profile/${user.id}`} title={user.name || user.id}>
+                <Avatar className="border-4 border-white">
                   <AvatarImage src={user.image || "/img/avatar.jpg"} />
                 </Avatar>
-                <span>{user.name}</span>
               </Link>
             </li>
           ))}
         </ul>
-      )}
+        <RegistrationCount
+          count={training.registrations.length}
+          max={training.maxInterns}
+        />
+      </div>
     </div>
   );
 }
 function RegistrationCount({ count, max }: { count: number; max: number }) {
   const freeSpots = max - count;
 
+  if (freeSpots <= 0) {
+    return <span className="text-xs font-semibold">voll</span>;
+  }
+
   return (
-    <div className="flex items-center">
-      <ul className="flex items-center">
-        {range(count).map((i) => (
-          <li key={i}>
-            <UserCheckIcon className="h-5 w-5" />
-          </li>
-        ))}
-        {range(freeSpots).map((i) => (
-          <li key={i}>
-            <UserIcon className="h-5 w-5 text-gray-400" />
-          </li>
-        ))}
-      </ul>
-      {freeSpots > 0 ? (
-        <span className="ml-2 text-xs font-medium">
-          {count}/{max}
-        </span>
-      ) : (
-        <span className="ml-2 text-xs">voll</span>
-      )}
-    </div>
+    <span className="text-xs font-semibold">
+      {count}/{max}
+    </span>
   );
 }
