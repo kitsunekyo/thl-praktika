@@ -64,18 +64,22 @@ export function TrainingList({
 
       <div className="py-6">
         {groupedByMonth.count > 0 ? (
-          Object.entries(groupedByMonth.months).map(([month, trainings]) => (
-            <div key={month} className="mb-6">
-              <h2 className="font-semibold">{month}</h2>
-              <ul className="space-y-4">
-                {trainings.map((t) => (
-                  <li key={t.id}>
-                    <TrainingCard training={t} user={user} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))
+          <ul className="relative space-y-6">
+            {Object.entries(groupedByMonth.months).map(([month, trainings]) => (
+              <li key={month}>
+                <p className="sticky top-0 -mx-4 bg-gray-50 px-6 py-4 font-semibold">
+                  {month}
+                </p>
+                <ul className="space-y-4">
+                  {trainings.map((t) => (
+                    <li key={t.id}>
+                      <TrainingCard training={t} user={user} />
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
         ) : (
           <p className="text-sm text-muted-foreground">Keine Einträge.</p>
         )}
