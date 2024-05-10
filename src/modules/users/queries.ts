@@ -16,6 +16,14 @@ export async function getUserProfiles() {
       role: "user",
     },
     select: selectUserSafe,
+    orderBy: [
+      {
+        name: "asc",
+      },
+      {
+        email: "asc",
+      },
+    ],
   });
 }
 
