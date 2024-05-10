@@ -106,7 +106,7 @@ export default async function Profile({
 }
 
 function TableRow({ children }: { children: React.ReactNode }) {
-  return <tr className="py-3 sm:grid sm:grid-cols-3 sm:gap-4">{children}</tr>;
+  return <tr className="grid grid-cols-3 gap-4 py-3">{children}</tr>;
 }
 
 function TableHead({ children }: { children: React.ReactNode }) {
@@ -119,9 +119,7 @@ function TableHead({ children }: { children: React.ReactNode }) {
 
 function TableData({ children }: { children: React.ReactNode }) {
   return (
-    <td className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-      {children}
-    </td>
+    <td className="col-span-2 text-sm leading-6 text-gray-700">{children}</td>
   );
 }
 
