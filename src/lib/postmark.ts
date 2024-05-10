@@ -160,7 +160,6 @@ async function sendMail(
   const isDisabled = await checkIsSendingDisabled(to, templateAlias);
 
   if (isDisabled) {
-    console.log("sending email is disabled in user preferences");
     return;
   }
 
