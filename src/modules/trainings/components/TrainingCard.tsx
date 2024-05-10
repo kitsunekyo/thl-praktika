@@ -91,7 +91,7 @@ export function TrainingCard({
             </time>
           </div>
         </div>
-        <div className="grow px-4 py-6">
+        <div className="grow px-3 py-6">
           <Link
             href={`/profile/${training.author.id}`}
             className="flex items-center gap-2 font-medium"
