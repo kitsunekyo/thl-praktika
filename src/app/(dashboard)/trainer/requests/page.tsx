@@ -39,15 +39,15 @@ export default async function Page() {
           Praktika Anfragen
         </BreadcrumbsItem>
       </Breadcrumbs>
-      <div className="mx-auto max-w-2xl py-6">
+      <div className="py-6">
         <PageTitle content="Hier findest du Praktika Anfragen die dir Student:innen geschickt haben. Wenn du ein neues Praktikum erstellst, werden alle in dieser Liste benachrichtigt.">
           Praktika Anfragen
         </PageTitle>
-        <div className="my-4 flex items-center justify-end">
+        <div className="space-y-4">
           <CreateTraining profile={profile} />
-        </div>
-        <div className="overflow-x-hidden">
-          <ReceivedTrainingRequests requests={requests} />
+          <div className="overflow-x-hidden">
+            <ReceivedTrainingRequests requests={requests} />
+          </div>
         </div>
       </div>
     </>
