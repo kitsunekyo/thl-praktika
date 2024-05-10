@@ -76,7 +76,7 @@ async function AdminSection() {
   }
 
   return (
-    <div className="px-3">
+    <div className="px-3 text-red-600">
       <Title>Admin</Title>
       <div className="space-y-1">
         <SidebarLink href="/admin/users">
