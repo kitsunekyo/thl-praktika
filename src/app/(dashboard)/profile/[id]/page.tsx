@@ -11,7 +11,7 @@ import { SafeUser } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 import { getTrainingRequests } from "@/modules/trainers/queries";
 import { RequestTraining } from "@/modules/trainings/components/RequestTraining";
-import { TrainingList } from "@/modules/trainings/components/TrainingList";
+import { TrainingListWithDateFilter } from "@/modules/trainings/components/TrainingList";
 import { getTrainingsByAuthor } from "@/modules/trainings/queries";
 import { getProfileById } from "@/modules/users/queries";
 
@@ -42,7 +42,7 @@ export default async function Profile({
         <div className="mb-6 space-y-4">
           <ProfileImage src={profile.image} />
           <header>
-            <h1 className="text-xl font-medium">{profile.name}</h1>
+            <h1 className="text-xl font-bold">{profile.name}</h1>
             <div className="text-sm text-gray-500">{roleLabel}</div>
           </header>
           <table className="mt-6 divide-y divide-gray-100">
@@ -98,7 +98,7 @@ export default async function Profile({
           role={profile.role}
         />
         {profile.role === "trainer" && (
-          <TrainerSection trainerId={id} user={session.user} />
+          <Trainings trainerId={id} user={session.user} />
         )}
       </article>
     </>
@@ -127,13 +127,13 @@ function TableData({ children }: { children: React.ReactNode }) {
 
 function ProfileImage({ src }: { src: string | null }) {
   return (
-    <div className="relative h-[140px] w-[140px]">
+    <div className="relative h-[120px] w-[120px]">
       <Image
         fill
         priority
         src={src || "/img/avatar.jpg"}
         alt="Profilbild"
-        sizes="140px"
+        sizes="120px"
         className="overflow-hidden rounded-full object-cover"
       />
     </div>
@@ -169,7 +169,7 @@ async function RequestTrainingWrapper({
   );
 }
 
-async function TrainerSection({
+async function Trainings({
   trainerId,
   user,
 }: {
@@ -180,8 +180,8 @@ async function TrainerSection({
 
   return (
     <section className="my-12">
-      <h2 className="font-medium">Praktika</h2>
-      <TrainingList trainings={trainings} user={user} />
+      <h2 className="mb-2 font-medium">Praktika</h2>
+      <TrainingListWithDateFilter trainings={trainings} user={user} />
     </section>
   );
 }

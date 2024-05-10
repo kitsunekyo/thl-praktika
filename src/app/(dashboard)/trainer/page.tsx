@@ -5,7 +5,7 @@ import { PageTitle } from "@/components/PageTitle";
 import { AuthorizationError } from "@/lib/errors";
 import { getMyTrainings } from "@/modules/trainers/queries";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
-import { TrainingList } from "@/modules/trainings/components/TrainingList";
+import { TrainingListWithDateFilter } from "@/modules/trainings/components/TrainingList";
 import { getMyProfile } from "@/modules/users/queries";
 
 export default async function Page() {
@@ -31,7 +31,7 @@ export default async function Page() {
         <div className="space-y-4">
           <Stats trainings={trainings} />
           <CreateTraining profile={profile} />
-          <TrainingList trainings={trainings} user={profile} />
+          <TrainingListWithDateFilter trainings={trainings} user={profile} />
         </div>
       </div>
     </>
@@ -52,7 +52,7 @@ function Stats({
   }
 
   return (
-    <div className="inline-block rounded-lg bg-white p-4 text-sm text-muted-foreground shadow-lg">
+    <div className="max-w-xl rounded-lg bg-white p-4 text-sm text-muted-foreground shadow-lg">
       <p>
         ✨ Du hast bisher{" "}
         <span className="font-bold">{trainingCount} Praktika</span> eingetragen.

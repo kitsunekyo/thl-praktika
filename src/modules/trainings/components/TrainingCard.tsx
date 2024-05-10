@@ -18,13 +18,13 @@ import { RegisteredUsers } from "./RegisteredUsers";
 import { TrainingTime } from "./TrainingTime";
 import { Unregister } from "./Unregister";
 
-type TrainingWithMetadata = Training & {
+export interface TrainingWithMetadata extends Training {
   registrations: (Registration & {
-    user: Pick<User, "id" | "image" | "name">;
+    user: Pick<SafeUser, "id" | "image" | "name">;
   })[];
-  author: Pick<User, "id" | "email" | "image" | "name">;
+  author: Pick<SafeUser, "id" | "email" | "image" | "name">;
   traveltime?: number;
-};
+}
 
 export function TrainingCard({
   training,

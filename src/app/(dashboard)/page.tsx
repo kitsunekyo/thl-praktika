@@ -1,18 +1,15 @@
 import { Registration, Training } from "@prisma/client";
 import { endOfDay, startOfDay } from "date-fns";
-import Image from "next/image";
-import Link from "next/link";
 
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
-import { formatAT } from "@/lib/date";
 import { AuthorizationError } from "@/lib/errors";
 import { SafeUser } from "@/lib/prisma";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
-import { TrainingCard } from "@/modules/trainings/components/TrainingCard";
 import {
   Filter,
   TrainingFilter,
 } from "@/modules/trainings/components/TrainingFilter";
+import { TrainingList } from "@/modules/trainings/components/TrainingList";
 import {
   computeDuration,
   computeTraveltime,
@@ -37,17 +34,6 @@ export default async function Home({
     trainings: await addMetadata(trainings),
     filter,
   });
-  const groupedTrainings = filteredTrainings.reduce(
-    (acc, t) => {
-      const month = formatAT(t.start, "MMMM");
-      if (!acc[month]) {
-        acc[month] = [];
-      }
-      acc[month].push(t);
-      return acc;
-    },
-    {} as Record<string, Awaited<ReturnType<typeof filterTrainings>>>,
-  );
 
   const userHasAddress = Boolean(profile.address);
 
@@ -79,52 +65,9 @@ export default async function Home({
               )}
             </div>
           </header>
-          {trainings.length === 0 && <NoTrainings />}
-          {filteredTrainings.length > 0 && (
-            <ul className="relative space-y-6">
-              {Object.entries(groupedTrainings).map(([month, trainings]) => (
-                <li key={month}>
-                  <p className="sticky top-0 -mx-4 bg-gray-50 px-6 py-4 font-semibold">
-                    {month}
-                  </p>
-                  <ul className="space-y-4">
-                    {trainings.map((t) => (
-                      <li key={t.id}>
-                        <TrainingCard training={t} user={profile} />
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ))}
-            </ul>
-          )}
+          <TrainingList trainings={filteredTrainings} user={profile} />
         </div>
       </section>
-    </>
-  );
-}
-
-function NoTrainings() {
-  return (
-    <>
-      <Image
-        src="/img/dog-bucket.svg"
-        className="h-40"
-        width={196}
-        height={224}
-        alt="Hund mit Eimer am Kopf"
-      />
-      <h3 className="mb-2 mt-6 text-xl font-bold tracking-tight sm:text-xl">
-        Keine Praktika gefunden
-      </h3>
-
-      <p className="mb-6 text-muted-foreground">
-        Aktuell hat niemand ein Praktikum eingetragen. Du kannst bei{" "}
-        <Link href="/trainers" className="underline">
-          Trainer:innen
-        </Link>{" "}
-        eine Anfrage stellen .
-      </p>
     </>
   );
 }

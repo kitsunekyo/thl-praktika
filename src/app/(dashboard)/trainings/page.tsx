@@ -5,7 +5,7 @@ import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import { SafeUser } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
-import { TrainingList } from "@/modules/trainings/components/TrainingList";
+import { TrainingListWithDateFilter } from "@/modules/trainings/components/TrainingList";
 import {
   computeDuration,
   computeTraveltime,
@@ -35,7 +35,10 @@ export default async function Trainings() {
           <Stats trainings={trainings} />
         </div>
         {trainings.length > 0 ? (
-          <TrainingList trainings={trainings} user={session.user} />
+          <TrainingListWithDateFilter
+            trainings={trainings}
+            user={session.user}
+          />
         ) : (
           <p className="text-sm text-muted-foreground">
             Du hast dich noch für keine Praktika angemeldet.

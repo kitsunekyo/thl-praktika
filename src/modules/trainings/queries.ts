@@ -92,9 +92,6 @@ export async function getTrainingsByAuthor(authorId: string) {
       },
     },
     where: {
-      start: {
-        gte: new Date(),
-      },
       authorId,
     },
     orderBy: {
