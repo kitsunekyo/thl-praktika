@@ -120,7 +120,7 @@ export function TrainingCard({
             </li>
           </ul>
           {!!actions && (
-            <footer className="flex items-center justify-end gap-2">
+            <footer className="mt-2 flex items-center justify-end gap-2">
               {actions}
             </footer>
           )}
