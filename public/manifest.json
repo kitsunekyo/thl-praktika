@@ -1,11 +1,44 @@
 {
+  "id": "/?homescreen=1",
   "name": "THL-Praktika",
+  "description": "Vereinfachte Pratika Planung für Trainer:innen und Stundent:innen.",
   "short_name": "Praktika",
   "theme_color": "#FFFFFF",
   "background_color": "#FFFFFF",
   "start_url": "/",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "browser"],
   "orientation": "portrait",
+  "categories": ["education", "social", "productivity"],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "shortcuts": [
+    {
+      "name": "Home",
+      "url": "/",
+      "description": "Praktika Übersicht"
+    },
+    {
+      "name": "Profil",
+      "url": "/profile",
+      "description": "Mein Profil"
+    },
+    {
+      "name": "Trainer:innen",
+      "url": "/trainers",
+      "description": "Alle verfügbaren Trainer:innen"
+    },
+    {
+      "name": "Praktikanten",
+      "url": "/users",
+      "description": "Alle angemeldeten Praktikanten"
+    }
+  ],
+  "scope": "https://thl-praktika.vercel.app",
+  "dir": "ltr",
+  "lang": "de",
+  "handle_links": "preferred",
   "icons": [
     {
       "src": "/pwa/windows11/SmallTile.scale-100.png",
