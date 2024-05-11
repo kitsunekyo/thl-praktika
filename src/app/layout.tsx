@@ -33,6 +33,7 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "THL Praktika",
     startupImage: [
+      "pwa/ios/splash_screens/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_portrait.png",
       {
         media:
           "screen and (width: 430px) and (height: 932px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)",
