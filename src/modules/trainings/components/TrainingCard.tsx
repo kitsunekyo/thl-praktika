@@ -155,7 +155,7 @@ function TrainingLocation({
   });
 
   return (
-    <div className="flex items-start gap-2 font-medium leading-tight">
+    <div className="flex gap-2 font-medium leading-tight">
       <MapPinIcon className="h-4 w-4 shrink-0" />
       <div className="space-y-1 break-words">
         {addressContent}

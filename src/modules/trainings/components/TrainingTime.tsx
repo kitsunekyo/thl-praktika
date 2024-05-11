@@ -14,11 +14,14 @@ export function TrainingTime({ start, end }: { start: Date; end: Date }) {
   );
 
   return (
-    <div className="flex grow items-center gap-2 font-medium">
+    <div className="flex gap-2 font-medium leading-tight">
       <ClockIcon className="h-4 w-4 shrink-0" />
-      <time dateTime={start.toLocaleDateString()}>
-        {formatTrainingTime(start, end)} ({duration})
-      </time>
+      <div className="space-y-1">
+        <time dateTime={start.toLocaleDateString()} className="font-medium">
+          {formatTrainingTime(start, end)}
+        </time>
+        <p className="text-xs font-normal">{duration}</p>
+      </div>
     </div>
   );
 }

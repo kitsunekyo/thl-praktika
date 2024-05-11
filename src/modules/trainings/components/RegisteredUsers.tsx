@@ -18,11 +18,7 @@ export function RegisteredUsers({
   return (
     <div className="mt-4 space-y-2">
       <div className="flex items-center gap-2">
-        {!training.registrations.length ? (
-          <p className="text-xs text-muted-foreground">
-            Noch keine Anmeldungen
-          </p>
-        ) : (
+        {!training.registrations.length ? null : (
           <ul className="flex -space-x-1">
             {training.registrations.map(({ user, id }) => (
               <li key={id} className="rounded-full ring-2 ring-white">
@@ -74,8 +70,11 @@ function RegistrationCount({ count, max }: { count: number; max: number }) {
   }
 
   return (
-    <span className="text-xs font-semibold">
-      {count}/{max}
-    </span>
+    <div className="space-x-1 text-xs">
+      <span className="truncate font-semibold">
+        {count}/{max}
+      </span>
+      <span className="truncate">Anmeldungen</span>
+    </div>
   );
 }
