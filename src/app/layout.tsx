@@ -135,8 +135,6 @@ export const metadata: Metadata = {
   },
   other: {
     "mobile-web-app-capable": "yes",
-    // @ts-ignore
-    "apple-touch-fullscreen": "yes",
   },
 };
 
