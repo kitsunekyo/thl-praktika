@@ -133,6 +133,11 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
   },
+  other: {
+    "mobile-web-app-capable": "yes",
+    // @ts-ignore
+    "apple-touch-fullscreen": "yes",
+  },
 };
 
 export const viewport: Viewport = {
