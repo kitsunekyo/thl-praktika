@@ -3,7 +3,7 @@
 import { formatDuration, intervalToDuration } from "date-fns";
 import { ClockIcon } from "lucide-react";
 
-import { formatTrainingTime } from "@/lib/date";
+import { formatAT, formatTrainingTime } from "@/lib/date";
 
 export function TrainingDatetime({ start, end }: { start: Date; end: Date }) {
   const duration = formatDuration(
@@ -17,9 +17,7 @@ export function TrainingDatetime({ start, end }: { start: Date; end: Date }) {
     <div className="flex gap-2 font-medium leading-tight">
       <ClockIcon className="h-4 w-4 shrink-0" />
       <div>
-        <time dateTime={start.toLocaleDateString()} className="font-medium">
-          {formatTrainingTime(start, end)}
-        </time>
+        <p>{formatTrainingTime(start, end)}</p>
         <p className="text-xs font-normal">{duration}</p>
       </div>
     </div>
