@@ -1,13 +1,10 @@
 "use client";
 
-import { Registration, Training, User } from "@prisma/client";
-import { formatDuration } from "date-fns";
-import { ExternalLinkIcon, MapPinIcon } from "lucide-react";
+import { Registration, Training } from "@prisma/client";
 import Link from "next/link";
 import React from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { secondsToDuration } from "@/lib/date";
 import { SafeUser } from "@/lib/prisma";
 import { getInitials } from "@/modules/users/name";
 
@@ -15,6 +12,7 @@ import { CancelTraining } from "./CancelTraining";
 import { EditTraining } from "./EditTraining";
 import { Register } from "./Register";
 import { RegisteredUsers } from "./RegisteredUsers";
+import { TrainingLocation } from "./TrainingLocation";
 import { TrainingTime } from "./TrainingTime";
 import { Unregister } from "./Unregister";
 
@@ -125,49 +123,5 @@ export function TrainingCard({
         </div>
       </div>
     </article>
-  );
-}
-
-function TrainingLocation({
-  address,
-  traveltime,
-}: {
-  address: string;
-  traveltime?: number;
-}) {
-  let parts = address.split(/(https:\/\/maps.app.goo.gl\/\w*)/gi);
-  const addressContent = parts.filter(Boolean).map((p, i) => {
-    if (p.match(/(https:\/\/maps.app.goo.gl\/\w*)/gi)) {
-      return (
-        <a
-          key={p + i}
-          href={p}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 underline"
-        >
-          Google maps
-          <ExternalLinkIcon className="h-4 w-4" />
-        </a>
-      );
-    }
-    return p;
-  });
-
-  return (
-    <div className="flex gap-2 font-medium leading-tight">
-      <MapPinIcon className="h-4 w-4 shrink-0" />
-      <div className="space-y-1 break-words">
-        {addressContent}
-        {!!traveltime && (
-          <p className="text-xs font-normal">
-            {formatDuration(secondsToDuration(traveltime), {
-              format: ["hours", "minutes"],
-            })}{" "}
-            entfernt
-          </p>
-        )}
-      </div>
-    </div>
   );
 }
