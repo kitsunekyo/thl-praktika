@@ -5,7 +5,7 @@ import { formatAT } from "@/lib/date";
 export default function Page() {
   return (
     <div className="relative flex h-full flex-col">
-      <header className="sticky top-0 z-30 flex min-h-[62px] flex-wrap items-center bg-white px-4 py-2 shadow">
+      <header className="sticky top-0 z-30 flex min-h-[var(--header-size)] flex-wrap items-center bg-white px-4 py-2 shadow">
         <div className="mr-12">
           <Logo />
         </div>

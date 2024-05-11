@@ -41,7 +41,7 @@ function Body({
   return (
     <div
       className={cn(
-        "grid min-h-[calc(100vh-62px)] border-t bg-gray-50",
+        "grid min-h-[calc(100vh-var(--header-size))] border-t bg-gray-50",
         className,
       )}
     >

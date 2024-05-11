@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 export default function LandingPage() {
   return (
     <>
-      <header className="sticky top-0 z-30 flex min-h-[62px] flex-wrap items-center bg-white px-4 py-2 shadow md:relative md:top-auto">
+      <header className="sticky top-0 z-30 flex min-h-[var(--header-size)] flex-wrap items-center bg-white px-4 py-2 shadow md:relative md:top-auto">
         <div className="mr-12">
           <Logo />
         </div>

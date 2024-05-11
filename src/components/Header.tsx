@@ -13,7 +13,7 @@ import { Skeleton } from "./ui/skeleton";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-30 flex min-h-[62px] flex-wrap items-center bg-white px-4 py-2 shadow md:static md:top-auto md:shadow-none">
+    <header className="sticky top-0 z-30 flex min-h-[var(--header-size)] flex-wrap items-center bg-white px-4 py-2 shadow md:static md:top-auto md:shadow-none">
       <div className="mr-12">
         <Logo />
       </div>
