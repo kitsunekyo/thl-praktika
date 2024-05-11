@@ -49,5 +49,5 @@ export default withAuth(
 
 export const config = {
   matcher:
-    "/((?!api|_next/static|_next/image|favicon.ico|pwa|img|robots.txt|apple-icon.ico|opengraph-image.jpg|twitter-image.jpg|manifest.json|sw.js|workbox-.*|about|legal|changelog).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|pwa|img|robots.txt|apple-icon.ico|apple-icon.png|opengraph-image.jpg|twitter-image.jpg|manifest.json|sw.js|workbox-.*|about|legal|changelog).*)",
 };
