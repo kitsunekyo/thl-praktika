@@ -19,20 +19,20 @@ export function TrainingLocation({
           href={p}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 underline"
+          className="flex items-center gap-1 underline"
         >
           Google maps
           <ExternalLinkIcon className="h-4 w-4" />
         </a>
       );
     }
-    return p;
+    return <div key={p + i}>{p}</div>;
   });
 
   return (
     <div className="flex gap-2 font-medium leading-tight">
       <MapPinIcon className="h-4 w-4 shrink-0" />
-      <div className="space-y-1 break-words">
+      <div className="break-words">
         {addressContent}
         {!!traveltime && (
           <p className="text-xs font-normal">

@@ -12,8 +12,8 @@ import { CancelTraining } from "./CancelTraining";
 import { EditTraining } from "./EditTraining";
 import { Register } from "./Register";
 import { RegisteredUsers } from "./RegisteredUsers";
+import { TrainingDatetime } from "./TrainingDatetime";
 import { TrainingLocation } from "./TrainingLocation";
-import { TrainingTime } from "./TrainingTime";
 import { Unregister } from "./Unregister";
 
 export interface TrainingWithMetadata extends Training {
@@ -61,15 +61,17 @@ export function TrainingCard({
     <article className="overflow-hidden rounded-xl bg-white text-sm shadow-lg">
       <div className="flex">
         <div className="flex flex-col items-center gap-2 border-r border-gray-100 px-3 py-4">
-          <Avatar className="shrink-0" size="sm">
-            <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
-            <AvatarFallback>
-              {getInitials({
-                name: training.author.name,
-                email: training.author.email,
-              })}
-            </AvatarFallback>
-          </Avatar>
+          <Link href={`/profile/${training.author.id}`} className="shrink-0">
+            <Avatar size="sm">
+              <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
+              <AvatarFallback>
+                {getInitials({
+                  name: training.author.name,
+                  email: training.author.email,
+                })}
+              </AvatarFallback>
+            </Avatar>
+          </Link>
           <div className="flex flex-col items-center gap-1">
             <time
               dateTime={training.start.toISOString()}
@@ -100,7 +102,7 @@ export function TrainingCard({
           </Link>
           <ul className="mb-4 space-y-2">
             <li>
-              <TrainingTime start={training.start} end={training.end} />
+              <TrainingDatetime start={training.start} end={training.end} />
             </li>
             {!!address && (
               <li>

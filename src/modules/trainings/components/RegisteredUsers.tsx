@@ -2,6 +2,7 @@
 
 import { User } from "@prisma/client";
 import Link from "next/link";
+import { Fragment } from "react";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
@@ -52,11 +53,11 @@ export function RegisteredUsers({
             </Link>
           ))
           .map((element, index, array) => (
-            <>
+            <Fragment key={element.key}>
               {element}
               {index < array.length - 2 ? ", " : ""}
               {index === array.length - 2 ? " und " : ""}
-            </>
+            </Fragment>
           ))}
       </p>
     </div>
