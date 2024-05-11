@@ -3,7 +3,7 @@ import { endOfDay, startOfDay } from "date-fns";
 
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { AuthorizationError } from "@/lib/errors";
-import { SafeUser } from "@/lib/prisma";
+import { PublicUser } from "@/lib/prisma";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
 import {
   Filter,
@@ -140,9 +140,9 @@ async function filterTrainings({
 export type TrainingsWithMetadata = Awaited<ReturnType<typeof addMetadata>>;
 async function addMetadata<
   T extends Training & {
-    author: SafeUser;
+    author: PublicUser;
     registrations: (Registration & {
-      user: SafeUser;
+      user: PublicUser;
     })[];
   },
 >(trainings: T[]) {

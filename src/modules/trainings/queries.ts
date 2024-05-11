@@ -1,7 +1,7 @@
 import { cache } from "react";
 
 import { AuthorizationError } from "@/lib/errors";
-import { prisma, selectUserSafe } from "@/lib/prisma";
+import { prisma, selectPublicUser } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 
 /**
@@ -24,12 +24,12 @@ export async function getMyTrainings() {
     },
     include: {
       author: {
-        select: selectUserSafe,
+        select: selectPublicUser,
       },
       registrations: {
         include: {
           user: {
-            select: selectUserSafe,
+            select: selectPublicUser,
           },
         },
       },
@@ -49,12 +49,12 @@ export const getAvailableTrainings = cache(async () => {
   const trainings = await prisma.training.findMany({
     include: {
       author: {
-        select: selectUserSafe,
+        select: selectPublicUser,
       },
       registrations: {
         include: {
           user: {
-            select: selectUserSafe,
+            select: selectPublicUser,
           },
         },
       },
@@ -81,12 +81,12 @@ export async function getTrainingsByAuthor(authorId: string) {
   const trainings = await prisma.training.findMany({
     include: {
       author: {
-        select: selectUserSafe,
+        select: selectPublicUser,
       },
       registrations: {
         include: {
           user: {
-            select: selectUserSafe,
+            select: selectPublicUser,
           },
         },
       },

@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatAT } from "@/lib/date";
-import { SafeUser } from "@/lib/prisma";
+import { PrivateUser } from "@/lib/prisma";
 
 import { TrainingCard, TrainingWithMetadata } from "./TrainingCard";
 
@@ -14,7 +14,7 @@ export function TrainingListWithDateFilter({
   user,
 }: {
   trainings: TrainingWithMetadata[];
-  user: Pick<SafeUser, "id" | "role">;
+  user: Pick<PrivateUser, "id" | "role">;
 }) {
   const [filter, setFilter] = useState<"future" | "past">("future");
 
@@ -75,7 +75,7 @@ export function TrainingList({
   user,
 }: {
   trainings: TrainingWithMetadata[];
-  user: Pick<SafeUser, "id" | "role">;
+  user: Pick<PrivateUser, "id" | "role">;
 }) {
   const groupedByMonth = useMemo(() => {
     return trainings.reduce(

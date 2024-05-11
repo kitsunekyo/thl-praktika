@@ -1,13 +1,13 @@
 import { Training } from "@prisma/client";
 
 import { AuthorizationError } from "@/lib/errors";
-import { SafeUser } from "@/lib/prisma";
+import { PublicUser } from "@/lib/prisma";
 import { getTraveltime } from "@/modules/users/address";
 
 import { getMyProfile } from "../users/queries";
 
 type WithAuthor<T> = T & {
-  author: SafeUser;
+  author: PublicUser;
 };
 
 /**

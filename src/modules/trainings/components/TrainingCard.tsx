@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { SafeUser } from "@/lib/prisma";
+import { PublicUser } from "@/lib/prisma";
 import { getInitials } from "@/modules/users/name";
 
 import { CancelTraining } from "./CancelTraining";
@@ -18,9 +18,9 @@ import { Unregister } from "./Unregister";
 
 export interface TrainingWithMetadata extends Training {
   registrations: (Registration & {
-    user: Pick<SafeUser, "id" | "image" | "name">;
+    user: Pick<PublicUser, "id" | "image" | "name">;
   })[];
-  author: Pick<SafeUser, "id" | "email" | "image" | "name">;
+  author: Pick<PublicUser, "id" | "email" | "image" | "name">;
   traveltime?: number;
 }
 
@@ -29,7 +29,7 @@ export function TrainingCard({
   user,
 }: {
   training: TrainingWithMetadata;
-  user: Pick<SafeUser, "id" | "role">;
+  user: Pick<PublicUser, "id" | "role">;
 }) {
   const hasFreeSpots = training.maxInterns - training.registrations.length > 0;
   const isOwner = training.authorId === user.id;

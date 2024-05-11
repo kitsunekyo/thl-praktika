@@ -7,7 +7,7 @@ import {
   BreadcrumbsItem,
   BreadcrumbsSeparator,
 } from "@/components/Breadcrumbs";
-import { SafeUser } from "@/lib/prisma";
+import { PrivateUser } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 import { getTrainingRequests } from "@/modules/trainers/queries";
 import { RequestTraining } from "@/modules/trainings/components/RequestTraining";
@@ -172,7 +172,7 @@ async function Trainings({
   user,
 }: {
   trainerId: string;
-  user: Pick<SafeUser, "id" | "role">;
+  user: Pick<PrivateUser, "id" | "role">;
 }) {
   const trainings = await getTrainingsByAuthor(trainerId);
 

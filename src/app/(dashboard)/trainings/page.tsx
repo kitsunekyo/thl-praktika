@@ -1,9 +1,9 @@
-import { Training, User } from "@prisma/client";
+import { Training } from "@prisma/client";
 import Link from "next/link";
 
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
-import { SafeUser } from "@/lib/prisma";
+import { PublicUser } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 import { TrainingListWithDateFilter } from "@/modules/trainings/components/TrainingList";
 import {
@@ -56,7 +56,7 @@ export default async function Trainings() {
 
 async function addMetadata<
   T extends Training & {
-    author: SafeUser;
+    author: PublicUser;
   },
 >(trainings: T[]) {
   return Promise.all(

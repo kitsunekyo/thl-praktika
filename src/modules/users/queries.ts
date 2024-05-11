@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 
 import { AuthorizationError } from "@/lib/errors";
-import { prisma, selectUserSafe } from "@/lib/prisma";
+import { prisma, selectPrivateUser, selectPublicUser } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 
 export async function getUserProfiles() {
@@ -15,7 +15,7 @@ export async function getUserProfiles() {
     where: {
       role: "user",
     },
-    select: selectUserSafe,
+    select: selectPublicUser,
     orderBy: [
       {
         name: "asc",
@@ -46,7 +46,7 @@ export const getProfileById = cache(async (id: string) => {
     where: {
       id,
     },
-    select: selectUserSafe,
+    select: selectPublicUser,
   });
 
   if (!profile) {
@@ -66,7 +66,7 @@ export const getMyProfile = cache(async () => {
     where: {
       id: session.user.id,
     },
-    select: selectUserSafe,
+    select: selectPrivateUser,
   });
 
   return user;
@@ -79,7 +79,7 @@ export async function getUsers() {
   }
 
   return await prisma.user.findMany({
-    select: selectUserSafe,
+    select: selectPrivateUser,
     orderBy: [
       {
         name: "asc",

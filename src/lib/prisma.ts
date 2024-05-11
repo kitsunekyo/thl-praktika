@@ -13,9 +13,21 @@ export const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
 
 if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = prisma;
 
-export type SafeUser = Pick<User, keyof typeof selectUserSafe>;
+export type PublicUser = Pick<User, keyof typeof selectPublicUser>;
 
-export const selectUserSafe = {
+export const selectPublicUser = {
+  id: true,
+  role: true,
+  name: true,
+  email: true,
+  image: true,
+  phone: true,
+  address: true,
+};
+
+export type PrivateUser = Pick<User, keyof typeof selectPrivateUser>;
+
+export const selectPrivateUser = {
   id: true,
   role: true,
   name: true,

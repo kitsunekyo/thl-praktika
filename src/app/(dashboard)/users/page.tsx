@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { PublicUser } from "@/lib/prisma";
 import { getInitials } from "@/modules/users/name";
 import { getUserProfiles } from "@/modules/users/queries";
 
@@ -32,19 +33,7 @@ export default async function Page() {
   );
 }
 
-function UserList({
-  users,
-}: {
-  users: {
-    id: string;
-    name: string | null;
-    address: string | null;
-    phone: string | null;
-    email: string;
-    lastLogin: Date | null;
-    image?: string | null;
-  }[];
-}) {
+function UserList({ users }: { users: PublicUser[] }) {
   return (
     <ul
       role="list"

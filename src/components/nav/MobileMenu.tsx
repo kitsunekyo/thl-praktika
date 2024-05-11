@@ -4,7 +4,7 @@ import { LogOutIcon, MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 
-import { SafeUser } from "@/lib/prisma";
+import { PrivateUser } from "@/lib/prisma";
 import { getInitials } from "@/modules/users/name";
 
 import { useMenu } from "./menu-context";
@@ -19,7 +19,7 @@ export function MobileMenu({
   children,
 }: React.HTMLAttributes<HTMLDivElement> & {
   children?: React.ReactNode;
-  user: Pick<SafeUser, "name" | "email" | "image">;
+  user: Pick<PrivateUser, "name" | "email" | "image">;
 }) {
   const menu = useMenu();
 

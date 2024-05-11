@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 
 import { AuthorizationError } from "@/lib/errors";
-import { prisma, selectUserSafe } from "@/lib/prisma";
+import { prisma, selectPublicUser } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 
 export async function getTrainers() {
@@ -45,10 +45,10 @@ export async function getTrainingRequests(
     where,
     include: {
       user: {
-        select: selectUserSafe,
+        select: selectPublicUser,
       },
       trainer: {
-        select: selectUserSafe,
+        select: selectPublicUser,
       },
     },
   });
@@ -65,12 +65,12 @@ export async function getMyTrainings() {
     },
     include: {
       author: {
-        select: selectUserSafe,
+        select: selectPublicUser,
       },
       registrations: {
         include: {
           user: {
-            select: selectUserSafe,
+            select: selectPublicUser,
           },
         },
       },

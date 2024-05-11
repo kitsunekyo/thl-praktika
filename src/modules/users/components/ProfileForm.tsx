@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { SafeUser } from "@/lib/prisma";
+import { PrivateUser } from "@/lib/prisma";
 import { updateProfile } from "@/modules/users/actions";
 
 const phoneRegex = new RegExp(
@@ -32,7 +32,7 @@ export const profileSchema = z.object({
   address: z.string().optional(),
 });
 
-export function ProfileForm({ user }: { user: SafeUser }) {
+export function ProfileForm({ user }: { user: PrivateUser }) {
   const [loading, startTransition] = useTransition();
   const { toast } = useToast();
   const form = useForm<z.infer<typeof profileSchema>>({
