@@ -2,7 +2,7 @@
   "id": "/?homescreen=1",
   "name": "THL-Praktika",
   "description": "Vereinfachte Pratika Planung für Trainer:innen und Stundent:innen.",
-  "short_name": "Praktika",
+  "short_name": "THL-Praktika",
   "theme_color": "#FFFFFF",
   "background_color": "#FFFFFF",
   "start_url": "/",
@@ -238,126 +238,6 @@
     },
     {
       "src": "/pwa/windows11/Square44x44Logo.targetsize-256.png",
-      "sizes": "256x256"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-16.png",
-      "sizes": "16x16"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-20.png",
-      "sizes": "20x20"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-24.png",
-      "sizes": "24x24"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-30.png",
-      "sizes": "30x30"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-32.png",
-      "sizes": "32x32"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-36.png",
-      "sizes": "36x36"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-40.png",
-      "sizes": "40x40"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-44.png",
-      "sizes": "44x44"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-48.png",
-      "sizes": "48x48"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-60.png",
-      "sizes": "60x60"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-64.png",
-      "sizes": "64x64"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-72.png",
-      "sizes": "72x72"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-80.png",
-      "sizes": "80x80"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-96.png",
-      "sizes": "96x96"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-unplated_targetsize-256.png",
-      "sizes": "256x256"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-16.png",
-      "sizes": "16x16"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-20.png",
-      "sizes": "20x20"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-24.png",
-      "sizes": "24x24"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-30.png",
-      "sizes": "30x30"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-32.png",
-      "sizes": "32x32"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-36.png",
-      "sizes": "36x36"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-40.png",
-      "sizes": "40x40"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-44.png",
-      "sizes": "44x44"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-48.png",
-      "sizes": "48x48"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-60.png",
-      "sizes": "60x60"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-64.png",
-      "sizes": "64x64"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-72.png",
-      "sizes": "72x72"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-80.png",
-      "sizes": "80x80"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-96.png",
-      "sizes": "96x96"
-    },
-    {
-      "src": "/pwa/windows11/Square44x44Logo.altform-lightunplated_targetsize-256.png",
       "sizes": "256x256"
     },
     {
