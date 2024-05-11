@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -112,6 +113,11 @@ export function ProfileForm({ user }: { user: PrivateUser }) {
               <FormControl>
                 <Input {...field} />
               </FormControl>
+              <FormDescription>
+                Wenn du deine Adresse nicht angeben möchtest, kannst du hier
+                auch nur einen Ort eingeben. Die Adresse wird zum Berechnen von
+                Anfahrtszeiten genutzt.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
