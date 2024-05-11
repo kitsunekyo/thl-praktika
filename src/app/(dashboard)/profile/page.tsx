@@ -23,7 +23,7 @@ export default async function Profile() {
         <BreadcrumbsItem href="/profile">Profil</BreadcrumbsItem>
       </Breadcrumbs>
       <article className="divide-y">
-        <section className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+        <section className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 md:grid-cols-3">
           <div>
             <h2 className="text-base font-semibold leading-7">
               Persönliche Informationen
@@ -51,7 +51,7 @@ export default async function Profile() {
           </div>
         </section>
 
-        <section className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+        <section className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 md:grid-cols-3">
           <div>
             <h2 className="text-base font-semibold leading-7">Einstellungen</h2>
             <p className="mt-1 text-sm leading-6 text-gray-400">
@@ -64,7 +64,7 @@ export default async function Profile() {
           </div>
         </section>
 
-        <section className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+        <section className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 md:grid-cols-3">
           <div>
             <h2 className="text-base font-semibold leading-7">
               Passwort ändern
@@ -79,7 +79,7 @@ export default async function Profile() {
           </div>
         </section>
 
-        <section className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+        <section className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 py-16 md:grid-cols-3">
           <div>
             <h2 className="text-base font-semibold leading-7">Konto löschen</h2>
             <p className="mt-1 text-sm leading-6 text-gray-400">
