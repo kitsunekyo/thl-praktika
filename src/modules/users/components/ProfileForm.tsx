@@ -25,7 +25,7 @@ const phoneRegex = new RegExp(
 );
 
 export const profileSchema = z.object({
-  name: z.string(),
+  name: z.string().min(1),
   phone: z.union([
     z.literal(""),
     z.string().regex(phoneRegex, "Ungültige Telefonnummer"),
@@ -39,7 +39,7 @@ export function ProfileForm({ user }: { user: PrivateUser }) {
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      name: user.name || "",
+      name: user.name,
       phone: user.phone || "",
       address: user.address || "",
     },
@@ -81,9 +81,9 @@ export function ProfileForm({ user }: { user: PrivateUser }) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Name*</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input required {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

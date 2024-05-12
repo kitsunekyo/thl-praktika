@@ -75,7 +75,7 @@ async function UserList() {
             </TableCell>
             <TableCell>
               <div className="max-w-[60px] truncate md:max-w-none">
-                {user.name || "-"}
+                {user.name}
               </div>
             </TableCell>
             <TableCell>

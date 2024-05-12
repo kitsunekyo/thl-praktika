@@ -47,9 +47,7 @@ export default async function RegistrationsPage() {
       <TableBody>
         {registrations.map((registration) => (
           <TableRow key={registration.id}>
-            <TableCell>
-              {registration.user.name || registration.user.email}
-            </TableCell>
+            <TableCell>{registration.user.name}</TableCell>
             <TableCell className="truncate whitespace-nowrap">
               <TrainingDate
                 start={registration.training.start}
@@ -57,8 +55,7 @@ export default async function RegistrationsPage() {
               />
             </TableCell>
             <TableCell className="truncate">
-              {registration.training.author.name ||
-                registration.training.author.email}
+              {registration.training.author.name}
             </TableCell>
             <TableCell className="text-right">
               <RegistrationButtons id={registration.id} />

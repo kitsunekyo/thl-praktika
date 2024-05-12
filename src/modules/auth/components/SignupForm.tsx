@@ -30,7 +30,7 @@ const formSchema = z.object({
   password: z
     .string()
     .min(6, { message: "Passwort entspricht nicht den Kritieren" }),
-  name: z.string(),
+  name: z.string().min(1),
 });
 
 export function SignupForm({ name, email }: { name?: string; email?: string }) {
@@ -114,9 +114,9 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Name*</FormLabel>
               <FormControl>
-                <Input type="text" data-1p-ignore {...field} />
+                <Input type="text" required data-1p-ignore {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

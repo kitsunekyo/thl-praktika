@@ -35,7 +35,7 @@ export default async function Profile({
         <BreadcrumbsItem href="/profile">Profil</BreadcrumbsItem>
         <BreadcrumbsSeparator />
         <BreadcrumbsItem href={`/profile/${id}`}>
-          {profile.name || profile.email}
+          {profile.name}
         </BreadcrumbsItem>
       </Breadcrumbs>
       <article className="mx-auto max-w-[600px] py-6">

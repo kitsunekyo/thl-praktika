@@ -88,7 +88,7 @@ export async function cancelTraining(id: string, reason: string) {
   registeredUsers.forEach((email) => {
     sendTrainingCancelledMail({
       to: email,
-      trainer: training.author.name || "Ein:e Trainer:in",
+      trainer: training.author.name,
       date: formatTrainingDate(training.start, training.end),
       reason,
     });

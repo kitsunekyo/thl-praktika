@@ -96,9 +96,7 @@ export function TrainingCard({
             href={`/profile/${training.author.id}`}
             className="flex items-center gap-2 font-medium"
           >
-            <h4 className="mb-3 font-semibold">
-              {training.author.name || training.author.email}
-            </h4>
+            <h4 className="mb-3 font-semibold">{training.author.name}</h4>
           </Link>
           <ul className="mb-4 space-y-2">
             <li>

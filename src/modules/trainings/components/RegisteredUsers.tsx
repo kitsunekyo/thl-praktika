@@ -25,7 +25,7 @@ export function RegisteredUsers({
               <li key={id} className="rounded-full ring-2 ring-white">
                 <Link
                   href={`/profile/${user.id}`}
-                  title={user.name || user.id}
+                  title={user.name}
                   className="block leading-[0]"
                 >
                   <Avatar size="xs">

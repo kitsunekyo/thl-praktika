@@ -24,7 +24,7 @@ export async function deleteUser(id: string) {
 export async function createUser(
   email: string,
   password: string,
-  name?: string,
+  name: string,
   role = "user",
 ) {
   const session = await getServerSession();

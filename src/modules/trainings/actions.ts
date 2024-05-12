@@ -65,7 +65,7 @@ export async function register(id: string) {
 
   sendTrainingRegistrationMail({
     to: training.author.email,
-    trainerName: training.author.name || "",
+    trainerName: training.author.name,
     date: formatTrainingDate(training.start, training.end),
     userName: currentUser.name || currentUser.email,
   });
@@ -111,7 +111,7 @@ export async function unregister(id: string) {
 
   sendRegistrationCancelledMail({
     to: registration.training.author.email,
-    trainerName: registration.training.author.name || "",
+    trainerName: registration.training.author.name,
     user: currentUser.name || currentUser.email,
     date: formatTrainingDate(
       registration.training.start,
