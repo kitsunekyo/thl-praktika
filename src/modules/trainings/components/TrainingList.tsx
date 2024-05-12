@@ -123,7 +123,6 @@ function NoTrainings() {
     <>
       <Image
         src="/img/dog-bucket.svg"
-        className="h-40"
         width={196}
         height={224}
         alt="Hund mit Eimer am Kopf"
