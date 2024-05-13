@@ -81,7 +81,7 @@
     "next": "^14.2.3",
     "next-auth": "^4.24.7",
     "postcss": "^8.4.38",
-    "posthog-js": "^1.131.3",
+    "posthog-js": "^1.131.4",
     "posthog-node": "^3.6.3",
     "postmark": "^4.0.2",
     "prettier": "^3.2.5",
