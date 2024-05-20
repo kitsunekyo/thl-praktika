@@ -4,10 +4,7 @@ import { revalidatePath } from "next/cache";
 
 import { formatTrainingDate } from "@/lib/date";
 import { AuthorizationError } from "@/lib/errors";
-import {
-  sendRegistrationCancelledMail,
-  sendTrainingRegistrationMail,
-} from "@/lib/postmark";
+import { sendMail } from "@/lib/mail";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 
@@ -63,11 +60,13 @@ export async function register(id: string) {
     },
   });
 
-  sendTrainingRegistrationMail({
+  sendMail({
     to: training.author.email,
-    trainerName: training.author.name,
-    date: formatTrainingDate(training.start, training.end),
-    userName: currentUser.name || currentUser.email,
+    templateName: "training-registration",
+    data: {
+      user_name: currentUser.name,
+      date: formatTrainingDate(training.start, training.end),
+    },
   });
 
   revalidatePath("/trainings");
@@ -109,14 +108,16 @@ export async function unregister(id: string) {
     },
   });
 
-  sendRegistrationCancelledMail({
+  sendMail({
     to: registration.training.author.email,
-    trainerName: registration.training.author.name,
-    user: currentUser.name || currentUser.email,
-    date: formatTrainingDate(
-      registration.training.start,
-      registration.training.end,
-    ),
+    templateName: "training-registration-cancelled",
+    data: {
+      user_name: currentUser.name,
+      date: formatTrainingDate(
+        registration.training.start,
+        registration.training.end,
+      ),
+    },
   });
 
   revalidatePath("/");
