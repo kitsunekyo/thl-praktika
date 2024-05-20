@@ -5,12 +5,7 @@ import { z } from "zod";
 
 import { formatTrainingDate } from "@/lib/date";
 import { AuthenticationError } from "@/lib/errors";
-import {
-  sendTrainingCancelledMail,
-  sendTrainingRegistrationNotificationMail,
-  sendTrainingRequestReceivedMail,
-  sendTrainingUpdatedMail,
-} from "@/lib/postmark";
+import { sendMail } from "@/lib/mail";
 import { prisma, selectPublicUser } from "@/lib/prisma";
 
 import { getServerSession } from "../auth/next-auth";
@@ -86,11 +81,14 @@ export async function cancelTraining(id: string, reason: string) {
 
   const registeredUsers = training.registrations.map((r) => r.user.email);
   registeredUsers.forEach((email) => {
-    sendTrainingCancelledMail({
+    sendMail({
       to: email,
-      trainer: training.author.name,
-      date: formatTrainingDate(training.start, training.end),
-      reason,
+      templateName: "training-cancelled",
+      data: {
+        trainer_name: training.author.name,
+        date: formatTrainingDate(training.start, training.end),
+        reason,
+      },
     });
   });
 
@@ -135,9 +133,12 @@ export async function createTraining(
 
   const subscribedUsers = trainingRequests.map((r) => r.user.email);
   subscribedUsers.forEach((email) => {
-    sendTrainingRegistrationNotificationMail({
+    sendMail({
+      templateName: "training-created",
       to: email,
-      trainerName: session.user.name || "Ein:e Trainer:in",
+      data: {
+        trainer_name: session.user.name,
+      },
     });
   });
 
@@ -191,10 +192,15 @@ export async function updateTraining(
   }));
 
   registeredUsers.forEach((user) => {
-    sendTrainingUpdatedMail({
+    sendMail({
       to: user.email,
-      trainerName: session.user.name || "Ein:e Trainer:in",
-      training: data,
+      templateName: "training-updated",
+      data: {
+        trainer_name: session.user.name,
+        date: formatTrainingDate(data.start, data.end),
+        description: data.description || "",
+        address: data.address || "",
+      },
     });
   });
 
@@ -245,10 +251,13 @@ export async function createTrainingRequest({
     },
   });
 
-  sendTrainingRequestReceivedMail({
+  await sendMail({
+    templateName: "training-request",
     to: trainer.email,
-    userName: session.user.name || session.user.email,
-    message,
+    data: {
+      user_name: session.user.name,
+      message,
+    },
   });
 
   revalidatePath(`/profile/${trainerId}`);
