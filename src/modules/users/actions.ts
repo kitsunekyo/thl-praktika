@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { AuthenticationError } from "@/lib/errors";
-import { sendInvitationMail } from "@/lib/postmark";
+import { sendMail } from "@/lib/mail";
 import { prisma } from "@/lib/prisma";
 import { preferencesSchema } from "@/modules/users/preferences";
 
@@ -52,7 +52,7 @@ export async function inviteUser(
   email: string,
   name = "",
   role: "user" | "trainer" | "admin" = "user",
-  sendEmail: boolean = false,
+  shouldSendEmail: boolean = false,
 ) {
   const session = await getServerSession();
   if (!session?.user) {
@@ -96,10 +96,18 @@ export async function inviteUser(
     };
   }
   revalidatePath("/admin/invitations");
-  if (!sendEmail) {
+  if (!shouldSendEmail) {
     return;
   }
-  sendInvitationMail({ to: email, name, role, id: inv.id });
+
+  sendMail({
+    to: email,
+    templateName: role === "trainer" ? "trainer-invitation" : "user-invitation",
+    data: {
+      invite_sender_name: "Alex",
+      action_url: `${process.env.NEXTAUTH_URL}/signup?email=${email}&name=${encodeURIComponent(name)}&id=${inv.id}`,
+    },
+  });
 }
 
 export async function resendInvitation(id: string) {
@@ -128,12 +136,16 @@ export async function resendInvitation(id: string) {
     },
   });
 
-  sendInvitationMail({
+  sendMail({
     to: invitation.email,
-    name: invitation.name || "",
-    role: invitation.role as "user" | "trainer",
-    id: invitation.id,
+    templateName:
+      invitation.role === "trainer" ? "trainer-invitation" : "user-invitation",
+    data: {
+      invite_sender_name: "Alex",
+      action_url: `${process.env.NEXTAUTH_URL}/signup?email=${invitation.email}&name=${encodeURIComponent(invitation.name || "")}&id=${invitation.id}`,
+    },
   });
+
   revalidatePath("/admin/invitations");
 }
 
