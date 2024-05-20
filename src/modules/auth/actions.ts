@@ -5,7 +5,7 @@ import { compare, hash } from "bcrypt";
 import { nanoid } from "nanoid";
 
 import { AuthorizationError, InputError, NotFoundError } from "@/lib/errors";
-import { sendForgotPasswordMail } from "@/lib/postmark";
+import { sendMail } from "@/lib/mail";
 import { prisma } from "@/lib/prisma";
 
 export async function forgotPassword(email: string) {
@@ -40,13 +40,14 @@ export async function forgotPassword(email: string) {
     throw new Error("could not create password reset token");
   }
 
-  sendForgotPasswordMail({
+  sendMail({
+    templateName: "forgot-password",
     to: user.email,
-    tokenId: token.id,
-    tokenValue: secret,
+    data: {
+      action_url: `${process.env.NEXTAUTH_URL}/reset-password?t=${token.id}&v=${secret}`,
+    },
   }).catch((e) => {
     captureException(e);
-    throw new Error("could not send password reset email");
   });
 }
 export async function resetPassword(
