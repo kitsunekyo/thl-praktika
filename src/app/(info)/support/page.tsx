@@ -16,13 +16,6 @@ export default function Page() {
             <strong>Für dich bleibt die App für immer gratis.</strong>
           </p>
           <p>
-            Die App kostet mich aktuell eta 15€ pro Monat für den Email Service{" "}
-            <a href="https://postmark.com/" rel="nofollow noopener noreferrer">
-              Postmark
-            </a>
-            .
-          </p>
-          <p>
             Wenn du mich und meine Arbeitszeit trotzdem unterstützen möchtest
             kannst du das über{" "}
             <a href="https://paypal.me/aspieslechner?country.x=AT&locale.x=de_DE">
