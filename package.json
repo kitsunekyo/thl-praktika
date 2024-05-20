@@ -101,5 +101,5 @@
     "uploadthing": "^6.10.3",
     "zod": "^3.23.8"
   },
-  "packageManager": "pnpm@9.0.0-beta.1+sha256.fba2e63d591308988fa66645c4f77d67aea9490c2a6c05f14b2b1154d207761e"
+  "packageManager": "pnpm@9.1.1+sha256.9551e803dcb7a1839fdf5416153a844060c7bce013218ce823410532504ac10b"
 }
