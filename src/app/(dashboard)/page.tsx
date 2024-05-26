@@ -48,9 +48,11 @@ export default async function Home({
             <TrainingFilter hasAddress={userHasAddress} value={filter} />
           </div>
         </aside>
-        <div className="mb-6 md:w-full md:max-w-[600px] md:py-6">
-          <header className="mb-4 divide-y rounded-xl bg-white shadow-lg">
-            <h2 className="p-4 text-sm font-medium">Bevorstehende Praktika</h2>
+        <div className="mb-6 w-full space-y-4 md:py-6">
+          <header className="max-w-2xl divide-y rounded-xl bg-white shadow-lg">
+            <h1 className="p-4 text-sm font-semibold">
+              Bevorstehende Praktika
+            </h1>
             <div className="flex items-center px-4 py-2">
               <CountLabel
                 count={filteredTrainings.length}
