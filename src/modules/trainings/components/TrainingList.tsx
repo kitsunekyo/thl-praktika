@@ -36,8 +36,8 @@ export function TrainingListWithDateFilter({
   }, [trainings]);
 
   return (
-    <div className="max-w-4xl">
-      <div className="flex items-center">
+    <section>
+      <div className="flex max-w-2xl items-center">
         <Tabs value={filter}>
           <TabsList>
             <TabsTrigger
@@ -66,7 +66,7 @@ export function TrainingListWithDateFilter({
           user={user}
         />
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -99,7 +99,7 @@ export function TrainingList({
   }
 
   return (
-    <ul className="relative space-y-6">
+    <ul className="relative max-w-2xl space-y-6">
       {Object.entries(groupedByMonth.months).map(([month, trainings]) => (
         <li key={month}>
           <p className="sticky top-[var(--header-size)] -mx-4 bg-gray-50 px-6 py-4 font-semibold md:top-0">
