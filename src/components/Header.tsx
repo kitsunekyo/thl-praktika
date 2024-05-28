@@ -41,7 +41,7 @@ async function NavLoader() {
 
   return (
     <>
-      <div className="hidden lg:block">
+      <div className="hidden leading-[0] lg:block">
         <UserMenu user={user} />
       </div>
       <div className="lg:hidden">
