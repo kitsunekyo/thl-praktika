@@ -72,7 +72,7 @@ export function InfoBox({ variant, children, storageKey }: Props) {
         <div className="flex-shrink-0">
           <Icon className="h-5 w-5 text-[--icon-color]" aria-hidden="true" />
         </div>
-        <div className="ml-3 flex-1 text-sm text-[--text-color] md:flex md:justify-between">
+        <div className="ml-3 flex-1 text-sm text-[--text-color]">
           {children}
         </div>
         <div className="ml-auto pl-3">
