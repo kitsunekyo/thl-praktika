@@ -1,6 +1,7 @@
 import { formatDuration } from "date-fns";
-import { ExternalLinkIcon, MapPinIcon } from "lucide-react";
+import { MapPinIcon } from "lucide-react";
 
+import { wrapLinksWithTags } from "@/lib/content";
 import { secondsToDuration } from "@/lib/date";
 
 export function TrainingLocation({
@@ -10,30 +11,11 @@ export function TrainingLocation({
   address: string;
   traveltime?: number;
 }) {
-  let parts = address.split(/(https:\/\/maps.app.goo.gl\/\w*)/gi);
-  const addressContent = parts.filter(Boolean).map((p, i) => {
-    if (p.match(/(https:\/\/maps.app.goo.gl\/\w*)/gi)) {
-      return (
-        <a
-          key={p + i}
-          href={p}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1 underline"
-        >
-          Google maps
-          <ExternalLinkIcon className="h-4 w-4" />
-        </a>
-      );
-    }
-    return <div key={p + i}>{p}</div>;
-  });
-
   return (
     <div className="flex gap-2 font-medium leading-tight">
       <MapPinIcon className="h-4 w-4 shrink-0" />
-      <div className="break-words">
-        {addressContent}
+      <div className="min-w-0 grow overflow-x-hidden">
+        {wrapLinksWithTags(address)}
         {!!traveltime && (
           <p className="text-xs font-normal">
             {formatDuration(secondsToDuration(traveltime), {

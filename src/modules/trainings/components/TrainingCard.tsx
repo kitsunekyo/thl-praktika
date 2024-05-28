@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { wrapLinksWithTags } from "@/lib/content";
 import { PublicUser } from "@/lib/prisma";
 import { getInitials } from "@/modules/users/name";
 
@@ -91,7 +92,7 @@ export function TrainingCard({
             </time>
           </div>
         </div>
-        <div className="grow px-3 py-6">
+        <div className="min-w-0 grow px-3 py-6">
           <Link
             href={`/profile/${training.author.id}`}
             className="flex items-center gap-2 font-medium"
@@ -111,7 +112,9 @@ export function TrainingCard({
               </li>
             )}
             {training.description && (
-              <li className="break-words">{training.description}</li>
+              <li className="break-words">
+                {wrapLinksWithTags(training.description)}
+              </li>
             )}
           </ul>
           <RegisteredUsers training={training} />
