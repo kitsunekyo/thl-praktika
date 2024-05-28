@@ -1,12 +1,30 @@
+import Link from "next/link";
+import { ReactNode } from "react";
+
 import { InfoBox, InfoBoxVariantOptions } from "./InfoBox";
 
 const infos: Array<{
   storageKey: string;
   variant: InfoBoxVariantOptions["variant"];
-  content: string;
+  content: ReactNode;
 }> = [
   {
-    storageKey: "block_info_202405_1",
+    storageKey: "pwa_info_20240528",
+    variant: "info",
+    content: (
+      <>
+        <h3 className="font-medium">Wusstest du schon?</h3>
+        <p className="mt-2 ">
+          Du kannst die Seite als App auf deinem Smartphone installieren.{" "}
+          <Link href="/help/install" className="underline">
+            Mehr erfahren
+          </Link>
+        </p>
+      </>
+    ),
+  },
+  {
+    storageKey: "block_info_20240528",
     variant: "info",
     content: "Nächster THL Block: 30. Mai - 02. Juni",
   },
@@ -18,7 +36,7 @@ export function AppInfoStack() {
   }
 
   return (
-    <ul className="space-y-1">
+    <ul className="space-y-1 pt-1">
       {infos.map((info) => (
         <li key={info.storageKey} className="px-1">
           <InfoBox storageKey={info.storageKey} variant={info.variant}>
