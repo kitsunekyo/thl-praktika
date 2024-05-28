@@ -20,6 +20,7 @@ export function BasicLayout({ children }: { children?: React.ReactNode }) {
 export function SidebarLayout({ children }: { children?: React.ReactNode }) {
   return (
     <>
+      <AppInfoStack />
       <Header />
       <Body className="lg:grid-cols-5">
         <Sidebar className="hidden lg:block" />
