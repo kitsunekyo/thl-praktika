@@ -2,7 +2,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { cn } from "@/lib/utils";
 
-import { SeminarInfoBox } from "./InfoBox";
+import { AppInfoStack } from "./AppInfoStack";
 import { Sidebar } from "./Sidebar";
 
 export function BasicLayout({ children }: { children?: React.ReactNode }) {
@@ -20,7 +20,7 @@ export function BasicLayout({ children }: { children?: React.ReactNode }) {
 export function SidebarLayout({ children }: { children?: React.ReactNode }) {
   return (
     <>
-      <SeminarInfoBox />
+      <AppInfoStack />
       <Header />
       <Body className="lg:grid-cols-5">
         <Sidebar className="hidden lg:block" />

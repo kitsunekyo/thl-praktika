@@ -1,9 +1,7 @@
 import { Registration, Training } from "@prisma/client";
 import { endOfDay, startOfDay } from "date-fns";
-import { InfoIcon } from "lucide-react";
 
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
-import { SeminarInfoBox } from "@/components/InfoBox";
 import { AuthorizationError } from "@/lib/errors";
 import { PublicUser } from "@/lib/prisma";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
