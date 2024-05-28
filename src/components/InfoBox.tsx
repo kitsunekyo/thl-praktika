@@ -80,7 +80,7 @@ export function InfoBox({ variant, children, storageKey }: Props) {
             <button
               type="button"
               onClick={handleClose}
-              className="hover:[--button-bg-hover] inline-flex rounded-md p-1.5 text-[--button-text] focus:outline-none focus:ring-2 focus:ring-[--focus-ring] focus:ring-offset-2"
+              className="inline-flex rounded-md p-1.5 text-[--button-text] hover:bg-[--button-bg-hover] focus:outline-none focus:ring-2 focus:ring-[--focus-ring] focus:ring-offset-2"
             >
               <span className="sr-only">Schließen</span>
               <XIcon className="h-5 w-5" aria-hidden="true" />
