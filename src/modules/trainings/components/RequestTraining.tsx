@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ClockIcon, SendIcon, SquareArrowUpRightIcon } from "lucide-react";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,7 +16,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -37,9 +35,11 @@ const formSchema = z.object({
 export function RequestTraining({
   trainerId,
   disabled,
+  children,
 }: {
   trainerId: string;
   disabled?: boolean;
+  children: React.ReactNode;
 }) {
   const [loading, startTransition] = useTransition();
   const { toast } = useToast();
@@ -86,21 +86,15 @@ export function RequestTraining({
 
   if (disabled) {
     return (
-      <div className="inline-flex items-center gap-2 rounded py-2 text-sm font-medium text-muted-foreground">
-        <ClockIcon className="h-4 w-4" />
-        Anfrage vor kurzem gesendet
+      <div className="px-2 py-1.5 text-sm text-muted-foreground">
+        Anfrage gesendet
       </div>
     );
   }
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button size="sm" disabled={loading} variant="secondary">
-          <span>Praktikum anfragen</span>
-          <SquareArrowUpRightIcon className="ml-1 h-4 w-4" />
-        </Button>
-      </AlertDialogTrigger>
+      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -136,7 +130,7 @@ export function RequestTraining({
               <AlertDialogCancel type="button">Abbrechen</AlertDialogCancel>
               <AlertDialogAction
                 type="submit"
-                disabled={!form.formState.isValid}
+                disabled={!form.formState.isValid || loading}
               >
                 Anfrage senden
               </AlertDialogAction>

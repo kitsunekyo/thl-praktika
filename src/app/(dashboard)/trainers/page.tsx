@@ -1,10 +1,11 @@
 import { differenceInDays, formatDistance } from "date-fns";
-import { ExternalLinkIcon } from "lucide-react";
+import { MapPinIcon } from "lucide-react";
 import Link from "next/link";
 
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -14,11 +15,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getServerSession } from "@/modules/auth/next-auth";
+import { TrainerMenu } from "@/modules/trainers/components/TrainerMenu";
 import { getTrainers, getTrainingRequests } from "@/modules/trainers/queries";
 import { RequestTraining } from "@/modules/trainings/components/RequestTraining";
 import { getInitials } from "@/modules/users/name";
 
-export default async function Page() {
+const REQUEST_COOLDOWN_IN_DAYS = 7;
+
+async function TrainerList() {
   const session = await getServerSession();
   if (!session) {
     throw new Error("Unauthorized");
@@ -26,6 +30,90 @@ export default async function Page() {
 
   const trainers = await getTrainers();
   const myRequests = await getTrainingRequests({ userId: session.user.id });
+
+  return (
+    <ul role="list" className="divide-y divide-gray-100">
+      {trainers.map((trainer) => {
+        const isOnCooldown = Boolean(
+          myRequests
+            .filter((r) => r.trainerId === trainer.id)
+            .find(
+              (r) =>
+                differenceInDays(new Date(), new Date(r.createdAt)) <
+                REQUEST_COOLDOWN_IN_DAYS,
+            ),
+        );
+
+        return (
+          <li key={trainer.email} className="flex justify-between gap-x-6 py-5">
+            <div className="flex min-w-0 gap-x-4">
+              <Avatar className="shrink-0" size="lg">
+                <AvatarImage src={trainer.image || "/img/avatar.jpg"} />
+                <AvatarFallback>
+                  {getInitials({
+                    name: trainer.name,
+                  })}
+                </AvatarFallback>
+              </Avatar>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold leading-6 text-gray-900">
+                  <Link
+                    href={`/profile/${trainer.id}`}
+                    className="hover:underline"
+                  >
+                    {trainer.name}
+                  </Link>
+                </p>
+                <div className="mt-1 flex flex-col text-xs leading-5 text-gray-500 md:flex-row">
+                  <a
+                    href={`mailto:${trainer.email}`}
+                    className="min-w-0 max-w-64 truncate hover:underline"
+                  >
+                    {trainer.email}
+                  </a>
+                  {!!trainer.address && (
+                    <div className="flex min-w-0 items-center">
+                      <span className="mx-2 hidden md:inline">•</span>
+                      <MapPinIcon className="h-3 w-3 shrink-0" />
+                      <p className="ml-1 max-w-48 truncate">
+                        {trainer.address}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="flex shrink-0 items-center gap-x-6">
+              <div className="hidden sm:flex sm:flex-col sm:items-end">
+                {session.user.role !== "trainer" && (
+                  <RequestTraining
+                    trainerId={trainer.id}
+                    disabled={isOnCooldown}
+                  >
+                    <Button size="sm" variant="outline">
+                      Praktikum anfragen
+                    </Button>
+                  </RequestTraining>
+                )}
+              </div>
+              <TrainerMenu
+                trainerId={trainer.id}
+                isRequestCooldown={isOnCooldown}
+                userRole={session.user.role}
+              />
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+export default async function Page() {
+  const session = await getServerSession();
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
 
   return (
     <>
@@ -43,142 +131,31 @@ export default async function Page() {
         >
           Trainer:innen
         </PageTitle>
-        <TrainerList trainers={trainers} requests={myRequests} />
-        <div className="my-8" />
-        {session.user.role === "user" && (
-          <>
-            <h2 className="mb-4 text-lg font-semibold">Gesendete Anfragen</h2>
-            <SentTrainingRequests requests={myRequests} />
-          </>
-        )}
+        <div className="max-w-6xl">
+          <TrainerList />
+          <div className="my-8" />
+          {session.user.role === "user" && (
+            <>
+              <h3 className="mb-4 font-semibold">
+                Unbeantwortete Praktika Anfragen
+              </h3>
+              <SentTrainingRequests />
+            </>
+          )}
+        </div>
       </div>
     </>
   );
 }
 
-const REQUEST_COOLDOWN_IN_DAYS = 7;
-
-async function TrainerList({
-  trainers,
-  requests,
-}: {
-  trainers: Awaited<ReturnType<typeof getTrainers>>;
-  requests: Awaited<ReturnType<typeof getTrainingRequests>>;
-}) {
-  if (trainers.length === 0) {
-    return (
-      <p className="text-sm text-gray-400">Keine Trainer:innen verfügbar.</p>
-    );
-  }
-
-  return (
-    <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-      {trainers.map((trainer) => (
-        <TrainerCard
-          key={trainer.id}
-          trainer={trainer}
-          hasRecentlyRequested={Boolean(
-            requests
-              .filter((r) => r.trainerId === trainer.id)
-              .find(
-                (r) =>
-                  differenceInDays(new Date(), new Date(r.createdAt)) <
-                  REQUEST_COOLDOWN_IN_DAYS,
-              ),
-          )}
-        />
-      ))}
-    </ul>
-  );
-}
-
-async function TrainerCard({
-  trainer,
-  hasRecentlyRequested,
-}: {
-  trainer: {
-    id: string;
-    address: string | null;
-    email: string;
-    phone: string | null;
-    name: string | null;
-    image: string | null;
-    lastLogin: Date | null;
-  };
-  hasRecentlyRequested?: boolean;
-}) {
+async function SentTrainingRequests() {
   const session = await getServerSession();
   if (!session) {
     throw new Error("Unauthorized");
   }
 
-  return (
-    <li
-      key={trainer.email}
-      className="overflow-hidden rounded-lg bg-white shadow"
-    >
-      <div className="flex min-h-[140px] w-full items-start gap-6 p-6">
-        <Link href={`/profile/${trainer.id}`}>
-          <Avatar className="mx-auto shrink-0" size="lg">
-            <AvatarImage src={trainer.image || "/img/avatar.jpg"} />
-            <AvatarFallback>
-              {getInitials({
-                name: trainer.name,
-                email: trainer.email,
-              })}
-            </AvatarFallback>
-          </Avatar>
-        </Link>
-        <div className="min-w-0 space-y-1 text-sm">
-          <div className="flex items-center gap-3">
-            <Link href={`/profile/${trainer.id}`}>
-              <h3 className="min-w-0 truncate font-medium text-gray-900">
-                {trainer.name}
-              </h3>
-            </Link>
-          </div>
-          <p className="text-gray-500">
-            <a
-              href={`mailto:${trainer.email}`}
-              className="flex items-center underline"
-            >
-              <span className="truncate">{trainer.email}</span>
-              <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
-            </a>
-          </p>
-          {trainer.phone ? (
-            <p className="truncate text-gray-500">
-              <a
-                href={`tel:${trainer.phone}`}
-                className="flex min-w-0 items-center underline"
-              >
-                {trainer.phone}
-                <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
-              </a>
-            </p>
-          ) : null}
-          {trainer.address ? (
-            <p className="truncate text-gray-500">{trainer.address}</p>
-          ) : null}
-        </div>
-      </div>
-      {session.user.role !== "trainer" ? (
-        <footer className="flex items-center justify-end gap-4 px-4 py-2">
-          <RequestTraining
-            trainerId={trainer.id}
-            disabled={hasRecentlyRequested}
-          />
-        </footer>
-      ) : null}
-    </li>
-  );
-}
+  const requests = await getTrainingRequests({ userId: session.user.id });
 
-async function SentTrainingRequests({
-  requests,
-}: {
-  requests?: Awaited<ReturnType<typeof getTrainingRequests>>;
-}) {
   if (!requests?.length) {
     return (
       <p className="text-sm text-gray-400">
@@ -195,7 +172,7 @@ async function SentTrainingRequests({
         <TableHeader>
           <TableRow>
             <TableHead>Trainer:in</TableHead>
-            <TableHead></TableHead>
+            <TableHead className="hidden md:block"></TableHead>
             <TableHead className="text-right">gesendet</TableHead>
             {/* <TableHead className="w-[50px] text-right"></TableHead> */}
           </TableRow>
@@ -208,7 +185,7 @@ async function SentTrainingRequests({
                   {request.trainer.name}
                 </div>
               </TableCell>
-              <TableCell>
+              <TableCell className="hidden md:block">
                 <div className="max-w-[80px] truncate md:max-w-xs">
                   {request.trainer.email}
                 </div>

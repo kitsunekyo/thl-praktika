@@ -24,7 +24,7 @@ export function SidebarLayout({ children }: { children?: React.ReactNode }) {
       <Header />
       <Body className="lg:grid-cols-5">
         <Sidebar className="hidden lg:block" />
-        <div className="col-span-3 flex flex-col lg:col-span-4 lg:border-l">
+        <div className="col-span-3 flex min-w-0 flex-col lg:col-span-4 lg:border-l">
           <Main>{children}</Main>
           <Footer />
         </div>
