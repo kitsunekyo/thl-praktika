@@ -1,3 +1,4 @@
+import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 import { ComponentProps } from "react";
 
@@ -11,9 +12,15 @@ const infos: ComponentProps<typeof InfoBox>[] = [
       <>
         <h3 className="font-medium">Wusstest du schon?</h3>
         <p className="mt-2 ">
-          Du kannst die Seite als App auf deinem Smartphone installieren.{" "}
-          <Link href="/help/install" className="underline">
-            Mehr erfahren
+          Du kannst die Seite wie eine App auf deinem Smartphone installieren.{" "}
+        </p>
+        <p className="mt-2">
+          <Link
+            href="/help/install"
+            className="inline-flex items-center underline"
+          >
+            <span>Mehr erfahren</span>
+            <ChevronRightIcon className="ml-1 inline-block h-4 w-4" />
           </Link>
         </p>
       </>
