@@ -1,17 +1,13 @@
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ComponentProps } from "react";
 
-import { InfoBox, InfoBoxVariantOptions } from "./InfoBox";
+import { InfoBox } from "./InfoBox";
 
-const infos: Array<{
-  storageKey: string;
-  variant: InfoBoxVariantOptions["variant"];
-  content: ReactNode;
-}> = [
+const infos: ComponentProps<typeof InfoBox>[] = [
   {
-    storageKey: "pwa_info_20240528",
+    storageKey: "pwa_install_info",
     variant: "info",
-    content: (
+    children: (
       <>
         <h3 className="font-medium">Wusstest du schon?</h3>
         <p className="mt-2 ">
@@ -34,9 +30,7 @@ export function AppInfoStack() {
     <ul className="space-y-1 pt-1">
       {infos.map((info) => (
         <li key={info.storageKey} className="px-1">
-          <InfoBox storageKey={info.storageKey} variant={info.variant}>
-            {info.content}
-          </InfoBox>
+          <InfoBox {...info} />
         </li>
       ))}
     </ul>

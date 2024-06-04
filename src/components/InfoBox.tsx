@@ -40,24 +40,44 @@ const variantToIconMap = {
 interface Props extends InfoBoxVariantOptions {
   children: ReactNode;
   storageKey: string;
+  maxAge?: number;
 }
 
-export function InfoBox({ variant, children, storageKey }: Props) {
-  const localStorageKey = `info-box-closed-${storageKey}`;
+const ONE_YEAR_IN_SECONDS = 60 * 60 * 24 * 365;
+
+export function InfoBox({
+  variant,
+  children,
+  storageKey,
+  maxAge = ONE_YEAR_IN_SECONDS,
+}: Props) {
+  const cookieKey = `info-box-closed-${storageKey}`;
   const [isClosed, setIsClosed] = useState(true);
 
+  const getCookie = (name: string) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+      return parts.pop()?.split(";").shift();
+    }
+  };
+
+  const setCookie = (name: string, value: string) => {
+    document.cookie = `${name}=${value};path=/;max-age=${maxAge}`;
+  };
+
   useEffect(() => {
-    const isClosedFromLocalStorage = localStorage.getItem(localStorageKey);
-    if (isClosedFromLocalStorage) {
-      setIsClosed(JSON.parse(isClosedFromLocalStorage));
+    const isClosedFromCookie = getCookie(cookieKey);
+    if (isClosedFromCookie) {
+      setIsClosed(JSON.parse(isClosedFromCookie));
     } else {
       setIsClosed(false);
     }
-  }, [localStorageKey]);
+  }, [cookieKey]);
 
   const handleClose = () => {
     setIsClosed(true);
-    localStorage.setItem(localStorageKey, JSON.stringify(true));
+    setCookie(cookieKey, JSON.stringify(true));
   };
 
   if (isClosed) {
