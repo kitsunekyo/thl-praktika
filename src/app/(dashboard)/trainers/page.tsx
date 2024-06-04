@@ -163,7 +163,7 @@ async function TrainerCard({
         </div>
       </div>
       {session.user.role !== "trainer" ? (
-        <footer className="flex items-center justify-end gap-4 bg-gray-50 px-4 py-2">
+        <footer className="flex items-center justify-end gap-4 px-4 py-2">
           <RequestTraining
             trainerId={trainer.id}
             disabled={hasRecentlyRequested}

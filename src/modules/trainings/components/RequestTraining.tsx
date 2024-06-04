@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ClockIcon, SendIcon } from "lucide-react";
+import { ClockIcon, SendIcon, SquareArrowUpRightIcon } from "lucide-react";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -88,7 +88,7 @@ export function RequestTraining({
     return (
       <div className="inline-flex items-center gap-2 rounded py-2 text-sm font-medium text-muted-foreground">
         <ClockIcon className="h-4 w-4" />
-        Praktikumsanfrage offen
+        Anfrage vor kurzem gesendet
       </div>
     );
   }
@@ -96,8 +96,9 @@ export function RequestTraining({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button size="sm" disabled={loading}>
-          Praktikum anfragen
+        <Button size="sm" disabled={loading} variant="secondary">
+          <span>Praktikum anfragen</span>
+          <SquareArrowUpRightIcon className="ml-1 h-4 w-4" />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
