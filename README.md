@@ -19,3 +19,7 @@ Eine Web App und PWA um Praktika Koordination zu vereinfachen. Gebaut für die A
 ## Changelog
 
 [https://thl-praktika.vercel.app/changelog](https://thl-praktika.vercel.app/changelog)
+
+## Repository Analatics
+
+![Alt](https://repobeats.axiom.co/api/embed/16a0d81e16e6a901f2e884eb5ef08158d66a0f24.svg "Repobeats analytics image")
