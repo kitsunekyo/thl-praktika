@@ -23,11 +23,6 @@ const infos: Array<{
       </>
     ),
   },
-  {
-    storageKey: "block_info_20240528",
-    variant: "info",
-    content: "Nächster THL Block: 30. Mai - 02. Juni",
-  },
 ];
 
 export function AppInfoStack() {
