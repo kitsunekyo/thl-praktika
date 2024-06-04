@@ -12,21 +12,24 @@ import { ReactNode, useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
-const variants = cva("rounded-md p-4 bg-[--bg-color]", {
-  variants: {
-    variant: {
-      info: "[--icon-color:theme(colors.blue.400)] [--text-color:theme(colors.blue.800)] [--bg-color:theme(colors.blue.50)] [--button-text:theme(colors.blue.500)] [--button-bg-hover:theme(colors.blue.100)] [--focus-ring:theme(colors.blue.600)]",
-      success:
-        "[--icon-color:theme(colors.green.400)] [--text-color:theme(colors.green.800)] [--bg-color:theme(colors.green.50)] [--button-text:theme(colors.green.500)] [--button-bg-hover:theme(colors.green.100)] [--focus-ring:theme(colors.green.600)]",
-      warn: "[--icon-color:theme(colors.yellow.400)] [--text-color:theme(colors.yellow.800)] [--bg-color:theme(colors.yellow.50)] [--button-text:theme(colors.yellow.500)] [--button-bg-hover:theme(colors.yellow.100)] [--focus-ring:theme(colors.yellow.600)]",
-      error:
-        "[--icon-color:theme(colors.red.400)] [--text-color:theme(colors.red.800)] [--bg-color:theme(colors.red.50)] [--button-text:theme(colors.red.500)] [--button-bg-hover:theme(colors.red.100)] [--focus-ring:theme(colors.red.600)]",
+const variants = cva(
+  "rounded-md p-4 bg-[--bg-color] border border-[--button-bg-hover]",
+  {
+    variants: {
+      variant: {
+        info: "[--icon-color:theme(colors.blue.400)] [--text-color:theme(colors.blue.800)] [--bg-color:theme(colors.blue.50)] [--button-text:theme(colors.blue.500)] [--button-bg-hover:theme(colors.blue.100)] [--focus-ring:theme(colors.blue.600)]",
+        success:
+          "[--icon-color:theme(colors.green.400)] [--text-color:theme(colors.green.800)] [--bg-color:theme(colors.green.50)] [--button-text:theme(colors.green.500)] [--button-bg-hover:theme(colors.green.100)] [--focus-ring:theme(colors.green.600)]",
+        warn: "[--icon-color:theme(colors.yellow.400)] [--text-color:theme(colors.yellow.800)] [--bg-color:theme(colors.yellow.50)] [--button-text:theme(colors.yellow.500)] [--button-bg-hover:theme(colors.yellow.100)] [--focus-ring:theme(colors.yellow.600)]",
+        error:
+          "[--icon-color:theme(colors.red.400)] [--text-color:theme(colors.red.800)] [--bg-color:theme(colors.red.50)] [--button-text:theme(colors.red.500)] [--button-bg-hover:theme(colors.red.100)] [--focus-ring:theme(colors.red.600)]",
+      },
+    },
+    defaultVariants: {
+      variant: "info",
     },
   },
-  defaultVariants: {
-    variant: "info",
-  },
-});
+);
 
 export type InfoBoxVariantOptions = VariantProps<typeof variants>;
 

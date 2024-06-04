@@ -27,12 +27,14 @@ export function AppInfoStack() {
   }
 
   return (
-    <ul className="space-y-1 pt-1">
-      {infos.map((info) => (
-        <li key={info.storageKey} className="px-1">
-          <InfoBox {...info} />
-        </li>
-      ))}
-    </ul>
+    <div className="fixed bottom-0 left-0">
+      <ul className="max-w-xl space-y-1 p-2">
+        {infos.map((info) => (
+          <li key={info.storageKey}>
+            <InfoBox {...info} />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

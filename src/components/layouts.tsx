@@ -20,7 +20,6 @@ export function BasicLayout({ children }: { children?: React.ReactNode }) {
 export function SidebarLayout({ children }: { children?: React.ReactNode }) {
   return (
     <>
-      <AppInfoStack />
       <Header />
       <Body className="lg:grid-cols-5">
         <Sidebar className="hidden lg:block" />
@@ -28,6 +27,7 @@ export function SidebarLayout({ children }: { children?: React.ReactNode }) {
           <Main>{children}</Main>
           <Footer />
         </div>
+        <AppInfoStack />
       </Body>
     </>
   );
@@ -43,7 +43,7 @@ function Body({
   return (
     <div
       className={cn(
-        "grid min-h-[calc(100vh-var(--header-size))] border-t bg-gray-50",
+        "relative grid min-h-[calc(100vh-var(--header-size))] border-t bg-gray-50",
         className,
       )}
     >
