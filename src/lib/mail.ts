@@ -12,6 +12,7 @@ const SENDER_EMAIL = "hi@mostviertel.tech";
 type MailData = {
   templateName: string;
   to: string;
+  replyTo?: string;
   data: unknown;
 };
 
@@ -38,6 +39,8 @@ interface TrainingRequest extends MailData {
   templateName: "training-request";
   data: {
     user_name: string;
+    user_email: string;
+    user_phone: string | null;
     message?: string;
   };
 }
@@ -111,6 +114,7 @@ export async function sendMail(config: EmailOptions) {
   const sendgridMailData = {
     from: { name: "Alex", email: SENDER_EMAIL },
     to: config.to,
+    replyTo: config.replyTo || SENDER_EMAIL,
     templateId: TEMPLATE_ID_MAP[config.templateName],
     dynamicTemplateData: config.data,
   } satisfies MailDataRequired;

@@ -218,9 +218,16 @@ export async function createTrainingRequest({
     return { error: "not authenticated" };
   }
 
+  const user = await prisma.user.findFirstOrThrow({
+    where: {
+      id: session.user.id,
+    },
+    select: selectPublicUser,
+  });
+
   const existingRequest = await prisma.trainingRequest.findFirst({
     where: {
-      userId: session.user.id,
+      userId: user.id,
       trainerId,
     },
   });
@@ -245,7 +252,7 @@ export async function createTrainingRequest({
 
   await prisma.trainingRequest.create({
     data: {
-      userId: session.user.id,
+      userId: user.id,
       trainerId,
       message,
     },
@@ -254,8 +261,11 @@ export async function createTrainingRequest({
   await sendMail({
     templateName: "training-request",
     to: trainer.email,
+    replyTo: user.email,
     data: {
-      user_name: session.user.name,
+      user_name: user.name,
+      user_email: user.email,
+      user_phone: user.phone,
       message,
     },
   });
