@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { formatTrainingDate } from "@/lib/date";
 import { AuthorizationError } from "@/lib/errors";
 import { sendMail } from "@/lib/mail";
-import { prisma } from "@/lib/prisma";
+import { prisma, selectPublicUser } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 
 export async function register(id: string) {
@@ -60,11 +60,20 @@ export async function register(id: string) {
     },
   });
 
+  const user = await prisma.user.findFirstOrThrow({
+    where: {
+      id: currentUser.id,
+    },
+    select: selectPublicUser,
+  });
+
   sendMail({
     to: training.author.email,
     templateName: "training-registration",
     data: {
-      user_name: currentUser.name,
+      user_name: user.name,
+      user_email: user.email,
+      user_phone: user.phone,
       date: formatTrainingDate(training.start, training.end),
     },
   });

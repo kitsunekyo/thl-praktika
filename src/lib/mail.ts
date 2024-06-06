@@ -58,6 +58,8 @@ interface TrainingRegistration extends MailData {
   data: {
     user_name: string;
     date: string;
+    user_email: string;
+    user_phone: string | null;
   };
 }
 
