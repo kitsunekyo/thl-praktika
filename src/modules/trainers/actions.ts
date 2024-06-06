@@ -5,7 +5,7 @@ import { z } from "zod";
 
 import { formatTrainingDate } from "@/lib/date";
 import { AuthenticationError } from "@/lib/errors";
-import { sendMail } from "@/lib/mail";
+import { sendHtmlMail, sendTemplateMail } from "@/lib/mail";
 import { prisma, selectPublicUser } from "@/lib/prisma";
 
 import { getServerSession } from "../auth/next-auth";
@@ -91,7 +91,7 @@ export async function cancelTraining(id: string, reason: string) {
 
   const registeredUsers = training.registrations.map((r) => r.user.email);
   registeredUsers.forEach((email) => {
-    sendMail({
+    sendTemplateMail({
       to: email,
       templateName: "training-cancelled",
       data: {
@@ -143,13 +143,21 @@ export async function createTraining(
 
   const subscribedUsers = trainingRequests.map((r) => r.user.email);
   subscribedUsers.forEach((email) => {
-    sendMail({
+    sendTemplateMail({
       templateName: "training-created",
       to: email,
       data: {
         trainer_name: session.user.name,
       },
     });
+  });
+
+  sendTemplateMail({
+    templateName: "training-created",
+    to: "alexander.spieslechner@gmail.com",
+    data: {
+      trainer_name: session.user.name,
+    },
   });
 
   await prisma.trainingRequest.deleteMany({
@@ -203,7 +211,7 @@ export async function updateTraining(
   }));
 
   registeredUsers.forEach((user) => {
-    sendMail({
+    sendTemplateMail({
       to: user.email,
       templateName: "training-updated",
       data: {
@@ -270,7 +278,7 @@ export async function createTrainingRequest({
     },
   });
 
-  await sendMail({
+  await sendTemplateMail({
     templateName: "training-request",
     to: trainer.email,
     replyTo: user.email,

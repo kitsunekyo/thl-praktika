@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 
 import { formatTrainingDate } from "@/lib/date";
 import { AuthorizationError } from "@/lib/errors";
-import { sendMail } from "@/lib/mail";
+import { sendTemplateMail } from "@/lib/mail";
 import { prisma, selectPublicUser } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 
@@ -67,7 +67,7 @@ export async function register(id: string) {
     select: selectPublicUser,
   });
 
-  sendMail({
+  sendTemplateMail({
     to: training.author.email,
     templateName: "training-registration",
     data: {
@@ -117,7 +117,7 @@ export async function unregister(id: string) {
     },
   });
 
-  sendMail({
+  sendTemplateMail({
     to: registration.training.author.email,
     templateName: "training-registration-cancelled",
     data: {

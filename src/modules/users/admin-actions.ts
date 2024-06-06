@@ -2,7 +2,7 @@
 import { hash } from "bcrypt";
 import { revalidatePath } from "next/cache";
 
-import { sendMail } from "@/lib/mail";
+import { sendTemplateMail } from "@/lib/mail";
 import { prisma } from "@/lib/prisma";
 
 import { getServerSession } from "../auth/next-auth";
@@ -95,7 +95,7 @@ export async function inviteUser(
     return;
   }
 
-  sendMail({
+  sendTemplateMail({
     to: email,
     templateName: role === "trainer" ? "trainer-invitation" : "user-invitation",
     data: {
@@ -131,7 +131,7 @@ export async function resendInvitation(id: string) {
     },
   });
 
-  sendMail({
+  sendTemplateMail({
     to: invitation.email,
     templateName:
       invitation.role === "trainer" ? "trainer-invitation" : "user-invitation",

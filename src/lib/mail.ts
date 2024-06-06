@@ -9,14 +9,17 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
 
 const SENDER_EMAIL = "hi@mostviertel.tech";
 
-type MailData = {
-  templateName: string;
+interface MailOptions {
   to: string;
   replyTo?: string;
-  data: unknown;
-};
+}
 
-interface TrainingCancelled extends MailData {
+interface TemplateMailData extends MailOptions {
+  templateName: string;
+  data: unknown;
+}
+
+interface TrainingCancelled extends TemplateMailData {
   templateName: "training-cancelled";
   data: {
     trainer_name: string;
@@ -25,7 +28,7 @@ interface TrainingCancelled extends MailData {
   };
 }
 
-interface TrainingUpdated extends MailData {
+interface TrainingUpdated extends TemplateMailData {
   templateName: "training-updated";
   data: {
     trainer_name: string;
@@ -35,7 +38,7 @@ interface TrainingUpdated extends MailData {
   };
 }
 
-interface TrainingRequest extends MailData {
+interface TrainingRequest extends TemplateMailData {
   templateName: "training-request";
   data: {
     user_name: string;
@@ -45,7 +48,7 @@ interface TrainingRequest extends MailData {
   };
 }
 
-interface TrainingRegistrationCancelled extends MailData {
+interface TrainingRegistrationCancelled extends TemplateMailData {
   templateName: "training-registration-cancelled";
   data: {
     user_name: string;
@@ -53,7 +56,7 @@ interface TrainingRegistrationCancelled extends MailData {
   };
 }
 
-interface TrainingRegistration extends MailData {
+interface TrainingRegistration extends TemplateMailData {
   templateName: "training-registration";
   data: {
     user_name: string;
@@ -63,7 +66,7 @@ interface TrainingRegistration extends MailData {
   };
 }
 
-interface Invitation extends MailData {
+interface Invitation extends TemplateMailData {
   templateName: "user-invitation" | "trainer-invitation";
   data: {
     invite_sender_name: string;
@@ -71,21 +74,21 @@ interface Invitation extends MailData {
   };
 }
 
-interface ForgotPassword extends MailData {
+interface ForgotPassword extends TemplateMailData {
   templateName: "forgot-password";
   data: {
     action_url: string;
   };
 }
 
-interface TrainingCreated extends MailData {
+interface TrainingCreated extends TemplateMailData {
   templateName: "training-created";
   data: {
     trainer_name: string;
   };
 }
 
-type EmailOptions =
+type TemplateMailOptions =
   | TrainingCreated
   | TrainingUpdated
   | TrainingRequest
@@ -95,7 +98,7 @@ type EmailOptions =
   | Invitation
   | ForgotPassword;
 
-const TEMPLATE_ID_MAP: Record<EmailOptions["templateName"], string> = {
+const TEMPLATE_ID_MAP: Record<TemplateMailOptions["templateName"], string> = {
   "training-cancelled": "d-745ee4a501d946c0a7b6636ea5ad77cc",
   "training-updated": "d-b3801af82a314193a1e6d89d1cb34898",
   "training-request": "d-c7e4253108604ce484d897c72ba36e7b",
@@ -107,22 +110,25 @@ const TEMPLATE_ID_MAP: Record<EmailOptions["templateName"], string> = {
   "training-created": "d-6e42350a3566463e809af95b64d7b3ee",
 } as const;
 
-export async function sendMail(config: EmailOptions) {
-  const isDisabled = await getIsSendingDisabled(config.to, config.templateName);
+export async function sendTemplateMail(options: TemplateMailOptions) {
+  const isDisabled = await getIsSendingDisabled(
+    options.to,
+    options.templateName,
+  );
   if (isDisabled) {
     return;
   }
 
   const sendgridMailData = {
     from: { name: "THL Praktika", email: SENDER_EMAIL },
-    to: config.to,
-    replyTo: config.replyTo || SENDER_EMAIL,
-    templateId: TEMPLATE_ID_MAP[config.templateName],
-    dynamicTemplateData: config.data,
+    to: options.to,
+    replyTo: options.replyTo || SENDER_EMAIL,
+    templateId: TEMPLATE_ID_MAP[options.templateName],
+    dynamicTemplateData: options.data,
   } satisfies MailDataRequired;
 
   if (process.env.NODE_ENV === "development") {
-    console.log("mock: mail sent", sendgridMailData);
+    console.log("mock template email sent", sendgridMailData);
     return;
   }
 
@@ -133,22 +139,46 @@ export async function sendMail(config: EmailOptions) {
   });
 }
 
-const TEMPLATE_PREF_MAP = {
+interface HtmlMailOptions extends MailOptions {
+  subject: string;
+  html: string;
+}
+
+export async function sendHtmlMail({ to, subject, html }: HtmlMailOptions) {
+  if (process.env.NODE_ENV === "development") {
+    console.log("mock html email sent", { html, to });
+    return;
+  }
+
+  return sgMail
+    .send({
+      from: { name: "THL Praktika", email: SENDER_EMAIL },
+      to,
+      html,
+      subject,
+    })
+    .catch((e) => {
+      captureException(e);
+      throw new Error("could not send email");
+    });
+}
+
+const TEMPLATE_PREFERENCE_MAP = {
   "training-registration": "trainingRegistration",
   "training-registration-cancelled": "trainingRegistrationCancelled",
   "training-created": "trainingCreatedAfterRegistration",
 } as const;
 
 function canBeDisabled(
-  template: EmailOptions["templateName"],
-): template is keyof typeof TEMPLATE_PREF_MAP {
-  const templatesWithPreferences = Object.keys(TEMPLATE_PREF_MAP);
+  template: TemplateMailOptions["templateName"],
+): template is keyof typeof TEMPLATE_PREFERENCE_MAP {
+  const templatesWithPreferences = Object.keys(TEMPLATE_PREFERENCE_MAP);
   return templatesWithPreferences.includes(template);
 }
 
 async function getIsSendingDisabled(
   to: string,
-  templateName: EmailOptions["templateName"],
+  templateName: TemplateMailOptions["templateName"],
 ) {
   if (!canBeDisabled(templateName)) {
     return false;
@@ -173,5 +203,5 @@ async function getIsSendingDisabled(
     recipientUser.preferences || {},
   ).email;
 
-  return emailPreferences[TEMPLATE_PREF_MAP[templateName]] === false;
+  return emailPreferences[TEMPLATE_PREFERENCE_MAP[templateName]] === false;
 }
