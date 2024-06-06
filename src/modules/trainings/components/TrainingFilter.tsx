@@ -399,12 +399,14 @@ function FilterOption({
   children: React.ReactNode;
 }) {
   return (
-    <Badge
-      variant={selected ? "default" : "secondary"}
-      className={cn("select-none", { "cursor-pointer": !selected })}
+    <button
       onClick={onClick}
+      className={cn(
+        "select-none rounded-full focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+        { "cursor-pointer": !selected },
+      )}
     >
-      {children}
-    </Badge>
+      <Badge variant={selected ? "default" : "secondary"}>{children}</Badge>
+    </button>
   );
 }
