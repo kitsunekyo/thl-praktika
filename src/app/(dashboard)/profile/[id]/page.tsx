@@ -92,7 +92,7 @@ export default async function Page({
             </tbody>
           </table>
         </div>
-        {session.user.role === "user" && (
+        {session.user.role === "user" && profile.role === "trainer" && (
           <RequestTrainingButton
             userId={session.user.id}
             trainerId={profile.id}
