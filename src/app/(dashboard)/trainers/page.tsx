@@ -17,7 +17,7 @@ import {
 import { getServerSession } from "@/modules/auth/next-auth";
 import { TrainerMenu } from "@/modules/trainers/components/TrainerMenu";
 import { getTrainers, getTrainingRequests } from "@/modules/trainers/queries";
-import { RequestTraining } from "@/modules/trainings/components/RequestTraining";
+import { RequestTrainingDialog } from "@/modules/trainings/components/RequestTrainingDialog";
 import { getInitials } from "@/modules/users/name";
 
 const REQUEST_COOLDOWN_IN_DAYS = 7;
@@ -136,15 +136,16 @@ async function TrainerList() {
             </div>
             <div className="flex shrink-0 items-center gap-x-6">
               <div className="hidden sm:flex sm:flex-col sm:items-end">
-                {session.user.role !== "trainer" && (
-                  <RequestTraining
-                    trainerId={trainer.id}
-                    disabled={isOnCooldown}
-                  >
+                {session.user.role !== "trainer" && !isOnCooldown ? (
+                  <RequestTrainingDialog trainerId={trainer.id}>
                     <Button size="sm" variant="outline">
                       Praktikum anfragen
                     </Button>
-                  </RequestTraining>
+                  </RequestTrainingDialog>
+                ) : (
+                  <div className="text-sm font-medium text-muted-foreground">
+                    Anfrage gesendet
+                  </div>
                 )}
               </div>
               <TrainerMenu

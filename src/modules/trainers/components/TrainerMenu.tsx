@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { RequestTraining } from "@/modules/trainings/components/RequestTraining";
+import { RequestTrainingDialog } from "@/modules/trainings/components/RequestTrainingDialog";
 
 export function TrainerMenu({
   trainerId,
@@ -34,15 +34,19 @@ export function TrainerMenu({
             Zum Profil
           </Link>
         </DropdownMenuItem>
-        {userRole === "user" && (
-          <RequestTraining trainerId={trainerId} disabled={isRequestCooldown}>
+        {userRole === "user" && !isRequestCooldown ? (
+          <RequestTrainingDialog trainerId={trainerId}>
             <DropdownMenuItem
               onSelect={(e) => e.preventDefault()}
               className="md:hidden"
             >
               Praktikum anfragen
             </DropdownMenuItem>
-          </RequestTraining>
+          </RequestTrainingDialog>
+        ) : (
+          <div className="px-2 py-1.5 text-sm text-muted-foreground">
+            Anfrage gesendet
+          </div>
         )}
       </DropdownMenuContent>
     </DropdownMenu>

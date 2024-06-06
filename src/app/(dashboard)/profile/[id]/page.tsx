@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { getServerSession } from "@/modules/auth/next-auth";
 import { getTrainingRequests } from "@/modules/trainers/queries";
-import { RequestTraining } from "@/modules/trainings/components/RequestTraining";
+import { RequestTrainingDialog } from "@/modules/trainings/components/RequestTrainingDialog";
 import { TrainingListWithDateFilter } from "@/modules/trainings/components/TrainingList";
 import { getTrainingsByAuthor } from "@/modules/trainings/queries";
 import { getProfileById } from "@/modules/users/queries";
@@ -156,9 +156,11 @@ async function RequestTrainingButton({
   );
 
   return (
-    <RequestTraining trainerId={trainerId} disabled={hasRecentlyRequested}>
-      <Button size="sm">Praktikum anfragen</Button>
-    </RequestTraining>
+    <RequestTrainingDialog trainerId={trainerId}>
+      <Button size="sm" variant="outline">
+        Praktikum anfragen
+      </Button>
+    </RequestTrainingDialog>
   );
 }
 

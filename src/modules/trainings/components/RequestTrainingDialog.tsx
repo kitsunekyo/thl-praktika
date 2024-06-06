@@ -32,13 +32,11 @@ const formSchema = z.object({
   message: z.string().max(190).optional(),
 });
 
-export function RequestTraining({
+export function RequestTrainingDialog({
   trainerId,
-  disabled,
   children,
 }: {
   trainerId: string;
-  disabled?: boolean;
   children: React.ReactNode;
 }) {
   const [loading, startTransition] = useTransition();
@@ -83,14 +81,6 @@ export function RequestTraining({
       });
     });
   };
-
-  if (disabled) {
-    return (
-      <div className="px-2 py-1.5 text-sm text-muted-foreground">
-        Anfrage gesendet
-      </div>
-    );
-  }
 
   return (
     <AlertDialog>
