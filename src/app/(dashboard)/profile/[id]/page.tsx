@@ -89,6 +89,14 @@ export default async function Page({
                   )}
                 </TableData>
               </TableRow>
+              {profile.description && (
+                <TableRow>
+                  <TableHead>Beschreibung</TableHead>
+                  <TableData>
+                    <span>{profile.description}</span>
+                  </TableData>
+                </TableRow>
+              )}
             </tbody>
           </table>
         </div>

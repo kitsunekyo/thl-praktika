@@ -49,6 +49,7 @@ model User {
   phone            String?
   lastLogin        DateTime?
   preferences      Json?             @db.Json
+  description      String?
   accounts         Account[]
   sessions         Session[]
   trainings        Training[]

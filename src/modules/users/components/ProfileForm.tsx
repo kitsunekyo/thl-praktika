@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { PrivateUser } from "@/lib/prisma";
 import { updateProfile } from "@/modules/users/actions";
@@ -31,6 +32,7 @@ export const profileSchema = z.object({
     z.string().regex(phoneRegex, "Ungültige Telefonnummer"),
   ]),
   address: z.string().optional(),
+  description: z.string().max(400).optional(),
 });
 
 export function ProfileForm({ user }: { user: PrivateUser }) {
@@ -42,6 +44,7 @@ export function ProfileForm({ user }: { user: PrivateUser }) {
       name: user.name,
       phone: user.phone || "",
       address: user.address || "",
+      description: user.description || "",
     },
   });
 
@@ -84,6 +87,20 @@ export function ProfileForm({ user }: { user: PrivateUser }) {
               <FormLabel>Name*</FormLabel>
               <FormControl>
                 <Input required {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Beschreibung</FormLabel>
+              <FormControl>
+                <Textarea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

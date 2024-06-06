@@ -23,6 +23,7 @@ export const selectPublicUser = {
   image: true,
   phone: true,
   address: true,
+  description: true,
 };
 
 export type PrivateUser = Pick<User, keyof typeof selectPrivateUser>;
@@ -37,4 +38,5 @@ export const selectPrivateUser = {
   address: true,
   preferences: true,
   lastLogin: true,
+  description: true,
 };
