@@ -6,7 +6,10 @@ import { useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { deleteInvitation, resendInvitation } from "@/modules/users/actions";
+import {
+  deleteInvitation,
+  resendInvitation,
+} from "@/modules/users/admin-actions";
 
 export function InvitationButtons({ invitation }: { invitation: Invitation }) {
   const [pending, startTransition] = useTransition();

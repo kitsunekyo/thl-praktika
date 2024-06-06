@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-import { createUser } from "@/modules/users/actions";
+import { createUser } from "@/modules/users/admin-actions";
 
 export const userSchema = z.object({
   email: z.string().email(),

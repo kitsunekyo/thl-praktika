@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/components/ui/use-toast";
-import { inviteUser } from "@/modules/users/actions";
+import { inviteUser } from "@/modules/users/admin-actions";
 
 export const userSchema = z.object({
   email: z.string().email(),

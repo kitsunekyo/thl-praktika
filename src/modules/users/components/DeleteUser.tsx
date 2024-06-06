@@ -5,7 +5,7 @@ import { User } from "next-auth";
 import { useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
-import { deleteUser } from "@/modules/users/actions";
+import { deleteUser } from "@/modules/users/admin-actions";
 
 export function DeleteUser({ user }: { user: User }) {
   const [pending, startTransition] = useTransition();
