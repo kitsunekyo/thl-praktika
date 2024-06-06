@@ -181,6 +181,7 @@ export async function updateTraining(
   await prisma.training.update({
     where: {
       id,
+      authorId: session.user.id,
     },
     data,
   });
@@ -216,6 +217,7 @@ export async function updateTraining(
 
   revalidatePath("/trainings");
 }
+
 export async function createTrainingRequest({
   trainerId,
   message,
@@ -224,8 +226,8 @@ export async function createTrainingRequest({
   message?: string;
 }) {
   const session = await getServerSession();
-  if (!session?.user) {
-    return { error: "not authenticated" };
+  if (!session?.user || session.user.role !== "user") {
+    return { error: "not authorized" };
   }
 
   const user = await prisma.user.findFirstOrThrow({
@@ -281,19 +283,5 @@ export async function createTrainingRequest({
   });
 
   revalidatePath(`/profile/${trainerId}`);
-  revalidatePath("/trainers/requests");
-}
-
-export async function deleteTrainingRequest(id: string) {
-  const session = await getServerSession();
-  if (!session?.user) {
-    return { error: "not authenticated" };
-  }
-  await prisma.trainingRequest.delete({
-    where: {
-      id,
-    },
-  });
-
   revalidatePath("/trainers/requests");
 }
