@@ -34,14 +34,7 @@ export default async function Page() {
         <BreadcrumbsItem href="/trainers">Trainer:innen</BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
-        <PageTitle
-          content={
-            <>
-              Sende Praktika Anfragen an Trainer:innen. Sie erhalten eine
-              Benachrichtigung mit der Bitte Praktika einzutragen.
-            </>
-          }
-        >
+        <PageTitle content="Alle Trainer:innen, die auf der App registriert sind. Du kannst Praktika über die App anfragen, oder die Trainer:innen über Telefon oder E-Mail kontaktieren.">
           Trainer:innen
         </PageTitle>
         <div className="max-w-6xl">
