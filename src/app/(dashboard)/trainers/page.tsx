@@ -20,6 +20,7 @@ import { TrainerMenu } from "@/modules/trainers/components/TrainerMenu";
 import { getTrainers, getTrainingRequests } from "@/modules/trainers/queries";
 import { RequestTrainingDialog } from "@/modules/trainings/components/RequestTrainingDialog";
 import { getInitials } from "@/modules/users/name";
+import { getTrainerInvitations } from "@/modules/users/queries";
 
 const REQUEST_COOLDOWN_IN_DAYS = 7;
 
@@ -73,98 +74,171 @@ async function TrainerList() {
   }
 
   const trainers = await getTrainers();
+  const trainerInvitations = await getTrainerInvitations();
   const myRequests = await getTrainingRequests({ userId: session.user.id });
 
   return (
-    <ul role="list" className="divide-y divide-gray-100">
-      {trainers.map((trainer) => {
-        const isOnCooldown = Boolean(
-          myRequests
-            .filter((r) => r.trainerId === trainer.id)
-            .find(
-              (r) =>
-                differenceInDays(new Date(), new Date(r.createdAt)) <
-                REQUEST_COOLDOWN_IN_DAYS,
-            ),
-        );
+    <div>
+      <ul role="list" className="divide-y divide-gray-100">
+        {trainers.map((trainer) => {
+          const isOnCooldown = Boolean(
+            myRequests
+              .filter((r) => r.trainerId === trainer.id)
+              .find(
+                (r) =>
+                  differenceInDays(new Date(), new Date(r.createdAt)) <
+                  REQUEST_COOLDOWN_IN_DAYS,
+              ),
+          );
 
-        return (
-          <li key={trainer.email} className="flex justify-between gap-x-6 py-5">
+          return (
+            <li
+              key={trainer.email}
+              className="flex justify-between gap-x-6 py-5"
+            >
+              <div className="flex min-w-0 items-start gap-x-4">
+                <Link
+                  href={`/profile/${trainer.id}`}
+                  className="shrink-0 leading-[0]"
+                >
+                  <Avatar size="lg">
+                    <AvatarImage src={trainer.image || "/img/avatar.jpg"} />
+                    <AvatarFallback>
+                      {getInitials({ name: trainer.name })}
+                    </AvatarFallback>
+                  </Avatar>
+                </Link>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold leading-6 text-gray-900">
+                    <Link
+                      href={`/profile/${trainer.id}`}
+                      className="hover:underline"
+                    >
+                      {trainer.name}
+                    </Link>
+                  </p>
+                  <div className="mt-1 flex text-xs leading-5 text-gray-500">
+                    <a
+                      href={`mailto:${trainer.email}`}
+                      className="min-w-0 truncate hover:underline md:max-w-64"
+                    >
+                      {trainer.email}
+                    </a>
+                    {!!trainer.phone && (
+                      <div className="min-w-0 shrink-0 truncate">
+                        <span className="mx-2">•</span>
+                        <a
+                          href={`tel:${trainer.phone}`}
+                          className="hover:underline"
+                        >
+                          {trainer.phone}
+                        </a>
+                      </div>
+                    )}
+                    {!!trainer.address && (
+                      <div className="hidden min-w-0 items-center md:flex">
+                        <span className="mx-2">•</span>
+                        <MapPinIcon className="h-3 w-3 shrink-0" />
+                        <p className="ml-1 truncate">{trainer.address}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="flex shrink-0 items-center gap-x-6">
+                <div className="hidden sm:flex sm:flex-col sm:items-end">
+                  {session.user.role === "user" ? (
+                    !isOnCooldown ? (
+                      <RequestTrainingDialog trainerId={trainer.id}>
+                        <Button size="sm" variant="outline">
+                          Praktikum anfragen
+                        </Button>
+                      </RequestTrainingDialog>
+                    ) : (
+                      <div className="text-sm font-medium text-muted-foreground">
+                        Anfrage gesendet
+                      </div>
+                    )
+                  ) : null}
+                </div>
+                <TrainerMenu
+                  trainerId={trainer.id}
+                  isRequestCooldown={isOnCooldown}
+                  userRole={session.user.role}
+                />
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+
+      <h2 className="mb-3 mt-6 text-lg font-medium">
+        Eingeladene Trainer:innen
+      </h2>
+      <p className="mb-3 space-y-2 text-sm text-muted-foreground">
+        Diese Trainer:innen haben eine Einladung erhalten, aber haben sich nicht
+        auf der App registriert. Du kannst per Telefon oder E-Mail um Praktika
+        Möglichkeiten anfragen.
+      </p>
+      <ul role="list" className="divide-y divide-gray-100">
+        {trainerInvitations.map((invitation) => (
+          <li
+            key={invitation.email}
+            className="flex justify-between gap-x-6 py-5"
+          >
             <div className="flex min-w-0 items-start gap-x-4">
               <Link
-                href={`/profile/${trainer.id}`}
+                href={`/trainers/invitations/${invitation.id}`}
                 className="shrink-0 leading-[0]"
               >
                 <Avatar size="lg">
-                  <AvatarImage src={trainer.image || "/img/avatar.jpg"} />
+                  <AvatarImage src="/img/avatar.jpg" />
                   <AvatarFallback>
-                    {getInitials({ name: trainer.name })}
+                    {getInitials({ name: invitation.name })}
                   </AvatarFallback>
                 </Avatar>
               </Link>
               <div className="min-w-0">
                 <p className="text-sm font-semibold leading-6 text-gray-900">
                   <Link
-                    href={`/profile/${trainer.id}`}
+                    href={`/trainers/invitations/${invitation.id}`}
                     className="hover:underline"
                   >
-                    {trainer.name}
+                    {invitation.name}
                   </Link>
                 </p>
                 <div className="mt-1 flex text-xs leading-5 text-gray-500">
                   <a
-                    href={`mailto:${trainer.email}`}
+                    href={`mailto:${invitation.email}`}
                     className="min-w-0 truncate hover:underline md:max-w-64"
                   >
-                    {trainer.email}
+                    {invitation.email}
                   </a>
-                  {!!trainer.phone && (
+                  {!!invitation.phone && (
                     <div className="min-w-0 shrink-0 truncate">
                       <span className="mx-2">•</span>
                       <a
-                        href={`tel:${trainer.phone}`}
+                        href={`tel:${invitation.phone}`}
                         className="hover:underline"
                       >
-                        {trainer.phone}
+                        {invitation.phone}
                       </a>
                     </div>
                   )}
-                  {!!trainer.address && (
+                  {!!invitation.address && (
                     <div className="hidden min-w-0 items-center md:flex">
                       <span className="mx-2">•</span>
                       <MapPinIcon className="h-3 w-3 shrink-0" />
-                      <p className="ml-1 truncate">{trainer.address}</p>
+                      <p className="ml-1 truncate">{invitation.address}</p>
                     </div>
                   )}
                 </div>
               </div>
             </div>
-            <div className="flex shrink-0 items-center gap-x-6">
-              <div className="hidden sm:flex sm:flex-col sm:items-end">
-                {session.user.role === "user" ? (
-                  !isOnCooldown ? (
-                    <RequestTrainingDialog trainerId={trainer.id}>
-                      <Button size="sm" variant="outline">
-                        Praktikum anfragen
-                      </Button>
-                    </RequestTrainingDialog>
-                  ) : (
-                    <div className="text-sm font-medium text-muted-foreground">
-                      Anfrage gesendet
-                    </div>
-                  )
-                ) : null}
-              </div>
-              <TrainerMenu
-                trainerId={trainer.id}
-                isRequestCooldown={isOnCooldown}
-                userRole={session.user.role}
-              />
-            </div>
           </li>
-        );
-      })}
-    </ul>
+        ))}
+      </ul>
+    </div>
   );
 }
 

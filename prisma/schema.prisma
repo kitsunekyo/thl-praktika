@@ -69,7 +69,9 @@ model VerificationToken {
 model Invitation {
   id        String   @id @default(cuid())
   email     String
-  name      String?
+  name      String
+  address   String?
+  phone     String?
   createdAt DateTime @default(now())
   role      String   @default("user")
 }

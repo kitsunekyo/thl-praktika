@@ -43,12 +43,21 @@ export async function createUser(
     };
   }
 }
-export async function inviteUser(
-  email: string,
-  name = "",
-  role: "user" | "trainer" | "admin" = "user",
-  shouldSendEmail: boolean = false,
-) {
+export async function inviteUser({
+  email,
+  name,
+  role = "user",
+  phone = "",
+  address = "",
+  shouldSendEmail = false,
+}: {
+  email: string;
+  name: string;
+  phone?: string;
+  address?: string;
+  role?: "user" | "trainer" | "admin";
+  shouldSendEmail?: boolean;
+}) {
   const session = await getServerSession();
   if (!session?.user || session.user.role !== "admin") {
     return { error: "not authorized" };
@@ -82,6 +91,8 @@ export async function inviteUser(
       email,
       name,
       role,
+      address,
+      phone,
     },
   });
 

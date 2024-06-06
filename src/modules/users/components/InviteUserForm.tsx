@@ -30,7 +30,9 @@ import { inviteUser } from "@/modules/users/admin-actions";
 
 export const userSchema = z.object({
   email: z.string().email(),
-  name: z.string().optional(),
+  name: z.string(),
+  address: z.string().optional(),
+  phone: z.string().optional(),
   role: z.union([z.literal("user"), z.literal("trainer"), z.literal("admin")]),
   sendEmail: z.boolean(),
 });
@@ -42,6 +44,8 @@ export function InviteUserForm() {
     defaultValues: {
       email: "",
       name: "",
+      phone: "",
+      address: "",
       role: "user",
       sendEmail: false,
     },
@@ -54,12 +58,14 @@ export function InviteUserForm() {
         className="max-w-lg space-y-6"
         onSubmit={form.handleSubmit((data: z.infer<typeof userSchema>) => {
           startTransition(async () => {
-            const res = await inviteUser(
-              data.email,
-              data.name,
-              data.role,
-              data.sendEmail,
-            );
+            const res = await inviteUser({
+              email: data.email,
+              name: data.name,
+              address: data.address,
+              phone: data.phone,
+              role: data.role,
+              shouldSendEmail: data.sendEmail,
+            });
             if (res?.error) {
               toast({
                 title: "Fehler beim Einladen",
@@ -117,14 +123,35 @@ export function InviteUserForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Name*</FormLabel>
               <FormControl>
-                <Input
-                  type="text"
-                  data-1p-ignore
-                  placeholder="Sam S"
-                  {...field}
-                />
+                <Input type="text" data-1p-ignore required {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Telefon</FormLabel>
+              <FormControl>
+                <Input type="text" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="address"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Adresse</FormLabel>
+              <FormControl>
+                <Input type="text" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

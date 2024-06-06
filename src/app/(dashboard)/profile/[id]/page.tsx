@@ -32,7 +32,15 @@ export default async function Page({
   return (
     <>
       <Breadcrumbs>
-        <BreadcrumbsItem href="/profile">Profil</BreadcrumbsItem>
+        {profile.role === "trainer" && (
+          <BreadcrumbsItem href="/trainers">Trainer:innen</BreadcrumbsItem>
+        )}
+        {profile.role === "user" && (
+          <BreadcrumbsItem href="/users">Praktikanten</BreadcrumbsItem>
+        )}
+        {profile.role === "admin" && (
+          <BreadcrumbsItem href="/admin/users">Admins</BreadcrumbsItem>
+        )}
         <BreadcrumbsSeparator />
         <BreadcrumbsItem href={`/profile/${id}`}>
           {profile.name}
