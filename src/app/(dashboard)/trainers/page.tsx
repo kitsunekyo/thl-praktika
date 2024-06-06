@@ -53,7 +53,7 @@ export default async function Page() {
         >
           Trainer:innen
         </PageTitle>
-        <div className="max-w-6xl">
+        <div className="max-w-4xl">
           <TrainerList />
           <div className="my-8" />
           {session.user.role === "user" && (

@@ -30,7 +30,9 @@ export default async function Page() {
         >
           Praktikanten
         </PageTitle>
-        <NewUserList />
+        <div className="max-w-4xl">
+          <NewUserList />
+        </div>
       </div>
     </>
   );
