@@ -3,6 +3,7 @@
 import { EllipsisVerticalIcon } from "lucide-react";
 import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,8 +23,10 @@ export function TrainerMenu({
 }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="rounded focus:outline-none">
-        <EllipsisVerticalIcon className="h-4 w-4" />
+      <DropdownMenuTrigger className="rounded focus:outline-none" asChild>
+        <Button variant="ghost" size="icon">
+          <EllipsisVerticalIcon className="h-4 w-4" />
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-[180px]">
         <DropdownMenuItem key={`/profile/${trainerId}`} asChild>
