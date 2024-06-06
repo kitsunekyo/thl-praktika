@@ -177,6 +177,17 @@ export function SignupForm({ name, email }: { name?: string; email?: string }) {
       </div>
       <GoogleSignupButton />
       <p className="my-6 text-center text-xs text-muted-foreground">
+        Mit deiner Registrierung nimmst du{" "}
+        <Link href="/legal/privacy" target="_blank" className="text-blue-500">
+          Datenschutzerklärung
+        </Link>{" "}
+        und{" "}
+        <Link href="/legal/cookies" target="_blank" className="text-blue-500">
+          Cookie Policy
+        </Link>{" "}
+        zur Kenntnis.
+      </p>
+      <p className="my-6 text-center text-xs text-muted-foreground">
         Du musst die bei THL hinterlegte E-Mail Adresse, oder die aus deiner
         Einladung verwenden, um dich registrieren zu können. Wenn du eine andere
         E-Mail Adresse verwenden möchtest, kontaktiere mich bitte unter{" "}
@@ -223,7 +234,7 @@ function GoogleSignupButton() {
           d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
         ></path>
       </svg>
-      Mit Google anmelden
+      Mit Google registrieren
     </Button>
   );
 }
