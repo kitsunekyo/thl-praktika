@@ -74,10 +74,7 @@ export function TrainingCard({
             <Avatar size="sm">
               <AvatarImage src={training.author.image || "/img/avatar.jpg"} />
               <AvatarFallback>
-                {getInitials({
-                  name: training.author.name,
-                  email: training.author.email,
-                })}
+                {getInitials(training.author.name)}
               </AvatarFallback>
             </Avatar>
           </Link>

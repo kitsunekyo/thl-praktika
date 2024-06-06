@@ -103,9 +103,7 @@ async function TrainerList() {
                 >
                   <Avatar size="lg">
                     <AvatarImage src={trainer.image || "/img/avatar.jpg"} />
-                    <AvatarFallback>
-                      {getInitials({ name: trainer.name })}
-                    </AvatarFallback>
+                    <AvatarFallback>{getInitials(trainer.name)}</AvatarFallback>
                   </Avatar>
                 </Link>
                 <div className="min-w-0">
@@ -194,7 +192,7 @@ async function TrainerList() {
                 <Avatar size="lg">
                   <AvatarImage src="/img/avatar.jpg" />
                   <AvatarFallback>
-                    {getInitials({ name: invitation.name })}
+                    {getInitials(invitation.name)}
                   </AvatarFallback>
                 </Avatar>
               </Link>

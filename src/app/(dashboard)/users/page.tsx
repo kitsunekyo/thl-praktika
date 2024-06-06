@@ -51,9 +51,7 @@ async function NewUserList() {
               >
                 <Avatar size="lg">
                   <AvatarImage src={user.image || "/img/avatar.jpg"} />
-                  <AvatarFallback>
-                    {getInitials({ name: user.name })}
-                  </AvatarFallback>
+                  <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
                 </Avatar>
               </Link>
               <div className="min-w-0">

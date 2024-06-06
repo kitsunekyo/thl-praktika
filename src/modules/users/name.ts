@@ -1,19 +1,11 @@
-export function getInitials(user: {
-  name?: string | null;
-  email?: string | null;
-}) {
-  const name = user.name?.split(" ");
-  if (name) {
-    const initials =
-      name.length > 2
-        ? name[0].charAt(0) + name[1].charAt(0)
-        : name[0].substring(0, 2);
-    return initials.toUpperCase();
-  }
-  const emailName = user.email?.split("@")[0];
-  if (emailName && emailName.length > 1) {
-    const initials = emailName.charAt(0) + emailName.charAt(1);
-    return initials.toUpperCase();
-  }
-  return "U";
+export function getInitials(payload: { name: string } | string) {
+  const name = typeof payload === "string" ? payload : payload.name;
+  const parts = name.split(" ");
+
+  const initials =
+    parts.length > 2
+      ? parts[0].charAt(0) + parts[1].charAt(0)
+      : parts[0].substring(0, 2);
+
+  return initials.toUpperCase();
 }
