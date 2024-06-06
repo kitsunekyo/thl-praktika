@@ -120,20 +120,16 @@ export function TrainingList({
 
 function NoTrainings() {
   return (
-    <>
+    <div className="space-y-2">
       <Image
         src="/img/dog-bucket.svg"
-        width={196}
-        height={224}
+        width={196 / 1.75}
+        height={224 / 1.75}
         alt="Hund mit Eimer am Kopf"
       />
-      <h3 className="mb-2 mt-6 text-xl font-bold tracking-tight sm:text-xl">
-        Keine Praktika
-      </h3>
-
-      <p className="mb-6 text-muted-foreground">
+      <p className="text-muted-foreground">
         Es wurden keine Praktika gefunden.
       </p>
-    </>
+    </div>
   );
 }

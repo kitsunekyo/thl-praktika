@@ -7,17 +7,17 @@ import {
   BreadcrumbsItem,
   BreadcrumbsSeparator,
 } from "@/components/Breadcrumbs";
-import { PrivateUser } from "@/lib/prisma";
+import { Button } from "@/components/ui/button";
 import { getServerSession } from "@/modules/auth/next-auth";
 import { getTrainingRequests } from "@/modules/trainers/queries";
-import { RequestTraining } from "@/modules/trainings/components/RequestTraining";
+import { RequestTrainingDialog } from "@/modules/trainings/components/RequestTrainingDialog";
 import { TrainingListWithDateFilter } from "@/modules/trainings/components/TrainingList";
 import { getTrainingsByAuthor } from "@/modules/trainings/queries";
 import { getProfileById } from "@/modules/users/queries";
 
 const REQUEST_COOLDOWN_IN_DAYS = 7;
 
-export default async function Profile({
+export default async function Page({
   params: { id },
 }: {
   params: { id: string };
@@ -38,7 +38,7 @@ export default async function Profile({
           {profile.name}
         </BreadcrumbsItem>
       </Breadcrumbs>
-      <article className="mx-auto max-w-[600px] py-6">
+      <article className="max-w-2xl py-6">
         <div className="mb-6 space-y-4">
           <ProfileImage src={profile.image} />
           <header>
@@ -92,14 +92,13 @@ export default async function Profile({
             </tbody>
           </table>
         </div>
-        <RequestTrainingWrapper
-          userId={session.user.id}
-          trainerId={id}
-          role={profile.role}
-        />
-        {profile.role === "trainer" && (
-          <Trainings trainerId={id} user={session.user} />
+        {session.user.role === "user" && (
+          <RequestTrainingButton
+            userId={session.user.id}
+            trainerId={profile.id}
+          />
         )}
+        {profile.role === "trainer" && <Trainings trainerId={id} />}
       </article>
     </>
   );
@@ -138,19 +137,13 @@ function ProfileImage({ src }: { src: string | null }) {
   );
 }
 
-async function RequestTrainingWrapper({
+async function RequestTrainingButton({
   userId,
   trainerId,
-  role,
 }: {
   userId: string;
   trainerId: string;
-  role: string;
 }) {
-  if (role === "user") {
-    return null;
-  }
-
   const requests = await getTrainingRequests({ trainerId, userId });
   const hasRecentlyRequested = Boolean(
     requests
@@ -163,23 +156,26 @@ async function RequestTrainingWrapper({
   );
 
   return (
-    <RequestTraining trainerId={trainerId} disabled={hasRecentlyRequested} />
+    <RequestTrainingDialog trainerId={trainerId}>
+      <Button size="sm" variant="outline">
+        Praktikum anfragen
+      </Button>
+    </RequestTrainingDialog>
   );
 }
 
-async function Trainings({
-  trainerId,
-  user,
-}: {
-  trainerId: string;
-  user: Pick<PrivateUser, "id" | "role">;
-}) {
+async function Trainings({ trainerId }: { trainerId: string }) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    throw new Error("Unauthorized");
+  }
+
   const trainings = await getTrainingsByAuthor(trainerId);
 
   return (
-    <section className="my-12">
-      <h2 className="mb-2 font-medium">Praktika</h2>
-      <TrainingListWithDateFilter trainings={trainings} user={user} />
+    <section className="my-12 space-y-2">
+      <h2 className="text-lg font-semibold">Praktika</h2>
+      <TrainingListWithDateFilter trainings={trainings} user={session.user} />
     </section>
   );
 }
