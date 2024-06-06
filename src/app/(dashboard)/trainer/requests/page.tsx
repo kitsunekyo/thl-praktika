@@ -6,6 +6,7 @@ import {
   BreadcrumbsItem,
   BreadcrumbsSeparator,
 } from "@/components/Breadcrumbs";
+import { HelpLink } from "@/components/HelpLink";
 import { PageTitle } from "@/components/PageTitle";
 import {
   Table,
@@ -40,7 +41,20 @@ export default async function Page() {
         </BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
-        <PageTitle content="Hier findest du Praktika Anfragen die dir Student:innen geschickt haben. Wenn du ein neues Praktikum erstellst, werden alle in dieser Liste benachrichtigt.">
+        <PageTitle
+          content={
+            <>
+              <p>
+                Hier findest du Praktika Anfragen die dir Student:innen
+                geschickt haben. Wenn du ein neues Praktikum erstellst, werden
+                alle in dieser Liste benachrichtigt.
+              </p>
+              <HelpLink href="/help/receive-requests">
+                Wie funktionierts?
+              </HelpLink>
+            </>
+          }
+        >
           Praktika Anfragen
         </PageTitle>
         <div className="space-y-4">

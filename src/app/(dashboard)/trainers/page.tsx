@@ -3,6 +3,7 @@ import { MapPinIcon } from "lucide-react";
 import Link from "next/link";
 
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
+import { HelpLink } from "@/components/HelpLink";
 import { PageTitle } from "@/components/PageTitle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -34,7 +35,18 @@ export default async function Page() {
         <BreadcrumbsItem href="/trainers">Trainer:innen</BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
-        <PageTitle content="Alle Trainer:innen, die auf der App registriert sind. Du kannst Praktika über die App anfragen, oder die Trainer:innen über Telefon oder E-Mail kontaktieren.">
+        <PageTitle
+          content={
+            <>
+              <p>
+                Hier findest du alle Trainer:innen, die auf der App registriert
+                sind. Du kannst Praktika anfragen, oder direkt über Telefon oder
+                E-Mail Kontakt aufnehmen.
+              </p>
+              <HelpLink href="/help/send-requests">Wie funktionierts?</HelpLink>
+            </>
+          }
+        >
           Trainer:innen
         </PageTitle>
         <div className="max-w-6xl">

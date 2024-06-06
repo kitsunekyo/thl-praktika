@@ -28,7 +28,7 @@ export default async function Trainings() {
         </BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
-        <PageTitle content="Deine Anmeldungen für Praktika.">
+        <PageTitle content={<p>Deine Anmeldungen für Praktika.</p>}>
           Anmeldungen
         </PageTitle>
         <div className="my-2">

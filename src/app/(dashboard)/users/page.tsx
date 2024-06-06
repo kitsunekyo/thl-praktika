@@ -20,7 +20,14 @@ export default async function Page() {
         <BreadcrumbsItem href="/users">Praktikanten</BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
-        <PageTitle content="Hier findest du alle Praktikanten, die sich auf dieser Seite registriert haben.">
+        <PageTitle
+          content={
+            <p>
+              Hier findest du alle Praktikanten, die sich auf dieser Seite
+              registriert haben.
+            </p>
+          }
+        >
           Praktikanten
         </PageTitle>
         <NewUserList />

@@ -9,9 +9,11 @@ export function PageTitle({
 }) {
   return (
     <div className="mb-4 flex items-center justify-between">
-      <div className="space-y-1">
-        <h2 className="text-lg font-semibold tracking-tight">{children}</h2>
-        {content && <p className="text-sm text-muted-foreground">{content}</p>}
+      <div className="space-y-2 text-sm text-muted-foreground">
+        <h1 className="text-xl font-semibold tracking-tight text-black">
+          {children}
+        </h1>
+        {content}
       </div>
     </div>
   );

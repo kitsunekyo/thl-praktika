@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
+import { HelpLink } from "@/components/HelpLink";
 import { PageTitle } from "@/components/PageTitle";
 import { AuthorizationError } from "@/lib/errors";
 import { getMyTrainings } from "@/modules/trainers/queries";
@@ -25,7 +26,19 @@ export default async function Page() {
         <BreadcrumbsItem href="/trainer">Meine Praktika</BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
-        <PageTitle content="Hier findest du deine erstellten Praktika. Du kannst sehen wer angemeldet ist, kannst Praktika bearbeiten oder absagen.">
+        <PageTitle
+          content={
+            <>
+              <p>
+                Hier findest du deine erstellten Praktika. Du kannst sehen wer
+                angemeldet ist, kannst Praktika bearbeiten oder absagen.
+              </p>
+              <HelpLink href="/help/receive-requests">
+                Wie funktionierts?
+              </HelpLink>
+            </>
+          }
+        >
           Meine Praktika
         </PageTitle>
         <div className="space-y-4">
