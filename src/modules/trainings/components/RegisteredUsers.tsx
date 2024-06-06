@@ -41,13 +41,13 @@ export function RegisteredUsers({
           max={training.maxInterns}
         />
       </div>
-      <p className="text-xs text-muted-foreground">
+      <p className="truncate text-xs text-muted-foreground">
         {training.registrations
           .map(({ user }) => (
             <Link
               key={user.id}
               href={`/profile/${user.id}`}
-              className="underline"
+              className="max-w-32 truncate hover:underline"
             >
               {user.name}
             </Link>

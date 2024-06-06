@@ -18,6 +18,7 @@ export async function deleteTraining(id: string) {
   const training = await prisma.training.findFirst({
     where: {
       id,
+      authorId: session.user.id,
     },
     include: {
       author: {
@@ -36,6 +37,9 @@ export async function deleteTraining(id: string) {
   if (!training) {
     return { error: "training not found" };
   }
+  if (training.registrations.length > 0) {
+    return { error: "training has registrations" };
+  }
 
   await prisma.training.delete({
     where: {
@@ -43,6 +47,7 @@ export async function deleteTraining(id: string) {
     },
   });
 
+  revalidatePath("/");
   revalidatePath("/trainers");
 }
 
@@ -51,9 +56,11 @@ export async function cancelTraining(id: string, reason: string) {
   if (!session?.user) {
     return { error: "not authenticated" };
   }
+
   const training = await prisma.training.findFirst({
     where: {
       id,
+      authorId: session.user.id,
     },
     include: {
       author: {
@@ -73,9 +80,12 @@ export async function cancelTraining(id: string, reason: string) {
     return { error: "training not found" };
   }
 
-  await prisma.training.delete({
+  await prisma.training.update({
     where: {
       id,
+    },
+    data: {
+      cancelledAt: new Date(),
     },
   });
 

@@ -5,8 +5,11 @@ import Link from "next/link";
 import React from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { wrapLinksWithTags } from "@/lib/content";
+import { formatAT } from "@/lib/date";
 import { PublicUser } from "@/lib/prisma";
+import { cn } from "@/lib/utils";
 import { getInitials } from "@/modules/users/name";
 
 import { CancelTraining } from "./CancelTraining";
@@ -36,11 +39,12 @@ export function TrainingCard({
   const isOwner = training.authorId === user.id;
   const isRegistered = training.registrations.some((r) => r.userId === user.id);
   const isPast = training.end < new Date();
+  const isCancelled = training.cancelledAt !== null;
   const canRegister = !isOwner && hasFreeSpots && !isRegistered;
   const address = training.address;
 
   let actions = null;
-  if (user.role === "trainer" && isOwner && !isPast) {
+  if (user.role === "trainer" && isOwner && !isPast && !isCancelled) {
     actions = (
       <>
         <EditTraining training={training} />
@@ -51,15 +55,19 @@ export function TrainingCard({
       </>
     );
   }
-  if (user.role === "user" && isRegistered && !isPast) {
+  if (user.role === "user" && isRegistered && !isPast && !isCancelled) {
     actions = <Unregister trainingId={training.id} />;
   }
-  if (user.role === "user" && canRegister && !isPast) {
+  if (user.role === "user" && canRegister && !isPast && !isCancelled) {
     actions = <Register trainingId={training.id} />;
   }
 
   return (
-    <article className="overflow-hidden rounded-xl bg-white text-sm shadow-lg">
+    <article
+      className={cn("overflow-hidden rounded-xl bg-white text-sm shadow-lg", {
+        "opacity-60": isCancelled,
+      })}
+    >
       <div className="flex">
         <div className="flex flex-col items-center gap-2 border-r border-gray-100 px-3 py-4">
           <Link href={`/profile/${training.author.id}`} className="shrink-0">
@@ -93,11 +101,16 @@ export function TrainingCard({
           </div>
         </div>
         <div className="min-w-0 grow px-3 py-6">
+          {training.cancelledAt && (
+            <Badge variant="destructive" className="mb-3">
+              Abgesagt
+            </Badge>
+          )}
           <Link
             href={`/profile/${training.author.id}`}
-            className="flex items-center gap-2 font-medium"
+            className="mb-3 flex items-center gap-2 font-semibold hover:underline"
           >
-            <h4 className="mb-3 font-semibold">{training.author.name}</h4>
+            {training.author.name}
           </Link>
           <ul className="mb-4 space-y-2">
             <li>

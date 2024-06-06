@@ -78,7 +78,7 @@ export async function register(id: string) {
     },
   });
 
-  revalidatePath("/trainings");
+  revalidatePath("/");
 }
 
 export async function unregister(id: string) {

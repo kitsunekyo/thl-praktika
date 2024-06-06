@@ -67,7 +67,7 @@ export function CancelTraining({
           });
         }}
       >
-        <BanIcon className="mr-2 h-4 w-4" /> Absagen
+        <BanIcon className="mr-2 h-4 w-4" /> Löschen
       </Button>
     );
   }

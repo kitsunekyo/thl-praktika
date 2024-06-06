@@ -76,7 +76,9 @@ model Invitation {
 
 model Training {
   id            String         @id @default(cuid())
+  cancelledAt   DateTime?
   createdAt     DateTime       @default(now())
+  updatedAt     DateTime?
   start         DateTime
   end           DateTime
   description   String?
