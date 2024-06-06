@@ -141,17 +141,19 @@ async function TrainerList() {
             </div>
             <div className="flex shrink-0 items-center gap-x-6">
               <div className="hidden sm:flex sm:flex-col sm:items-end">
-                {session.user.role !== "trainer" && !isOnCooldown ? (
-                  <RequestTrainingDialog trainerId={trainer.id}>
-                    <Button size="sm" variant="outline">
-                      Praktikum anfragen
-                    </Button>
-                  </RequestTrainingDialog>
-                ) : (
-                  <div className="text-sm font-medium text-muted-foreground">
-                    Anfrage gesendet
-                  </div>
-                )}
+                {session.user.role === "user" ? (
+                  !isOnCooldown ? (
+                    <RequestTrainingDialog trainerId={trainer.id}>
+                      <Button size="sm" variant="outline">
+                        Praktikum anfragen
+                      </Button>
+                    </RequestTrainingDialog>
+                  ) : (
+                    <div className="text-sm font-medium text-muted-foreground">
+                      Anfrage gesendet
+                    </div>
+                  )
+                ) : null}
               </div>
               <TrainerMenu
                 trainerId={trainer.id}
