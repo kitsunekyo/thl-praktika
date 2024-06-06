@@ -8,7 +8,7 @@ import {
   BreadcrumbsSeparator,
 } from "@/components/Breadcrumbs";
 import { getServerSession } from "@/modules/auth/next-auth";
-import { getTrainerInvitationById } from "@/modules/users/queries";
+import { getTrainerInvitationById } from "@/modules/trainers/queries";
 
 export default async function Page({
   params: { id },

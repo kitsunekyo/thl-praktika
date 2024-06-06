@@ -33,6 +33,54 @@ export async function getTrainers() {
   });
 }
 
+export async function getTrainerInvitations() {
+  const session = await getServerSession();
+  if (!session) {
+    throw new AuthorizationError();
+  }
+
+  return await prisma.invitation.findMany({
+    where: {
+      role: "trainer",
+    },
+    select: {
+      id: true,
+      name: true,
+      phone: true,
+      email: true,
+      address: true,
+    },
+    orderBy: [
+      {
+        name: "asc",
+      },
+      {
+        email: "asc",
+      },
+    ],
+  });
+}
+
+export async function getTrainerInvitationById(id: string) {
+  const session = await getServerSession();
+  if (!session) {
+    throw new AuthorizationError();
+  }
+
+  return await prisma.invitation.findFirst({
+    where: {
+      role: "trainer",
+      id,
+    },
+    select: {
+      name: true,
+      phone: true,
+      email: true,
+      address: true,
+    },
+  });
+}
+
 export async function getTrainingRequests(
   where: Prisma.TrainingRequestWhereInput,
 ) {

@@ -17,10 +17,13 @@ import {
 } from "@/components/ui/table";
 import { getServerSession } from "@/modules/auth/next-auth";
 import { TrainerMenu } from "@/modules/trainers/components/TrainerMenu";
-import { getTrainers, getTrainingRequests } from "@/modules/trainers/queries";
+import {
+  getTrainerInvitations,
+  getTrainers,
+  getTrainingRequests,
+} from "@/modules/trainers/queries";
 import { RequestTrainingDialog } from "@/modules/trainings/components/RequestTrainingDialog";
 import { getInitials } from "@/modules/users/name";
-import { getTrainerInvitations } from "@/modules/users/queries";
 
 const REQUEST_COOLDOWN_IN_DAYS = 7;
 
