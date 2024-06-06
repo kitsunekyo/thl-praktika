@@ -112,7 +112,7 @@ export async function sendMail(config: EmailOptions) {
   }
 
   const sendgridMailData = {
-    from: { name: "Alex", email: SENDER_EMAIL },
+    from: { name: "THL Praktika", email: SENDER_EMAIL },
     to: config.to,
     replyTo: config.replyTo || SENDER_EMAIL,
     templateId: TEMPLATE_ID_MAP[config.templateName],
