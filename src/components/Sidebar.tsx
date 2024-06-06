@@ -25,7 +25,7 @@ export async function Sidebar({ className }: { className?: string }) {
   return (
     <aside className={cn("relative pb-12", className)}>
       <nav className="sticky top-0 space-y-4 py-6">
-        <Suspense fallback={<SectionLoading />}>
+        <Suspense>
           <AdminSection />
         </Suspense>
         <Suspense fallback={<SectionLoading />}>
