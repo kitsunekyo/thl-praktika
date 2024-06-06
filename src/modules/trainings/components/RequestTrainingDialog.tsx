@@ -94,27 +94,24 @@ export function RequestTrainingDialog({
               </AlertDialogTitle>
             </AlertDialogHeader>
             <div className="my-4 space-y-2">
-              <AlertDialogDescription>
-                Der/die Trainer:in wird per E-Mail informiert, dass du Interesse
-                an einem Praktikum hast. Sobald der/die Trainer:in das Praktikum
-                auf der Seite eingetragen hat, wirst du per E-Mail
-                benachrichtigt.
-              </AlertDialogDescription>
               <FormField
                 control={form.control}
                 name="message"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>
-                      Nachricht an den/die Trainer:in (optional)
-                    </FormLabel>
+                    <FormLabel>Nachricht (optional)</FormLabel>
                     <FormControl>
-                      <Textarea maxLength={190} {...field} />
+                      <Textarea maxLength={200} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+              <AlertDialogDescription>
+                Der/die Trainer:in bekommt ein E-Mail mit deiner Nachricht und
+                deinen, im Profil eingetragenen, Kontaktdaten. Wenn ein
+                Praktikum erstellt wird, bekommst du ein E-Mail.
+              </AlertDialogDescription>
             </div>
             <AlertDialogFooter>
               <AlertDialogCancel type="button">Abbrechen</AlertDialogCancel>
