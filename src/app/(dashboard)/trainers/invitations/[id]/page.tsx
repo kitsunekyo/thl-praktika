@@ -8,7 +8,7 @@ import {
   BreadcrumbsSeparator,
 } from "@/components/Breadcrumbs";
 import { getServerSession } from "@/modules/auth/next-auth";
-import { getTrainerInvitationById } from "@/modules/trainers/queries";
+import { getInvitedTrainerById } from "@/modules/trainers/queries";
 
 export default async function Page({
   params: { id },
@@ -19,7 +19,7 @@ export default async function Page({
   if (!session?.user) {
     throw new Error("Unauthorized");
   }
-  const profile = await getTrainerInvitationById(id);
+  const profile = await getInvitedTrainerById(id);
 
   if (!profile) {
     return notFound();

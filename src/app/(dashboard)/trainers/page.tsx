@@ -18,7 +18,7 @@ import {
 import { getServerSession } from "@/modules/auth/next-auth";
 import { TrainerMenu } from "@/modules/trainers/components/TrainerMenu";
 import {
-  getTrainerInvitations,
+  getInvitedTrainers,
   getTrainers,
   getTrainingRequests,
 } from "@/modules/trainers/queries";
@@ -77,7 +77,7 @@ async function TrainerList() {
   }
 
   const trainers = await getTrainers();
-  const trainerInvitations = await getTrainerInvitations();
+  const invitedTrainers = await getInvitedTrainers();
   const myRequests = await getTrainingRequests({ userId: session.user.id });
 
   return (
@@ -182,7 +182,7 @@ async function TrainerList() {
         Möglichkeiten anfragen.
       </p>
       <ul role="list" className="divide-y divide-gray-100">
-        {trainerInvitations.map((invitation) => (
+        {invitedTrainers.map((invitation) => (
           <li
             key={invitation.email}
             className="flex justify-between gap-x-6 py-5"

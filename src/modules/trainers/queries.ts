@@ -33,7 +33,7 @@ export async function getTrainers() {
   });
 }
 
-export async function getTrainerInvitations() {
+export async function getInvitedTrainers() {
   const session = await getServerSession();
   if (!session) {
     throw new AuthorizationError();
@@ -61,7 +61,7 @@ export async function getTrainerInvitations() {
   });
 }
 
-export async function getTrainerInvitationById(id: string) {
+export async function getInvitedTrainerById(id: string) {
   const session = await getServerSession();
   if (!session) {
     throw new AuthorizationError();
