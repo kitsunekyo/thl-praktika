@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { normalizePhoneNumber } from "@/lib/utils";
 import { getServerSession } from "@/modules/auth/next-auth";
 import { getInitials } from "@/modules/users/name";
 import { getUserProfiles } from "@/modules/users/queries";
@@ -75,7 +76,10 @@ async function NewUserList() {
                   {!!user.phone && (
                     <div className="min-w-0 shrink-0 truncate">
                       <span className="mx-2">•</span>
-                      <a href={`tel:${user.phone}`} className="hover:underline">
+                      <a
+                        href={`https://wa.me/${normalizePhoneNumber(user.phone)}`}
+                        className="hover:underline"
+                      >
                         {user.phone}
                       </a>
                     </div>

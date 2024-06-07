@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { normalizePhoneNumber } from "@/lib/utils";
 import { getServerSession } from "@/modules/auth/next-auth";
 import { TrainerMenu } from "@/modules/trainers/components/TrainerMenu";
 import {
@@ -129,7 +130,7 @@ async function TrainerList() {
                       <div className="min-w-0 shrink-0 truncate">
                         <span className="mx-2">•</span>
                         <a
-                          href={`tel:${trainer.phone}`}
+                          href={`https://wa.me/${normalizePhoneNumber(trainer.phone)}`}
                           className="hover:underline"
                         >
                           {trainer.phone}
@@ -219,7 +220,7 @@ async function TrainerList() {
                     <div className="min-w-0 shrink-0 truncate">
                       <span className="mx-2">•</span>
                       <a
-                        href={`tel:${invitation.phone}`}
+                        href={`https://wa.me/${normalizePhoneNumber(invitation.phone)}`}
                         className="hover:underline"
                       >
                         {invitation.phone}

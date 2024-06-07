@@ -7,6 +7,7 @@ import {
   BreadcrumbsSeparator,
 } from "@/components/Breadcrumbs";
 import { Button } from "@/components/ui/button";
+import { normalizePhoneNumber } from "@/lib/utils";
 import { getServerSession } from "@/modules/auth/next-auth";
 import { getTrainingRequests } from "@/modules/trainers/queries";
 import { RequestTrainingDialog } from "@/modules/trainings/components/RequestTrainingDialog";
@@ -68,7 +69,7 @@ export default async function Page({
                 <TableData>
                   {profile.phone ? (
                     <a
-                      href={`sms:${profile.phone}`}
+                      href={`https://wa.me/${normalizePhoneNumber(profile.phone)}`}
                       className="hover:underline"
                     >
                       <span className="truncate">{profile.phone}</span>
