@@ -1,28 +1,28 @@
+import { captureException } from "@sentry/nextjs";
 import { type FileRouter, createUploadthing } from "uploadthing/next";
+import { UploadThingError } from "uploadthing/server";
 
 import { getServerSession } from "@/modules/auth/next-auth";
 
 const f = createUploadthing();
 
-// FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
-  // Define as many FileRoutes as you like, each with a unique routeSlug
-  imageUploader: f({
+  avatar: f({
     "image/jpeg": { maxFileSize: "2MB", maxFileCount: 1 },
     "image/png": { maxFileSize: "2MB", maxFileCount: 1 },
     "image/gif": { maxFileSize: "2MB", maxFileCount: 1 },
+    "image/heic": { maxFileSize: "2MB", maxFileCount: 1 },
   })
-    // Set permissions and file types for this FileRoute
-    .middleware(async ({ req }) => {
-      // This code runs on your server before upload
+    .middleware(async () => {
       const session = await getServerSession();
-      // If you throw, the user will not be able to upload
-      if (!session) throw new Error("Unauthorized");
+      if (!session) {
+        throw new UploadThingError("Unauthorized");
+      }
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { userId: session.user.id };
     })
     .onUploadError(({ error }) => {
-      console.error(error);
+      captureException(error);
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
