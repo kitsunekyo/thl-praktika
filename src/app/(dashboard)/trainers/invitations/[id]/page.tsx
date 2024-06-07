@@ -29,11 +29,7 @@ export default async function Page({
       <Breadcrumbs>
         <BreadcrumbsItem href="/trainers">Trainer:innen</BreadcrumbsItem>
         <BreadcrumbsSeparator />
-        <BreadcrumbsItem>Einladungen</BreadcrumbsItem>
-        <BreadcrumbsSeparator />
-        <BreadcrumbsItem href={`/trainers/invitations/${id}`}>
-          {profile.name}
-        </BreadcrumbsItem>
+        <BreadcrumbsItem>{profile.name}</BreadcrumbsItem>
       </Breadcrumbs>
       <article className="max-w-2xl py-6">
         <div className="mb-6 space-y-4">

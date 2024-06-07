@@ -37,9 +37,7 @@ export default async function Page({
         {profile.role === "user" && (
           <BreadcrumbsItem href="/users">Praktikanten</BreadcrumbsItem>
         )}
-        {profile.role === "admin" && (
-          <BreadcrumbsItem href="/admin/users">Admins</BreadcrumbsItem>
-        )}
+        {profile.role === "admin" && <BreadcrumbsItem>Admins</BreadcrumbsItem>}
         <BreadcrumbsSeparator />
         <BreadcrumbsItem href={`/profile/${id}`}>
           {profile.name}
