@@ -27,26 +27,17 @@ export function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-export function normalizePhoneNumber(phoneNumber: string): string {
-  const cleaned = phoneNumber.replace(/(?!^\+)\D/g, "");
-  const phoneNumberPattern = /^(\+|00)?(\d{1,3})?(\d{7,14})$/;
-  const match = cleaned.match(phoneNumberPattern);
+const countryCode = /\+(\d\d)/g;
+const altCountryCode = /^00(\d\d)/g;
 
-  if (match) {
-    let countryCode = match[2] ? match[2] : "";
-    let number = match[3];
+export function normalizePhoneNumber(tel: string) {
+  const cleanedTel = tel
+    .replace(/([\s\/\-|a-z\(\)])/g, "")
+    .replace(altCountryCode, "+$1");
 
-    if (cleaned.startsWith("00")) {
-      countryCode = "+" + countryCode;
-    } else if (!cleaned.startsWith("+")) {
-      if (countryCode) {
-        countryCode = "+" + countryCode;
-      } else {
-        countryCode = "+43";
-      }
-    }
-    return countryCode + number;
+  if (cleanedTel.match(countryCode)) {
+    return cleanedTel;
   }
 
-  return phoneNumber;
+  return `+43${cleanedTel}`;
 }
