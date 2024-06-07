@@ -12,7 +12,7 @@ export function Breadcrumbs({ children }: { children: React.ReactNode }) {
           <HomeIcon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
           <span className="sr-only">Home</span>
         </Breadcrumb>
-        <BreadcrumbsSeparator />
+        {!!children && <BreadcrumbsSeparator />}
         {children}
       </ul>
     </nav>
@@ -55,7 +55,7 @@ function Breadcrumb({
 
   if (!href || pathname === href) {
     return (
-      <span className="flex items-center text-sm font-medium text-gray-700">
+      <span className="flex min-w-0 items-center truncate text-sm font-medium text-gray-700">
         {children}
       </span>
     );
@@ -65,7 +65,7 @@ function Breadcrumb({
     <Link
       {...rest}
       href={href}
-      className="flex items-center text-sm font-medium text-gray-500 underline hover:text-gray-700"
+      className="flex min-w-0 items-center truncate text-sm font-medium text-gray-500 underline hover:text-gray-700"
     >
       {children}
     </Link>
