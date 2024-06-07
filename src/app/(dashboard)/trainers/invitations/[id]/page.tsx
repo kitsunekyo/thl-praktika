@@ -1,4 +1,3 @@
-import { ExternalLinkIcon } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -62,10 +61,9 @@ export default async function Page({
                 <TableData>
                   <a
                     href={`mailto:${profile.email}`}
-                    className="flex items-center underline"
+                    className="hover:underline"
                   >
                     <span className="truncate">{profile.email}</span>
-                    <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
                   </a>
                 </TableData>
               </TableRow>
@@ -75,10 +73,9 @@ export default async function Page({
                   <TableData>
                     <a
                       href={`tel:${profile.phone}`}
-                      className="flex items-center underline"
+                      className="hover:underline"
                     >
                       <span className="truncate">{profile.phone}</span>
-                      <ExternalLinkIcon className="ml-1 h-4 w-4 shrink-0" />
                     </a>
                   </TableData>
                 </TableRow>
