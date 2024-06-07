@@ -70,7 +70,7 @@ export default async function Page({
                 <TableData>
                   {profile.phone ? (
                     <a
-                      href={`tel:${profile.phone}`}
+                      href={`sms:${profile.phone}`}
                       className="hover:underline"
                     >
                       <span className="truncate">{profile.phone}</span>
