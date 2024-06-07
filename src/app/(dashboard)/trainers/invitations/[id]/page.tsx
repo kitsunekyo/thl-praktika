@@ -74,7 +74,7 @@ export default async function Page({
                   <TableHead>Telefon</TableHead>
                   <TableData>
                     <a
-                      href={`mailto:${profile.phone}`}
+                      href={`tel:${profile.phone}`}
                       className="flex items-center underline"
                     >
                       <span className="truncate">{profile.phone}</span>
