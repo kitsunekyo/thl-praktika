@@ -1,3 +1,4 @@
+import { TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -38,7 +39,13 @@ export default async function Page({
             <h3 className="font-medium">Members:</h3>
             <ul className="ml-8 list-disc">
               {team.users.map((user) => (
-                <li key={user.user.id}>{user.user.name}</li>
+                <li key={user.id} className="flex items-center gap-2">
+                  <div>{user.name}</div>
+                  <Button variant="ghost" size="icon">
+                    <span className="sr-only">delete</span>
+                    <TrashIcon className="size-4" />
+                  </Button>
+                </li>
               ))}
             </ul>
             <Link href={`/teams/${id}/invite`}>

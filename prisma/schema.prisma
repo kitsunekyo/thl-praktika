@@ -56,8 +56,8 @@ model User {
   registrations    Registration[]
   sentRequests     TrainingRequest[] @relation("user")
   receivedRequests TrainingRequest[] @relation("trainer")
-  teams            UserOnTeam[]
-  ownedTeams       Team[]
+  teams            Team[]            @relation("members")
+  ownedTeams       Team[]            @relation("owner")
 }
 
 model VerificationToken {
@@ -136,25 +136,13 @@ model Team {
   createdAt DateTime     @default(now())
   name      String
   ownerId   String
-  owner     User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  users     UserOnTeam[]
+  owner     User         @relation("owner", fields: [ownerId], references: [id], onDelete: Cascade)
+  users     User[]       @relation("members")
   licenseId String?
   license   TeamLicense? @relation(fields: [licenseId], references: [id], onDelete: Cascade)
 
   @@index([ownerId])
   @@index([licenseId])
-}
-
-model UserOnTeam {
-  userId    String
-  teamId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-
-  @@id([teamId, userId])
-  @@index([teamId])
-  @@index([userId])
 }
 
 model TeamLicense {

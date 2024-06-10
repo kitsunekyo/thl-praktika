@@ -40,15 +40,7 @@ export function InviteMemberForm({ teamId }: { teamId: string }) {
         onSubmit={form.handleSubmit(
           (data: z.infer<typeof inviteMemberSchema>) => {
             startTransition(async () => {
-              const res = await inviteMember(teamId, data.email);
-
-              if (res?.error) {
-                toast({
-                  title: "Fehler beim Einladen",
-                  variant: "destructive",
-                });
-                return;
-              }
+              await inviteMember(teamId, data.email);
 
               toast({
                 title: "Benutzer wurde eingeladen",

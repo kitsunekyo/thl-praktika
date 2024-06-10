@@ -30,43 +30,22 @@ export async function inviteMember(teamId: string, userEmail: string) {
     throw new AuthorizationError();
   }
 
-  const user = await prisma.user.findFirst({
-    where: {
-      email: userEmail,
-    },
-  });
-
-  if (!user) {
-    return {
-      error: `userEmail ${userEmail} not found`,
-    };
-  }
-
-  const team = await prisma.team.findFirst({
+  await prisma.team.update({
     where: {
       id: teamId,
       ownerId: session.user.id,
       users: {
         none: {
-          userId: user.email,
+          email: userEmail,
         },
       },
     },
-    include: {
-      users: true,
-    },
-  });
-
-  if (!team) {
-    return {
-      error: `teamId ${teamId} not found`,
-    };
-  }
-
-  await prisma.userOnTeam.create({
     data: {
-      teamId,
-      userId: user.id,
+      users: {
+        connect: {
+          email: userEmail,
+        },
+      },
     },
   });
 
@@ -79,17 +58,19 @@ export async function removeMember(teamId: string, userId: string) {
     throw new AuthorizationError();
   }
 
-  const team = await prisma.team.findFirst({
+  await prisma.team.update({
     where: {
       id: teamId,
       ownerId: session.user.id,
     },
-    include: {
-      users: true,
+    data: {
+      users: {
+        disconnect: {
+          id: userId,
+        },
+      },
     },
   });
 
-  if (!team) {
-    return { error: "teamId not found" };
-  }
+  revalidatePath("/teams");
 }

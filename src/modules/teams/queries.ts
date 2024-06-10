@@ -18,7 +18,7 @@ export async function getMyTeams() {
         {
           users: {
             some: {
-              userId: session.user.id,
+              id: session.user.id,
             },
           },
         },
@@ -43,7 +43,7 @@ export async function getTeam(id: string) {
         {
           users: {
             some: {
-              userId: session.user.id,
+              id: session.user.id,
             },
           },
         },
@@ -55,11 +55,7 @@ export async function getTeam(id: string) {
         select: selectPublicUser,
       },
       users: {
-        include: {
-          user: {
-            select: selectPublicUser,
-          },
-        },
+        select: selectPublicUser,
       },
     },
   });
