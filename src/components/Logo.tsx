@@ -32,7 +32,6 @@ export function Logo({
           width={40}
           className="text-thl"
         />
-        <span>Praktika</span>
       </Link>
     </div>
   );
