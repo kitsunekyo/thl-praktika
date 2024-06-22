@@ -1,8 +1,4 @@
-import {
-  Breadcrumbs,
-  BreadcrumbsItem,
-  BreadcrumbsSeparator,
-} from "@/components/Breadcrumbs";
+import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
 import { CreateTeamForm } from "@/modules/teams/components/CreateTeamForm";
 
@@ -10,9 +6,7 @@ export default async function Page() {
   return (
     <>
       <Breadcrumbs>
-        <BreadcrumbsItem href="/teams">Teams</BreadcrumbsItem>
-        <BreadcrumbsSeparator />
-        <BreadcrumbsItem>Erstellen</BreadcrumbsItem>
+        <BreadcrumbsItem>Team erstellen</BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
         <PageTitle
