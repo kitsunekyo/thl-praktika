@@ -1,9 +1,9 @@
-import { GlobalSidebarLayout } from "@/components/GlobalSidebarLayout";
+import { AuthenticatedLayout } from "@/components/AuthenticatedLayout";
 
 export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <GlobalSidebarLayout>{children}</GlobalSidebarLayout>;
+  return <AuthenticatedLayout>{children}</AuthenticatedLayout>;
 }

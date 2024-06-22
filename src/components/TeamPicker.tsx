@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -37,9 +38,21 @@ export function TeamPicker({
       <DropdownMenuContent className="min-w-[180px]">
         {teams.map((team) => (
           <DropdownMenuItem key={team.id} asChild>
-            <Link href={`/team/${team.id}`}>{team.name}</Link>
+            <Link
+              href={`/teams/${team.id}`}
+              className="flex items-center gap-2"
+            >
+              <div className="size-4 shrink-0 rounded-full bg-gray-100" />
+              <span>{team.name}</span>
+            </Link>
           </DropdownMenuItem>
         ))}
+        <DropdownMenuItem key="create" asChild>
+          <Link href={`/teams/create`} className="flex items-center gap-2">
+            <PlusCircleIcon className="size-4 shrink-0 text-muted-foreground" />
+            <span>Neues Team erstellen</span>
+          </Link>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

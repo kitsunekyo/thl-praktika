@@ -10,7 +10,7 @@ import { MenuProvider } from "./nav/menu-context";
 import { MobileMenu } from "./nav/MobileMenu";
 import { AppSidebarSection, Sidebar } from "./Sidebar";
 
-export function GlobalSidebarLayout({
+export function AuthenticatedLayout({
   children,
 }: {
   children?: React.ReactNode;
