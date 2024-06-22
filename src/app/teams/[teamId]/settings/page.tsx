@@ -12,11 +12,11 @@ import { Button } from "@/components/ui/button";
 import { getTeam } from "@/modules/teams/queries";
 
 export default async function Page({
-  params: { id },
+  params: { teamId },
 }: {
-  params: { id: string };
+  params: { teamId: string };
 }) {
-  const team = await getTeam(id);
+  const team = await getTeam(teamId);
 
   if (!team) {
     return notFound();
@@ -25,7 +25,7 @@ export default async function Page({
   return (
     <>
       <Breadcrumbs>
-        <BreadcrumbsItem href="/teams">Teams</BreadcrumbsItem>
+        <BreadcrumbsItem>Teams</BreadcrumbsItem>
         <BreadcrumbsSeparator />
         <BreadcrumbsItem>{team.name}</BreadcrumbsItem>
       </Breadcrumbs>
@@ -48,7 +48,7 @@ export default async function Page({
                 </li>
               ))}
             </ul>
-            <Link href={`/teams/${id}/invite`}>
+            <Link href={`/teams/${teamId}/invite-member`}>
               <Button>Mitglieder einladen</Button>
             </Link>
           </section>

@@ -23,7 +23,7 @@ export function CreateTraining({
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button size="sm">Praktikum erstellen</Button>
+        <Button size="sm">Praktikum erstellen...</Button>
       </DialogTrigger>
       <DialogContent className="md:max-w-2xl">
         <DialogHeader>

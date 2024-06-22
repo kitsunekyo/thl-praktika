@@ -23,13 +23,11 @@ export default async function Trainings() {
   return (
     <>
       <Breadcrumbs>
-        <BreadcrumbsItem href="/trainings">
-          Meine Praktika Anmeldungen
-        </BreadcrumbsItem>
+        <BreadcrumbsItem>Meine Anmeldungen</BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
         <PageTitle content={<p>Deine Anmeldungen für Praktika.</p>}>
-          Anmeldungen
+          Meine Anmeldungen
         </PageTitle>
         <div className="my-2">
           <Stats trainings={trainings} />

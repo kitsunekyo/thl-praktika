@@ -18,7 +18,7 @@ export function MobileMenu({
   children,
 }: React.HTMLAttributes<HTMLDivElement> & {
   children?: React.ReactNode;
-  user: Pick<PrivateUser, "name" | "email" | "image">;
+  user?: Pick<PrivateUser, "name" | "email" | "image"> | null;
 }) {
   const menu = useMenu();
 
@@ -42,7 +42,7 @@ export function MobileMenu({
         <SheetHeader className="text-left">
           <Logo onNavigate={close} />
         </SheetHeader>
-        <div className="-ml-6 -mr-6 overflow-y-auto">{children}</div>
+        <div className="-ml-6 -mr-6 grow overflow-y-auto">{children}</div>
         <footer className="mt-auto border-t pt-4">
           {!!user && (
             <>

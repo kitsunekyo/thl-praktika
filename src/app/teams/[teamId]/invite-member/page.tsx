@@ -10,11 +10,11 @@ import { InviteMemberForm } from "@/modules/teams/components/InviteMemberForm";
 import { getTeam } from "@/modules/teams/queries";
 
 export default async function Page({
-  params: { id },
+  params: { teamId },
 }: {
-  params: { id: string };
+  params: { teamId: string };
 }) {
-  const team = await getTeam(id);
+  const team = await getTeam(teamId);
 
   if (!team) {
     return notFound();
@@ -25,13 +25,13 @@ export default async function Page({
       <Breadcrumbs>
         <BreadcrumbsItem href="/teams">Teams</BreadcrumbsItem>
         <BreadcrumbsSeparator />
-        <BreadcrumbsItem href={`/teams/${id}`}>{team.name}</BreadcrumbsItem>
+        <BreadcrumbsItem href={`/teams/${teamId}`}>{team.name}</BreadcrumbsItem>
         <BreadcrumbsSeparator />
         <BreadcrumbsItem>Mitglied Einladen</BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
         <PageTitle>Lade Mitglieder ein</PageTitle>
-        <InviteMemberForm teamId={id} />
+        <InviteMemberForm teamId={teamId} />
       </div>
     </>
   );

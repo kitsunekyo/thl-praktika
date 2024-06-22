@@ -1,76 +1,52 @@
 import {
-  BugIcon,
   CalendarCheck2Icon,
-  CloudDownloadIcon,
-  ContactIcon,
-  ExternalLinkIcon,
   GraduationCapIcon,
+  HelpCircleIcon,
   LayoutGridIcon,
   ListIcon,
-  ListRestartIcon,
   MailsIcon,
-  UserCircleIcon,
-  Users2Icon,
+  RefreshCwIcon,
   UsersIcon,
 } from "lucide-react";
-import { Suspense } from "react";
+import React from "react";
 
 import { cn } from "@/lib/utils";
 import { getMyProfile } from "@/modules/users/queries";
 
 import { SidebarLink } from "./SidebarLink";
-import { Skeleton } from "./ui/skeleton";
 
-export async function Sidebar({ className }: { className?: string }) {
+export async function Sidebar({
+  className,
+  children,
+}: {
+  className?: string;
+  children?: React.ReactNode;
+}) {
   return (
-    <aside className={cn("relative pb-12", className)}>
-      <nav className="sticky top-0 space-y-4 py-6">
-        <Suspense>
-          <AdminSection />
-        </Suspense>
-        <Suspense fallback={<SectionLoading />}>
-          <UserSection />
-        </Suspense>
-        <div className="px-3">
-          <Title>Personen</Title>
-          <div className="space-y-1">
-            <SidebarLink href="/profile" exact>
-              <UserCircleIcon className="mr-2 h-4 w-4 shrink-0" />
-              Mein Profil
-            </SidebarLink>
-            <SidebarLink href="/trainers">
-              <ContactIcon className="mr-2 h-4 w-4 shrink-0" />
-              Trainer:innen
-            </SidebarLink>
-            <SidebarLink href="/users">
-              <Users2Icon className="mr-2 h-4 w-4 shrink-0" />
-              Praktikanten
-            </SidebarLink>
-          </div>
-        </div>
-        <div className="mt-auto px-3">
-          <Title>Hilfe</Title>
-          <div className="space-y-1">
-            <SidebarLink href="/help/install">
-              <CloudDownloadIcon className="mr-2 h-4 w-4 shrink-0" />
-              App installieren
-            </SidebarLink>
-            <SidebarLink href="/help/contact">
-              <BugIcon className="mr-2 h-4 w-4 shrink-0" />
-              Fehler melden
-            </SidebarLink>
-            <SidebarLink href="/changelog">
-              <ListRestartIcon className="mr-2 h-4 w-4 shrink-0" />
-              Änderungen
-            </SidebarLink>
-          </div>
-        </div>
+    <aside className={cn("relative h-full bg-white", className)}>
+      <nav className="flex min-h-full flex-col py-6 md:sticky md:top-[--header-size] md:min-h-[calc(100vh-var(--header-size))]">
+        <div className="grow space-y-4">{children}</div>
       </nav>
     </aside>
   );
 }
 
-async function AdminSection() {
+export function AppSidebarSection() {
+  return (
+    <SidebarSection title="App">
+      <SidebarLink href="/help" exact>
+        <HelpCircleIcon className="mr-2 h-4 w-4 shrink-0" />
+        Hilfe
+      </SidebarLink>
+      <SidebarLink href="/changelog" exact>
+        <RefreshCwIcon className="mr-2 h-4 w-4 shrink-0" />
+        Änderungen
+      </SidebarLink>
+    </SidebarSection>
+  );
+}
+
+export async function AdminSidebarSection() {
   const user = await getMyProfile();
   const role = user?.role;
   const isAdmin = role === "admin";
@@ -80,75 +56,70 @@ async function AdminSection() {
   }
 
   return (
-    <div className="px-3 text-red-600">
-      <Title>Admin</Title>
-      <div className="space-y-1">
-        <SidebarLink href="/admin/users">
-          <UsersIcon className="mr-2 h-4 w-4 shrink-0" />
-          Benutzer
-        </SidebarLink>
-        <SidebarLink href="/admin/invitations">
-          <MailsIcon className="mr-2 h-4 w-4 shrink-0" />
-          Einladungen
-        </SidebarLink>
-      </div>
-    </div>
+    <SidebarSection title="Admin" className="px-3 text-red-600">
+      <SidebarLink href="/admin/users">
+        <UsersIcon className="mr-2 h-4 w-4 shrink-0" />
+        Benutzer
+      </SidebarLink>
+      <SidebarLink href="/admin/invitations">
+        <MailsIcon className="mr-2 h-4 w-4 shrink-0" />
+        Einladungen
+      </SidebarLink>
+    </SidebarSection>
   );
 }
 
-async function UserSection() {
+export async function UserSection() {
   const user = await getMyProfile();
   const role = user?.role;
   const canRegister = role === "user" || role === "admin";
   const canCreateTrainings = role === "trainer" || role === "admin";
 
   return (
-    <div className="px-3">
-      <div className="space-y-1">
-        <SidebarLink href="/" exact>
-          <LayoutGridIcon className="mr-2 h-4 w-4 shrink-0" />
-          Praktika Übersicht
+    <SidebarSection>
+      <SidebarLink href="/" exact>
+        <LayoutGridIcon className="mr-2 h-4 w-4 shrink-0" />
+        Praktika Übersicht
+      </SidebarLink>
+      {canRegister && (
+        <SidebarLink href="/trainings">
+          <CalendarCheck2Icon className="mr-2 h-4 w-4 shrink-0" />
+          Meine Anmeldungen
         </SidebarLink>
-        {canRegister && (
-          <SidebarLink href="/trainings">
-            <CalendarCheck2Icon className="mr-2 h-4 w-4 shrink-0" />
-            Meine Anmeldungen
-          </SidebarLink>
-        )}
-        {canCreateTrainings && (
-          <SidebarLink href="/trainer" exact>
-            <GraduationCapIcon className="mr-2 h-4 w-4 shrink-0" />
-            Meine Praktika
-          </SidebarLink>
-        )}
-        {canCreateTrainings && (
-          <SidebarLink href="/trainer/requests" exact>
-            <ListIcon className="mr-2 h-4 w-4 shrink-0" />
-            Praktika Anfragen
-          </SidebarLink>
-        )}
-      </div>
-    </div>
+      )}
+      {canCreateTrainings && (
+        <SidebarLink href="/trainer" exact>
+          <GraduationCapIcon className="mr-2 h-4 w-4 shrink-0" />
+          Meine Praktika
+        </SidebarLink>
+      )}
+      {canCreateTrainings && (
+        <SidebarLink href="/trainer/requests" exact>
+          <ListIcon className="mr-2 h-4 w-4 shrink-0" />
+          Praktika Anfragen
+        </SidebarLink>
+      )}
+    </SidebarSection>
   );
 }
 
-function Title({ children }: React.HTMLAttributes<HTMLDivElement>) {
+export function SidebarSection({
+  children,
+  title,
+  className,
+}: {
+  children: React.ReactNode;
+  title?: string;
+  className?: string;
+}) {
   return (
-    <div className="px-4 text-xs font-medium leading-6 text-muted-foreground">
-      {children}
-    </div>
-  );
-}
-
-function SectionLoading() {
-  return (
-    <div className="px-3">
-      <Skeleton className="mb-2 h-6 w-24 rounded" />
-      <div className="space-y-1">
-        <Skeleton className="h-8 rounded" />
-        <Skeleton className="h-8 rounded" />
-        <Skeleton className="h-8 rounded" />
-      </div>
+    <div className={cn("px-3", className)}>
+      {!!title && (
+        <div className="px-4 text-xs font-medium leading-6 text-muted-foreground">
+          {title}
+        </div>
+      )}
+      <div className="space-y-1">{children}</div>
     </div>
   );
 }

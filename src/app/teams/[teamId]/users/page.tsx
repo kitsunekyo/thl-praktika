@@ -18,7 +18,7 @@ export default async function Page() {
   return (
     <>
       <Breadcrumbs>
-        <BreadcrumbsItem href="/users">Praktikanten</BreadcrumbsItem>
+        <BreadcrumbsItem>Praktikanten</BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
         <PageTitle

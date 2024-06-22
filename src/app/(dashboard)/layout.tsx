@@ -1,9 +1,9 @@
-import { SidebarLayout } from "@/components/layouts";
+import { GlobalSidebarLayout } from "@/components/GlobalSidebarLayout";
 
 export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <SidebarLayout>{children}</SidebarLayout>;
+  return <GlobalSidebarLayout>{children}</GlobalSidebarLayout>;
 }

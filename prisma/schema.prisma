@@ -91,8 +91,11 @@ model Training {
   address       String?
   registrations Registration[]
   author        User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  teamId        String
+  team          Team           @relation(fields: [teamId], references: [id])
 
   @@index([authorId])
+  @@index([teamId])
 }
 
 model Registration {
@@ -102,10 +105,13 @@ model Registration {
   userId     String
   training   Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teamId     String
+  team       Team     @relation(fields: [teamId], references: [id])
 
   @@unique([trainingId, userId])
   @@index([trainingId])
   @@index([userId])
+  @@index([teamId])
 }
 
 model PasswordResetToken {
@@ -132,14 +138,16 @@ model TrainingRequest {
 }
 
 model Team {
-  id        String       @id @default(cuid())
-  createdAt DateTime     @default(now())
-  name      String
-  ownerId   String
-  owner     User         @relation("owner", fields: [ownerId], references: [id], onDelete: Cascade)
-  users     User[]       @relation("members")
-  licenseId String?
-  license   TeamLicense? @relation(fields: [licenseId], references: [id], onDelete: Cascade)
+  id            String         @id @default(cuid())
+  createdAt     DateTime       @default(now())
+  name          String
+  ownerId       String
+  owner         User           @relation("owner", fields: [ownerId], references: [id], onDelete: Cascade)
+  users         User[]         @relation("members")
+  licenseId     String?
+  license       TeamLicense?   @relation(fields: [licenseId], references: [id], onDelete: Cascade)
+  trainings     Training[]
+  registrations Registration[]
 
   @@index([ownerId])
   @@index([licenseId])

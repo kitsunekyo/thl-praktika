@@ -102,7 +102,7 @@ export function TrainingList({
     <ul className="relative max-w-2xl space-y-6">
       {Object.entries(groupedByMonth.months).map(([month, trainings]) => (
         <li key={month}>
-          <p className="sticky top-[var(--header-size)] -mx-4 bg-gray-50 px-6 py-4 font-semibold md:top-0">
+          <p className="sticky top-[var(--header-size)] -mx-4 bg-gray-50 px-6 py-4 font-semibold">
             {month}
           </p>
           <ul className="space-y-4">

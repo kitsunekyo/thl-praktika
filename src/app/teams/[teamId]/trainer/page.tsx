@@ -23,7 +23,7 @@ export default async function Page() {
   return (
     <>
       <Breadcrumbs>
-        <BreadcrumbsItem href="/trainer">Meine Praktika</BreadcrumbsItem>
+        <BreadcrumbsItem>Praktika verwalten</BreadcrumbsItem>
       </Breadcrumbs>
       <div className="py-6">
         <PageTitle
@@ -39,7 +39,7 @@ export default async function Page() {
             </>
           }
         >
-          Meine Praktika
+          Praktika verwalten
         </PageTitle>
         <div className="space-y-4">
           <Stats trainings={trainings} />
