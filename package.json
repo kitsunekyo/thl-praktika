@@ -55,7 +55,7 @@
     "@serwist/next": "^9.0.2",
     "@tailwindcss/typography": "^0.5.13",
     "@types/bcrypt": "^5.0.2",
-    "@types/lodash": "^4.17.4",
+    "@types/lodash": "^4.17.6",
     "@types/mdx": "^2.0.13",
     "@types/node": "^20.14.0",
     "@types/react": "^18.3.2",
