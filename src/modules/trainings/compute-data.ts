@@ -1,28 +1,32 @@
 import { Training } from "@prisma/client";
 
 import { AuthorizationError } from "@/lib/errors";
-import { PublicUser } from "@/lib/prisma";
 import { getTraveltime } from "@/modules/users/address";
 
+import { WithAuthor } from "./types";
 import { getMyProfile } from "../users/queries";
-
-type WithAuthor<T> = T & {
-  author: PublicUser;
-};
 
 /**
  * @param duration in milliseconds
  */
-export function computeDuration<T extends Training>(training: T) {
+export function computeDuration<T extends Pick<Training, "end" | "start">>(
+  training: T,
+) {
   return {
     ...training,
     duration: training.end.getTime() - training.start.getTime(),
   };
 }
 
-export async function computeTraveltime<T extends WithAuthor<Training>>(
+export async function computeTraveltime<
+  T extends Pick<Training, "end" | "address"> & WithAuthor,
+>(
   training: T,
-) {
+): Promise<
+  T & {
+    traveltime?: number;
+  }
+> {
   if (new Date() > training.end) {
     return training;
   }
@@ -58,4 +62,15 @@ export async function computeTraveltime<T extends WithAuthor<Training>>(
     ...training,
     traveltime,
   };
+}
+
+export type WithDurationAndTraveltime<T extends Training & WithAuthor> =
+  Awaited<ReturnType<typeof addMetadata<T>>>;
+
+export async function addMetadata<T extends Training & WithAuthor>(
+  trainings: T[],
+) {
+  return Promise.all(
+    trainings.map((training) => computeTraveltime(computeDuration(training))),
+  );
 }

@@ -1,9 +1,8 @@
-import { Registration, Training } from "@prisma/client";
+import { Training } from "@prisma/client";
 import { endOfDay, startOfDay } from "date-fns";
 
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { AuthorizationError } from "@/lib/errors";
-import { PublicUser } from "@/lib/prisma";
 import { CreateTraining } from "@/modules/trainings/components/CreateTraining";
 import {
   Filter,
@@ -11,10 +10,11 @@ import {
 } from "@/modules/trainings/components/TrainingFilter";
 import { TrainingList } from "@/modules/trainings/components/TrainingList";
 import {
-  computeDuration,
-  computeTraveltime,
+  WithDurationAndTraveltime,
+  addMetadata,
 } from "@/modules/trainings/compute-data";
 import { getAvailableTrainings } from "@/modules/trainings/queries";
+import { WithAuthor, WithRegistrations } from "@/modules/trainings/types";
 import { getMyProfile } from "@/modules/users/queries";
 
 export default async function Home({
@@ -102,6 +102,11 @@ function getFilter(
   };
 }
 
+interface TrainingsWithMetadata
+  extends WithDurationAndTraveltime<
+    Training & WithRegistrations & WithAuthor
+  > {}
+
 async function filterTrainings({
   trainings,
   filter,
@@ -137,21 +142,4 @@ async function filterTrainings({
     }
     return true;
   });
-}
-
-export type TrainingsWithMetadata = Awaited<ReturnType<typeof addMetadata>>;
-async function addMetadata<
-  T extends Training & {
-    author: PublicUser;
-    registrations: (Registration & {
-      user: PublicUser;
-    })[];
-  },
->(trainings: T[]) {
-  return Promise.all(
-    trainings.map(
-      async (training) =>
-        await computeTraveltime(await computeDuration(training)),
-    ),
-  );
 }

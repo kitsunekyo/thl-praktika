@@ -1,15 +1,10 @@
-import { Training } from "@prisma/client";
 import Link from "next/link";
 
 import { Breadcrumbs, BreadcrumbsItem } from "@/components/Breadcrumbs";
 import { PageTitle } from "@/components/PageTitle";
-import { PublicUser } from "@/lib/prisma";
 import { getServerSession } from "@/modules/auth/next-auth";
 import { TrainingListWithDateFilter } from "@/modules/trainings/components/TrainingList";
-import {
-  computeDuration,
-  computeTraveltime,
-} from "@/modules/trainings/compute-data";
+import { addMetadata } from "@/modules/trainings/compute-data";
 import { getMyTrainings } from "@/modules/trainings/queries";
 
 export default async function Trainings() {
@@ -51,16 +46,6 @@ export default async function Trainings() {
         )}
       </div>
     </>
-  );
-}
-
-async function addMetadata<
-  T extends Training & {
-    author: PublicUser;
-  },
->(trainings: T[]) {
-  return Promise.all(
-    trainings.map((training) => computeTraveltime(computeDuration(training))),
   );
 }
 
