@@ -60,9 +60,7 @@ async function addMetadata<
   },
 >(trainings: T[]) {
   return Promise.all(
-    trainings.map(async (training) => {
-      return await computeTraveltime(await computeDuration(training));
-    }),
+    trainings.map((training) => computeTraveltime(computeDuration(training))),
   );
 }
 
