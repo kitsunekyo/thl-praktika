@@ -49,7 +49,7 @@ export async function computeTraveltime<T extends WithAuthor<Training>>(
   }
 
   if (training.address.includes("https://")) {
-    return 0;
+    return training;
   }
 
   const traveltime = await getTraveltime(user.address, training.address);
