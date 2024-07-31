@@ -61,7 +61,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@uploadthing/react": "^6.5.4",
-    "@vercel/edge-config": "^1.1.1",
+    "@vercel/edge-config": "^1.2.1",
     "autoprefixer": "^10.4.19",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
