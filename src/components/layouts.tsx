@@ -3,6 +3,7 @@ import { Header } from "@/components/Header";
 import { cn } from "@/lib/utils";
 
 import { AppInfoStack } from "./AppInfoStack";
+import { GoodByeDialog } from "./GoodByeDialog";
 import { Sidebar } from "./Sidebar";
 
 export function BasicLayout({ children }: { children?: React.ReactNode }) {
@@ -21,6 +22,7 @@ export function SidebarLayout({ children }: { children?: React.ReactNode }) {
   return (
     <>
       <AppInfoStack />
+      <GoodByeDialog />
       <Header />
       <Body className="lg:grid-cols-5">
         <Sidebar className="hidden lg:block" />
@@ -28,7 +30,6 @@ export function SidebarLayout({ children }: { children?: React.ReactNode }) {
           <Main>{children}</Main>
           <Footer />
         </div>
-        <AppInfoStack />
       </Body>
     </>
   );
